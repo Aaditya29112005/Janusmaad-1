@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink:        #070B1A;  /* Dark Navy Ink typography & primary text */
+  --ink-raised: #FFFFFF;  /* Pure White card & container surface */
+  --bone:       #F6F3EC;  /* Primary Warm Bone editorial light base */
+  --violet:     #0E1E4B;  /* Rich Navy Accent for CTAs & highlights */
+  --violet-deep:#03050E;  /* Deep hover state */
+  --teal:       #0E9C97;  /* Secondary accent for positive gain deltas */
+  --mute:       #5C5E6E;  /* Mute labels & meta text */
+  --hairline:   rgba(7, 11, 26, 0.08);
+  --hairline-dark: rgba(7, 11, 26, 0.12);
+}
+
+html {
+  scroll-behavior: auto;
+  background-color: var(--bone);
+  color: var(--ink);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  background-color: var(--bone);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* Typography Scale Inspired by Gionatannese & Jesper Landberg */
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.text-hero-display {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3.2rem, 9.2vw, 9.2rem);
+  line-height: 0.91;
+  letter-spacing: -0.04em;
+}
+
+.text-footer-display {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+
+.text-data-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Award-Winning Card Surface & Shadow Utilities */
+.card-surface {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(7, 11, 26, 0.08);
+  box-shadow: 0 20px 40px -15px rgba(7, 11, 26, 0.05);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.card-surface:hover {
+  border-color: rgba(14, 30, 75, 0.25);
+  box-shadow: 0 30px 60px -20px rgba(7, 11, 26, 0.1);
+}
+
+/* Accessibility Focus Visible */
+*:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 4px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bone);
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD2E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--violet);
+}
+
+/* Range Input Styling for ROI Calculator */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: rgba(7, 11, 26, 0.1);
+  border-radius: 4px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--violet);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+  box-shadow: 0 0 12px rgba(14, 30, 75, 0.3);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: var(--violet-deep);
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: rgba(7, 11, 26, 0.1);
+  border-radius: 4px;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--violet);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 12px rgba(14, 30, 75, 0.3);
+}
