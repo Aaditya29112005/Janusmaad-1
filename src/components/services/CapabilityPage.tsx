@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   BarChart3, 
   Code2, 
@@ -11,7 +11,8 @@ import {
   Clock, 
   Sparkles,
   ShieldCheck,
-  Send
+  Send,
+  ExternalLink
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -55,7 +56,7 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
     badge: 'ACQUIRE CAPABILITIES',
     title: 'Performance Marketing & Performance Max',
     subtitle: 'Meta, Google & TikTok campaigns built for high return on ad spend (ROAS).',
-    description: 'We don’t just run ads — we build a complete performance system. Our Performance Max approach is designed to track, optimize, and scale high-quality leads across Google & Meta inventory.',
+    description: 'We don’t just run ads — we build a complete performance system. Our Performance Max approach is designed to track, optimize, and scale high-quality leads across Google & Meta inventory with real-time conversion signals.',
     bullets: [
       'Performance Max campaign setup & optimization',
       'Lead quality analysis & funnel optimization',
@@ -64,13 +65,13 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
     ],
     kpiLabel: 'Blended Target ROAS',
     kpiValue: '4.82x',
-    kpiSubText: 'Avg Cost Per Lead: ₹142.50 | Qualified Rate: 38.4%',
+    kpiSubText: 'Avg Cost Per Lead: ₹142.50 | Qualified Funnel Rate: 38.4%',
     stats: [
       { label: 'Clicks Generated', value: '120K+', delta: '+140% QoQ', desc: 'High-intent buyer traffic redirected to conversion funnels.' },
       { label: 'Total Impressions', value: '4.8M+', delta: 'Multi-Channel', desc: 'Scale brand authority across Meta, Google & Amazon.' },
       { label: 'Verified Conversions', value: '3.2K+', delta: 'Verified Leads', desc: 'High-converting sales, calls, and qualified enquiries.' }
     ],
-    technologies: ['Meta Ads (FB & IG)', 'Google Ads', 'Amazon Ads', 'Flipkart Ads', 'Meesho Ads', 'Etsy Ads', 'TikTok Ads', 'YouTube Video Ads'],
+    technologies: ['Meta Ads (FB & IG)', 'Google Ads & PMax', 'Amazon Ads', 'Flipkart Ads', 'Meesho Ads', 'Etsy Ads', 'TikTok Ads', 'GA4 & GTM CAPI'],
     solutions: [
       { num: '01', title: 'Conversion Tracking & Analytics', desc: 'End-to-end tracking using GA4, GTM, and offline conversion integrations for 100% clean data accuracy.' },
       { num: '02', title: 'Meta Ads (Facebook & Instagram)', desc: 'Conversion-focused campaigns designed to generate high-intent leads, direct sales, and qualified enquiries.' },
@@ -101,7 +102,7 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
       { label: 'Page 1 Keywords', value: '1.4K+', delta: 'Rank #1-#3', desc: 'Dominate competitive industry terms across Google & Bing.' },
       { label: 'AI Search Overviews', value: '450+', delta: 'GEO Verified', desc: 'Featured recommendations inside ChatGPT, Gemini & Perplexity.' }
     ],
-    technologies: ['Google Search Console', 'Ahrefs Enterprise', 'SEMrush', 'Screaming Frog', 'Schema.org', 'Next.js SSR', 'Vercel Analytics'],
+    technologies: ['Google Search Console', 'Ahrefs Enterprise', 'SEMrush', 'Screaming Frog', 'Schema.org JSON-LD', 'Next.js SSR', 'Vercel Analytics'],
     solutions: [
       { num: '01', title: 'Technical SEO & Crawl Budgeting', desc: 'Architecture audits, canonicalization, JS rendering optimization, and Core Web Vitals speed tuning.' },
       { num: '02', title: 'Generative Engine Optimization (GEO)', desc: 'Optimizing structured data and brand citations so AI tools recommend your business first.' },
@@ -146,7 +147,7 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
     id: 'convert-build',
     category: 'Convert',
     badge: 'CONVERT CAPABILITIES',
-    title: 'Build (Design & Development)',
+    title: 'Build (Bespoke Design & Development)',
     subtitle: 'High-speed bespoke landing pages and custom Shopify storefronts engineered for sub-1-second load times.',
     description: 'Sub-1-second page loads, headless Next.js architectures, and ultra-high converting landing page designs built for maximum ROAS and smooth customer checkout.',
     bullets: [
@@ -306,6 +307,11 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
 }) => {
   const details = CAPABILITIES_DATA[capabilityId] || CAPABILITIES_DATA['acquire-performance'];
 
+  // Scroll to top whenever capability ID changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [capabilityId]);
+
   // Form State
   const [formData, setFormData] = useState({
     name: '',
@@ -356,14 +362,14 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
   const CategoryIcon = getCategoryIcon(details.category);
 
   return (
-    <div className="pt-24 pb-20 px-4 sm:px-8 bg-bone text-ink min-h-screen">
+    <div id={capabilityId} className="pt-28 pb-20 px-4 sm:px-8 bg-bone text-ink min-h-screen relative z-10">
       <div className="max-w-7xl mx-auto space-y-16">
 
         {/* Top Header Navigation Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-hairline">
           <button
             onClick={onNavigateHome}
-            className="inline-flex items-center gap-2 text-sm font-display font-bold text-ink hover:text-violet transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-display font-bold text-ink hover:text-violet transition-colors group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-violet group-hover:-translate-x-1 transition-transform" />
             <span>← Back to Overview</span>
@@ -379,8 +385,8 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
         </div>
 
         {/* Capability Selector Bar (Switch between all 8 pages easily) */}
-        <div className="bg-white border border-hairline rounded-2xl p-2 shadow-sm space-y-2">
-          <div className="text-[11px] font-mono text-violet uppercase tracking-wider font-bold px-3 pt-1">
+        <div className="bg-white border border-hairline rounded-2xl p-3 shadow-sm space-y-2">
+          <div className="text-[11px] font-mono text-violet uppercase tracking-wider font-bold px-3">
             EXPLORE DEDICATED CAPABILITY PAGES:
           </div>
           <div className="flex flex-wrap items-center gap-1.5 px-1">
@@ -397,7 +403,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
               <button
                 key={cap.id}
                 onClick={() => onNavigateCapability(cap.id as CapabilityId)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-display font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-display font-medium transition-all cursor-pointer ${
                   capabilityId === cap.id
                     ? 'bg-violet text-white shadow-md font-bold'
                     : 'text-mute hover:text-ink hover:bg-bone'
@@ -566,6 +572,38 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
           </div>
         </div>
 
+        {/* Reference Industry Case Benchmarks */}
+        <div className="bg-bone border border-hairline rounded-3xl p-8 sm:p-12 space-y-6">
+          <div className="space-y-2">
+            <div className="text-data-label text-violet uppercase text-xs font-bold">BENCHMARK CASE STUDIES</div>
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink">
+              Proven Playbooks & Execution Standards
+            </h2>
+            <p className="text-mute text-sm sm:text-base max-w-3xl">
+              Inspired by leading growth frameworks across e-commerce, direct-to-consumer, and enterprise tech platforms.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+            {[
+              { title: 'Performance Ad Engine', source: 'Teckey Performance System', desc: 'Google PMax & Meta CAPI server-side conversion architecture.' },
+              { title: 'Sub-Second PDP Speed', source: 'The Landing Page Co Framework', desc: 'Custom Shopify Liquid & Next.js 15 landing page speed optimization.' },
+              { title: 'Short-Form Video Engine', source: 'Storyflix Direct Response', desc: 'Reels and TikTok creator UGC funnels driving viral purchase intent.' },
+              { title: 'Multi-Channel Attribution', source: 'Visionary Growth Architecture', desc: 'Unified Google, Meta, and owned channel lifecycle attribution.' },
+              { title: 'Zero-Party Data CDP', source: 'ShellKode Data Engineering', desc: 'BigQuery & Segment real-time zero-party quiz data warehousing.' },
+            ].map((caseItem, idx) => (
+              <div key={idx} className="p-5 bg-white rounded-2xl border border-hairline space-y-2 shadow-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-violet">{caseItem.source}</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-mute" />
+                </div>
+                <div className="font-display font-bold text-ink text-sm">{caseItem.title}</div>
+                <div className="text-xs text-mute leading-relaxed">{caseItem.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Dedicated "TALK TO US" Contact Form for this Capability */}
         <div id="talk-to-us" className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-12 shadow-2xl relative overflow-hidden">
           <div className="max-w-3xl space-y-3">
@@ -669,7 +707,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
                       name="optIn"
                       checked={formData.optIn}
                       onChange={handleInputChange}
-                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/10 text-teal focus:ring-teal"
+                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/10 text-teal focus:ring-teal cursor-pointer"
                     />
                     <label htmlFor="optIn" className="text-xs text-white/70 leading-relaxed cursor-pointer">
                       I would like to opt-in to receive emails about news, trends, offers, or blogs. For more information, please read our{' '}
@@ -679,7 +717,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
 
                   <button
                     type="submit"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-teal text-ink font-display font-bold rounded-xl hover:bg-emerald-400 transition-colors shadow-lg"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-teal text-ink font-display font-bold rounded-xl hover:bg-emerald-400 transition-colors shadow-lg cursor-pointer"
                   >
                     <span>Send Message</span>
                     <Send className="w-4 h-4" />

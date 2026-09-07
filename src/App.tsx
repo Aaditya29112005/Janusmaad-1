@@ -69,6 +69,9 @@ export const App: React.FC = () => {
       smoothWheel: true,
     });
 
+    lenis.scrollTo(0, { immediate: true });
+    window.scrollTo(0, 0);
+
     lenis.on('scroll', ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
