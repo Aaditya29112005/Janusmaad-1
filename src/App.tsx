@@ -23,6 +23,8 @@ import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
 import { TechPartners } from './components/partners/TechPartners';
 import { ClosingCTA } from './components/cta/ClosingCTA';
 
+import { PerformanceMarketingSection } from './components/services/PerformanceMarketingSection';
+
 export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<string>('audit');
@@ -67,6 +69,7 @@ export const App: React.FC = () => {
       <main id="main-content">
         <Hero onOpenAudit={handleOpenAudit} />
         <ProofStrip />
+        <PerformanceMarketingSection onOpenAudit={handleOpenAudit} />
         <ReceiptsSection />
         <Calculator onOpenAudit={handleOpenAudit} />
         <TestimonialsMarquee />
