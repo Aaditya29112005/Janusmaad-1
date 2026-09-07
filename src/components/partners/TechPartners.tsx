@@ -29,14 +29,14 @@ export const TechPartners: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative">
+    <section id="partners" className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative">
       <div ref={containerRef} className="max-w-7xl mx-auto space-y-12 relative z-10">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <span className="text-data-label text-violet text-xs uppercase tracking-widest font-bold">
             Certified MarTech Architecture
           </span>
-          <h2 className="font-display text-3xl sm:text-5xl text-ink tracking-tight">
-            Key Technology Ecosystem<span className="text-violet">.</span>
+          <h2 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
+            Technology Partners<span className="text-violet">.</span>
           </h2>
           <p className="text-mute text-sm sm:text-base">
             Deep native integrations with leading enterprise commerce and performance growth platforms.

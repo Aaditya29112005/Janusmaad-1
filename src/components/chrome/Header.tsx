@@ -86,6 +86,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
                     <a
                       key={item.name}
                       href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block group/item p-2.5 rounded-xl hover:bg-bone transition-colors"
                     >
                       <div className="font-display font-medium text-ink group-hover/item:text-violet transition-colors text-sm">
@@ -106,6 +108,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
             <a
               key={item.name}
               href={item.href}
+              target={item.href.startsWith('#') && item.href !== '#audit-modal' ? '_blank' : undefined}
+              rel={item.href.startsWith('#') && item.href !== '#audit-modal' ? 'noopener noreferrer' : undefined}
               onClick={(e) => {
                 if (item.href === '#audit-modal') {
                   e.preventDefault();
@@ -151,6 +155,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
                   <a
                     key={item.name}
                     href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
                     className="text-ink/90 text-sm font-medium hover:text-violet py-1"
                   >
@@ -166,6 +172,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
               <a
                 key={item.name}
                 href={item.href}
+                target={item.href.startsWith('#') && item.href !== '#audit-modal' ? '_blank' : undefined}
+                rel={item.href.startsWith('#') && item.href !== '#audit-modal' ? 'noopener noreferrer' : undefined}
                 onClick={(e) => {
                   setMobileMenuOpen(false);
                   if (item.href === '#audit-modal') {
@@ -178,6 +186,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
                 {item.name}
               </a>
             ))}
+
             <div className="pt-2">
               <Button
                 variant="primary"

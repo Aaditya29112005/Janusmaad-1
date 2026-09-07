@@ -6,7 +6,6 @@ export interface ClientLogo {
 
 export const GUEST_LIST_LOGOS: ClientLogo[] = [
   { id: '1', name: 'JanusMaad Client 1', logoSrc: '/logos/full_brands/1_brand_1.png' },
-  { id: '2', name: 'JanusMaad Client 2', logoSrc: '/logos/full_brands/1_brand_2.png' },
   { id: '3', name: 'JanusMaad Client 3', logoSrc: '/logos/full_brands/1_brand_3.png' },
   { id: '4', name: 'JanusMaad Client 4', logoSrc: '/logos/full_brands/1_brand_4.png' },
   { id: '5', name: 'JanusMaad Client 5', logoSrc: '/logos/full_brands/1_brand_5.png' },

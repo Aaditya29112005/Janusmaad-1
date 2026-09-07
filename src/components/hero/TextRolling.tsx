@@ -45,7 +45,7 @@ export const TextRolling: React.FC<TextRollingProps> = ({ text }) => {
     return () => ctx.revert();
   }, [text]);
 
-  const characters = text.split('');
+  const words = text.split(' ');
 
   return (
     <span
@@ -53,16 +53,23 @@ export const TextRolling: React.FC<TextRollingProps> = ({ text }) => {
       className="inline-block text-violet font-display"
       style={{ perspective: '800px', transformStyle: 'preserve-3d' }}
     >
-      {characters.map((char, index) => (
-        <span
-          key={index}
-          className="roll-char inline-block"
-          style={{
-            transformOrigin: '50% 50% -20px',
-            willChange: 'transform, opacity',
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block whitespace-nowrap">
+          {word.split('').map((char, charIndex) => (
+            <span
+              key={charIndex}
+              className="roll-char inline-block"
+              style={{
+                transformOrigin: '50% 50% -20px',
+                willChange: 'transform, opacity',
+              }}
+            >
+              {char}
+            </span>
+          ))}
+          {wordIndex < words.length - 1 && (
+            <span className="roll-char inline-block">&nbsp;</span>
+          )}
         </span>
       ))}
     </span>

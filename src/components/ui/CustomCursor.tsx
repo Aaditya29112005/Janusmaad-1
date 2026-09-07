@@ -74,7 +74,7 @@ export const CustomCursor: React.FC = () => {
       {/* Outer Magnetic Ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-10 h-10 -ml-5 -mt-5 border border-ink/25 rounded-full pointer-events-none transition-transform duration-100 ease-out"
+        className="fixed top-0 left-0 w-10 h-10 -ml-5 -mt-5 border border-ink/25 rounded-full pointer-events-none"
       />
     </div>
   );

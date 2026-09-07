@@ -8,8 +8,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
   return (
-    <footer className="bg-bone border-t border-hairline pt-20 pb-12 px-4 sm:px-8 text-ink relative overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-16 relative z-10">
+    <footer className="bg-bone border-t border-hairline pt-20 pb-0 text-ink relative overflow-hidden select-none">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-16 relative z-10">
         {/* Display Headline Statement */}
         <div className="border-b border-hairline pb-12">
           <h2 className="text-footer-display font-display text-ink max-w-4xl">
@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
               <span className="font-display font-bold text-xl text-ink">Janusmaad Digital</span>
             </div>
             <p className="text-mute max-w-md text-base leading-relaxed">
-              Performance marketing and SEO agency operating across Sydney and Delhi NCR. We build high-converting landing pages, scale organic search visibility, and drive sustainable profit.
+              Performance marketing and SEO agency operating across India (Delhi NCR & Noida). We build high-converting landing pages, scale organic search visibility, and drive sustainable profit.
             </p>
             <div className="pt-2">
               <Button
@@ -41,15 +41,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
 
           {/* Right Columns: Links & Offices */}
           <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
-            {/* Services */}
+            {/* Capabilities */}
             <div className="space-y-4">
               <div className="text-data-label text-violet uppercase text-xs font-bold">Capabilities</div>
               <ul className="space-y-2.5 text-mute">
-                <li><a href="#acquire-performance" className="hover:text-violet transition-colors">Performance Marketing</a></li>
-                <li><a href="#acquire-seo" className="hover:text-violet transition-colors">Search Everywhere SEO</a></li>
-                <li><a href="#convert-build" className="hover:text-violet transition-colors">Shopify Build & Dev</a></li>
-                <li><a href="#convert-cro" className="hover:text-violet transition-colors">CRO Retainer</a></li>
-                <li><a href="#retain-marketing" className="hover:text-violet transition-colors">Retention Marketing</a></li>
+                <li><a href="#acquire-performance" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Performance Marketing</a></li>
+                <li><a href="#acquire-seo" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Search Everywhere SEO</a></li>
+                <li><a href="#acquire-smm" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">SMM Strategy</a></li>
+                <li><a href="#convert-build" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Shopify Build & Dev</a></li>
+                <li><a href="#convert-cro" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">CRO Retainer</a></li>
+                <li><a href="#retain-marketing" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Retention Marketing</a></li>
+                <li><a href="#retain-cep" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">CEP (Klaviyo / Braze)</a></li>
+                <li><a href="#retain-cdp" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">CDP (Zero-Party Data)</a></li>
               </ul>
             </div>
 
@@ -57,11 +60,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
             <div className="space-y-4">
               <div className="text-data-label text-violet uppercase text-xs font-bold">Company</div>
               <ul className="space-y-2.5 text-mute">
-                <li><a href="#receipts" className="hover:text-violet transition-colors">Receipts & Case Studies</a></li>
+                <li><a href="#receipts" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Receipts & Case Studies</a></li>
                 <li><a href="#calculator" className="hover:text-violet transition-colors">ROI Calculator</a></li>
                 <li><a href="#process" className="hover:text-violet transition-colors">How We Work</a></li>
                 <li><a href="#fit" className="hover:text-violet transition-colors">Client Fit Check</a></li>
-                <li><a href="#blog" className="hover:text-violet transition-colors">Growth Journal</a></li>
+                <li><a href="#about" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">About Us</a></li>
               </ul>
             </div>
 
@@ -70,12 +73,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
               <div className="text-data-label text-violet uppercase text-xs font-bold">Offices & Social</div>
               <div className="space-y-3 text-mute">
                 <div>
-                  <div className="text-ink font-bold text-xs uppercase">Sydney Hub</div>
-                  <div className="text-xs text-mute">Barangaroo International Towers, NSW 2000</div>
-                </div>
-                <div>
                   <div className="text-ink font-bold text-xs uppercase">Delhi NCR Hub</div>
                   <div className="text-xs text-mute">Cyber City, Phase II, Gurugram 122002</div>
+                </div>
+                <div>
+                  <div className="text-ink font-bold text-xs uppercase">Noida Hub</div>
+                  <div className="text-xs text-mute">Sector 62, Digital Park, Noida 201309</div>
                 </div>
                 <div className="pt-2 flex items-center gap-4 text-xs font-display">
                   <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors flex items-center gap-1">
@@ -91,19 +94,30 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-hairline flex flex-col sm:flex-row items-center justify-between text-xs text-mute gap-4">
-          <div>
-            © {new Date().getFullYear()} Janusmaad Digital Pty Ltd. All rights reserved.
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="#privacy" className="hover:text-violet transition-colors">Privacy Policy</a>
-            <a href="#terms" className="hover:text-violet transition-colors">Terms of Service</a>
-            <a href="#security" className="hover:text-violet transition-colors">Security & Data</a>
-          </div>
+      {/* Giant Brand Display Footer Block (Matching image.png Reference) */}
+      <div className="mt-20 border-t border-hairline/80 pt-6">
+        {/* Meta Bar */}
+        <div className="max-w-[96vw] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-mute uppercase gap-2 mb-6">
+          <div>© {new Date().getFullYear()} JANUSMAAD DIGITAL. ALL RIGHTS RESERVED.</div>
+          <div>DATA IN. DESIGN OUT. ABSOLUTE IN INTENT.</div>
+        </div>
+
+        {/* Giant Edge-to-Edge JANUSMAAD Text with Top-to-Bottom Fade Gradient */}
+        <div className="w-full overflow-hidden text-center leading-none px-2 sm:px-4">
+          <h1 className="text-[14.5vw] sm:text-[15.5vw] md:text-[16vw] font-display font-black tracking-tighter leading-none uppercase bg-clip-text text-transparent bg-gradient-to-b from-[#1c202e] via-[#1c202e]/75 to-transparent select-none pointer-events-none transform translate-y-[1vw]">
+            JANUSMAAD
+          </h1>
+        </div>
+
+        {/* Dual Accent Bottom Bar (Navy + Red / Crimson Stripe) */}
+        <div className="w-full flex h-2.5 mt-0">
+          <div className="w-[28%] bg-[#1c202e]" />
+          <div className="w-[72%] bg-[#c8102e]" />
         </div>
       </div>
     </footer>
   );
 };
+

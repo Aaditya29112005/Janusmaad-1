@@ -15,9 +15,12 @@ import { ProofStrip } from './components/proof/ProofStrip';
 import { ReceiptsSection } from './components/receipts/ReceiptsSection';
 import { Calculator } from './components/calculator/Calculator';
 import { TestimonialsMarquee } from './components/testimonials/TestimonialsMarquee';
+import { ReelsReviewMarquee } from './components/testimonials/ReelsReviewMarquee';
 import { TrustedBy } from './components/trusted/TrustedBy';
 import { HowWeWork } from './components/process/HowWeWork';
 import { HorizontalMarqueeText } from './components/common/HorizontalMarqueeText';
+import { ScrollRailMarquee } from './components/common/ScrollRailMarquee';
+import { CursorFollowList } from './components/common/CursorFollowList';
 import { ThreeWaysIn } from './components/pricing/ThreeWaysIn';
 import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
 import { TechPartners } from './components/partners/TechPartners';
@@ -34,7 +37,10 @@ const VALID_CAPABILITIES: CapabilityId[] = [
   'convert-cro',
   'retain-marketing',
   'retain-cep',
-  'retain-cdp'
+  'retain-cdp',
+  'receipts',
+  'about',
+  'pricing'
 ];
 
 export const App: React.FC = () => {
@@ -45,12 +51,22 @@ export const App: React.FC = () => {
   useEffect(() => {
     // Listen to hash changes for standalone capability page routing
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
+      const hash = window.location.hash.replace('#', '').trim();
       if (VALID_CAPABILITIES.includes(hash as CapabilityId)) {
         setActiveCapability(hash as CapabilityId);
         window.scrollTo({ top: 0, behavior: 'instant' });
       } else {
         setActiveCapability(null);
+        if (hash && hash !== 'home') {
+          setTimeout(() => {
+            const el = document.getElementById(hash);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 150);
+        } else if (hash === 'home') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }
     };
 
@@ -60,8 +76,12 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll synced to ScrollTrigger
-    if (prefersReducedMotion()) return;
+    // Refresh ScrollTrigger whenever activeCapability changes
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    if (prefersReducedMotion()) return () => clearTimeout(timer);
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -69,18 +89,18 @@ export const App: React.FC = () => {
       smoothWheel: true,
     });
 
-    lenis.scrollTo(0, { immediate: true });
-    window.scrollTo(0, 0);
-
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      clearTimeout(timer);
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
   }, [activeCapability]);
@@ -119,15 +139,18 @@ export const App: React.FC = () => {
             onOpenAudit={handleOpenAudit}
           />
         ) : (
-          /* Clean Agency Homepage Flow (Does NOT display capability detail sections inline) */
+          /* Clean Agency Homepage Flow */
           <>
             <Hero onOpenAudit={handleOpenAudit} />
             <ProofStrip />
             <ReceiptsSection />
             <Calculator onOpenAudit={handleOpenAudit} />
+            <ReelsReviewMarquee />
             <TestimonialsMarquee />
             <TrustedBy />
+            <CursorFollowList />
             <HowWeWork />
+            <ScrollRailMarquee />
             <HorizontalMarqueeText />
             <ThreeWaysIn onOpenAudit={handleOpenAudit} />
             <WhoWeDontWorkWith />

@@ -184,7 +184,7 @@ export const TESTIMONIALS: Testimonial[] = [
     id: '17',
     logo: 'JANUSMAAD REVIEW 17',
     metric: '+110% Organic Traffic',
-    quote: 'Google position #1 rankings achieved across core transactional terms in Sydney & Noida markets.',
+    quote: 'Google position #1 rankings achieved across core transactional terms in Delhi NCR & Noida markets.',
     name: 'Verified Client',
     role: 'Founder',
     company: 'B2B Logistics',

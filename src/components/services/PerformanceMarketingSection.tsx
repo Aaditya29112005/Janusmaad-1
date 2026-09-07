@@ -455,7 +455,7 @@ export const PerformanceMarketingSection: React.FC<PerformanceMarketingSectionPr
 
                   <div className="space-y-4">
                     <a
-                      href="tel:+917727887117"
+                      href="tel:+919818747001"
                       className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                     >
                       <div className="p-2.5 bg-teal/20 text-teal rounded-lg group-hover:scale-105 transition-transform">
@@ -463,12 +463,12 @@ export const PerformanceMarketingSection: React.FC<PerformanceMarketingSectionPr
                       </div>
                       <div>
                         <div className="text-xs text-white/60">Call Now</div>
-                        <div className="text-sm font-bold text-white">+91 7727887117</div>
+                        <div className="text-sm font-bold text-white">+91 98187 47001</div>
                       </div>
                     </a>
 
                     <a
-                      href="mailto:office@teckey.co.in"
+                      href="mailto:hello@janusmaad.com"
                       className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                     >
                       <div className="p-2.5 bg-teal/20 text-teal rounded-lg group-hover:scale-105 transition-transform">
@@ -476,7 +476,7 @@ export const PerformanceMarketingSection: React.FC<PerformanceMarketingSectionPr
                       </div>
                       <div>
                         <div className="text-xs text-white/60">Email Us</div>
-                        <div className="text-sm font-bold text-white">office@teckey.co.in</div>
+                        <div className="text-sm font-bold text-white">hello@janusmaad.com</div>
                       </div>
                     </a>
 
@@ -491,12 +491,9 @@ export const PerformanceMarketingSection: React.FC<PerformanceMarketingSectionPr
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <div className="text-xs font-mono text-white/60 uppercase">Global Support Lines</div>
-                      <div className="grid grid-cols-2 gap-2 text-xs text-white/80 font-mono">
-                        <div>🇮🇳 India: +91</div>
-                        <div>🇳🇴 Norway: +47</div>
-                        <div>🇺🇸 USA: +1</div>
-                        <div>🇬🇧 UK: +44</div>
+                      <div className="text-xs font-mono text-white/60 uppercase">India Support Hub</div>
+                      <div className="text-xs text-white/80 font-mono">
+                        <div>🇮🇳 India: +91 98187 47001</div>
                       </div>
                     </div>
                   </div>

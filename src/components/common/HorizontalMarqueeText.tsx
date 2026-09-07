@@ -3,25 +3,27 @@ import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 
 export const HorizontalMarqueeText: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const textRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
     const section = sectionRef.current;
     const text = textRef.current;
-    if (!section || !text || prefersReducedMotion()) return;
+    if (!container || !section || !text || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
       const scrollLength = text.scrollWidth - window.innerWidth;
 
       if (scrollLength > 0 && window.innerWidth >= 768) {
-        // Main Horizontal Scroll Pinning (CodePen GSAP spec)
+        // Main Horizontal Scroll Pinning (safely pinning inner section inside container div)
         const scrollTween = gsap.to(text, {
           x: -scrollLength,
           ease: 'none',
           scrollTrigger: {
-            trigger: section,
-            pin: true,
+            trigger: container,
+            pin: section,
             scrub: 1,
             start: 'top center',
             end: () => `+=${scrollLength + 600}`,
@@ -51,7 +53,7 @@ export const HorizontalMarqueeText: React.FC = () => {
           );
         });
       }
-    }, section);
+    }, container);
 
     return () => ctx.revert();
   }, []);
@@ -60,27 +62,29 @@ export const HorizontalMarqueeText: React.FC = () => {
   const wordsArray = marqueeText.split(' ');
 
   return (
-    <section
-      ref={sectionRef}
-      className="Horizontal overflow-hidden bg-violet text-bone py-16 sm:py-24 border-y border-hairline relative select-none"
-    >
-      <div className="w-full flex items-center">
-        <h2
-          ref={textRef}
-          className="Horizontal__text font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-9xl whitespace-nowrap flex items-center gap-6 sm:gap-10 tracking-tight text-bone pl-[10vw] pr-[10vw]"
-        >
-          {wordsArray.map((word, i) => (
-            <span
-              key={i}
-              className={`kinetic-word inline-block transition-colors ${
-                word === 'CONVERSIONS' || word === 'EARN' ? 'text-teal' : 'text-bone'
-              }`}
-            >
-              {word}
-            </span>
-          ))}
-        </h2>
-      </div>
-    </section>
+    <div ref={containerRef} className="w-full">
+      <section
+        ref={sectionRef}
+        className="Horizontal overflow-hidden bg-violet text-bone py-16 sm:py-24 border-y border-hairline relative select-none"
+      >
+        <div className="w-full flex items-center">
+          <h2
+            ref={textRef}
+            className="Horizontal__text font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-9xl whitespace-nowrap flex items-center gap-6 sm:gap-10 tracking-tight text-bone pl-[10vw] pr-[10vw]"
+          >
+            {wordsArray.map((word, i) => (
+              <span
+                key={i}
+                className={`kinetic-word inline-block transition-colors ${
+                  word === 'CONVERSIONS' || word === 'EARN' ? 'text-teal' : 'text-bone'
+                }`}
+              >
+                {word}
+              </span>
+            ))}
+          </h2>
+        </div>
+      </section>
+    </div>
   );
 };

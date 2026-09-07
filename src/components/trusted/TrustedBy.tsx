@@ -59,7 +59,7 @@ export const TrustedBy: React.FC = () => {
       {/* Title Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10">
         <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
-          The Guest List<span className="text-violet">.</span>
+          Our Clients<span className="text-violet">.</span>
         </h1>
       </div>
 

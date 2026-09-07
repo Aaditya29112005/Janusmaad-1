@@ -3,6 +3,7 @@ import { LIVE_WORKS } from '../../content/receipts';
 import { ExternalLink, Sparkles, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
 import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
+import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 
 export const ReceiptsSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -52,7 +53,7 @@ export const ReceiptsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative overflow-hidden select-none">
+    <section id="receipts" className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative overflow-hidden select-none">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-hairline pb-8">
@@ -64,8 +65,8 @@ export const ReceiptsSection: React.FC = () => {
             <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
               Selected Work & Live Funnels<span className="text-violet">.</span>
             </h1>
-            <p className="text-mute text-base sm:text-lg">
-              Actual live website pages built and scaled across Sydney & Delhi NCR. Click any card to visit live URL.
+            <p className="text-mute text-sm sm:text-base max-w-xl">
+              Actual live website pages built and scaled across India. Click any card to visit live URL.
             </p>
           </div>
 
@@ -181,6 +182,11 @@ export const ReceiptsSection: React.FC = () => {
               aria-label={`Show ${work.clientName}`}
             />
           ))}
+        </div>
+
+        {/* Category Success Metrics Explorer & All 38 Clients Database */}
+        <div className="pt-12 border-t border-hairline">
+          <CategoryMetricsExplorer />
         </div>
       </div>
     </section>

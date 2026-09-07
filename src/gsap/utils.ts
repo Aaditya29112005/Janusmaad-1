@@ -25,6 +25,7 @@ export const useMagneticButton = <T extends HTMLElement = HTMLButtonElement>() =
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       const distanceX = e.clientX - centerX;

@@ -167,7 +167,7 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, initial
             </div>
             <h3 className="font-display text-2xl text-ink font-bold">Audit Request Received!</h3>
             <p className="text-mute text-sm max-w-md mx-auto">
-              We have dispatched a confirmation email to <span className="text-violet font-bold">{formData.email}</span>. A senior strategist from Sydney/Noida will review <span className="text-ink font-bold">{formData.websiteUrl}</span> and confirm your call timeslot shortly.
+              We have dispatched a confirmation email to <span className="text-violet font-bold">{formData.email}</span>. A senior strategist from Delhi NCR / Noida will review <span className="text-ink font-bold">{formData.websiteUrl}</span> and confirm your call timeslot shortly.
             </p>
             <div className="pt-4">
               <Button onClick={handleReset} variant="outline" size="md">

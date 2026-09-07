@@ -9,7 +9,7 @@ interface ThreeWaysInProps {
 
 export const ThreeWaysIn: React.FC<ThreeWaysInProps> = ({ onOpenAudit }) => {
   return (
-    <section className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative">
+    <section id="pricing" className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         {/* Section Heading & Subtitle */}
         <div className="max-w-3xl space-y-3">

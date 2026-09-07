@@ -3,7 +3,7 @@ import { HERO_CONTENT } from '../../content/hero';
 import { Button } from '../ui/Button';
 import { TextRolling } from './TextRolling';
 import { HeroVisual } from './HeroVisual';
-import { ArrowDown, Zap, ShieldCheck } from 'lucide-react';
+import { ArrowDown, ShieldCheck } from 'lucide-react';
 import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 
@@ -22,16 +22,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       tl.fromTo(
-        '.valmax-badge',
-        { opacity: 0, y: 20, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6 }
+        '.valmax-headline',
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.9 }
       )
-        .fromTo(
-          '.valmax-headline',
-          { opacity: 0, y: 35 },
-          { opacity: 1, y: 0, duration: 0.9 },
-          '-=0.3'
-        )
         .fromTo(
           '.valmax-sub',
           { opacity: 0, y: 20 },
@@ -60,17 +54,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         {/* Left Column: Content */}
         <div className="lg:col-span-7 space-y-8">
-          {/* Live Status Badge */}
-          <div className="valmax-badge opacity-0 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-hairline shadow-sm">
-            <Zap className="w-3.5 h-3.5 text-teal animate-pulse" />
-            <span className="text-data-label text-ink text-xs uppercase tracking-wider font-bold">
-              Full-Stack Performance Engine • Sydney & Delhi NCR
-            </span>
-          </div>
-
           {/* Main Display Headline */}
           <h1 className="valmax-headline opacity-0 text-hero-display text-ink font-display tracking-tight leading-[0.91]">
-            <span>{HERO_CONTENT.headlineLine1}</span>{' '}
+            <span className="inline-block">{HERO_CONTENT.headlineLine1}</span>{' '}
             <br className="hidden sm:inline" />
             <TextRolling text={HERO_CONTENT.headlineLine2} />
           </h1>

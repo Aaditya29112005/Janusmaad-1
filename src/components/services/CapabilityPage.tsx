@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   BarChart3, 
   Code2, 
@@ -12,9 +12,65 @@ import {
   Sparkles,
   ShieldCheck,
   Send,
-  ExternalLink
+  ExternalLink,
+  Star,
+  Play
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
+import { TextRolling } from '../hero/TextRolling';
+import { HoverCursorImage } from '../receipts/HoverCursorImage';
+import { gsap } from '../../gsap/register';
+
+
+// GSAP Magnetic Pull Button component for magnetic hover effects
+const MagneticButton: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}> = ({ children, className = '', onClick }) => {
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = btnRef.current;
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    gsap.to(btn, {
+      x: x * 0.35,
+      y: y * 0.35,
+      duration: 0.3,
+      ease: 'power2.out',
+      overwrite: 'auto'
+    });
+  };
+
+  const handleMouseLeave = () => {
+    const btn = btnRef.current;
+    if (!btn) return;
+    gsap.to(btn, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: 'elastic.out(1, 0.4)',
+      overwrite: 'auto'
+    });
+  };
+
+  return (
+    <button
+      ref={btnRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      className={className}
+    >
+      {children}
+    </button>
+  );
+};
+
 
 export type CapabilityId = 
   | 'acquire-performance' 
@@ -24,12 +80,15 @@ export type CapabilityId =
   | 'convert-cro' 
   | 'retain-marketing' 
   | 'retain-cep' 
-  | 'retain-cdp';
+  | 'retain-cdp'
+  | 'receipts'
+  | 'about'
+  | 'pricing';
 
 interface CapabilityPageProps {
   capabilityId: CapabilityId;
   onNavigateHome: () => void;
-  onNavigateCapability: (id: CapabilityId) => void;
+  onNavigateCapability?: (id: CapabilityId) => void;
   onOpenAudit: (type?: string) => void;
 }
 
@@ -296,13 +355,149 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
       { num: '04', title: 'Predictive Churn & LTV Modeling', desc: 'Using machine learning algorithms to identify high-LTV VIPs and at-risk buyers before they leave.' },
       { num: '05', title: 'Real-Time Ad Platform Audience Sync', desc: 'Pushing dynamic exclusion lists and high-value lookalike seed lists directly into Meta, Google, and TikTok.' }
     ]
+  },
+
+  'receipts': {
+    id: 'receipts',
+    category: 'Acquire',
+    badge: 'VERIFIED CASE STUDIES',
+    title: 'Receipts & Case Studies Showcase',
+    subtitle: 'Verified performance marketing, site speed, and conversion results across leading brands.',
+    description: 'We don’t present pitch decks — we present receipts. Explore live storefronts, verified revenue lifts, and sub-second speed benchmarks delivered for DTC and B2B clients.',
+    bullets: [
+      'Interactive 3D Work & Storefront Showcase',
+      'Real-Time Google Lighthouse Speed Benchmarks',
+      'Verified Blended ROAS & Conversion Metrics',
+      'Full Technology Stack & Architecture Breakdown'
+    ],
+    kpiLabel: 'Total Client Value Created',
+    kpiValue: '$14.2M+',
+    kpiSubText: 'Avg Blended Client ROAS: 4.82x | Mobile Speed: 0.62s',
+    stats: [
+      { label: 'Storefronts & Apps Built', value: '45+', delta: 'Verified', desc: 'Bespoke Shopify storefronts, Next.js web apps, and landing pages.' },
+      { label: 'Blended Client ROAS', value: '4.8x', delta: '+140% Lift', desc: 'Proven revenue growth across Meta, Google & Amazon ad channels.' },
+      { label: 'Avg Mobile Speed', value: '0.62s', delta: 'Sub-1s', desc: 'Google Lighthouse 95+ score for maximum visitor retention.' }
+    ],
+    technologies: ['React 19', 'Next.js 15', 'Shopify Liquid', 'Meta CAPI Gateway', 'Google PMax', 'Klaviyo', 'Braze', 'BigQuery'],
+    solutions: [
+      { num: '01', title: 'Interactive Storefront Showcase', desc: 'Browse our portfolio of custom storefronts and high-converting campaign landing pages.' },
+      { num: '02', title: 'Sub-Second Speed Engineering', desc: 'Before & after Lighthouse audits demonstrating sub-1-second mobile load times.' },
+      { num: '03', title: 'Multi-Channel Ad Attribution', desc: 'Server-to-server CAPI tracking setups generating 99.1% clean attribution accuracy.' },
+      { num: '04', title: 'Retention & Email Flow Receipts', desc: 'Automated Klaviyo & Braze flows driving 30%+ of total store revenue hands-free.' },
+      { num: '05', title: 'Enterprise Data Warehouse CDP', desc: 'Unified zero-party data platforms built for GDPR compliance and high ad match rates.' }
+    ]
+  },
+
+  'about': {
+    id: 'about',
+    category: 'Convert',
+    badge: 'AGENCY PHILOSOPHY & PROCESS',
+    title: 'About Janusmaad Digital & How We Work',
+    subtitle: 'Performance marketing and engineering operating across Delhi NCR and Noida.',
+    description: 'We are a specialized growth studio. We combine direct-response media buying with sub-second frontend engineering to help ambitious brands scale profitably without ad waste.',
+    bullets: [
+      '01. Deep Audit & Strategy Mapping',
+      '02. Rapid Execution & System Build',
+      '03. Continuous Optimization & Scaling',
+      'India Dual-Hub Operations (Delhi NCR & Noida)'
+    ],
+    kpiLabel: 'Client Retention Rate',
+    kpiValue: '94.2%',
+    kpiSubText: 'Average Partnership Duration: 18+ Months | Blended ROAS Target: 4.5x',
+    stats: [
+      { label: 'Global Team Size', value: '28+', delta: 'Specialists', desc: 'Senior strategists, media buyers, developers, and data engineers.' },
+      { label: 'Ad Spend Managed', value: '$8.5M+', delta: 'Annual', desc: 'Optimization across Meta, Google, TikTok, and Amazon inventory.' },
+      { label: 'Client Net Satisfaction', value: '98%', delta: 'CSAT', desc: 'Transparent weekly reporting with real-time Slack/Teams access.' }
+    ],
+    technologies: ['GA4 & GTM', 'Vercel App Hosting', 'Meta Business Suite', 'Google Search Console', 'Klaviyo Enterprise', 'Ahrefs', 'Figma'],
+    solutions: [
+      { num: '01', title: 'Phase 1: Deep Audit & Data Setup', desc: 'We audit your tracking, funnel drop-offs, and ad accounts to plug revenue leaks immediately.' },
+      { num: '02', title: 'Phase 2: High-Speed Build & Ads', desc: 'We deploy sub-second landing pages, high-converting ad creative hooks, and automated email flows.' },
+      { num: '03', title: 'Phase 3: Scale & Optimize', desc: 'We run multivariate A/B tests and scale winning ad sets to maximize blended return on ad spend.' },
+      { num: '04', title: 'Transparent Communication', desc: 'No fluff reports. You get direct access to our senior strategists via dedicated channels.' },
+      { num: '05', title: 'Performance-Aligned Incentives', desc: 'Our growth models are structured around your profit targets, ensuring complete alignment.' }
+    ]
+  },
+
+  'pricing': {
+    id: 'pricing',
+    category: 'Retain',
+    badge: 'TRANSPARENT ENGAGEMENT MODELS',
+    title: 'Targeted Engagement Models & Pricing',
+    subtitle: 'Three clear ways to work with Janusmaad Digital — designed for your stage of growth.',
+    description: 'Choose the model that fits your goals: dedicated single-channel capability audits, full-service growth retainers, or custom performance-share partnerships.',
+    bullets: [
+      'No Long-Term Lock-in Contracts',
+      '100% Transparent Weekly Reporting',
+      'Dedicated Growth Strategist & Dev Team',
+      'Guaranteed Sub-Second Page Speed Standards'
+    ],
+    kpiLabel: 'Avg ROI Across Models',
+    kpiValue: '380%',
+    kpiSubText: 'Average Payback Period: 45 Days | Profit Lift Guarantee',
+    stats: [
+      { label: 'Sprint Audit Time', value: '7 Days', delta: 'Fast Track', desc: 'Complete teardown and growth roadmap delivered within one week.' },
+      { label: 'Avg Retainer ROAS', value: '4.5x+', delta: 'Blended', desc: 'Full-funnel media buying and site optimization included.' },
+      { label: 'Clients Scaled to 8-Figs', value: '12+', delta: 'Success Rate', desc: 'Brands scaled from early stage to enterprise market leadership.' }
+    ],
+    technologies: ['Full Stack MarTech', 'Custom Dashboards', 'Stripe Billing', 'Shopify Plus', 'Klaviyo Enterprise', 'GA4 Analytics'],
+    solutions: [
+      { num: '01', title: 'Capability Sprint Audit (Fixed Fee)', desc: '7-day deep audit of your ad accounts, site speed, and conversion funnel with an actionable 90-day roadmap.' },
+      { num: '02', title: 'Full-Service Growth Retainer (Monthly)', desc: 'End-to-end media buying, creative production, landing page development, and retention marketing.' },
+      { num: '03', title: 'Performance Share Partnership', desc: 'Shared upside model for high-scale brands where our compensation is directly tied to incremental net revenue.' },
+      { num: '04', title: 'Custom Shopify Dev & Headless Build', desc: 'One-off bespoke storefront or landing page engineering with sub-1-second mobile speed guarantees.' },
+      { num: '05', title: 'Retention & Klaviyo Setup Package', desc: 'Complete setup of automated email, SMS, and WhatsApp funnels designed to increase customer LTV.' }
+    ]
   }
 };
+
+const TESTIMONIALS = [
+  {
+    author: 'Rahul Sharma',
+    role: 'Founder & CEO, Skincare Co.',
+    quote: 'Janusmaad replaced our slow Shopify theme with a sub-second page that immediately boosted our conversion rate by 42%. The numbers move from day one.',
+    metric: '+42% CVR Lift'
+  },
+  {
+    author: 'Ananya Verma',
+    role: 'Head of Growth, D2C Wellness',
+    quote: 'No 40-slide decks, no pitch fluff. They built 6 high-converting landing pages in a 4-week sprint and lowered our Meta CAC by 31%.',
+    metric: '-31% CAC Drop'
+  },
+  {
+    author: 'Vikramaditya Mehta',
+    role: 'CMO, Luxury Apparel',
+    quote: 'The "Do the Math" calculator was spot on. We locked in their CRO retainer and added over ₹2.4Cr in net revenue within 90 days.',
+    metric: '+₹2.4Cr Revenue'
+  }
+];
+
+const BUILD_PROOF_CARDS = [
+  { category: 'DTC Skincare Brand', metric: '+48.2% CVR', title: 'Sub-0.8s PDP Speed Upgrade', desc: 'Mobile PDP load dropped from 4.2s to 0.65s, adding ₹1.2Cr monthly revenue.' },
+  { category: 'B2B Enterprise SaaS', metric: '+310% Leads', title: 'Custom Next.js Demo Engine', desc: 'Interactive pricing teardown and sub-second demo booking architecture.' },
+  { category: 'Luxury Apparel E-Com', metric: '+38.5% AOV', title: 'Bespoke 1-Click Cart Upsell', desc: 'Custom cart slide recommendations increasing average order value by ₹1,450.' },
+  { category: 'Health & Wellness', metric: '-28.4% CAC', title: 'High-Converting Campaign Page', desc: 'Direct response landing page with UGC video hooks and instant trust badges.' },
+  { category: 'Organic Beauty Store', metric: '+64.0% Repeat', title: 'Klaviyo Lifecycle Flow Sync', desc: 'Automated welcome series and win-back flows driving 34% of store revenue.' },
+  { category: 'Footwear Brand', metric: '4.82x ROAS', title: 'Meta & Google PMax CAPI', desc: 'Server-side conversion API tracking generating 99.1% match accuracy.' },
+
+  { category: 'Home Decor Brand', metric: '+52.1% Checkout', title: 'Single-Page Checkout Teardown', desc: 'Friction removal on payment gateways and address auto-fill integration.' },
+  { category: 'Gourmet Coffee DTC', metric: '+42.0% Subscriptions', title: 'Headless Recharge Funnel', desc: 'Seamless recurring subscription management UI built with custom Liquid.' },
+  { category: 'Activewear Apparel', metric: '+85.0% Mobile Rev', title: 'Sub-Second Speed Overhaul', desc: 'React 19 storefront migration dropping bounce rate from 58% to 19%.' },
+  { category: 'Electronics & Accessories', metric: '3.4x Conversion', title: 'Multivariate VWO A/B Test', desc: 'Statistically verified headlines and call-to-action button variations.' },
+  { category: 'Personal Care Products', metric: '2.8x Target ROAS', title: 'Pre-Launch Campaign Pages', desc: 'Single-purpose landing pages engineered specifically for TikTok ad traffic.' },
+  { category: 'Fine Jewelry Retailer', metric: '+54.2% Cart AOV', title: 'Dynamic Cross-Sell Bundling', desc: 'Product matching algorithms recommending pairing items directly in cart.' },
+
+  { category: 'Fitness Tech Platform', metric: '+120% Trials', title: 'Generative AI Overview (GEO)', desc: 'Schema JSON-LD Knowledge Graph architecture for ChatGPT & Perplexity.' },
+  { category: 'Organic Snack Foods', metric: '+44.8% First Buyers', title: 'Zero-Party Quiz Engine', desc: 'Interactive flavor finder quiz capturing customer preferences live.' },
+  { category: 'Sustainable Fashion', metric: '-34.0% Bounce Rate', title: 'Lighthouse 98/100 CWV Tuning', desc: 'Optimized image loading and edge CDN delivery on Vercel infrastructure.' },
+  { category: 'Pet Care E-Commerce', metric: '3.8x ROAS', title: 'Omnichannel SMS & WhatsApp', desc: 'Instant 98% open-rate abandoned cart recovery alerts.' },
+  { category: 'Eyewear & Accessories', metric: '+41.2% RPV', title: 'Direct Response UX Design', desc: 'High-contrast typography and sticky bottom conversion bars on mobile.' },
+  { category: 'Modern Luggage & Travel', metric: '+210% Organic Traffic', title: 'Search Everywhere SEO', desc: 'Clustered content hubs capturing high-intent commercial keywords.' }
+];
 
 export const CapabilityPage: React.FC<CapabilityPageProps> = ({
   capabilityId,
   onNavigateHome,
-  onNavigateCapability,
   onOpenAudit
 }) => {
   const details = CAPABILITIES_DATA[capabilityId] || CAPABILITIES_DATA['acquire-performance'];
@@ -322,6 +517,69 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
     optIn: true
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  // Build Page Calculator & Proof Carousel State
+  const [buildMonthlyAdSpend, setBuildMonthlyAdSpend] = useState(500000); // ₹5L (min 1L to 1CR)
+  const [buildPromiseLift, setBuildPromiseLift] = useState(25); // 25% (10% to 100%)
+
+  // Performance Ad Calculator State
+  const [perfAdSpend, setPerfAdSpend] = useState(500000); // ₹5L
+  const [perfCPL, setPerfCPL] = useState(180); // ₹180 CPL
+  const [perfCVR, setPerfCVR] = useState(3.5); // 3.5%
+
+  const perfTotalLeads = Math.round(perfAdSpend / perfCPL);
+  const perfQualifiedLeads = Math.round(perfTotalLeads * (perfCVR / 100));
+  const perfProjectedROAS = (perfCVR * 1.35).toFixed(2);
+
+  // CRO Calculator State
+  const [croTraffic, setCroTraffic] = useState(100000); // 100k visitors
+  const [croCVR, setCroCVR] = useState(1.8); // 1.8% CVR
+  const [croAOV, setCroAOV] = useState(3500); // ₹3,500 AOV
+
+  const croCurrentRev = (croTraffic * (croCVR / 100)) * croAOV;
+  const croNewCVR = croCVR * 1.3; // +30% lift
+  const croNewRev = (croTraffic * (croNewCVR / 100)) * croAOV;
+  const croMonthlyGain = croNewRev - croCurrentRev;
+
+  // SMM Calculator State
+  const [smmViews, setSmmViews] = useState(500000); // 500k video views
+  const [smmConversionRate, setSmmConversionRate] = useState(0.8); // 0.8%
+  const [smmAOV, setSmmAOV] = useState(2400); // ₹2,400 AOV
+
+  const smmGeneratedSales = Math.round(smmViews * (smmConversionRate / 100));
+  const smmMonthlyRevenue = smmGeneratedSales * smmAOV;
+
+  // Retention Calculator State
+  const [retainListSize, setRetainListSize] = useState(50000); // 50k subscribers
+  const [retainOpenRate, setRetainOpenRate] = useState(45); // 45% open rate
+  const retainMonthlyRev = Math.round(retainListSize * (retainOpenRate / 100) * 0.04 * 2800);
+
+  // SEO Calculator State
+  const [seoSearchVolume, setSeoSearchVolume] = useState(250000); // 250k monthly queries
+  const [seoRankShare, setSeoRankShare] = useState(28); // 28% position #1-#3 CTR
+  const [seoConversionRate, setSeoConversionRate] = useState(2.5); // 2.5%
+  const seoEstOrganicVisits = Math.round(seoSearchVolume * (seoRankShare / 100));
+  const seoEstConversions = Math.round(seoEstOrganicVisits * (seoConversionRate / 100));
+
+
+  // CEP Event Simulator State
+  const [activeCepTrigger, setActiveCepTrigger] = useState<'cart' | 'pricedrop' | 'restock'>('cart');
+
+  // Page Specific Interactive Feature States
+  const [croActiveVariant, setCroActiveVariant] = useState<'legacy' | 'cro'>('cro');
+  const [buildFlipFilter, setBuildFlipFilter] = useState<'all' | 'speed' | 'upsell' | 'headless'>('all');
+  const [smmHoveredImage, setSmmHoveredImage] = useState<string | null>(null);
+  const [seoActiveTab, setSeoActiveTab] = useState<'google' | 'geo' | 'video' | 'reddit'>('geo');
+
+
+  const formatINR = (val: number): string => {
+    if (val >= 10000000) {
+      return `₹${(val / 10000000).toFixed(2)}Cr`;
+    } else if (val >= 100000) {
+      return `₹${(val / 100000).toFixed(1)}L`;
+    }
+    return `₹${Math.round(val).toLocaleString('en-IN')}`;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -361,8 +619,1051 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
 
   const CategoryIcon = getCategoryIcon(details.category);
 
+  const renderCustomPageFeature = (id: CapabilityId) => {
+    switch (id) {
+      case 'acquire-performance':
+        return (
+          <div className="space-y-12">
+            {/* Magnetic Strategy Call & Ad Channel Scaling Architecture Matrix */}
+            <div className="bg-[#0b101d] text-white border border-teal/30 rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-2 max-w-2xl">
+                  <span className="text-data-label text-teal uppercase text-xs font-bold tracking-widest font-mono">PAID MEDIA MATRIX</span>
+                  <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">Ad Channel Scaling Architecture</h2>
+                  <p className="text-white/70 text-sm sm:text-base">Targeted audience segmentation and ROAS optimization by advertising channel.</p>
+                </div>
+                <MagneticButton
+                  onClick={() => onOpenAudit('acquire-performance')}
+                  className="px-6 py-3.5 bg-teal text-ink font-display font-bold text-sm rounded-xl hover:bg-emerald-400 transition-colors shadow-lg shrink-0 cursor-pointer"
+                >
+                  ⚡ Book Ad Strategy Call →
+                </MagneticButton>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+                {[
+                  { name: 'Meta Ads (FB/IG)', intent: 'High Commercial Prospecting', roas: '4.2x - 5.8x', tag: 'Prospecting & Retargeting' },
+                  { name: 'Google Ads & PMax', intent: 'High-Intent Searchers', roas: '5.1x - 7.4x', tag: 'Demand Capture' },
+                  { name: 'TikTok Ads', intent: 'Short-Form Viral Hooks', roas: '3.4x - 4.6x', tag: 'UGC Prospecting' },
+                  { name: 'Amazon Ads', intent: 'Instant Purchase Intent', roas: '4.8x - 6.2x', tag: 'E-commerce Conversion' },
+                ].map((item, idx) => (
+                  <div key={idx} className="p-5 bg-white/5 rounded-2xl border border-white/10 space-y-3 hover:border-teal/50 transition-colors">
+                    <div className="text-xs font-mono font-bold text-teal">{item.tag}</div>
+                    <div className="font-display font-bold text-white text-base">{item.name}</div>
+                    <div className="text-xs text-white/60">{item.intent}</div>
+                    <div className="text-sm font-bold text-emerald-400 pt-2 border-t border-white/10 flex items-center justify-between">
+                      <span>Target ROAS</span>
+                      <span>{item.roas}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Performance Ad ROAS & Lead Scale Calculator */}
+            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="max-w-3xl space-y-2">
+                <div className="text-data-label text-teal uppercase text-xs font-bold tracking-widest">
+                  INTERACTIVE PERFORMANCE CALCULATOR
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                  Performance Ad Spend & ROAS Calculator
+                </h2>
+                <p className="text-white/70 text-sm sm:text-base">
+                  Adjust your monthly ad budget, expected cost per lead (CPL), and funnel conversion rate to forecast lead volume and target return on ad spend.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  {/* Slider 1: Monthly Ad Budget */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>MONTHLY AD BUDGET</span>
+                      <span className="text-teal font-bold text-sm">{formatINR(perfAdSpend)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={100000}
+                      max={5000000}
+                      step={50000}
+                      value={perfAdSpend}
+                      onChange={(e) => setPerfAdSpend(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                    <div className="flex justify-between text-[10px] text-white/50 font-mono">
+                      <span>₹1L</span><span>₹25L</span><span>₹50L</span>
+                    </div>
+                  </div>
+
+                  {/* Slider 2: Target Cost Per Lead (CPL) */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>TARGET COST PER LEAD (CPL)</span>
+                      <span className="text-teal font-bold text-sm">₹{perfCPL}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={50}
+                      max={1000}
+                      step={10}
+                      value={perfCPL}
+                      onChange={(e) => setPerfCPL(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                    <div className="flex justify-between text-[10px] text-white/50 font-mono">
+                      <span>₹50</span><span>₹500</span><span>₹1,000</span>
+                    </div>
+                  </div>
+
+                  {/* Slider 3: Funnel Conversion Rate */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>QUALIFIED FUNNEL CONVERSION RATE</span>
+                      <span className="text-teal font-bold text-sm">{perfCVR}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={1.0}
+                      max={10.0}
+                      step={0.5}
+                      value={perfCVR}
+                      onChange={(e) => setPerfCVR(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                    <div className="flex justify-between text-[10px] text-white/50 font-mono">
+                      <span>1%</span><span>5%</span><span>10%</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Calculator Outputs */}
+                <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-5">
+                  <div className="text-xs font-mono text-teal uppercase font-bold">PROJECTED PERFORMANCE OUTPUTS</div>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">Estimated Total Leads / Month</div>
+                      <div className="text-3xl font-display font-bold text-white mt-0.5">{perfTotalLeads.toLocaleString()} Leads</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-white/60">Qualified Funnel Leads</div>
+                      <div className="text-3xl font-display font-bold text-teal mt-0.5">{perfQualifiedLeads.toLocaleString()} Buyers</div>
+                    </div>
+                    <div className="pt-3 border-t border-white/10">
+                      <div className="text-xs text-white/60">Target Blended ROAS Benchmark</div>
+                      <div className="text-2xl font-display font-bold text-emerald-400 mt-0.5">{perfProjectedROAS}x ROAS Target</div>
+                    </div>
+                  </div>
+                  <Button variant="primary" size="sm" className="w-full" onClick={() => onOpenAudit('acquire-performance')}>
+                    Lock In This ROAS Roadmap
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'acquire-seo':
+        return (
+          <div className="space-y-12">
+            {/* Search Dominance Tabbed Showcase */}
+            <div className="bg-white border border-blue-200 rounded-3xl p-8 sm:p-12 space-y-8 shadow-md">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-2">
+                  <span className="text-data-label text-blue-600 uppercase text-xs font-bold font-mono">SEARCH EVERYWHERE PLATFORM TABS</span>
+                  <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">Multi-Channel Organic Dominance Engine</h2>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {(['geo', 'google', 'video', 'reddit'] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setSeoActiveTab(tab)}
+                      className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                        seoActiveTab === tab ? 'bg-blue-600 text-white shadow-md' : 'bg-bone border border-hairline text-ink hover:border-blue-500'
+                      }`}
+                    >
+                      {tab === 'geo' ? '⚡ Generative (GEO)' : tab}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dynamic Answer Terminal based on Active Tab */}
+              <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 space-y-4 shadow-xl border border-blue-500/20">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3 text-xs font-mono">
+                  <div className="flex items-center gap-2 text-blue-400 font-bold">
+                    <Sparkles className="w-4 h-4 text-blue-400 animate-spin" />
+                    <span>{seoActiveTab.toUpperCase()} REAL-TIME SEARCH RESULT PREVIEW</span>
+                  </div>
+                  <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded text-[10px]">VERIFIED RANK #1</span>
+                </div>
+
+                {seoActiveTab === 'geo' && (
+                  <div className="space-y-3">
+                    <div className="text-xs text-white/50 font-mono">Query: "Best direct response agency and Shopify developer in Delhi NCR"</div>
+                    <div className="p-4 bg-white/5 rounded-xl border border-white/10 text-sm text-white/90 leading-relaxed">
+                      "According to recent e-commerce benchmarks, <strong className="text-blue-400">Janusmaad Digital</strong> ranks #1 in India for high-conversion storefront engineering, delivering sub-0.8s mobile page load speeds and average <strong className="text-emerald-400">4.82x ROAS</strong>."
+                    </div>
+                  </div>
+                )}
+
+                {seoActiveTab === 'google' && (
+                  <div className="space-y-3">
+                    <div className="text-xs text-white/50 font-mono">Query: "Performance Marketing Agency Noida Delhi"</div>
+                    <div className="p-4 bg-white/5 rounded-xl border border-white/10 space-y-2">
+                      <div className="text-blue-400 font-bold text-base hover:underline cursor-pointer">Janusmaad Digital | High ROAS Performance & Shopify CRO Studio</div>
+                      <div className="text-emerald-400 text-xs font-mono">https://janusmaad.com › acquire-performance</div>
+                      <div className="text-xs text-white/80">We engineer sub-second Shopify storefronts and Meta/Google ad systems built strictly for profit. Over ₹14.2Cr value created for Indian DTC brands.</div>
+                    </div>
+                  </div>
+                )}
+
+                {seoActiveTab === 'video' && (
+                  <div className="space-y-3">
+                    <div className="text-xs text-white/50 font-mono">YouTube Query: "How to fix high mobile bounce rate on Shopify store"</div>
+                    <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center gap-4">
+                      <div className="w-16 h-12 bg-blue-600/30 rounded flex items-center justify-center text-blue-400 shrink-0">
+                        <Play className="w-6 h-6 fill-current" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold text-white">How Janusmaad Lowered Bounce Rate from 58% to 19% (Full Case Study)</div>
+                        <div className="text-xs text-white/60 font-mono">42K Views • 98.4% Like Ratio • Verified Solution</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {seoActiveTab === 'reddit' && (
+                  <div className="space-y-3">
+                    <div className="text-xs text-white/50 font-mono">Reddit Thread: "Which agency actually delivers results for Meta Ads in India?"</div>
+                    <div className="p-4 bg-white/5 rounded-xl border border-white/10 text-xs text-white/90 space-y-2">
+                      <div className="font-bold text-blue-300">r/IndianD2C • Posted by u/ecom_founder_delhi</div>
+                      <p>"Hands down Janusmaad Digital. Replaced our slow theme with custom code and lowered our CPL by 34% within 3 weeks."</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Interactive Organic Traffic & Lead Opportunity Calculator */}
+            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="max-w-3xl space-y-2">
+                <div className="text-data-label text-teal uppercase text-xs font-bold tracking-widest">
+                  INTERACTIVE SEO CALCULATOR
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                  Organic Traffic & High-Intent Buyer Calculator
+                </h2>
+                <p className="text-white/70 text-sm sm:text-base">
+                  Estimate the organic traffic volume, lead conversions, and zero-ad-cost revenue unlocked by ranking Rank #1 across commercial keywords.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  {/* Slider 1 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>MONTHLY INDUSTRY KEYWORD SEARCH VOLUME</span>
+                      <span className="text-teal font-bold text-sm">{seoSearchVolume.toLocaleString()} Searches</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={25000}
+                      max={2000000}
+                      step={25000}
+                      value={seoSearchVolume}
+                      onChange={(e) => setSeoSearchVolume(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 2 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>TARGET RANK #1-#3 ORGANIC CLICK SHARE</span>
+                      <span className="text-teal font-bold text-sm">{seoRankShare}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={10}
+                      max={50}
+                      step={2}
+                      value={seoRankShare}
+                      onChange={(e) => setSeoRankShare(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 3 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>ORGANIC TRAFFIC CONVERSION RATE</span>
+                      <span className="text-teal font-bold text-sm">{seoConversionRate}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0.5}
+                      max={5.0}
+                      step={0.5}
+                      value={seoConversionRate}
+                      onChange={(e) => setSeoConversionRate(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+                </div>
+
+                {/* Calculator Outputs */}
+                <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-5">
+                  <div className="text-xs font-mono text-teal uppercase font-bold">PROJECTED ORGANIC YIELD</div>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">Estimated Organic Visits / Month</div>
+                      <div className="text-3xl font-display font-bold text-teal mt-0.5">{seoEstOrganicVisits.toLocaleString()} Visitors</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-white/60">Organic Conversions (Zero Ad Spend)</div>
+                      <div className="text-3xl font-display font-bold text-white mt-0.5">{seoEstConversions.toLocaleString()} Buyers / mo</div>
+                    </div>
+                  </div>
+                  <Button variant="primary" size="sm" className="w-full" onClick={() => onOpenAudit('acquire-seo')}>
+                    Claim Your Free SEO Audit
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'acquire-smm':
+        return (
+          <div className="space-y-12">
+            <HoverCursorImage imageSrc={smmHoveredImage} isVisible={!!smmHoveredImage} />
+
+            {/* SMM Cursor Follow Hover Reel Showcase Grid */}
+            <div className="bg-white border border-pink-200 rounded-3xl p-8 sm:p-12 space-y-8 shadow-sm">
+              <div className="space-y-2">
+                <span className="text-data-label text-pink-600 uppercase text-xs font-bold font-mono">GSAP CURSOR-FOLLOW REEL SHOWCASE</span>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">Viral Short-Form Reels & Creator UGC Hooks</h2>
+                <p className="text-mute text-sm sm:text-base">Hover over any campaign below to preview floating video hook assets in real time.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: 'Unboxing & Texture Pattern Interrupt',
+                    creator: '@skincare_expert',
+                    views: '4.8M',
+                    cvr: '+42%',
+                    img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80'
+                  },
+                  {
+                    title: 'Before & After 3-Second Hook',
+                    creator: '@fitness_guru',
+                    views: '8.2M',
+                    cvr: '+68%',
+                    img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'
+                  },
+                  {
+                    title: 'Founder Story & Direct Offer',
+                    creator: '@d2c_brand_talk',
+                    views: '3.4M',
+                    cvr: '+31%',
+                    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'
+                  }
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    onMouseEnter={() => setSmmHoveredImage(item.img)}
+                    onMouseLeave={() => setSmmHoveredImage(null)}
+                    className="p-6 bg-pink-50/40 border border-pink-200 rounded-2xl space-y-4 hover:border-pink-500 hover:shadow-xl transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-pink-600 font-bold">{item.creator}</span>
+                      <span className="px-2.5 py-1 bg-pink-100 text-pink-700 font-bold rounded-full">{item.cvr} Lift</span>
+                    </div>
+                    <h3 className="font-display font-bold text-lg text-ink group-hover:text-pink-600 transition-colors">{item.title}</h3>
+                    <div className="flex items-center justify-between text-xs text-mute pt-3 border-t border-pink-200 font-mono">
+                      <span>Verified Reach:</span>
+                      <span className="font-bold text-ink">{item.views} Views</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Interactive SMM Short-Form Video & Lead Calculator */}
+            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="max-w-3xl space-y-2">
+                <div className="text-data-label text-teal uppercase text-xs font-bold tracking-widest">
+                  INTERACTIVE SMM CALCULATOR
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                  Short-Form Video Views & Revenue Calculator
+                </h2>
+                <p className="text-white/70 text-sm sm:text-base">
+                  Calculate the direct revenue and customer order volume generated from targeted Reels, Shorts, and TikTok UGC video funnels.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  {/* Slider 1 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>ESTIMATED MONTHLY VIDEO VIEWS</span>
+                      <span className="text-teal font-bold text-sm">{smmViews.toLocaleString()} Views</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={50000}
+                      max={5000000}
+                      step={50000}
+                      value={smmViews}
+                      onChange={(e) => setSmmViews(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 2 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>VIEWER TO CUSTOMER CONVERSION RATE</span>
+                      <span className="text-teal font-bold text-sm">{smmConversionRate}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0.1}
+                      max={2.0}
+                      step={0.1}
+                      value={smmConversionRate}
+                      onChange={(e) => setSmmConversionRate(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 3 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>AVERAGE ORDER VALUE (AOV)</span>
+                      <span className="text-teal font-bold text-sm">₹{smmAOV.toLocaleString()}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={500}
+                      max={10000}
+                      step={500}
+                      value={smmAOV}
+                      onChange={(e) => setSmmAOV(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+                </div>
+
+                {/* Calculator Outputs */}
+                <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-5">
+                  <div className="text-xs font-mono text-teal uppercase font-bold">PROJECTED SOCIAL REVENUE</div>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">Generated Customer Orders</div>
+                      <div className="text-3xl font-display font-bold text-teal mt-0.5">{smmGeneratedSales.toLocaleString()} Orders / mo</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-white/60">Estimated Monthly Social Revenue</div>
+                      <div className="text-3xl font-display font-bold text-white mt-0.5">{formatINR(smmMonthlyRevenue)} / mo</div>
+                    </div>
+                  </div>
+                  <Button variant="primary" size="sm" className="w-full" onClick={() => onOpenAudit('acquire-smm')}>
+                    Get Social Content Plan
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'convert-build':
+        return (
+          <div className="space-y-16">
+            {/* 1. Bento Flip Proof Grid */}
+            <div className="bg-white border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <span className="text-data-label text-violet uppercase text-xs font-bold font-mono">BENTO FLIP PROOF GRID</span>
+                  <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">Bespoke Storefront & PDP Engineering</h2>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {(['all', 'speed', 'upsell', 'headless'] as const).map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setBuildFlipFilter(cat)}
+                      className={`px-4 py-2 rounded-xl text-xs font-mono font-bold capitalize transition-all cursor-pointer ${
+                        buildFlipFilter === cat ? 'bg-violet text-white shadow-md' : 'bg-bone border border-hairline text-ink hover:border-violet'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-300">
+                {BUILD_PROOF_CARDS.filter(card => {
+                  if (buildFlipFilter === 'speed') return card.title.toLowerCase().includes('speed') || card.desc.toLowerCase().includes('speed');
+                  if (buildFlipFilter === 'upsell') return card.title.toLowerCase().includes('upsell') || card.metric.includes('AOV') || card.category.includes('Apparel');
+                  if (buildFlipFilter === 'headless') return card.title.toLowerCase().includes('headless') || card.desc.toLowerCase().includes('next.js');
+                  return true;
+                }).slice(0, 6).map((card, idx) => (
+                  <div key={idx} className="p-6 bg-bone rounded-2xl border border-hairline space-y-3 hover:border-violet transition-all group">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-violet">{card.category}</span>
+                      <span className="text-sm font-display font-bold text-emerald-600">{card.metric}</span>
+                    </div>
+                    <h3 className="font-display font-bold text-base text-ink group-hover:text-violet transition-colors">{card.title}</h3>
+                    <p className="text-xs text-mute leading-relaxed">{card.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 2. Customer Testimonial Section */}
+            <div className="bg-bone border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-xs">
+              <div className="space-y-2">
+                <span className="text-data-label text-violet uppercase text-xs font-bold">CLIENT PROOF & TESTIMONIALS</span>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">What Founders & CMOs Say About Our Builds</h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {TESTIMONIALS.map((t, idx) => (
+                  <div key={idx} className="bg-white border border-hairline rounded-2xl p-6 space-y-4 shadow-sm flex flex-col justify-between">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1 text-amber-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <p className="text-xs sm:text-sm text-ink/90 leading-relaxed italic">"{t.quote}"</p>
+                    </div>
+                    <div className="pt-4 border-t border-hairline flex items-center justify-between">
+                      <div>
+                        <div className="font-display font-bold text-sm text-ink">{t.author}</div>
+                        <div className="text-xs text-mute">{t.role}</div>
+                      </div>
+                      <span className="px-2.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full">{t.metric}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 3. Do the Math Interactive Calculator */}
+            <div id="do-the-math" className="bg-white border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-md">
+              <div className="max-w-3xl space-y-2">
+                <h2 className="text-3xl sm:text-5xl font-display font-bold text-ink">Do the Math</h2>
+                <p className="text-violet text-base sm:text-lg font-display font-medium">
+                  Input your monthly ad spend and targeted conversion lift. See how much extra revenue high-converting landing pages generate for your brand.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  {/* Slider 1 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-ink font-bold">
+                      <span>MONTHLY AD SPEND</span>
+                      <span className="text-violet text-sm">{formatINR(buildMonthlyAdSpend)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={100000}
+                      max={10000000}
+                      step={100000}
+                      value={buildMonthlyAdSpend}
+                      onChange={(e) => setBuildMonthlyAdSpend(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-violet"
+                    />
+                  </div>
+
+                  {/* Slider 2 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-ink font-bold">
+                      <span>OUR PROMISE ON LIFT</span>
+                      <span className="text-violet text-sm">+{buildPromiseLift}% Lift</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={10}
+                      max={100}
+                      step={5}
+                      value={buildPromiseLift}
+                      onChange={(e) => setBuildPromiseLift(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-violet"
+                    />
+                  </div>
+                </div>
+
+                {/* Calculated Output Box */}
+                <div className="lg:col-span-5 bg-ink text-white rounded-2xl p-6 space-y-5 shadow-xl">
+                  <div className="text-xs font-mono text-teal uppercase font-bold">PROJECTED REVENUE MULTIPLIER</div>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">Extra Monthly Revenue Generated</div>
+                      <div className="text-3xl font-display font-bold text-teal mt-0.5">
+                        +{formatINR(buildMonthlyAdSpend * (buildPromiseLift / 100) * 1.5)} / mo
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-white/60">Extra Annual Revenue Yield</div>
+                      <div className="text-3xl font-display font-bold text-white mt-0.5">
+                        +{formatINR(buildMonthlyAdSpend * (buildPromiseLift / 100) * 1.5 * 12)}
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="primary" size="sm" className="w-full" onClick={() => onOpenAudit('convert-build')}>
+                    Claim Your +{buildPromiseLift}% Guaranteed Lift
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. We Build for Conversions Pricing */}
+            <div className="bg-bone border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-xs">
+              <div className="space-y-2">
+                <h2 className="text-3xl sm:text-5xl font-display font-bold text-ink">We Build for Conversions</h2>
+                <p className="text-mute text-base sm:text-lg">
+                  Choose the solution that fits your brand journey. Every solution starts with understanding your data, UI and funnel
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Card 1 */}
+                <div className="bg-white border border-hairline rounded-3xl p-8 flex flex-col justify-between space-y-6 shadow-sm">
+                  <div className="space-y-4">
+                    <div className="text-xs font-mono font-bold text-mute uppercase">Tier · 01 · Diagnostic</div>
+                    <h3 className="font-display font-bold text-2xl text-ink">Live growth audit. 60 mins.</h3>
+                    <div className="text-violet font-display font-bold text-lg">Free ₹0 if selected</div>
+                    <p className="text-mute text-sm leading-relaxed">
+                      We'll audit your store live on a call. Go through everything in detail.
+                    </p>
+                  </div>
+                  <Button variant="outline" size="md" className="w-full" onClick={() => onOpenAudit('convert-build')}>
+                    Apply for Audit
+                  </Button>
+                </div>
+
+                {/* Card 2 */}
+                <div className="bg-white border-2 border-violet rounded-3xl p-8 flex flex-col justify-between space-y-6 shadow-xl relative">
+                  <div className="absolute -top-3.5 left-8 bg-violet text-bone text-xs font-display font-bold uppercase tracking-wider px-4 py-1 rounded-full">
+                    Most booked
+                  </div>
+                  <div className="space-y-4">
+                    <div className="text-xs font-mono font-bold text-violet uppercase">Tier · 02 · Build</div>
+                    <h3 className="font-display font-bold text-2xl text-ink">Full Shopify Store Development</h3>
+                    <p className="text-mute text-sm leading-relaxed">
+                      From sitemap to conversion architecture. Your store stops being a brochure and starts earning.
+                    </p>
+                  </div>
+                  <Button variant="primary" size="md" className="w-full" onClick={() => onOpenAudit('convert-build')}>
+                    Book Full Store Build
+                  </Button>
+                </div>
+
+                {/* Card 3 */}
+                <div className="bg-white border border-hairline rounded-3xl p-8 flex flex-col justify-between space-y-6 shadow-sm">
+                  <div className="space-y-4">
+                    <div className="text-xs font-mono font-bold text-mute uppercase">Tier · 03 · Retainer</div>
+                    <h3 className="font-display font-bold text-2xl text-ink">CRO retainer</h3>
+                    <p className="text-mute text-sm leading-relaxed">
+                      Reduce the Bounce Rate. Optimise your landing pages for conversion
+                    </p>
+                  </div>
+                  <Button variant="outline" size="md" className="w-full" onClick={() => onOpenAudit('convert-build')}>
+                    Start CRO Retainer
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'convert-cro':
+        return (
+          <div className="space-y-12">
+            {/* CRO A/B Variant Live Experiment Switcher */}
+            <div className="bg-white border border-amber-200 rounded-3xl p-8 sm:p-12 space-y-8 shadow-sm">
+              <div className="space-y-2">
+                <span className="text-data-label text-amber-600 uppercase text-xs font-bold font-mono">LIVE A/B EXPERIMENT SIMULATOR</span>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">Compare Control PDP vs Janusmaad CRO Engine</h2>
+                <p className="text-mute text-sm sm:text-base">Toggle between control and variant B to see real-time friction removal and conversion lift.</p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <button
+                  onClick={() => setCroActiveVariant('legacy')}
+                  className={`px-5 py-2.5 rounded-xl font-display font-bold text-xs transition-all cursor-pointer ${
+                    croActiveVariant === 'legacy' ? 'bg-slate-800 text-white shadow-md' : 'bg-bone border border-hairline text-ink'
+                  }`}
+                >
+                  Variant A: Control (Legacy Store)
+                </button>
+                <button
+                  onClick={() => setCroActiveVariant('cro')}
+                  className={`px-5 py-2.5 rounded-xl font-display font-bold text-xs transition-all cursor-pointer ${
+                    croActiveVariant === 'cro' ? 'bg-amber-500 text-ink shadow-md font-bold' : 'bg-bone border border-hairline text-ink'
+                  }`}
+                >
+                  ⚡ Variant B: Janusmaad CRO Engine (+36.8% Lift)
+                </button>
+              </div>
+
+              {croActiveVariant === 'legacy' ? (
+                <div className="p-6 bg-red-50/70 border border-red-200 rounded-2xl space-y-4">
+                  <div className="flex items-center justify-between font-mono text-xs text-red-600 font-bold">
+                    <span>STATUS: HIGH FRICTION DROP-OFF DETECTED</span>
+                    <span>CONVERSION RATE: 1.42%</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-red-800">
+                    <div className="p-4 bg-white rounded-xl border border-red-200">❌ 4.2s Slow Mobile PDP Render Time</div>
+                    <div className="p-4 bg-white rounded-xl border border-red-200">❌ Multi-Step Distracted Cart Checkout</div>
+                    <div className="p-4 bg-white rounded-xl border border-red-200">❌ Hidden Shipping Costs at Final Step</div>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-6 bg-amber-50/80 border border-amber-300 rounded-2xl space-y-4 animate-in fade-in duration-300">
+                  <div className="flex items-center justify-between font-mono text-xs text-amber-800 font-bold">
+                    <span>STATUS: OPTIMIZED FOR SUB-SECOND CHECKOUT</span>
+                    <span className="text-emerald-700 font-bold text-sm">CONVERSION RATE: 2.85% (+100% LIFT)</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-ink font-medium">
+                    <div className="p-4 bg-white rounded-xl border border-amber-200 shadow-xs">✅ 0.62s Sub-Second Instant Mobile Load</div>
+                    <div className="p-4 bg-white rounded-xl border border-amber-200 shadow-xs">✅ 1-Click Sticky Bottom Checkout Bar</div>
+                    <div className="p-4 bg-white rounded-xl border border-amber-200 shadow-xs">✅ Dynamic Free Shipping & Trust Badges</div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* GSAP Magnetic Pull Experiment Zone */}
+            <div className="bg-[#0e131f] text-white border border-amber-500/30 rounded-3xl p-8 sm:p-12 space-y-6 shadow-2xl">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <span className="text-data-label text-amber-400 uppercase text-xs font-bold font-mono">MAGNETIC HOVER ZONE</span>
+                  <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">Experience Elastic Magnetic Micro-Interactions</h2>
+                  <p className="text-white/70 text-sm">Hover over the button below to see GSAP magnetic pull physics with elastic snapback.</p>
+                </div>
+                <MagneticButton
+                  onClick={() => onOpenAudit('convert-cro')}
+                  className="px-8 py-4 bg-amber-400 text-ink font-display font-bold text-base rounded-xl hover:bg-amber-300 transition-colors shadow-xl shrink-0 cursor-pointer"
+                >
+                  ⚡ Launch A/B Test Engine →
+                </MagneticButton>
+              </div>
+            </div>
+
+            {/* Interactive CRO & Revenue Per Visitor (RPV) Calculator */}
+            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="max-w-3xl space-y-2">
+                <div className="text-data-label text-teal uppercase text-xs font-bold tracking-widest">
+                  INTERACTIVE CRO CALCULATOR
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                  Conversion Rate & Revenue Per Visitor (RPV) Calculator
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  {/* Slider 1 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>MONTHLY WEBSITE VISITORS</span>
+                      <span className="text-teal font-bold text-sm">{croTraffic.toLocaleString()} Visitors</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={10000}
+                      max={1000000}
+                      step={10000}
+                      value={croTraffic}
+                      onChange={(e) => setCroTraffic(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 2 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>CURRENT CONVERSION RATE (CVR)</span>
+                      <span className="text-teal font-bold text-sm">{croCVR}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0.5}
+                      max={5.0}
+                      step={0.1}
+                      value={croCVR}
+                      onChange={(e) => setCroCVR(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 3 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>AVERAGE ORDER VALUE (AOV)</span>
+                      <span className="text-teal font-bold text-sm">₹{croAOV.toLocaleString()}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={500}
+                      max={20000}
+                      step={500}
+                      value={croAOV}
+                      onChange={(e) => setCroAOV(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+                </div>
+
+                {/* Calculator Outputs */}
+                <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-5">
+                  <div className="text-xs font-mono text-teal uppercase font-bold">PROJECTED CRO REVENUE GAIN</div>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">Optimized Monthly Conversion Rate</div>
+                      <div className="text-3xl font-display font-bold text-teal mt-0.5">{croNewCVR.toFixed(2)}% CVR</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-white/60">Extra Monthly Revenue Unlocked</div>
+                      <div className="text-3xl font-display font-bold text-white mt-0.5">{formatINR(croMonthlyGain)} / mo</div>
+                    </div>
+                  </div>
+                  <Button variant="primary" size="sm" className="w-full" onClick={() => onOpenAudit('convert-cro')}>
+                    Get Free CRO Teardown
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'retain-marketing':
+        return (
+          <div className="space-y-12">
+            {/* 4 Automated Flow Blueprints */}
+            <div className="bg-white border border-emerald-200 rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+              <div className="space-y-2">
+                <span className="text-data-label text-emerald-600 uppercase text-xs font-bold font-mono">LIFECYCLE FLOW BLUEPRINT</span>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">Automated Owned Channel Funnels</h2>
+                <p className="text-mute text-sm sm:text-base">Automated Email, SMS, and WhatsApp flows that generate revenue 24/7 on autopilot.</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+                {[
+                  { title: 'Welcome Series', channel: 'Email + SMS', desc: '3-stage onboarding sequence converting new leads into 1st time buyers.' },
+                  { title: 'Cart Recovery', channel: 'WhatsApp + Email', desc: 'Instant multi-channel alerts recovering 24%+ of abandoned checkout carts.' },
+                  { title: 'Post-Purchase', channel: 'SMS + Email', desc: 'Cross-sell & educational flows increasing 60-day repeat order rate.' },
+                  { title: 'Win-Back Flow', channel: 'Omnichannel', desc: 'Predictive timing automations re-engaging customers before churn.' }
+                ].map((flow, idx) => (
+                  <div key={idx} className="p-5 bg-emerald-50/40 rounded-2xl border border-emerald-200 space-y-2 hover:border-emerald-500 transition-colors">
+                    <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold rounded-md uppercase">{flow.channel}</span>
+                    <div className="font-display font-bold text-ink text-base pt-1">{flow.title}</div>
+                    <div className="text-xs text-mute leading-relaxed">{flow.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Interactive Retention Revenue & LTV Yield Calculator */}
+            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="max-w-3xl space-y-2">
+                <div className="text-data-label text-teal uppercase text-xs font-bold tracking-widest">
+                  INTERACTIVE RETENTION CALCULATOR
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                  Owned Channel & LTV Revenue Multiplier
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  {/* Slider 1 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>ACTIVE SUBSCRIBER LIST SIZE</span>
+                      <span className="text-teal font-bold text-sm">{retainListSize.toLocaleString()} Contacts</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={5000}
+                      max={500000}
+                      step={5000}
+                      value={retainListSize}
+                      onChange={(e) => setRetainListSize(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+
+                  {/* Slider 2 */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-white/80">
+                      <span>AVERAGE AUTOMATED FLOW OPEN RATE</span>
+                      <span className="text-teal font-bold text-sm">{retainOpenRate}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={20}
+                      max={70}
+                      step={2}
+                      value={retainOpenRate}
+                      onChange={(e) => setRetainOpenRate(Number(e.target.value))}
+                      className="w-full cursor-pointer accent-teal"
+                    />
+                  </div>
+                </div>
+
+                {/* Calculator Outputs */}
+                <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-5">
+                  <div className="text-xs font-mono text-teal uppercase font-bold">PROJECTED OWNED CHANNEL REVENUE</div>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">Estimated Flow Revenue / Month</div>
+                      <div className="text-3xl font-display font-bold text-teal mt-0.5">{formatINR(retainMonthlyRev)} / mo</div>
+                    </div>
+                  </div>
+                  <Button variant="primary" size="sm" className="w-full" onClick={() => onOpenAudit('retain-marketing')}>
+                    Audit Retention Funnels
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'retain-cep':
+        return (
+          <div className="space-y-12">
+            {/* Interactive Live Event Trigger Simulator */}
+            <div className="bg-white border border-purple-200 rounded-3xl p-8 sm:p-12 space-y-8 shadow-sm">
+              <div className="space-y-2">
+                <span className="text-data-label text-purple-600 uppercase text-xs font-bold font-mono">LIVE EVENT STREAM SIMULATOR</span>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">Real-Time Klaviyo & Braze Trigger Engine</h2>
+                <p className="text-mute text-sm sm:text-base">Sub-50ms event latency powering personalized WhatsApp, SMS, and Email messaging instant triggers.</p>
+              </div>
+
+              {/* Event Simulator Controller */}
+              <div className="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8 space-y-6">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-xs font-mono font-bold text-ink uppercase">Simulate Customer Action:</span>
+                  <button
+                    onClick={() => setActiveCepTrigger('cart')}
+                    className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                      activeCepTrigger === 'cart'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'bg-white border border-hairline text-ink hover:border-purple-500'
+                    }`}
+                  >
+                    🛒 Abandoned Cart (₹4,200)
+                  </button>
+                  <button
+                    onClick={() => setActiveCepTrigger('pricedrop')}
+                    className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                      activeCepTrigger === 'pricedrop'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'bg-white border border-hairline text-ink hover:border-purple-500'
+                    }`}
+                  >
+                    🏷️ Wishlist Price Drop Alert
+                  </button>
+                  <button
+                    onClick={() => setActiveCepTrigger('restock')}
+                    className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                      activeCepTrigger === 'restock'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'bg-white border border-hairline text-ink hover:border-purple-500'
+                    }`}
+                  >
+                    📦 Restock Arrival Trigger
+                  </button>
+                </div>
+
+                {/* Simulator Live Trigger Payload Display */}
+                <div className="bg-slate-900 text-white rounded-xl p-5 space-y-3 font-mono text-xs shadow-inner border border-purple-500/20">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2 text-purple-400">
+                    <span>⚡ WEBHOOK LATENCY: 24ms</span>
+                    <span className="text-emerald-400 font-bold">STATUS: FIRED 200 OK</span>
+                  </div>
+                  {activeCepTrigger === 'cart' && (
+                    <div className="space-y-1 text-white/80">
+                      <div>Trigger: <span className="text-purple-300">`checkout_started`</span></div>
+                      <div>Channel Dispatched: <span className="text-emerald-300">WhatsApp + Klaviyo Email</span></div>
+                      <div>Payload: <span className="text-amber-300">"Hey Rahul, your cart items are reserved for 15 mins. Click to complete order with 1-click discount!"</span></div>
+                    </div>
+                  )}
+                  {activeCepTrigger === 'pricedrop' && (
+                    <div className="space-y-1 text-white/80">
+                      <div>Trigger: <span className="text-purple-300">`wishlist_price_drop`</span></div>
+                      <div>Channel Dispatched: <span className="text-emerald-300">SMS + Push Notification</span></div>
+                      <div>Payload: <span className="text-amber-300">"Price Drop Alert! Your saved Leather Sneakers just dropped by 20%. Only 4 pairs left in your size."</span></div>
+                    </div>
+                  )}
+                  {activeCepTrigger === 'restock' && (
+                    <div className="space-y-1 text-white/80">
+                      <div>Trigger: <span className="text-purple-300">`inventory_restocked`</span></div>
+                      <div>Channel Dispatched: <span className="text-emerald-300">Klaviyo VIP Email</span></div>
+                      <div>Payload: <span className="text-amber-300">"VIP Early Access: The Sold-Out Organic Hoodie is back in stock. Priority dispatch active now."</span></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'retain-cdp':
+        return (
+          <div className="space-y-12">
+            {/* Server-Side CAPI & Zero-Party CDP Visualizer */}
+            <div className="bg-slate-900 text-white border border-cyan-500/30 rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl">
+              <div className="space-y-2">
+                <span className="text-data-label text-cyan-400 uppercase text-xs font-bold font-mono">DATA VAULT & CAPI GATEWAY</span>
+                <h2 className="text-2xl sm:text-4xl font-display font-bold text-white">Single Customer View & Meta CAPI Gateway</h2>
+                <p className="text-white/70 text-sm sm:text-base">Bypassing iOS privacy restrictions and ad blockers with bulletproof server-to-server tracking.</p>
+              </div>
+
+              {/* Data Sync Live Match Rate Metrics Box */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="p-6 bg-white/5 border border-cyan-500/30 rounded-2xl space-y-2 shadow-lg">
+                  <div className="text-xs font-mono text-cyan-400 font-bold uppercase">Meta CAPI Event Match Quality</div>
+                  <div className="text-4xl font-display font-bold text-emerald-400">99.1%</div>
+                  <p className="text-xs text-white/70">Server-to-server hashes for email, phone, IP, and FBP tokens.</p>
+                </div>
+                <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                  <div className="text-xs font-mono text-purple-400 font-bold uppercase">Zero-Party Data Capture</div>
+                  <div className="text-4xl font-display font-bold text-white">84.2%</div>
+                  <p className="text-xs text-white/70">Quiz preferences & survey responses stored directly in CDP profiles.</p>
+                </div>
+                <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                  <div className="text-xs font-mono text-teal font-bold uppercase">Predictive LTV Accuracy</div>
+                  <div className="text-4xl font-display font-bold text-white">92.5%</div>
+                  <p className="text-xs text-white/70">Machine learning models identifying VIP buyers before 2nd order.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'receipts':
+        return <CategoryMetricsExplorer onOpenAudit={onOpenAudit} />;
+
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div id={capabilityId} className="pt-28 pb-20 px-4 sm:px-8 bg-bone text-ink min-h-screen relative z-10">
+    <div id={`capability-${capabilityId}`} className="pt-28 pb-20 px-4 sm:px-8 bg-bone text-ink min-h-screen relative z-10">
       <div className="max-w-7xl mx-auto space-y-16">
 
         {/* Top Header Navigation Bar */}
@@ -384,115 +1685,111 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
           </div>
         </div>
 
-        {/* Capability Selector Bar (Switch between all 8 pages easily) */}
-        <div className="bg-white border border-hairline rounded-2xl p-3 shadow-sm space-y-2">
-          <div className="text-[11px] font-mono text-violet uppercase tracking-wider font-bold px-3">
-            EXPLORE DEDICATED CAPABILITY PAGES:
-          </div>
-          <div className="flex flex-wrap items-center gap-1.5 px-1">
-            {[
-              { id: 'acquire-performance', label: 'Performance Marketing', cat: 'Acquire' },
-              { id: 'acquire-seo', label: 'Search Everywhere SEO', cat: 'Acquire' },
-              { id: 'acquire-smm', label: 'Social Media (SMM)', cat: 'Acquire' },
-              { id: 'convert-build', label: 'Build (Design & Dev)', cat: 'Convert' },
-              { id: 'convert-cro', label: 'CRO Optimisation', cat: 'Convert' },
-              { id: 'retain-marketing', label: 'Retention Marketing', cat: 'Retain' },
-              { id: 'retain-cep', label: 'CEP (Klaviyo/Braze)', cat: 'Retain' },
-              { id: 'retain-cdp', label: 'CDP (Customer Data)', cat: 'Retain' },
-            ].map((cap) => (
-              <button
-                key={cap.id}
-                onClick={() => onNavigateCapability(cap.id as CapabilityId)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-display font-medium transition-all cursor-pointer ${
-                  capabilityId === cap.id
-                    ? 'bg-violet text-white shadow-md font-bold'
-                    : 'text-mute hover:text-ink hover:bg-bone'
-                }`}
-              >
-                {cap.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Main Capability Dedicated Hero Card with Bespoke Page Theme */}
+        {(() => {
+          const isDarkTheme = [
+            'acquire-performance', 
+            'acquire-smm', 
+            'convert-cro', 
+            'retain-marketing', 
+            'retain-cep', 
+            'retain-cdp'
+          ].includes(capabilityId);
 
-        {/* Main Capability Dedicated Hero Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-gradient-to-br from-white via-bone to-white border border-hairline rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-violet/5 rounded-full blur-3xl -z-0 pointer-events-none" />
+          const heroThemeClass = {
+            'acquire-performance': 'bg-[#0a0d16] text-white border-teal/40 shadow-2xl',
+            'acquire-seo': 'bg-gradient-to-br from-white via-blue-50/40 to-white text-ink border-blue-200 shadow-xl',
+            'acquire-smm': 'bg-gradient-to-br from-[#12101f] via-[#1a1228] to-[#0c0d16] text-white border-pink-500/30 shadow-2xl',
+            'convert-build': 'bg-gradient-to-br from-white via-bone to-white text-ink border-violet/30 shadow-xl',
+            'convert-cro': 'bg-[#0f141f] text-white border-amber-500/30 shadow-2xl',
+            'retain-marketing': 'bg-gradient-to-br from-[#091512] via-[#0d1e1a] to-[#07120f] text-white border-emerald-500/30 shadow-2xl',
+            'retain-cep': 'bg-gradient-to-br from-[#140e24] via-[#1b1230] to-[#0f0a1c] text-white border-purple-500/30 shadow-2xl',
+            'retain-cdp': 'bg-gradient-to-br from-[#0a1120] via-[#0e182e] to-[#070d1a] text-white border-cyan-500/30 shadow-2xl',
+            'receipts': 'bg-white text-ink border-hairline',
+            'about': 'bg-white text-ink border-hairline',
+            'pricing': 'bg-white text-ink border-hairline',
+          }[capabilityId];
 
-          <div className="lg:col-span-7 space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
-              <CategoryIcon className="w-3.5 h-3.5 text-violet" />
-              <span>{details.badge}</span>
-            </div>
+          return (
+            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border rounded-3xl p-8 sm:p-12 relative overflow-hidden transition-all duration-300 ${heroThemeClass}`}>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-violet/10 rounded-full blur-3xl -z-0 pointer-events-none" />
 
-            <h1 className="text-3xl sm:text-5xl font-display font-bold text-ink leading-tight">
-              {details.title}
-            </h1>
-
-            <p className="text-violet font-display text-lg sm:text-xl font-medium">
-              {details.subtitle}
-            </p>
-
-            <p className="text-mute text-base sm:text-lg leading-relaxed">
-              {details.description}
-            </p>
-
-            {/* Key Bullets */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {details.bullets.map((bullet, i) => (
-                <div key={i} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-teal shrink-0 mt-1" />
-                  <span className="text-sm font-medium text-ink/90">{bullet}</span>
+              <div className="lg:col-span-7 space-y-6 relative z-10">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/15 border border-violet/30 rounded-full text-xs font-mono font-bold text-teal uppercase tracking-wider">
+                  <CategoryIcon className="w-3.5 h-3.5 text-teal" />
+                  <span>{details.badge}</span>
                 </div>
-              ))}
-            </div>
 
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Button variant="primary" size="md" onClick={() => onOpenAudit(capabilityId)}>
-                Get Free Capability Audit
-              </Button>
-              <a
-                href="#talk-to-us"
-                className="inline-flex items-center gap-2 text-sm font-display font-bold text-violet hover:text-violet-deep transition-colors"
-              >
-                <span>Talk to Our Strategists</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
+                <h1 className={`text-3xl sm:text-5xl font-display font-bold leading-tight ${isDarkTheme ? 'text-white' : 'text-ink'}`}>
+                  <TextRolling text={details.title} />
+                </h1>
 
-          {/* Visual KPI Showcase Card */}
-          <div className="lg:col-span-5 relative z-10">
-            <div className="bg-ink text-white rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-white/10 relative overflow-hidden">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <span className="text-xs font-mono uppercase text-teal font-bold">{details.category.toUpperCase()} SYSTEM METRICS</span>
-                <span className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  ACTIVE BENCHMARK
-                </span>
+                <p className={`font-display text-lg sm:text-xl font-medium ${isDarkTheme ? 'text-teal' : 'text-violet'}`}>
+                  {details.subtitle}
+                </p>
+
+                <p className={`text-base sm:text-lg leading-relaxed ${isDarkTheme ? 'text-white/80' : 'text-mute'}`}>
+                  {details.description}
+                </p>
+
+                {/* Key Bullets */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  {details.bullets.map((bullet, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-teal shrink-0 mt-1" />
+                      <span className={`text-sm font-medium ${isDarkTheme ? 'text-white/90' : 'text-ink/90'}`}>{bullet}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4 pt-4">
+                  <Button variant="primary" size="md" onClick={() => onOpenAudit(capabilityId)}>
+                    Get Free Capability Audit
+                  </Button>
+                  <a
+                    href="#talk-to-us"
+                    className={`inline-flex items-center gap-2 text-sm font-display font-bold transition-colors ${isDarkTheme ? 'text-teal hover:text-white' : 'text-violet hover:text-violet-deep'}`}
+                  >
+                    <span>Talk to Our Strategists</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <div className="text-xs text-white/60">{details.kpiLabel}</div>
-                  <div className="text-4xl sm:text-5xl font-display font-bold text-white mt-1">
-                    {details.kpiValue}
+              {/* Visual KPI Showcase Card */}
+              <div className="lg:col-span-5 relative z-10">
+                <div className="bg-ink text-white rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-white/15 relative overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                    <span className="text-xs font-mono uppercase text-teal font-bold">{details.category.toUpperCase()} SYSTEM METRICS</span>
+                    <span className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      ACTIVE BENCHMARK
+                    </span>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs text-white/60">{details.kpiLabel}</div>
+                      <div className="text-4xl sm:text-5xl font-display font-bold text-white mt-1">
+                        {details.kpiValue}
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 bg-white/5 rounded-xl border border-white/10 text-xs text-white/80 space-y-1">
+                      <div className="font-bold text-teal">Performance Benchmark</div>
+                      <div className="text-white/70">{details.kpiSubText}</div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-white/60 font-mono">
+                    <span>• 100% Transparent Data</span>
+                    <span>• Weekly Reporting</span>
                   </div>
                 </div>
-
-                <div className="p-3.5 bg-white/5 rounded-xl border border-white/10 text-xs text-white/80 space-y-1">
-                  <div className="font-bold text-teal">Performance Benchmark</div>
-                  <div className="text-white/70">{details.kpiSubText}</div>
-                </div>
-              </div>
-
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-white/60 font-mono">
-                <span>• 100% Transparent Data</span>
-                <span>• Weekly Reporting</span>
               </div>
             </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Real Performance Stats Grid */}
         <div className="space-y-8">
@@ -523,6 +1820,9 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
             ))}
           </div>
         </div>
+
+        {/* Custom Visual Feature Block Tailored Specific to this Page */}
+        {renderCustomPageFeature(capabilityId)}
 
         {/* Technologies & Frameworks Showcase */}
         <div className="bg-white border border-hairline rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
@@ -680,7 +1980,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
                         required
                         value={formData.phone}
                         onChange={handleInputChange}
-                        placeholder="+91 7727887117"
+                        placeholder="+91 98187 47001"
                         className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
                       />
                     </div>
@@ -732,7 +2032,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
 
               <div className="space-y-4">
                 <a
-                  href="tel:+917727887117"
+                  href="tel:+919818747001"
                   className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                 >
                   <div className="p-2.5 bg-teal/20 text-teal rounded-lg group-hover:scale-105 transition-transform">
@@ -740,12 +2040,12 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
                   </div>
                   <div>
                     <div className="text-xs text-white/60">Call Now</div>
-                    <div className="text-sm font-bold text-white">+91 7727887117</div>
+                    <div className="text-sm font-bold text-white">+91 98187 47001</div>
                   </div>
                 </a>
 
                 <a
-                  href="mailto:office@teckey.co.in"
+                  href="mailto:hello@janusmaad.com"
                   className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                 >
                   <div className="p-2.5 bg-teal/20 text-teal rounded-lg group-hover:scale-105 transition-transform">
@@ -753,7 +2053,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
                   </div>
                   <div>
                     <div className="text-xs text-white/60">Email Us</div>
-                    <div className="text-sm font-bold text-white">office@teckey.co.in</div>
+                    <div className="text-sm font-bold text-white">hello@janusmaad.com</div>
                   </div>
                 </a>
 
@@ -768,12 +2068,9 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
                 </div>
 
                 <div className="pt-2 border-t border-white/10 space-y-2">
-                  <div className="text-xs font-mono text-white/60 uppercase">Global Support Lines</div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-white/80 font-mono">
-                    <div>🇮🇳 India: +91</div>
-                    <div>🇳🇴 Norway: +47</div>
-                    <div>🇺🇸 USA: +1</div>
-                    <div>🇬🇧 UK: +44</div>
+                  <div className="text-xs font-mono text-white/60 uppercase">India Support Hub</div>
+                  <div className="text-xs text-white/80 font-mono">
+                    <div>🇮🇳 India: +91 98187 47001</div>
                   </div>
                 </div>
               </div>
