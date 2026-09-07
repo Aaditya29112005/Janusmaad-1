@@ -15,7 +15,6 @@ import { ProofStrip } from './components/proof/ProofStrip';
 import { ReceiptsSection } from './components/receipts/ReceiptsSection';
 import { Calculator } from './components/calculator/Calculator';
 import { TestimonialsMarquee } from './components/testimonials/TestimonialsMarquee';
-import { ReelsReviewMarquee } from './components/testimonials/ReelsReviewMarquee';
 import { TrustedBy } from './components/trusted/TrustedBy';
 import { HowWeWork } from './components/process/HowWeWork';
 import { HorizontalMarqueeText } from './components/common/HorizontalMarqueeText';
@@ -145,7 +144,6 @@ export const App: React.FC = () => {
             <ProofStrip />
             <ReceiptsSection />
             <Calculator onOpenAudit={handleOpenAudit} />
-            <ReelsReviewMarquee />
             <TestimonialsMarquee />
             <TrustedBy />
             <CursorFollowList />

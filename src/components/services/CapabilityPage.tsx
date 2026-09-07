@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   Send,
   ExternalLink,
-  Star,
   Play
 } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -450,27 +449,6 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
     ]
   }
 };
-
-const TESTIMONIALS = [
-  {
-    author: 'Rahul Sharma',
-    role: 'Founder & CEO, Skincare Co.',
-    quote: 'Janusmaad replaced our slow Shopify theme with a sub-second page that immediately boosted our conversion rate by 42%. The numbers move from day one.',
-    metric: '+42% CVR Lift'
-  },
-  {
-    author: 'Ananya Verma',
-    role: 'Head of Growth, D2C Wellness',
-    quote: 'No 40-slide decks, no pitch fluff. They built 6 high-converting landing pages in a 4-week sprint and lowered our Meta CAC by 31%.',
-    metric: '-31% CAC Drop'
-  },
-  {
-    author: 'Vikramaditya Mehta',
-    role: 'CMO, Luxury Apparel',
-    quote: 'The "Do the Math" calculator was spot on. We locked in their CRO retainer and added over ₹2.4Cr in net revenue within 90 days.',
-    metric: '+₹2.4Cr Revenue'
-  }
-];
 
 const BUILD_PROOF_CARDS = [
   { category: 'DTC Skincare Brand', metric: '+48.2% CVR', title: 'Sub-0.8s PDP Speed Upgrade', desc: 'Mobile PDP load dropped from 4.2s to 0.65s, adding ₹1.2Cr monthly revenue.' },
@@ -1123,36 +1101,6 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
                     </div>
                     <h3 className="font-display font-bold text-base text-ink group-hover:text-violet transition-colors">{card.title}</h3>
                     <p className="text-xs text-mute leading-relaxed">{card.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 2. Customer Testimonial Section */}
-            <div className="bg-bone border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-xs">
-              <div className="space-y-2">
-                <span className="text-data-label text-violet uppercase text-xs font-bold">CLIENT PROOF & TESTIMONIALS</span>
-                <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">What Founders & CMOs Say About Our Builds</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {TESTIMONIALS.map((t, idx) => (
-                  <div key={idx} className="bg-white border border-hairline rounded-2xl p-6 space-y-4 shadow-sm flex flex-col justify-between">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-1 text-amber-400">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-amber-400" />
-                        ))}
-                      </div>
-                      <p className="text-xs sm:text-sm text-ink/90 leading-relaxed italic">"{t.quote}"</p>
-                    </div>
-                    <div className="pt-4 border-t border-hairline flex items-center justify-between">
-                      <div>
-                        <div className="font-display font-bold text-sm text-ink">{t.author}</div>
-                        <div className="text-xs text-mute">{t.role}</div>
-                      </div>
-                      <span className="px-2.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full">{t.metric}</span>
-                    </div>
                   </div>
                 ))}
               </div>
