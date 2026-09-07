@@ -23,11 +23,41 @@ import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
 import { TechPartners } from './components/partners/TechPartners';
 import { ClosingCTA } from './components/cta/ClosingCTA';
 
-import { PerformanceMarketingSection } from './components/services/PerformanceMarketingSection';
+// Dedicated Capability Page Component
+import { CapabilityPage, type CapabilityId } from './components/services/CapabilityPage';
+
+const VALID_CAPABILITIES: CapabilityId[] = [
+  'acquire-performance',
+  'acquire-seo',
+  'acquire-smm',
+  'convert-build',
+  'convert-cro',
+  'retain-marketing',
+  'retain-cep',
+  'retain-cdp'
+];
 
 export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<string>('audit');
+  const [activeCapability, setActiveCapability] = useState<CapabilityId | null>(null);
+
+  useEffect(() => {
+    // Listen to hash changes for standalone capability page routing
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (VALID_CAPABILITIES.includes(hash as CapabilityId)) {
+        setActiveCapability(hash as CapabilityId);
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      } else {
+        setActiveCapability(null);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   useEffect(() => {
     // Initialize Lenis smooth scroll synced to ScrollTrigger
@@ -50,11 +80,21 @@ export const App: React.FC = () => {
     return () => {
       lenis.destroy();
     };
-  }, []);
+  }, [activeCapability]);
 
   const handleOpenAudit = (type?: string) => {
     if (type) setModalType(type);
     setModalOpen(true);
+  };
+
+  const handleNavigateHome = () => {
+    window.location.hash = 'home';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateCapability = (id: CapabilityId) => {
+    window.location.hash = id;
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   return (
@@ -65,21 +105,33 @@ export const App: React.FC = () => {
       {/* Global Header */}
       <Header onOpenAudit={handleOpenAudit} />
 
-      {/* Main Content Sections */}
+      {/* Main Content View */}
       <main id="main-content">
-        <Hero onOpenAudit={handleOpenAudit} />
-        <ProofStrip />
-        <PerformanceMarketingSection onOpenAudit={handleOpenAudit} />
-        <ReceiptsSection />
-        <Calculator onOpenAudit={handleOpenAudit} />
-        <TestimonialsMarquee />
-        <TrustedBy />
-        <HowWeWork />
-        <HorizontalMarqueeText />
-        <ThreeWaysIn onOpenAudit={handleOpenAudit} />
-        <WhoWeDontWorkWith />
-        <TechPartners />
-        <ClosingCTA onOpenAudit={handleOpenAudit} />
+        {activeCapability ? (
+          /* Dedicated Standalone Capability Page View */
+          <CapabilityPage
+            capabilityId={activeCapability}
+            onNavigateHome={handleNavigateHome}
+            onNavigateCapability={handleNavigateCapability}
+            onOpenAudit={handleOpenAudit}
+          />
+        ) : (
+          /* Clean Agency Homepage Flow (Does NOT display capability detail sections inline) */
+          <>
+            <Hero onOpenAudit={handleOpenAudit} />
+            <ProofStrip />
+            <ReceiptsSection />
+            <Calculator onOpenAudit={handleOpenAudit} />
+            <TestimonialsMarquee />
+            <TrustedBy />
+            <HowWeWork />
+            <HorizontalMarqueeText />
+            <ThreeWaysIn onOpenAudit={handleOpenAudit} />
+            <WhoWeDontWorkWith />
+            <TechPartners />
+            <ClosingCTA onOpenAudit={handleOpenAudit} />
+          </>
+        )}
       </main>
 
       {/* Global Display Footer */}

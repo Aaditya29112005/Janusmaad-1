@@ -1,0 +1,750 @@
+import React, { useState } from 'react';
+import { 
+  BarChart3, 
+  Code2, 
+  RotateCcw, 
+  CheckCircle2, 
+  ArrowLeft, 
+  ArrowRight, 
+  Phone, 
+  Mail, 
+  Clock, 
+  Sparkles,
+  ShieldCheck,
+  Send
+} from 'lucide-react';
+import { Button } from '../ui/Button';
+
+export type CapabilityId = 
+  | 'acquire-performance' 
+  | 'acquire-seo' 
+  | 'acquire-smm' 
+  | 'convert-build' 
+  | 'convert-cro' 
+  | 'retain-marketing' 
+  | 'retain-cep' 
+  | 'retain-cdp';
+
+interface CapabilityPageProps {
+  capabilityId: CapabilityId;
+  onNavigateHome: () => void;
+  onNavigateCapability: (id: CapabilityId) => void;
+  onOpenAudit: (type?: string) => void;
+}
+
+export interface CapabilityDetails {
+  id: CapabilityId;
+  category: 'Acquire' | 'Convert' | 'Retain';
+  title: string;
+  badge: string;
+  subtitle: string;
+  description: string;
+  bullets: string[];
+  kpiLabel: string;
+  kpiValue: string;
+  kpiSubText: string;
+  stats: { label: string; value: string; delta: string; desc: string }[];
+  technologies: string[];
+  solutions: { num: string; title: string; desc: string }[];
+}
+
+const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
+  'acquire-performance': {
+    id: 'acquire-performance',
+    category: 'Acquire',
+    badge: 'ACQUIRE CAPABILITIES',
+    title: 'Performance Marketing & Performance Max',
+    subtitle: 'Meta, Google & TikTok campaigns built for high return on ad spend (ROAS).',
+    description: 'We don’t just run ads — we build a complete performance system. Our Performance Max approach is designed to track, optimize, and scale high-quality leads across Google & Meta inventory.',
+    bullets: [
+      'Performance Max campaign setup & optimization',
+      'Lead quality analysis & funnel optimization',
+      'Creative testing across Search, Display, YouTube & Discovery',
+      'Continuous performance monitoring & scaling'
+    ],
+    kpiLabel: 'Blended Target ROAS',
+    kpiValue: '4.82x',
+    kpiSubText: 'Avg Cost Per Lead: ₹142.50 | Qualified Rate: 38.4%',
+    stats: [
+      { label: 'Clicks Generated', value: '120K+', delta: '+140% QoQ', desc: 'High-intent buyer traffic redirected to conversion funnels.' },
+      { label: 'Total Impressions', value: '4.8M+', delta: 'Multi-Channel', desc: 'Scale brand authority across Meta, Google & Amazon.' },
+      { label: 'Verified Conversions', value: '3.2K+', delta: 'Verified Leads', desc: 'High-converting sales, calls, and qualified enquiries.' }
+    ],
+    technologies: ['Meta Ads (FB & IG)', 'Google Ads', 'Amazon Ads', 'Flipkart Ads', 'Meesho Ads', 'Etsy Ads', 'TikTok Ads', 'YouTube Video Ads'],
+    solutions: [
+      { num: '01', title: 'Conversion Tracking & Analytics', desc: 'End-to-end tracking using GA4, GTM, and offline conversion integrations for 100% clean data accuracy.' },
+      { num: '02', title: 'Meta Ads (Facebook & Instagram)', desc: 'Conversion-focused campaigns designed to generate high-intent leads, direct sales, and qualified enquiries.' },
+      { num: '03', title: 'Creative Testing & Optimization', desc: 'Continuous testing of ad creatives, copies, and formats to lower CPL and maximize blended ROAS.' },
+      { num: '04', title: 'Amazon Ads for High-Intent Buyers', desc: 'Conversion-focused Amazon advertising to increase product sales, Sponsored Products rank, and visibility.' },
+      { num: '05', title: 'Google Ads & Performance Max', desc: 'High-intent traffic across Search, Display, YouTube & Discovery — engineered specifically for revenue.' }
+    ]
+  },
+
+  'acquire-seo': {
+    id: 'acquire-seo',
+    category: 'Acquire',
+    badge: 'ACQUIRE CAPABILITIES',
+    title: 'SEO (Search Everywhere Optimisation)',
+    subtitle: 'Scale organic search visibility across Google, YouTube, Reddit, and AI engines (ChatGPT, Perplexity, SGE).',
+    description: 'Modern SEO is no longer just keywords on Google. We optimize your brand authority across search engine AI overviews, video search, community forums, and generative recommendation engines.',
+    bullets: [
+      'Entity & Schema Architecture for Knowledge Graphs',
+      'Generative Engine Optimization (GEO) for SGE & LLMs',
+      'Core Web Vitals & Sub-Second Technical Performance',
+      'High-Authority Digital PR & Editorial Placements'
+    ],
+    kpiLabel: 'Organic Search Growth',
+    kpiValue: '+320%',
+    kpiSubText: 'Avg Rank 1-3 Placement: 74.2% | Zero-Click AI Wins: 420+',
+    stats: [
+      { label: 'Organic Monthly Visits', value: '850K+', delta: '+210% YoY', desc: 'High-intent searchers converted into long-term brand traffic.' },
+      { label: 'Page 1 Keywords', value: '1.4K+', delta: 'Rank #1-#3', desc: 'Dominate competitive industry terms across Google & Bing.' },
+      { label: 'AI Search Overviews', value: '450+', delta: 'GEO Verified', desc: 'Featured recommendations inside ChatGPT, Gemini & Perplexity.' }
+    ],
+    technologies: ['Google Search Console', 'Ahrefs Enterprise', 'SEMrush', 'Screaming Frog', 'Schema.org', 'Next.js SSR', 'Vercel Analytics'],
+    solutions: [
+      { num: '01', title: 'Technical SEO & Crawl Budgeting', desc: 'Architecture audits, canonicalization, JS rendering optimization, and Core Web Vitals speed tuning.' },
+      { num: '02', title: 'Generative Engine Optimization (GEO)', desc: 'Optimizing structured data and brand citations so AI tools recommend your business first.' },
+      { num: '03', title: 'High-Authority Digital PR & Backlinks', desc: 'Earning white-hat editorial backlinks from tier-1 industry news and publication domains.' },
+      { num: '04', title: 'Local & Multi-Region Enterprise SEO', desc: 'DOM, Google Business Profile, and localized landing pages for multi-location domination.' },
+      { num: '05', title: 'Topical Authority & Content Hubs', desc: 'Clustered content hubs engineered to capture long-tail commercial intent and high-value leads.' }
+    ]
+  },
+
+  'acquire-smm': {
+    id: 'acquire-smm',
+    category: 'Acquire',
+    badge: 'ACQUIRE CAPABILITIES',
+    title: 'SMM (Social Media Marketing)',
+    subtitle: 'Organic and paid content strategy engineered to build brand authority and viral engagement.',
+    description: 'Turn social impressions into customer trust. We create high-converting short-form video hooks, carousel frameworks, and targeted ad funnels across Instagram, LinkedIn, and TikTok.',
+    bullets: [
+      'Short-Form Video Hooks & Viral Reels Production',
+      'Paid Social Lead Generation & Retargeting Funnels',
+      'Creator & UGC Content Creator Partnerships',
+      'Brand Authority Architecture & Community Engagement'
+    ],
+    kpiLabel: 'Social Engagement Rate',
+    kpiValue: '6.4%',
+    kpiSubText: 'Monthly Reels Views: 2.4M+ | Lead Conversion Rate: 4.2%',
+    stats: [
+      { label: 'Video Views Generated', value: '18M+', delta: 'Viral Reach', desc: 'High-performing short form video content across Instagram & TikTok.' },
+      { label: 'Social Lead Inquiries', value: '4.5K+', delta: '+180% ROAS', desc: 'Direct message and lead form submissions converted into sales.' },
+      { label: 'Brand Followers Built', value: '95K+', delta: 'Qualified Community', desc: 'Engaged buyer audience building lasting brand equity.' }
+    ],
+    technologies: ['Instagram Business', 'TikTok Ads Manager', 'LinkedIn Campaign Manager', 'CapCut Pro', 'Figma Creative Engine', 'Meta Business Suite'],
+    solutions: [
+      { num: '01', title: 'Short-Form Video Engine', desc: 'Scripting, editing, and publishing high-performing Reels, Shorts, and TikToks designed for viral reach.' },
+      { num: '02', title: 'Paid Social Funnel Architecture', desc: 'Multi-stage prospecting and retargeting ad campaigns that convert casual scrollers into paying clients.' },
+      { num: '03', title: 'Creator & UGC Strategy', desc: 'Sourcing, vetting, and managing user-generated content from real creators to boost trust and ad response.' },
+      { num: '04', title: 'Community & Brand Management', desc: 'Active DM and comment engagement to build hyper-loyal customer relationships.' },
+      { num: '05', title: 'Social Commerce & Storefront Sync', desc: 'Integrating Instagram Shop and TikTok Shop to enable instant 1-click in-app purchasing.' }
+    ]
+  },
+
+  'convert-build': {
+    id: 'convert-build',
+    category: 'Convert',
+    badge: 'CONVERT CAPABILITIES',
+    title: 'Build (Design & Development)',
+    subtitle: 'High-speed bespoke landing pages and custom Shopify storefronts engineered for sub-1-second load times.',
+    description: 'Sub-1-second page loads, headless Next.js architectures, and ultra-high converting landing page designs built for maximum ROAS and smooth customer checkout.',
+    bullets: [
+      'Bespoke React & Next.js Headless Architecture',
+      'Custom Shopify Plus Storefront & Liquid Theme Engineering',
+      'High-Converting Direct Response Landing Pages',
+      'Sub-Second Speed & Core Web Vitals 95+ Score'
+    ],
+    kpiLabel: 'Avg Mobile Page Load Speed',
+    kpiValue: '0.62s',
+    kpiSubText: 'Google Lighthouse Score: 98/100 | Checkout Lift: +34%',
+    stats: [
+      { label: 'Custom Storefronts Built', value: '45+', delta: 'Headless / Shopify', desc: 'Bespoke high-converting e-commerce and SaaS platforms.' },
+      { label: 'Avg Speed Improvement', value: '3.4x', delta: 'Sub-1s Load', desc: 'Lightning fast rendering that keeps bounce rates below 20%.' },
+      { label: 'Conversion Rate Increase', value: '+42%', delta: 'Post-Launch', desc: 'Immediate lift in visitor-to-customer conversion rates.' }
+    ],
+    technologies: ['React 19', 'Next.js 15', 'Shopify Liquid', 'Tailwind CSS', 'GSAP Animation Engine', 'TypeScript', 'Vercel App Hosting'],
+    solutions: [
+      { num: '01', title: 'Custom Shopify Plus Storefronts', desc: 'Tailor-made e-commerce storefronts with bespoke collection filters, custom checkout flows, and high speed.' },
+      { num: '02', title: 'High-Converting Campaign Landing Pages', desc: 'Single-purpose direct response pages built specifically for paid ad campaigns to maximize ROAS.' },
+      { num: '03', title: 'Headless E-commerce & APIs', desc: 'Decoupled frontend architectures connecting Shopify, Stripe, and custom backends for ultimate flexibility.' },
+      { num: '04', title: 'UI/UX Motion & GSAP Interactive Animations', desc: 'Fluid magnetic micro-interactions and smooth scroll experiences that captivate buyers.' },
+      { num: '05', title: 'Speed Optimization & CWV Audit', desc: 'Transforming slow legacy websites into sub-second speed powerhouses with perfect 90+ Lighthouse scores.' }
+    ]
+  },
+
+  'convert-cro': {
+    id: 'convert-cro',
+    category: 'Convert',
+    badge: 'CONVERT CAPABILITIES',
+    title: 'CRO (Conversion Rate Optimisation)',
+    subtitle: 'Rigorous A/B testing and data science to maximize visitor revenue and checkout completion.',
+    description: 'We analyze user session recordings, heatmaps, and funnel drop-offs to systematically increase your site-wide conversion rate by 20% to 50% without increasing ad spend.',
+    bullets: [
+      'Behavioral Heatmap & Session Recording Analytics',
+      'Multivariate & A/B Experimentation Frameworks',
+      'Cart Friction Removal & One-Click Checkout Flow',
+      'Dynamic On-Page Personalization Engine'
+    ],
+    kpiLabel: 'Blended Conversion Lift',
+    kpiValue: '+36.8%',
+    kpiSubText: 'Cart Abandonment Drop: -28.4% | Revenue Per Visitor: +$4.12',
+    stats: [
+      { label: 'A/B Tests Conducted', value: '380+', delta: '95% Confidence', desc: 'Rigorous scientific testing across landing pages & checkouts.' },
+      { label: 'Revenue Lift Generated', value: '$2.8M+', delta: 'Net Added Value', desc: 'Extra top-line revenue created purely through CRO.' },
+      { label: 'Avg AOV Lift', value: '+18.5%', delta: 'Upsell Strategy', desc: 'Smart cart bundles and post-purchase offer boosts.' }
+    ],
+    technologies: ['VWO Enterprise', 'Hotjar Heatmaps', 'Microsoft Clarity', 'GA4 Analytics', 'Klaviyo Dynamic Personalization', 'Google Optimize / Optimizely'],
+    solutions: [
+      { num: '01', title: 'Data-Driven Funnel Audits', desc: 'Deep dive into drop-off analytics, user friction points, and form fields to identify immediate wins.' },
+      { num: '02', title: 'Multivariate A/B Testing', desc: 'Deploying statistically significant experiments on headlines, CTAs, product pages, and checkout flows.' },
+      { num: '03', title: 'Cart & Checkout Friction Removal', desc: 'Optimizing cart slides, trust badges, payment options, and single-click checkout steps.' },
+      { num: '04', title: 'Dynamic On-Page Personalization', desc: 'Tailoring page content and product recommendations based on traffic source, geography, and buyer history.' },
+      { num: '05', title: 'Post-Purchase Upsell Architecture', desc: '1-click post-purchase add-ons that boost Average Order Value (AOV) without ruining customer trust.' }
+    ]
+  },
+
+  'retain-marketing': {
+    id: 'retain-marketing',
+    category: 'Retain',
+    badge: 'RETAIN CAPABILITIES',
+    title: 'Retention Marketing & Lifecycle Automation',
+    subtitle: 'Automated email, SMS, and WhatsApp funnels that increase customer LTV and repeat purchase rates.',
+    description: 'Turn one-time buyers into lifelong brand advocates. We build automated retention funnels that deliver the right message at the right moment across Email, SMS, and WhatsApp.',
+    bullets: [
+      'Automated Multi-Stage Lifecycle Email Sequences',
+      'Omnichannel SMS & WhatsApp Instant Alerts',
+      'VIP Loyalty, Referral & Repeat Order Loops',
+      'Customer Cohort LTV & Churn Predictive Modeling'
+    ],
+    kpiLabel: 'Owned Channel Revenue',
+    kpiValue: '34.2%',
+    kpiSubText: 'Repeat Customer Rate: 42.8% | Flow Open Rate: 58.4%',
+    stats: [
+      { label: 'Automated Revenue', value: '$1.9M+', delta: 'Klaviyo / Attentive', desc: 'Hands-free automated flow revenue generated for clients.' },
+      { label: 'Repeat Order Rate', value: '42%', delta: '+150% LTV', desc: 'Percentage of existing customers making 2nd and 3rd orders.' },
+      { label: 'Avg Email Open Rate', value: '54.5%', delta: 'High Deliverability', desc: 'Inbox-optimized send reputation and hyper-personalized subject lines.' }
+    ],
+    technologies: ['Klaviyo', 'Attentive SMS', 'WhatsApp Business API', 'Recharge Subscriptions', 'Postscript', 'Gorgias Customer Support'],
+    solutions: [
+      { num: '01', title: 'Lifecycle Automation & Welcome Flows', desc: 'High-converting welcome series, abandoned cart recovery, browse abandonment, and post-purchase onboarding.' },
+      { num: '02', title: 'Win-Back & Churn Prevention Flows', desc: 'Predictive timing automations that re-engage inactive customers right before their estimated depletion date.' },
+      { num: '03', title: 'Omnichannel SMS & WhatsApp Funnels', desc: 'Instant 98% open-rate broadcast alerts, order updates, and conversational sales funnels.' },
+      { num: '04', title: 'Customer Segmentation & RFM Analytics', desc: 'Segmenting your audience by Recency, Frequency, and Monetary value for targeted messaging.' },
+      { num: '05', title: 'VIP Loyalty & Referral Programs', desc: 'Reward structures that gamify repeat purchases and turn happy buyers into brand ambassadors.' }
+    ]
+  },
+
+  'retain-cep': {
+    id: 'retain-cep',
+    category: 'Retain',
+    badge: 'RETAIN CAPABILITIES',
+    title: 'CEP (Customer Engagement Platform)',
+    subtitle: 'Klaviyo and Braze architectures setup for hyper-personalised real-time messaging.',
+    description: 'Enterprise-grade customer engagement infrastructure. We configure Klaviyo and Braze architectures to process real-time user events, dynamic catalog feeds, and hyper-targeted messages.',
+    bullets: [
+      'Enterprise Klaviyo & Braze Migration & Architecture',
+      'Real-Time Event Triggers & Webhook Synchronization',
+      'Hyper-Personalization Dynamic Catalog & Price Drop Alerts',
+      'Cross-Channel Messaging Orchestration (Email, Push, In-App)'
+    ],
+    kpiLabel: 'Real-Time Event Processing',
+    kpiValue: '12M+/mo',
+    kpiSubText: 'Event Latency: <50ms | Dynamic Personalization Rate: 99.4%',
+    stats: [
+      { label: 'Real-Time Triggers', value: '12M+', delta: 'Sub-50ms Sync', desc: 'Instant behavioral events triggering personalized messages.' },
+      { label: 'In-App & Push Lift', value: '+48%', delta: 'Mobile App Eng', desc: 'Higher engagement on mobile channels via Braze orchestration.' },
+      { label: 'Deliverability Score', value: '99.2%', delta: 'Tier-1 Sender', desc: 'Zero spam placement with dedicated IP warming protocols.' }
+    ],
+    technologies: ['Braze Enterprise', 'Klaviyo Master', 'Segment.io', 'Mixpanel', 'Webhooks API', 'Firebase Cloud Messaging'],
+    solutions: [
+      { num: '01', title: 'Klaviyo & Braze Enterprise Setup', desc: 'Clean architecture design, custom event schema mapping, and dedicated domain authentication.' },
+      { num: '02', title: 'Real-Time Event & Trigger Architecture', desc: 'Wiring custom backend events (e.g. video watch, wishlist add, trial start) directly to messaging triggers.' },
+      { num: '03', title: 'Dynamic Predictive Personalization', desc: 'Injecting dynamic product recommendations, custom pricing badges, and localized currency in real-time.' },
+      { num: '04', title: 'Cross-Channel Messaging Workflows', desc: 'Unified orchestration across Mobile Push, In-App Messages, Email, and SMS.' },
+      { num: '05', title: 'Deliverability & IP Reputation Management', desc: 'Proactive domain health monitoring, inbox placement testing, and warm-up schedules.' }
+    ]
+  },
+
+  'retain-cdp': {
+    id: 'retain-cdp',
+    category: 'Retain',
+    badge: 'RETAIN CAPABILITIES',
+    title: 'CDP (Customer Data Platform)',
+    subtitle: 'Unified zero-party data infrastructure for predictive audience targeting and privacy-first compliance.',
+    description: 'Take back control of your customer data in the post-cookie era. We build unified zero-party and first-party data platforms that sync real-time customer profiles directly with your ad channels.',
+    bullets: [
+      'Unified Single Customer View (SCV) Data Warehouse',
+      'Zero & First-Party Data Capture via Quizzes & Surveys',
+      'Real-Time Meta CAPI & Google Offline Conversion Sync',
+      'Privacy-First GDPR & CCPA Compliance Framework'
+    ],
+    kpiLabel: 'First-Party Data Match Rate',
+    kpiValue: '88.6%',
+    kpiSubText: 'Attribution Accuracy: 99.1% | Ad Platform Match Boost: +32%',
+    stats: [
+      { label: 'Unified Profiles', value: '1.2M+', delta: 'Single View', desc: 'Clean aggregated customer profiles across all touchpoints.' },
+      { label: 'Ad Match Rate Lift', value: '+35%', delta: 'Meta & Google', desc: 'Higher match rate for custom audiences using server-side sync.' },
+      { label: 'Data Accuracy', value: '99.8%', delta: 'Zero-Party Verified', desc: 'Direct survey and quiz preference data captured straight from buyers.' }
+    ],
+    technologies: ['Segment CDP', 'RudderStack', 'BigQuery Data Warehouse', 'Meta CAPI Gateway', 'Google Ads Offline API', 'Typeform / Octane AI'],
+    solutions: [
+      { num: '01', title: 'Unified Customer Profile Aggregation', desc: 'Combining website visits, purchase history, customer support tickets, and email clicks into one profile.' },
+      { num: '02', title: 'Server-Side Conversions API (CAPI)', desc: 'Bypassing ad blockers and iOS privacy restrictions with bulletproof server-to-server event tracking.' },
+      { num: '03', title: 'Zero-Party Quiz & Preference Funnels', desc: 'Interactive recommendation quizzes that collect customer preferences while increasing conversion.' },
+      { num: '04', title: 'Predictive Churn & LTV Modeling', desc: 'Using machine learning algorithms to identify high-LTV VIPs and at-risk buyers before they leave.' },
+      { num: '05', title: 'Real-Time Ad Platform Audience Sync', desc: 'Pushing dynamic exclusion lists and high-value lookalike seed lists directly into Meta, Google, and TikTok.' }
+    ]
+  }
+};
+
+export const CapabilityPage: React.FC<CapabilityPageProps> = ({
+  capabilityId,
+  onNavigateHome,
+  onNavigateCapability,
+  onOpenAudit
+}) => {
+  const details = CAPABILITIES_DATA[capabilityId] || CAPABILITIES_DATA['acquire-performance'];
+
+  // Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: `Inquiry regarding ${details.title}`,
+    phone: '',
+    message: '',
+    optIn: true
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) return;
+    setFormSubmitted(true);
+    setTimeout(() => {
+      setFormSubmitted(false);
+      setFormData({
+        name: '',
+        email: '',
+        subject: `Inquiry regarding ${details.title}`,
+        phone: '',
+        message: '',
+        optIn: true
+      });
+    }, 4000);
+  };
+
+  const getCategoryIcon = (cat: string) => {
+    switch(cat) {
+      case 'Acquire': return BarChart3;
+      case 'Convert': return Code2;
+      case 'Retain': return RotateCcw;
+      default: return Sparkles;
+    }
+  };
+
+  const CategoryIcon = getCategoryIcon(details.category);
+
+  return (
+    <div className="pt-24 pb-20 px-4 sm:px-8 bg-bone text-ink min-h-screen">
+      <div className="max-w-7xl mx-auto space-y-16">
+
+        {/* Top Header Navigation Bar */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-hairline">
+          <button
+            onClick={onNavigateHome}
+            className="inline-flex items-center gap-2 text-sm font-display font-bold text-ink hover:text-violet transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 text-violet group-hover:-translate-x-1 transition-transform" />
+            <span>← Back to Overview</span>
+          </button>
+
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className="px-2.5 py-1 bg-violet/10 text-violet font-bold rounded-full uppercase">
+              {details.category} Capabilities
+            </span>
+            <span className="text-mute">/</span>
+            <span className="text-ink font-bold">{details.title}</span>
+          </div>
+        </div>
+
+        {/* Capability Selector Bar (Switch between all 8 pages easily) */}
+        <div className="bg-white border border-hairline rounded-2xl p-2 shadow-sm space-y-2">
+          <div className="text-[11px] font-mono text-violet uppercase tracking-wider font-bold px-3 pt-1">
+            EXPLORE DEDICATED CAPABILITY PAGES:
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5 px-1">
+            {[
+              { id: 'acquire-performance', label: 'Performance Marketing', cat: 'Acquire' },
+              { id: 'acquire-seo', label: 'Search Everywhere SEO', cat: 'Acquire' },
+              { id: 'acquire-smm', label: 'Social Media (SMM)', cat: 'Acquire' },
+              { id: 'convert-build', label: 'Build (Design & Dev)', cat: 'Convert' },
+              { id: 'convert-cro', label: 'CRO Optimisation', cat: 'Convert' },
+              { id: 'retain-marketing', label: 'Retention Marketing', cat: 'Retain' },
+              { id: 'retain-cep', label: 'CEP (Klaviyo/Braze)', cat: 'Retain' },
+              { id: 'retain-cdp', label: 'CDP (Customer Data)', cat: 'Retain' },
+            ].map((cap) => (
+              <button
+                key={cap.id}
+                onClick={() => onNavigateCapability(cap.id as CapabilityId)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-display font-medium transition-all ${
+                  capabilityId === cap.id
+                    ? 'bg-violet text-white shadow-md font-bold'
+                    : 'text-mute hover:text-ink hover:bg-bone'
+                }`}
+              >
+                {cap.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Capability Dedicated Hero Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-gradient-to-br from-white via-bone to-white border border-hairline rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-violet/5 rounded-full blur-3xl -z-0 pointer-events-none" />
+
+          <div className="lg:col-span-7 space-y-6 relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
+              <CategoryIcon className="w-3.5 h-3.5 text-violet" />
+              <span>{details.badge}</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-display font-bold text-ink leading-tight">
+              {details.title}
+            </h1>
+
+            <p className="text-violet font-display text-lg sm:text-xl font-medium">
+              {details.subtitle}
+            </p>
+
+            <p className="text-mute text-base sm:text-lg leading-relaxed">
+              {details.description}
+            </p>
+
+            {/* Key Bullets */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              {details.bullets.map((bullet, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-teal shrink-0 mt-1" />
+                  <span className="text-sm font-medium text-ink/90">{bullet}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4 pt-4">
+              <Button variant="primary" size="md" onClick={() => onOpenAudit(capabilityId)}>
+                Get Free Capability Audit
+              </Button>
+              <a
+                href="#talk-to-us"
+                className="inline-flex items-center gap-2 text-sm font-display font-bold text-violet hover:text-violet-deep transition-colors"
+              >
+                <span>Talk to Our Strategists</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Visual KPI Showcase Card */}
+          <div className="lg:col-span-5 relative z-10">
+            <div className="bg-ink text-white rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-white/10 relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <span className="text-xs font-mono uppercase text-teal font-bold">{details.category.toUpperCase()} SYSTEM METRICS</span>
+                <span className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  ACTIVE BENCHMARK
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <div className="text-xs text-white/60">{details.kpiLabel}</div>
+                  <div className="text-4xl sm:text-5xl font-display font-bold text-white mt-1">
+                    {details.kpiValue}
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-white/5 rounded-xl border border-white/10 text-xs text-white/80 space-y-1">
+                  <div className="font-bold text-teal">Performance Benchmark</div>
+                  <div className="text-white/70">{details.kpiSubText}</div>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-white/60 font-mono">
+                <span>• 100% Transparent Data</span>
+                <span>• Weekly Reporting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Real Performance Stats Grid */}
+        <div className="space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <div className="text-data-label text-violet uppercase text-xs font-bold tracking-widest">
+              CAPABILITY STATS
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">
+              Proven Impact & Scalable Systems
+            </h2>
+            <p className="text-mute text-sm sm:text-base">
+              Aggregated results from our direct implementation across leading brands.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {details.stats.map((stat, i) => (
+              <div key={i} className="card-surface rounded-2xl p-6 sm:p-8 space-y-3 relative overflow-hidden group">
+                <div className="flex items-center justify-between text-xs font-mono text-mute">
+                  <span>{stat.label}</span>
+                  <span className="text-teal font-bold">{stat.delta}</span>
+                </div>
+                <div className="text-4xl sm:text-5xl font-display font-bold text-ink group-hover:text-violet transition-colors">
+                  {stat.value}
+                </div>
+                <p className="text-xs text-mute leading-relaxed">{stat.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Technologies & Frameworks Showcase */}
+        <div className="bg-white border border-hairline rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+          <div className="max-w-3xl space-y-2">
+            <div className="text-data-label text-violet uppercase text-xs font-bold">TECH & PLATFORMS</div>
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink">
+              Enterprise Tools & Integrations
+            </h2>
+            <p className="text-mute text-sm sm:text-base">
+              We leverage modern stacks to guarantee high speed, maximum security, and deep attribution.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            {details.technologies.map((tech, i) => (
+              <div
+                key={i}
+                className="px-4 py-2.5 bg-bone border border-hairline rounded-xl text-xs font-display font-bold text-ink hover:border-violet hover:text-violet transition-all"
+              >
+                {tech}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 01 to 05 Detailed Solutions We Offer */}
+        <div className="space-y-8">
+          <div className="space-y-2">
+            <div className="text-data-label text-violet uppercase text-xs font-bold">SOLUTIONS</div>
+            <h2 className="text-2xl sm:text-4xl font-display font-bold text-ink">
+              What We Deliver for {details.title}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {details.solutions.map((sol, i) => (
+              <div key={i} className="card-surface rounded-2xl p-6 sm:p-8 space-y-4 group">
+                <div className="text-xs font-mono font-bold text-teal">{sol.num}</div>
+                <h3 className="text-lg font-display font-bold text-ink group-hover:text-violet transition-colors">
+                  {sol.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-mute leading-relaxed">
+                  {sol.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dedicated "TALK TO US" Contact Form for this Capability */}
+        <div id="talk-to-us" className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-12 shadow-2xl relative overflow-hidden">
+          <div className="max-w-3xl space-y-3">
+            <div className="text-data-label text-teal uppercase text-xs font-bold tracking-widest">
+              TALK TO US
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display font-bold text-white">
+              How May We Help You!
+            </h2>
+            <p className="text-white/70 text-sm sm:text-base">
+              Get in touch with our specialists for a free campaign audit and custom ROAS roadmap for {details.title}.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Form */}
+            <div className="lg:col-span-7">
+              {formSubmitted ? (
+                <div className="bg-white/10 border border-teal/40 rounded-2xl p-8 text-center space-y-4 animate-in fade-in duration-200">
+                  <ShieldCheck className="w-12 h-12 text-teal mx-auto" />
+                  <h3 className="text-xl font-display font-bold text-white">Thank You for Reaching Out!</h3>
+                  <p className="text-sm text-white/80 max-w-md mx-auto">
+                    Your inquiry regarding {details.title} has been submitted. A strategist will get back to you within 2 hours.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-white/80 uppercase">Your Name*</label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="John Doe"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-white/80 uppercase">Your Email*</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="john@company.com"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-white/80 uppercase">Subject*</label>
+                      <input
+                        type="text"
+                        name="subject"
+                        required
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        placeholder={`Inquiry regarding ${details.title}`}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-white/80 uppercase">Your Phone*</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="+91 7727887117"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-mono text-white/80 uppercase">Message*</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      required
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder={`Tell us about your current targets for ${details.title}...`}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors resize-none"
+                    />
+                  </div>
+
+                  {/* Opt-in Checkbox */}
+                  <div className="flex items-start gap-3 pt-1">
+                    <input
+                      type="checkbox"
+                      id="optIn"
+                      name="optIn"
+                      checked={formData.optIn}
+                      onChange={handleInputChange}
+                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/10 text-teal focus:ring-teal"
+                    />
+                    <label htmlFor="optIn" className="text-xs text-white/70 leading-relaxed cursor-pointer">
+                      I would like to opt-in to receive emails about news, trends, offers, or blogs. For more information, please read our{' '}
+                      <a href="#privacy" className="text-teal underline hover:text-white">Privacy Policy</a>.
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-teal text-ink font-display font-bold rounded-xl hover:bg-emerald-400 transition-colors shadow-lg"
+                  >
+                    <span>Send Message</span>
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* Direct Contact Info */}
+            <div className="lg:col-span-5 space-y-6 bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-display font-bold text-white">Direct Contact</h3>
+
+              <div className="space-y-4">
+                <a
+                  href="tel:+917727887117"
+                  className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                >
+                  <div className="p-2.5 bg-teal/20 text-teal rounded-lg group-hover:scale-105 transition-transform">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-white/60">Call Now</div>
+                    <div className="text-sm font-bold text-white">+91 7727887117</div>
+                  </div>
+                </a>
+
+                <a
+                  href="mailto:office@teckey.co.in"
+                  className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                >
+                  <div className="p-2.5 bg-teal/20 text-teal rounded-lg group-hover:scale-105 transition-transform">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-white/60">Email Us</div>
+                    <div className="text-sm font-bold text-white">office@teckey.co.in</div>
+                  </div>
+                </a>
+
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5">
+                  <div className="p-2.5 bg-teal/20 text-teal rounded-lg">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-white/60">Working Hours</div>
+                    <div className="text-sm font-bold text-white">Monday – Saturday: 9am – 8pm</div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-white/10 space-y-2">
+                  <div className="text-xs font-mono text-white/60 uppercase">Global Support Lines</div>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-white/80 font-mono">
+                    <div>🇮🇳 India: +91</div>
+                    <div>🇳🇴 Norway: +47</div>
+                    <div>🇺🇸 USA: +1</div>
+                    <div>🇬🇧 UK: +44</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};

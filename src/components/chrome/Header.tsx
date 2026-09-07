@@ -54,8 +54,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
       className="fixed top-0 left-0 right-0 z-40 py-6 px-4 sm:px-8 border-b border-transparent transition-all duration-300 bg-bone/90 backdrop-blur-md"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Crisp Brand Logo Image Only (Text removed as logo artwork already contains brand name) */}
-        <a href="#" className="group flex items-center focus-visible:outline-violet">
+        {/* Crisp Brand Logo Image Only */}
+        <a href="#home" className="group flex items-center focus-visible:outline-violet">
           <img src="/logo.png" alt="Janusmaad Digital" className="h-9 sm:h-10 object-contain hover:scale-105 transition-transform" />
         </a>
 
