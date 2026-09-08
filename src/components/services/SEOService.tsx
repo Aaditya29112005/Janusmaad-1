@@ -62,42 +62,57 @@ export const SEOService: React.FC<SEOServiceProps> = ({
         </button>
       </div>
 
-      {/* 1. HERO SECTION: variant="editorial" (No hero image. Single column header with purple accent) */}
+      {/* 1. HERO SECTION: Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-gradient-to-br from-white via-violet/5 to-white border border-violet/20 rounded-3xl p-8 sm:p-14 space-y-8 shadow-xl">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3.5 py-1 bg-violet/15 text-violet text-xs font-mono font-bold rounded-full border border-violet/30 uppercase">
-              ACQUIRE PILLAR • FLAGSHIP DEEP-DIVE SERVICE
-            </span>
-            <span className="px-3 py-1 bg-ink/5 text-ink/70 text-xs font-mono rounded-full">
-              SLUG: services/seo
-            </span>
-          </div>
+        <div
+          className="rounded-[24px] p-8 sm:p-14 space-y-8 relative overflow-hidden shadow-2xl text-white"
+          style={{
+            background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+            boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+          }}
+        >
+          {/* Glass Glare Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+          
+          <div className="relative z-10 space-y-6 max-w-4xl">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
+                ACQUIRE PILLAR • FLAGSHIP DEEP-DIVE SERVICE
+              </span>
+              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
+                SLUG: services/seo
+              </span>
+            </div>
 
-          <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-ink leading-tight">
-            Get Found on Google, YouTube and Inside AI Answers<span className="text-violet">.</span>
-          </h1>
+            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
+              Get Found on Google, YouTube and Inside AI Answers<span className="text-sky-200">.</span>
+            </h1>
 
-          <p className="text-lg sm:text-xl text-mute max-w-4xl leading-relaxed font-body">
-            Search has expanded beyond traditional blue links. Brands are watching organic clicks fall while impressions hold — losing customer clicks to Google AI Overviews, Perplexity, and zero-click answer engines. Janusmaad builds full Search Everywhere Optimisation (SEO + AEO + GEO).
-          </p>
+            <p className="text-lg sm:text-xl text-sky-100 font-medium leading-relaxed font-body">
+              Search has expanded beyond traditional blue links. Brands are watching organic clicks fall while impressions hold — losing customer clicks to Google AI Overviews, Perplexity, and zero-click answer engines. Janusmaad builds full Search Everywhere Optimisation (SEO + AEO + GEO).
+            </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-4">
-            <Button variant="primary" size="lg" className="bg-violet hover:bg-violet-deep text-white border-none" onClick={() => onOpenAudit('acquire-seo')}>
-              Free Search Visibility & AEO Audit →
-            </Button>
-          </div>
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => onOpenAudit('acquire-seo')}
+                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
+              >
+                Free Search Visibility & AEO Audit →
+              </button>
+            </div>
 
-          {/* Primary & Supporting Keywords */}
-          <div className="pt-6 border-t border-hairline flex flex-wrap gap-2 text-xs font-mono text-mute">
-            <span className="text-violet font-bold">PRIMARY KEYWORD:</span> SEO agency India |
-            <span>search everywhere optimisation</span> |
-            <span>AEO (Answer Engine Optimisation)</span> |
-            <span>generative engine optimisation</span> |
-            <span>AI SEO</span> |
-            <span>technical SEO</span> |
-            <span>Shopify SEO</span> |
-            <span>local SEO Delhi NCR</span>
+            {/* Primary & Supporting Keywords */}
+            <div className="pt-6 border-t border-white/20 flex flex-wrap gap-2 text-xs font-mono text-sky-100">
+              <span className="text-white font-bold font-mono uppercase">PRIMARY KEYWORD:</span>
+              <span>SEO agency India</span> |
+              <span>search everywhere optimisation</span> |
+              <span>AEO (Answer Engine Optimisation)</span> |
+              <span>generative engine optimisation</span> |
+              <span>AI SEO</span> |
+              <span>technical SEO</span> |
+              <span>Shopify SEO</span> |
+              <span>local SEO Delhi NCR</span>
+            </div>
           </div>
         </div>
       </div>
@@ -256,48 +271,84 @@ export const SEOService: React.FC<SEOServiceProps> = ({
                 THE 5 DELIVERABLE GROUPS
               </div>
 
-              {/* 01. Technical SEO */}
-              <section id="technical-seo" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
-                <div className="text-2xl font-mono font-bold text-violet">01.</div>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
-                  Technical SEO: Crawlability, Core Web Vitals & Schema
-                </h3>
-                <p className="text-mute leading-relaxed text-sm">
-                  Fix indexation bottlenecks, render-blocking scripts, and tune mobile Core Web Vitals to sub-second standards with rich JSON-LD Knowledge Graph schema.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Sub-1-second mobile load tuning</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> JSON-LD Knowledge Graph architecture</div>
+              {/* 01. Technical SEO (Light Blue) */}
+              <section
+                id="technical-seo"
+                className="litmus-card-1 relative rounded-[24px] p-6 sm:p-8 space-y-3 overflow-hidden text-[#07101E]"
+                style={{
+                  background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+                  boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+                <div className="relative z-10 space-y-3">
+                  <div className="text-xs font-mono font-bold text-[#07101E]/80 bg-white/50 px-2.5 py-0.5 rounded-full w-fit">
+                    DELIVERABLE 01 • LIGHT BLUE
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-display font-extrabold text-[#07101E]">
+                    Technical SEO: Crawlability, Core Web Vitals & Schema
+                  </h3>
+                  <p className="text-[#0A2540] font-medium leading-relaxed text-sm">
+                    Fix indexation bottlenecks, render-blocking scripts, and tune mobile Core Web Vitals to sub-second standards with rich JSON-LD Knowledge Graph schema.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-semibold text-[#07101E] border-t border-[#07101E]/15">
+                    <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#07101E] shrink-0" /> Sub-1-second mobile load tuning</div>
+                    <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#07101E] shrink-0" /> JSON-LD Knowledge Graph architecture</div>
+                  </div>
                 </div>
               </section>
 
-              {/* 02. Content Clusters */}
-              <section id="content-clusters" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
-                <div className="text-2xl font-mono font-bold text-violet">02.</div>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
-                  Content Clusters Mapped to Commercial Intent
-                </h3>
-                <p className="text-mute leading-relaxed text-sm">
-                  Build semantic pillar-and-cluster content to capture high-intent bottom-of-funnel searchers and dominate national search indexes.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> High-converting commercial landing pages</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Internal link architecture optimization</div>
+              {/* 02. Content Clusters (Medium Blue) */}
+              <section
+                id="content-clusters"
+                className="litmus-card-2 relative rounded-[24px] p-6 sm:p-8 space-y-3 overflow-hidden text-white"
+                style={{
+                  background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                  boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+                <div className="relative z-10 space-y-3">
+                  <div className="text-xs font-mono font-bold text-white/90 bg-white/20 px-2.5 py-0.5 rounded-full w-fit">
+                    DELIVERABLE 02 • MEDIUM BLUE
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-display font-extrabold text-white drop-shadow-xs">
+                    Content Clusters Mapped to Commercial Intent
+                  </h3>
+                  <p className="text-sky-100 font-medium leading-relaxed text-sm">
+                    Build semantic pillar-and-cluster content to capture high-intent bottom-of-funnel searchers and dominate national search indexes.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-medium text-white border-t border-white/20">
+                    <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-white shrink-0" /> High-converting commercial landing pages</div>
+                    <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-white shrink-0" /> Internal link architecture optimization</div>
+                  </div>
                 </div>
               </section>
 
-              {/* 03. AEO and GEO */}
-              <section id="ai-seo-aeo" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
-                <div className="text-2xl font-mono font-bold text-violet">03.</div>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
-                  AEO & GEO: Getting Cited by ChatGPT, Perplexity & AI Overviews
-                </h3>
-                <p className="text-mute leading-relaxed text-sm">
-                  Format brand data and specs into machine-readable structures so conversational AI models directly cite your brand as the answer.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> LLM model citation optimization</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Zero-click AI snippet capture</div>
+              {/* 03. AEO and GEO (Dark Blue) */}
+              <section
+                id="ai-seo-aeo"
+                className="litmus-card-3 relative rounded-[24px] p-6 sm:p-8 space-y-3 overflow-hidden text-white"
+                style={{
+                  background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                  boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+                <div className="relative z-10 space-y-3">
+                  <div className="text-xs font-mono font-bold text-blue-100 bg-black/20 px-2.5 py-0.5 rounded-full w-fit">
+                    DELIVERABLE 03 • DARK BLUE
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-display font-extrabold text-white drop-shadow-sm">
+                    AEO & GEO: Getting Cited by ChatGPT, Perplexity & AI Overviews
+                  </h3>
+                  <p className="text-blue-100 font-medium leading-relaxed text-sm">
+                    Format brand data and specs into machine-readable structures so conversational AI models directly cite your brand as the answer.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-medium text-white border-t border-white/20">
+                    <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#5DAFFF] shrink-0" /> LLM model citation optimization</div>
+                    <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#5DAFFF] shrink-0" /> Zero-click AI snippet capture</div>
+                  </div>
                 </div>
               </section>
 

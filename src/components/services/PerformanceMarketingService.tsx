@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { 
   CheckCircle2, 
-  HelpCircle, 
   Sliders,
   Activity
 } from 'lucide-react';
-import { Button } from '../ui/Button';
+
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 
@@ -133,43 +132,52 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </button>
       </div>
 
-      {/* 1. HERO SECTION: variant="split" (Hero 60/40, copy left, animated spend-to-return chart right) */}
+      {/* 1. HERO SECTION: Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#0a0d16] border border-teal/30 rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-2xl">
-          {/* Subtle background glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl -z-0 pointer-events-none" />
+        <div
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-[24px] p-8 sm:p-12 relative overflow-hidden shadow-2xl text-white"
+          style={{
+            background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+            boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+          }}
+        >
+          {/* Glass Glare */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
 
-          {/* Left Column: 60% (col-span-7) */}
+          {/* Left Column */}
           <div className="lg:col-span-7 space-y-6 relative z-10">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1 bg-teal/15 text-teal text-xs font-mono font-bold rounded-full border border-teal/40 uppercase">
+              <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
                 ACQUIRE PILLAR • PERFORMANCE MARKETING
               </span>
-              <span className="px-3 py-1 bg-white/10 text-white/70 text-xs font-mono rounded-full">
+              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
                 SLUG: services/performance-marketing
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight">
-              Paid Media Judged on Return, Not Reach<span className="text-teal">.</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
+              Paid Media Judged on Return, Not Reach<span className="text-sky-200">.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-body">
-              Meta, Google and TikTok campaigns managed strictly to blended ROAS and Contribution Margin. Built for D2C and lead-gen founders spending <strong className="text-teal font-mono">[SPEND_BAND: $10k - $200k+ / mo]</strong> whose ROAS has flattened and who cannot tell which campaign is carrying it.
+            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
+              Meta & Google campaigns managed strictly to blended ROAS and Contribution Margin. Built for D2C and lead-gen founders spending <strong className="text-white font-mono">[SPEND_BAND: $10k - $200k+ / mo]</strong> whose ROAS has flattened and who cannot tell which campaign is carrying it.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
-              <Button variant="primary" size="lg" onClick={() => onOpenAudit('acquire-performance')}>
+              <button
+                onClick={() => onOpenAudit('acquire-performance')}
+                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
+              >
                 Get Free Live Account Audit (No Obligation) →
-              </Button>
-              <div className="text-xs text-white/60 font-mono">
-                Management baseline from <strong className="text-teal">[PRICE: $2,500 AUD / ₹1.5L / mo]</strong>
+              </button>
+              <div className="text-xs text-sky-100 font-mono">
+                Management baseline from <strong className="text-white font-bold">[PRICE: $2,500 AUD / ₹1.5L / mo]</strong>
               </div>
             </div>
 
             {/* Supporting Keywords Pills */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2 text-xs font-mono text-white/60">
-              <span className="text-teal font-bold">PRIMARY:</span> performance marketing agency |
+            <div className="pt-4 border-t border-white/20 flex flex-wrap gap-2 text-xs font-mono text-sky-100">
+              <span className="text-white font-bold">PRIMARY:</span> performance marketing agency |
               <span>meta ads agency</span> |
               <span>google ads management</span> |
               <span>tiktok ads agency</span> |
@@ -177,56 +185,65 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </div>
           </div>
 
-          {/* Right Column: 40% (col-span-5) Animated Spend-to-Return Chart */}
+          {/* Right Column: Spend-to-Return Simulator (Dark Blue Litmus #3B7FC3 -> #0D2D5C) */}
           <div className="lg:col-span-5 relative z-10">
-            <div className="bg-ink/90 border border-teal/40 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl backdrop-blur-md">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-teal animate-pulse" />
-                  <span className="text-xs font-mono font-bold text-teal uppercase">SPEND TO RETURN SIMULATOR</span>
-                </div>
-                <span className="text-xs font-mono text-emerald-400 font-bold bg-emerald-400/10 px-2.5 py-1 rounded-full">
-                  LIVE BENCHMARK
-                </span>
-              </div>
-
-              {/* Animated Spend Bar Chart */}
-              <div className="space-y-4 font-mono">
-                <div>
-                  <div className="flex justify-between text-xs text-white/70 mb-1">
-                    <span>Monthly Ad Spend</span>
-                    <span className="text-teal font-bold">$50,000 AUD</span>
+            <div
+              className="rounded-[24px] p-6 sm:p-8 space-y-6 shadow-2xl backdrop-blur-md text-white overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-center justify-between border-b border-white/20 pb-4">
+                  <div className="flex items-center gap-2">
+                    <Activity className="w-4 h-4 text-[#5DAFFF] animate-pulse" />
+                    <span className="text-xs font-mono font-bold text-white uppercase">SPEND TO RETURN SIMULATOR</span>
                   </div>
-                  <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-white/40 w-1/3 rounded-full" />
-                  </div>
+                  <span className="text-xs font-mono text-white font-bold bg-white/20 px-2.5 py-1 rounded-full border border-white/30">
+                    LIVE BENCHMARK
+                  </span>
                 </div>
 
-                <div>
-                  <div className="flex justify-between text-xs text-white/70 mb-1">
-                    <span>Legacy Agency Return (2.1x ROAS)</span>
-                    <span className="text-red-400 font-bold">$105,000 AUD</span>
+                {/* Animated Spend Bar Chart */}
+                <div className="space-y-4 font-mono">
+                  <div>
+                    <div className="flex justify-between text-xs text-blue-100 mb-1 font-semibold">
+                      <span>Monthly Ad Spend</span>
+                      <span className="text-white font-bold">$50,000 AUD</span>
+                    </div>
+                    <div className="h-3 bg-black/20 rounded-full overflow-hidden border border-white/10">
+                      <div className="h-full bg-white/50 w-1/3 rounded-full" />
+                    </div>
                   </div>
-                  <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-red-500/60 w-1/2 rounded-full" />
+
+                  <div>
+                    <div className="flex justify-between text-xs text-blue-100 mb-1 font-semibold">
+                      <span>Legacy Agency Return (2.1x ROAS)</span>
+                      <span className="text-red-300 font-bold">$105,000 AUD</span>
+                    </div>
+                    <div className="h-3 bg-black/20 rounded-full overflow-hidden border border-white/10">
+                      <div className="h-full bg-red-400/80 w-1/2 rounded-full" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-xs text-blue-100 mb-1 font-semibold">
+                      <span>Janusmaad Rebuild Return (4x ROAS)</span>
+                      <span className="text-emerald-300 font-bold">$200,000 AUD</span>
+                    </div>
+                    <div className="h-3 bg-black/20 rounded-full overflow-hidden border border-white/10">
+                      <div className="h-full bg-[#5DAFFF] w-[92%] rounded-full animate-pulse" />
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <div className="flex justify-between text-xs text-white/70 mb-1">
-                    <span>Janusmaad Rebuild Return (4x ROAS)</span>
-                    <span className="text-emerald-400 font-bold">$200,000 AUD</span>
-                  </div>
-                  <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-teal w-[92%] rounded-full animate-pulse" />
-                  </div>
+                <div className="p-4 bg-black/25 border border-white/20 rounded-xl space-y-1">
+                  <div className="text-xs font-mono font-bold text-[#5DAFFF] uppercase">NET LIFT DEMONSTRATED</div>
+                  <div className="text-2xl font-display font-extrabold text-white">+$136,000 AUD / Mo</div>
+                  <div className="text-xs text-blue-100">Attributable via GA4 + CAPI Server-Side Tagging</div>
                 </div>
-              </div>
-
-              <div className="p-4 bg-teal/10 border border-teal/30 rounded-xl space-y-1">
-                <div className="text-xs font-mono font-bold text-teal uppercase">NET LIFT DEMONSTRATED</div>
-                <div className="text-2xl font-display font-extrabold text-white">+$136,000 AUD / Mo</div>
-                <div className="text-xs text-white/70">Attributable via GA4 + CAPI Server-Side Tagging</div>
               </div>
             </div>
           </div>
@@ -263,29 +280,65 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
-              <div className="text-teal font-mono font-bold text-xs uppercase">• AI-POWERED OPTIMISATION</div>
-              <h3 className="text-lg font-bold text-white">Pattern & Opportunity Discovery</h3>
-              <p className="text-xs text-white/70 leading-relaxed">
-                AI-powered optimisation to uncover patterns, arbitrage, and scaling opportunities in real-time.
-              </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2 items-stretch">
+            {/* Card 1: Light Blue */}
+            <div
+              className="litmus-card-1 relative rounded-[24px] p-6 space-y-2 text-[#07101E] overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
+              style={{
+                background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-xs font-mono font-bold text-[#07101E]/90 bg-white/60 px-2.5 py-0.5 rounded-full w-fit">
+                  AI-POWERED OPTIMISATION
+                </div>
+                <h3 className="text-lg font-extrabold text-[#07101E]">Pattern & Opportunity Discovery</h3>
+                <p className="text-xs text-[#0A2540] font-medium leading-relaxed">
+                  AI-powered optimisation to uncover patterns, arbitrage, and scaling opportunities in real-time.
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
-              <div className="text-teal font-mono font-bold text-xs uppercase">• MULTI-PLATFORM PERFORMANCE</div>
-              <h3 className="text-lg font-bold text-white">Cross-Channel Presence</h3>
-              <p className="text-xs text-white/70 leading-relaxed">
-                Multi-platform performance across the channels where your highest-LTV buyers actually hang out.
-              </p>
+            {/* Card 2: Medium Blue */}
+            <div
+              className="litmus-card-2 relative rounded-[24px] p-6 space-y-2 text-white overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
+              style={{
+                background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-xs font-mono font-bold text-white/90 bg-white/20 px-2.5 py-0.5 rounded-full w-fit">
+                  MULTI-PLATFORM PERFORMANCE
+                </div>
+                <h3 className="text-lg font-extrabold text-white drop-shadow-xs">Cross-Channel Presence</h3>
+                <p className="text-xs text-sky-100 font-medium leading-relaxed">
+                  Multi-platform performance across the channels where your highest-LTV buyers actually hang out.
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
-              <div className="text-teal font-mono font-bold text-xs uppercase">• REGULAR CAMPAIGN REVIEWS</div>
-              <h3 className="text-lg font-bold text-white">No 'Set and Forget' Approach</h3>
-              <p className="text-xs text-white/70 leading-relaxed">
-                Regular campaign reviews with weekly video teardowns — no 'set and forget' agency laziness.
-              </p>
+            {/* Card 3: Dark Blue */}
+            <div
+              className="litmus-card-3 relative rounded-[24px] p-6 space-y-2 text-white overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
+              style={{
+                background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-xs font-mono font-bold text-blue-100 bg-black/20 px-2.5 py-0.5 rounded-full w-fit">
+                  REGULAR CAMPAIGN REVIEWS
+                </div>
+                <h3 className="text-lg font-extrabold text-white drop-shadow-sm">No 'Set and Forget' Approach</h3>
+                <p className="text-xs text-blue-100 font-medium leading-relaxed">
+                  Regular campaign reviews with weekly video teardowns — no 'set and forget' agency laziness.
+                </p>
+              </div>
             </div>
 
             <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
@@ -389,7 +442,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               <span className="text-teal">➔ Promoted to Meta ASC</span>
             </div>
             <div className="p-3 bg-white rounded-xl border border-teal/30 text-ink font-bold flex items-center justify-between">
-              <span>TikTok Trend Hook</span>
+              <span>Performance UGC Hook</span>
               <span className="text-teal">➔ Scaled to $5k/day</span>
             </div>
           </div>
@@ -397,9 +450,9 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
         {/* Group 4 & 5: Budget, Bid Strategy & Measurement */}
         <div id="tracking-attribution" className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div id="tiktok-ads" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
+          <div id="tracking-attribution-budget" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
             <div className="text-xs font-mono font-bold text-teal">DELIVERABLE 04</div>
-            <h3 className="text-xl font-display font-bold text-ink">Budget & Bid Strategy (Meta, Google, TikTok)</h3>
+            <h3 className="text-xl font-display font-bold text-ink">Budget & Bid Strategy (Meta & Google)</h3>
             <p className="text-mute text-sm leading-relaxed">
               Dynamic cross-channel budget allocation based on marginal ROAS — shifting capital live to whichever platform yields the lowest CAC.
             </p>
@@ -489,117 +542,51 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               </div>
             </div>
 
-            {/* Output Side */}
-            <div className="lg:col-span-5 bg-white/5 border border-teal/40 rounded-2xl p-6 space-y-6 flex flex-col justify-between">
-              <div className="space-y-4 font-mono">
-                <div>
-                  <div className="text-xs text-white/60">Projected Blended ROAS</div>
-                  <div className="text-3xl font-display font-extrabold text-teal">{projectedROAS}x</div>
+            {/* Output Side: Medium Blue Litmus Card (#5DAFFF -> #1D5B9A) */}
+            <div
+              className="lg:col-span-5 rounded-[24px] p-6 sm:p-8 space-y-6 flex flex-col justify-between relative overflow-hidden text-white shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-6 flex flex-col justify-between h-full">
+                <div className="space-y-4 font-mono">
+                  <div>
+                    <div className="text-xs text-sky-100 font-medium">Projected Blended ROAS</div>
+                    <div className="text-3xl font-display font-extrabold text-white drop-shadow-xs">{projectedROAS}x</div>
+                  </div>
+
+                  <div>
+                    <div className="text-xs text-sky-100 font-medium">Extra Monthly Revenue</div>
+                    <div className="text-2xl font-display font-extrabold text-white">{formatCurrency(extraMonthlyRevenue)}</div>
+                  </div>
+
+                  <div>
+                    <div className="text-xs text-sky-100 font-medium">12-Month Cumulative Gain</div>
+                    <div className="text-2xl font-display font-extrabold text-emerald-300">{formatCurrency(annualGain)}</div>
+                  </div>
+
+                  <div>
+                    <div className="text-xs text-sky-100 font-medium">Estimated Payback Window</div>
+                    <div className="text-xl font-bold text-white">{paybackDays} Days</div>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="text-xs text-white/60">Extra Monthly Revenue</div>
-                  <div className="text-2xl font-display font-bold text-white">{formatCurrency(extraMonthlyRevenue)}</div>
-                </div>
-
-                <div>
-                  <div className="text-xs text-white/60">12-Month Cumulative Gain</div>
-                  <div className="text-2xl font-display font-bold text-emerald-400">{formatCurrency(annualGain)}</div>
-                </div>
-
-                <div>
-                  <div className="text-xs text-white/60">Estimated Payback Window</div>
-                  <div className="text-xl font-bold text-white">{paybackDays} Days</div>
-                </div>
+                <button
+                  onClick={() => onOpenAudit('acquire-performance')}
+                  className="w-full py-3.5 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/95 transition-all shadow-md cursor-pointer uppercase tracking-wider"
+                >
+                  CLAIM THIS ROAS GROWTH →
+                </button>
               </div>
-
-              <Button variant="primary" size="md" onClick={() => onOpenAudit('acquire-performance')}>
-                Claim This ROAS Growth →
-              </Button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 4. PRICING TIERS SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-12">
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            ENGAGEMENT TIERS
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-ink">
-            Transparent Media Buying Packages
-          </h2>
-          <p className="text-mute text-base">
-            No percentage penalties on ad spend scaling. Pick the tier that matches your spend.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Tier 1 */}
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-6 flex flex-col justify-between shadow-sm">
-            <div className="space-y-4">
-              <div className="text-xs font-mono font-bold text-teal uppercase">TIER 01 • DIAGNOSTIC</div>
-              <h3 className="text-xl font-display font-bold text-ink">Free Account Audit</h3>
-              <div className="text-3xl font-display font-extrabold text-ink">$0 <span className="text-xs font-mono text-mute">/ 100% Free</span></div>
-              <p className="text-xs text-mute leading-relaxed">
-                Live account teardown covering tracking, audience overlap, and waste identification.
-              </p>
-            </div>
-            <Button variant="outline" size="sm" onClick={() => onOpenAudit('acquire-performance')}>
-              Request Free Audit
-            </Button>
-          </div>
-
-          {/* Tier 2 */}
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-6 flex flex-col justify-between shadow-sm">
-            <div className="space-y-4">
-              <div className="text-xs font-mono font-bold text-teal uppercase">TIER 02 • LAUNCH</div>
-              <h3 className="text-xl font-display font-bold text-ink">Performance Launch</h3>
-              <div className="text-3xl font-display font-extrabold text-ink">[PRICE] <span className="text-xs font-mono text-mute">/ mo</span></div>
-              <p className="text-xs text-mute leading-relaxed">
-                For brands spending up to $25k AUD / ₹15L INR monthly across Meta & Google.
-              </p>
-            </div>
-            <Button variant="outline" size="sm" onClick={() => onOpenAudit('acquire-performance')}>
-              Select Launch
-            </Button>
-          </div>
-
-          {/* Tier 3: Featured */}
-          <div className="bg-ink text-white rounded-3xl p-6 border-2 border-teal space-y-6 flex flex-col justify-between shadow-2xl relative">
-            <div className="absolute -top-3 right-6 px-3 py-1 bg-teal text-ink text-[10px] font-mono font-bold rounded-full uppercase">
-              MOST POPULAR
-            </div>
-            <div className="space-y-4">
-              <div className="text-xs font-mono font-bold text-teal uppercase">TIER 03 • SCALE</div>
-              <h3 className="text-xl font-display font-bold text-white">Scale Engine</h3>
-              <div className="text-3xl font-display font-extrabold text-white">[PRICE] <span className="text-xs font-mono text-white/60">/ mo</span></div>
-              <p className="text-xs text-white/80 leading-relaxed">
-                For brands spending $25k - $100k AUD / ₹15L - ₹60L INR. Includes CAPI & creative testing.
-              </p>
-            </div>
-            <Button variant="primary" size="sm" onClick={() => onOpenAudit('acquire-performance')}>
-              Start Scaling
-            </Button>
-          </div>
-
-          {/* Tier 4 */}
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-6 flex flex-col justify-between shadow-sm">
-            <div className="space-y-4">
-              <div className="text-xs font-mono font-bold text-teal uppercase">TIER 04 • FULL FUNNEL</div>
-              <h3 className="text-xl font-display font-bold text-ink">Enterprise Growth</h3>
-              <div className="text-3xl font-display font-extrabold text-ink">Custom <span className="text-xs font-mono text-mute">/ Performance Share</span></div>
-              <p className="text-xs text-mute leading-relaxed">
-                For high-scale brands spending $100k+ AUD / ₹60L+ INR. Includes dedicated creative pod.
-              </p>
-            </div>
-            <Button variant="outline" size="sm" onClick={() => onOpenAudit('acquire-performance')}>
-              Contact Enterprise
-            </Button>
-          </div>
-        </div>
-      </div>
 
       {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR PERFORMANCE MARKETING */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
@@ -623,56 +610,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         <TestimonialsMarquee />
       </div>
 
-      {/* 5. FAQ MUST ANSWER SECTION */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="text-center space-y-3">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            FREQUENTLY ASKED QUESTIONS
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Everything You Need to Know
-          </h2>
-        </div>
 
-        <div className="space-y-4">
-          {[
-            {
-              q: "Do you charge a flat fee or percentage of spend?",
-              a: "We charge a transparent flat monthly retainer aligned to your spend band ([PRICE]/month baseline) or performance-share tiers. We do not punish scaling by taking arbitrary percentages of ad spend."
-            },
-            {
-              q: "What is the minimum monthly ad spend required?",
-              a: "Our performance media management is engineered for brands spending between [SPEND_BAND: $10,000 to $200,000+ AUD / ₹5L to ₹1Cr+ INR] per month."
-            },
-            {
-              q: "What is your contract notice period?",
-              a: "We operate on flexible 30-day notice periods after an initial 90-day sprint foundation. No long-term handcuffs."
-            },
-            {
-              q: "Who owns the ad account and pixel tracking data?",
-              a: "You own 100% of your Meta Business Manager, Google Ads account, TikTok Ads account, GA4, and CAPI pixel data. You retain full ownership forever."
-            },
-            {
-              q: "What is the realistic time to first performance signal?",
-              a: "Initial conversion tracking signals and creative test readouts stabilize within 7 to 14 days of launching structured campaigns."
-            },
-            {
-              q: "What is your reporting cadence?",
-              a: "Real-time client dashboard access + weekly video breakdown + bi-weekly strategic growth alignment calls."
-            }
-          ].map((faq, idx) => (
-            <div key={idx} className="bg-white rounded-2xl p-6 border border-hairline space-y-2">
-              <h3 className="font-display font-bold text-ink text-lg flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-teal shrink-0" />
-                {faq.q}
-              </h3>
-              <p className="text-mute text-sm leading-relaxed pl-7">
-                {faq.a}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* 6. CROSS-LINKS SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 border-t border-hairline pt-12">

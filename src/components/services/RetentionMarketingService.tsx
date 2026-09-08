@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Sliders } from 'lucide-react';
-import { Button } from '../ui/Button';
+import React, { useState, useRef } from 'react';
+import { Sliders, ChevronLeft, ChevronRight } from 'lucide-react';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 
@@ -13,6 +12,8 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
   onOpenAudit,
   onNavigateCapability
 }) => {
+  const scrollRailRef = useRef<HTMLDivElement | null>(null);
+
   // Calculator State
   const [orders, setOrders] = useState(3000); // 3,000 orders/mo
   const [repeatRate, setRepeatRate] = useState(18); // 18% current repeat rate
@@ -23,6 +24,16 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
   const incrementalRepeatOrders = Math.round(orders * ((newRepeatRate - repeatRate) / 100));
   const extraMonthlyRevenue = incrementalRepeatOrders * aov;
   const annualGain = extraMonthlyRevenue * 12;
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRailRef.current) {
+      const scrollAmount = 360;
+      scrollRailRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   const formatCurrency = (val: number) => {
     if (val >= 10000000) return `₹${(val / 10000000).toFixed(2)}Cr`;
@@ -62,41 +73,55 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
         </button>
       </div>
 
-      {/* 1. HERO SECTION: variant="flow" (Connected node map down left gutter marking lifecycle stages) */}
+      {/* 1. HERO SECTION: Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-gradient-to-br from-[#091512] via-[#0d1e1a] to-[#07120f] text-white rounded-3xl p-8 sm:p-14 border border-emerald-500/30 space-y-8 relative overflow-hidden shadow-2xl">
+        <div
+          className="rounded-[24px] p-8 sm:p-14 space-y-8 relative overflow-hidden shadow-2xl text-white"
+          style={{
+            background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+            boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+          }}
+        >
+          {/* Glass Glare Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
           
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3.5 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold rounded-full border border-emerald-500/30 uppercase">
-              RETAIN PILLAR • LIFECYCLE & RETENTION
-            </span>
-            <span className="px-3 py-1 bg-white/10 text-white/70 text-xs font-mono rounded-full">
-              SLUG: services/retention-marketing
-            </span>
-          </div>
+          <div className="relative z-10 space-y-6 max-w-3xl">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
+                RETAIN PILLAR • LIFECYCLE & RETENTION
+              </span>
+              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
+                SLUG: services/retention-marketing
+              </span>
+            </div>
 
-          <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight">
-            Email, SMS & WhatsApp Flows That Lift Lifetime Value<span className="text-teal">.</span>
-          </h1>
+            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
+              Email, SMS & WhatsApp Flows That Lift Lifetime Value<span className="text-sky-200">.</span>
+            </h1>
 
-          <p className="text-base sm:text-lg text-white/80 max-w-3xl leading-relaxed font-body">
-            Automated lifecycle flows and predictive RFM segmentation engineered for brands where repeat rate is flat, customer acquisition cost (CAC) keeps climbing, and customer subscriber lists are sitting unsegmented.
-          </p>
+            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
+              Automated lifecycle flows and predictive RFM segmentation engineered for brands where repeat rate is flat, customer acquisition cost (CAC) keeps climbing, and customer subscriber lists are sitting unsegmented.
+            </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-4">
-            <Button variant="primary" size="lg" className="bg-teal text-ink font-bold hover:bg-emerald-400 border-none" onClick={() => onOpenAudit('retain-marketing')}>
-              Get Free Flow & Deliverability Audit →
-            </Button>
-          </div>
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => onOpenAudit('retain-marketing')}
+                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
+              >
+                Get Free Flow & Deliverability Audit →
+              </button>
+            </div>
 
-          {/* Supporting Keywords */}
-          <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2 text-xs font-mono text-white/60">
-            <span className="text-teal font-bold">PRIMARY:</span> retention marketing agency |
-            <span>Klaviyo agency</span> |
-            <span>WhatsApp marketing API</span> |
-            <span>email marketing agency</span> |
-            <span>lifecycle marketing</span> |
-            <span>customer LTV</span>
+            {/* Supporting Keywords */}
+            <div className="pt-4 border-t border-white/20 flex flex-wrap gap-2 text-xs font-mono text-sky-100">
+              <span className="text-white font-bold font-mono uppercase">PRIMARY:</span>
+              <span>retention marketing agency</span> |
+              <span>Klaviyo agency</span> |
+              <span>WhatsApp marketing API</span> |
+              <span>email marketing agency</span> |
+              <span>lifecycle marketing</span> |
+              <span>customer LTV</span>
+            </div>
           </div>
         </div>
       </div>
@@ -116,60 +141,151 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
         </div>
       </div>
 
-      {/* 2. VERTICAL CONNECTED FLOWS SECTION (Horizontal scroll track on desktop, stacked on mobile) */}
-      <div id="core-flows" className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            THE 5 DELIVERABLE GROUPS
+      {/* 2. CORE LIFECYCLE FLOW ARCHITECTURE: Interactive Scroll Rail with 5 Litmus Cards */}
+      <div id="core-flows" className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-hairline pb-4">
+          <div className="space-y-2">
+            <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
+              THE 5 DELIVERABLE GROUPS
+            </div>
+            <h2 className="text-3xl font-display font-extrabold text-ink">
+              Core Lifecycle Flow Architecture
+            </h2>
           </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Core Lifecycle Flow Architecture
-          </h2>
+
+          {/* Interactive Rail Controls */}
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <button
+              onClick={() => handleScroll('left')}
+              className="p-3 bg-white border border-hairline hover:border-teal rounded-full shadow-sm hover:scale-105 active:scale-95 transition-all text-ink hover:text-teal cursor-pointer"
+              aria-label="Scroll rail left"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => handleScroll('right')}
+              className="p-3 bg-white border border-hairline hover:border-teal rounded-full shadow-sm hover:scale-105 active:scale-95 transition-all text-ink hover:text-teal cursor-pointer"
+              aria-label="Scroll rail right"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Desktop Horizontal Scroll Track / Mobile Stack */}
-        <div className="flex flex-col md:flex-row overflow-x-auto gap-6 pb-4 scrollbar-none snap-x">
-          
-          <div className="md:w-80 shrink-0 bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm snap-start">
-            <span className="text-xs font-mono font-bold text-teal">FLOW 01</span>
-            <h3 id="campaigns" className="text-xl font-bold text-ink">Welcome Series (3-Part)</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Introducing brand story, zero-party preference quiz, and first-purchase incentive.
-            </p>
+        {/* Swipe / Drag / Scroll Rail with all 5 Litmus Gradient Cards */}
+        <div
+          ref={scrollRailRef}
+          className="flex overflow-x-auto gap-6 pb-6 pt-2 scrollbar-none snap-x items-stretch scroll-smooth"
+        >
+          {/* Flow 01: Light Blue */}
+          <div
+            className="litmus-card-1 w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-[#07101E] hover:-translate-y-1 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+            <div className="relative z-10 space-y-4">
+              <span className="px-3 py-1 bg-white/60 border border-white/80 text-[#07101E] text-xs font-mono font-bold rounded-full w-fit inline-block">
+                FLOW 01 • LIGHT BLUE
+              </span>
+              <h3 id="campaigns" className="text-2xl font-display font-extrabold text-[#07101E]">
+                Welcome Series (3-Part)
+              </h3>
+              <p className="text-xs text-[#0A2540] font-medium leading-relaxed">
+                Introducing brand story, zero-party preference quiz, and first-purchase incentive.
+              </p>
+            </div>
           </div>
 
-          <div className="md:w-80 shrink-0 bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm snap-start">
-            <span className="text-xs font-mono font-bold text-teal">FLOW 02</span>
-            <h3 id="whatsapp-api" className="text-xl font-bold text-ink">Abandoned Cart & Checkout</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Multi-channel recovery triggers via Email + WhatsApp API within 15 minutes of drop-off.
-            </p>
+          {/* Flow 02: Medium Blue */}
+          <div
+            className="litmus-card-2 w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+            <div className="relative z-10 space-y-4">
+              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
+                FLOW 02 • MEDIUM BLUE
+              </span>
+              <h3 id="whatsapp-api" className="text-2xl font-display font-extrabold text-white drop-shadow-xs">
+                Abandoned Cart & Checkout
+              </h3>
+              <p className="text-xs text-sky-100 font-medium leading-relaxed">
+                Multi-channel recovery triggers via Email + WhatsApp API within 15 minutes of drop-off.
+              </p>
+            </div>
           </div>
 
-          <div className="md:w-80 shrink-0 bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm snap-start">
-            <span className="text-xs font-mono font-bold text-teal">FLOW 03</span>
-            <h3 id="segmentation-rfm" className="text-xl font-bold text-ink">Post-Purchase & Cross-Sell</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Product usage instructions, review capture, and dynamic cross-sell recommendations.
-            </p>
+          {/* Flow 03: Dark Blue */}
+          <div
+            className="litmus-card-3 w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+            <div className="relative z-10 space-y-4">
+              <span className="px-3 py-1 bg-white/15 border border-white/30 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
+                FLOW 03 • DARK BLUE
+              </span>
+              <h3 id="segmentation-rfm" className="text-2xl font-display font-extrabold text-white drop-shadow-sm">
+                Post-Purchase & Cross-Sell
+              </h3>
+              <p className="text-xs text-blue-100 font-medium leading-relaxed">
+                Product usage instructions, review capture, and dynamic cross-sell recommendations.
+              </p>
+            </div>
           </div>
 
-          <div className="md:w-80 shrink-0 bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm snap-start">
-            <span className="text-xs font-mono font-bold text-teal">FLOW 04</span>
-            <h3 id="deliverability" className="text-xl font-bold text-ink">Winback & Sunset Flow</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Re-engaging unengaged contacts before list cleaning to maintain high deliverability.
-            </p>
+          {/* Flow 04: Cyan Sky Litmus Card */}
+          <div
+            className="w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, #60A5FA 0%, #1E40AF 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+            <div className="relative z-10 space-y-4">
+              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
+                FLOW 04 • CYAN SKY
+              </span>
+              <h3 id="deliverability" className="text-2xl font-display font-extrabold text-white drop-shadow-xs">
+                Winback & Sunset Flow
+              </h3>
+              <p className="text-xs text-sky-100 font-medium leading-relaxed">
+                Re-engaging unengaged contacts before list cleaning to maintain high deliverability and sender reputation.
+              </p>
+            </div>
           </div>
 
-          <div className="md:w-80 shrink-0 bg-ink text-white rounded-3xl p-6 border border-teal space-y-4 shadow-2xl snap-start">
-            <span className="text-xs font-mono font-bold text-teal">FLOW 05</span>
-            <h3 className="text-xl font-bold text-white">VIP Tier & RFM Modeling</h3>
-            <p className="text-xs text-white/80 leading-relaxed">
-              Segmenting high-LTV buyers into exclusive early-access drop lists and rewards.
-            </p>
+          {/* Flow 05: Royal Deep Litmus Card */}
+          <div
+            className="w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, #38BDF8 0%, #0369A1 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+            <div className="relative z-10 space-y-4">
+              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
+                FLOW 05 • ROYAL BLUE
+              </span>
+              <h3 className="text-2xl font-display font-extrabold text-white drop-shadow-xs">
+                VIP Tier & RFM Modeling
+              </h3>
+              <p className="text-xs text-sky-100 font-medium leading-relaxed">
+                Segmenting high-LTV buyers into exclusive early-access drop lists, rewards tiers, and personalized VIP flows.
+              </p>
+            </div>
           </div>
-
         </div>
       </div>
 
@@ -237,32 +353,44 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
               </div>
             </div>
 
-            <div className="lg:col-span-5 bg-white/5 border border-teal/30 rounded-2xl p-6 space-y-4 font-mono flex flex-col justify-between">
-              <div className="space-y-3 text-xs">
-                <div>
-                  <div className="text-white/60">New Repeat Purchase Rate</div>
-                  <div className="text-3xl font-bold text-teal">{newRepeatRate}%</div>
+            <div
+              className="lg:col-span-5 rounded-[24px] p-6 space-y-4 font-mono flex flex-col justify-between relative overflow-hidden text-white shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-4 flex flex-col justify-between h-full">
+                <div className="space-y-3 text-xs">
+                  <div>
+                    <div className="text-sky-100 font-medium">New Repeat Purchase Rate</div>
+                    <div className="text-3xl font-extrabold text-white drop-shadow-xs">{newRepeatRate}%</div>
+                  </div>
+
+                  <div>
+                    <div className="text-sky-100 font-medium">Incremental Repeat Orders / Mo</div>
+                    <div className="text-2xl font-extrabold text-white">+{incrementalRepeatOrders.toLocaleString()} Orders</div>
+                  </div>
+
+                  <div>
+                    <div className="text-sky-100 font-medium">Extra Monthly Revenue</div>
+                    <div className="text-2xl font-extrabold text-emerald-300">{formatCurrency(extraMonthlyRevenue)}</div>
+                  </div>
+
+                  <div>
+                    <div className="text-sky-100 font-medium">12-Month Cumulative Gain</div>
+                    <div className="text-xl font-extrabold text-white">{formatCurrency(annualGain)}</div>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="text-white/60">Incremental Repeat Orders / Mo</div>
-                  <div className="text-2xl font-bold text-white">+{incrementalRepeatOrders.toLocaleString()} Orders</div>
-                </div>
-
-                <div>
-                  <div className="text-white/60">Extra Monthly Revenue</div>
-                  <div className="text-2xl font-bold text-emerald-400">{formatCurrency(extraMonthlyRevenue)}</div>
-                </div>
-
-                <div>
-                  <div className="text-white/60">12-Month Cumulative Gain</div>
-                  <div className="text-xl font-bold text-white">{formatCurrency(annualGain)}</div>
-                </div>
+                <button
+                  onClick={() => onOpenAudit('retain-marketing')}
+                  className="w-full py-3.5 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/95 transition-all shadow-md cursor-pointer mt-4 uppercase tracking-wider"
+                >
+                  UNLOCK RETENTION LIFT →
+                </button>
               </div>
-
-              <Button variant="primary" size="md" className="bg-teal text-ink font-bold border-none" onClick={() => onOpenAudit('retain-marketing')}>
-                Unlock Retention Lift →
-              </Button>
             </div>
           </div>
         </div>

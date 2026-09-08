@@ -1,6 +1,5 @@
 import React from 'react';
 import { Gauge } from 'lucide-react';
-import { Button } from '../ui/Button';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 import { HowWeWork } from '../process/HowWeWork';
@@ -47,38 +46,50 @@ export const BuildService: React.FC<BuildServiceProps> = ({
         </button>
       </div>
 
-      {/* 1. HERO SECTION: variant="showcase" (Full-bleed hero, device mockup bleeding past right edge) */}
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#070b12] text-white py-16 px-4 sm:px-12 border-y border-teal/20 shadow-2xl">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* 1. HERO SECTION: Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
+      <div
+        className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-16 px-4 sm:px-12 rounded-[24px] text-white overflow-hidden shadow-2xl"
+        style={{
+          background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+          boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+        }}
+      >
+        {/* Glass Glare */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           
           {/* Left Text Column */}
           <div className="lg:col-span-7 space-y-6">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1 bg-teal/15 text-teal text-xs font-mono font-bold rounded-full border border-teal/30 uppercase">
+              <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
                 CONVERT PILLAR • DESIGN & DEVELOPMENT
               </span>
-              <span className="px-3 py-1 bg-white/10 text-white/70 text-xs font-mono rounded-full">
+              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
                 SLUG: services/web-design-development
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight">
-              Pages & Storefronts Built to Load Fast & Convert<span className="text-teal">.</span>
+            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
+              Pages & Storefronts Built to Load Fast & Convert<span className="text-sky-200">.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-body">
+            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
               Fast bespoke landing pages and custom Shopify storefronts, built mobile-first and speed-tuned to sub-1-second standards. Engineered for brands whose site is slow, off-brand, or actively throttling paid media return.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
-              <Button variant="primary" size="lg" className="bg-teal text-ink font-bold hover:bg-emerald-400 border-none" onClick={() => onOpenAudit('convert-build')}>
+              <button
+                onClick={() => onOpenAudit('convert-build')}
+                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
+              >
                 Get Free Speed & Conversion Teardown →
-              </Button>
+              </button>
             </div>
 
             {/* Supporting Keywords */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2 text-xs font-mono text-white/60">
-              <span className="text-teal font-bold">PRIMARY:</span> Shopify development agency |
+            <div className="pt-4 border-t border-white/20 flex flex-wrap gap-2 text-xs font-mono text-sky-100">
+              <span className="text-white font-bold">PRIMARY:</span> Shopify development agency |
               <span>landing page design</span> |
               <span>custom Shopify theme</span> |
               <span>headless Shopify</span> |
@@ -87,31 +98,40 @@ export const BuildService: React.FC<BuildServiceProps> = ({
             </div>
           </div>
 
-          {/* Right Bleeding Device Mockup */}
+          {/* Right Bleeding Device Mockup Card (Dark Blue Litmus #3B7FC3 -> #0D2D5C) */}
           <div className="lg:col-span-5 relative">
-            <div className="lg:translate-x-12 translate-y-4 bg-ink/90 border-2 border-teal/40 rounded-3xl p-6 shadow-2xl space-y-4 backdrop-blur-xl">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs">
-                <span className="text-teal font-bold">DEVICE MOCKUP PROOF</span>
-                <span className="text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">SUB-0.65s MOBILE</span>
-              </div>
-              
-              <div className="space-y-3 font-mono text-xs">
-                <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                  <span className="text-white/80">Lighthouse Score</span>
-                  <span className="text-emerald-400 font-bold">98 / 100</span>
+            <div
+              className="lg:translate-x-12 translate-y-4 rounded-[24px] p-6 space-y-4 shadow-2xl backdrop-blur-xl text-white overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-4">
+                <div className="flex items-center justify-between border-b border-white/20 pb-3 font-mono text-xs">
+                  <span className="text-blue-100 font-bold">DEVICE MOCKUP PROOF</span>
+                  <span className="text-white bg-white/20 px-2.5 py-0.5 rounded-full font-bold border border-white/30">SUB-0.65s MOBILE</span>
                 </div>
-                <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                  <span className="text-white/80">Largest Contentful Paint</span>
-                  <span className="text-teal font-bold">0.62s</span>
+                
+                <div className="space-y-3 font-mono text-xs">
+                  <div className="p-3 bg-black/20 rounded-xl border border-white/20 flex items-center justify-between">
+                    <span className="text-white/90">Lighthouse Score</span>
+                    <span className="text-emerald-300 font-bold">98 / 100</span>
+                  </div>
+                  <div className="p-3 bg-black/20 rounded-xl border border-white/20 flex items-center justify-between">
+                    <span className="text-white/90">Largest Contentful Paint</span>
+                    <span className="text-sky-200 font-bold">0.62s</span>
+                  </div>
+                  <div className="p-3 bg-black/20 rounded-xl border border-white/20 flex items-center justify-between">
+                    <span className="text-white/90">Cumulative Layout Shift</span>
+                    <span className="text-sky-200 font-bold">0.000</span>
+                  </div>
                 </div>
-                <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                  <span className="text-white/80">Cumulative Layout Shift</span>
-                  <span className="text-teal font-bold">0.000</span>
-                </div>
-              </div>
 
-              <div className="text-[10px] text-white/60 text-center italic font-mono">
-                * Real build snapshot from D2C Skincare & SaaS mobile deployments.
+                <div className="text-[10px] text-sky-100/80 text-center italic font-mono">
+                  * Real build snapshot from D2C Skincare & SaaS mobile deployments.
+                </div>
               </div>
             </div>
           </div>
@@ -186,21 +206,59 @@ export const BuildService: React.FC<BuildServiceProps> = ({
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-bone border-y border-hairline py-12 px-4 sm:px-12">
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="text-xs font-mono font-bold text-teal uppercase">FULL-WIDTH STOREFRONT CASE SHOWCASE</div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="p-6 bg-white rounded-2xl border border-hairline space-y-2 shadow-xs">
-              <div className="text-xs font-mono font-bold text-violet">DTC Beauty & Skincare</div>
-              <div className="font-display font-bold text-ink text-base">Custom Shopify Liquid PDP</div>
-              <div className="text-xs text-mute">Sub-0.65s PDP load adding ₹1.2Cr monthly revenue.</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
+            {/* Card 1: Light Blue */}
+            <div
+              className="litmus-card-1 relative rounded-[24px] p-6 space-y-2 text-[#07101E] overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
+              style={{
+                background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-xs font-mono font-bold text-[#07101E]/80 bg-white/50 px-2.5 py-0.5 rounded-full w-fit">
+                  DTC Beauty & Skincare
+                </div>
+                <div className="font-display font-extrabold text-[#07101E] text-lg">Custom Shopify Liquid PDP</div>
+                <div className="text-xs text-[#0A2540] font-medium leading-relaxed">Sub-0.65s PDP load adding ₹1.2Cr monthly revenue.</div>
+              </div>
             </div>
-            <div className="p-6 bg-white rounded-2xl border border-hairline space-y-2 shadow-xs">
-              <div className="text-xs font-mono font-bold text-violet">B2B Enterprise SaaS</div>
-              <div className="font-display font-bold text-ink text-base">Next.js 15 Demo Engine</div>
-              <div className="text-xs text-mute">Interactive pricing teardown and sub-second demo booking.</div>
+
+            {/* Card 2: Medium Blue */}
+            <div
+              className="litmus-card-2 relative rounded-[24px] p-6 space-y-2 text-white overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
+              style={{
+                background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-xs font-mono font-bold text-white/90 bg-white/20 px-2.5 py-0.5 rounded-full w-fit">
+                  B2B Enterprise SaaS
+                </div>
+                <div className="font-display font-extrabold text-white text-lg drop-shadow-xs">Next.js 15 Demo Engine</div>
+                <div className="text-xs text-sky-100 font-medium leading-relaxed">Interactive pricing teardown and sub-second demo booking.</div>
+              </div>
             </div>
-            <div className="p-6 bg-white rounded-2xl border border-hairline space-y-2 shadow-xs">
-              <div className="text-xs font-mono font-bold text-violet">Luxury Apparel E-Com</div>
-              <div className="font-display font-bold text-ink text-base">Headless Recharge Funnel</div>
-              <div className="text-xs text-mute">Bespoke 1-click cart upsell lifting AOV by ₹1,450.</div>
+
+            {/* Card 3: Dark Blue */}
+            <div
+              className="litmus-card-3 relative rounded-[24px] p-6 space-y-2 text-white overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
+              style={{
+                background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-xs font-mono font-bold text-blue-100 bg-black/20 px-2.5 py-0.5 rounded-full w-fit">
+                  Luxury Apparel E-Com
+                </div>
+                <div className="font-display font-extrabold text-white text-lg drop-shadow-sm">Headless Recharge Funnel</div>
+                <div className="text-xs text-blue-100 font-medium leading-relaxed">Bespoke 1-click cart upsell lifting AOV by ₹1,450.</div>
+              </div>
             </div>
           </div>
         </div>

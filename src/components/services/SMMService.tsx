@@ -8,7 +8,6 @@ import {
   Share2,
   Megaphone
 } from 'lucide-react';
-import { Button } from '../ui/Button';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 
@@ -65,17 +64,25 @@ export const SMMService: React.FC<SMMServiceProps> = ({
 
       {/* 1. HERO SECTION: variant="feed" (Slow vertical marquee of 9:16 tiles behind copy) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative overflow-hidden">
-        <div className="bg-gradient-to-br from-[#12101f] via-[#1a1228] to-[#0c0d16] text-white rounded-3xl p-8 sm:p-14 border border-violet/30 space-y-8 relative overflow-hidden shadow-2xl">
+        <div
+          className="rounded-[24px] p-8 sm:p-14 space-y-8 relative overflow-hidden shadow-2xl text-white"
+          style={{
+            background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+            boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+          }}
+        >
+          {/* Glass Glare */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
           
           {/* Background Marquee of 9:16 vertical content tiles */}
-          <div className="absolute top-0 right-0 w-full sm:w-1/2 h-full opacity-20 pointer-events-none overflow-hidden flex gap-4 -z-0">
+          <div className="absolute top-0 right-0 w-full sm:w-1/2 h-full opacity-25 pointer-events-none overflow-hidden flex gap-4 -z-0">
             <div className="flex flex-col gap-4 animate-marquee-vertical">
               {feedTiles.concat(feedTiles).map((tile, idx) => (
-                <div key={idx} className="w-40 h-64 bg-violet/30 border border-violet/40 rounded-2xl p-3 flex flex-col justify-between shrink-0">
-                  <span className="text-[10px] font-mono bg-teal/20 text-teal px-2 py-0.5 rounded-full w-fit">{tile.tag}</span>
+                <div key={idx} className="w-40 h-64 bg-white/20 border border-white/30 rounded-2xl p-3 flex flex-col justify-between shrink-0 backdrop-blur-md">
+                  <span className="text-[10px] font-mono bg-white/30 text-white font-bold px-2 py-0.5 rounded-full w-fit">{tile.tag}</span>
                   <div>
                     <div className="text-xs font-bold text-white">{tile.title}</div>
-                    <div className="text-[10px] text-teal font-mono">{tile.metric}</div>
+                    <div className="text-[10px] text-sky-100 font-mono font-semibold">{tile.metric}</div>
                   </div>
                 </div>
               ))}
@@ -84,31 +91,34 @@ export const SMMService: React.FC<SMMServiceProps> = ({
 
           <div className="relative z-10 space-y-6 max-w-3xl">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1 bg-violet/30 text-teal text-xs font-mono font-bold rounded-full border border-violet/40 uppercase">
+              <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
                 ACQUIRE PILLAR • SOCIAL MEDIA MARKETING
               </span>
-              <span className="px-3 py-1 bg-white/10 text-white/70 text-xs font-mono rounded-full">
+              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
                 SLUG: services/social-media-marketing
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight">
-              AI Content, Social Management & High-ROAS Ad Creatives<span className="text-teal">.</span>
+            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
+              AI Content, Social Management & High-ROAS Ad Creatives<span className="text-sky-200">.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-body">
+            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
               Engineered social engines blending cutting-edge AI generated content, seamless social media management, and high-converting performance ad creatives that drive measurable brand growth.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
-              <Button variant="primary" size="lg" className="bg-teal text-ink font-bold hover:bg-emerald-400 border-none" onClick={() => onOpenAudit('acquire-smm')}>
+              <button
+                onClick={() => onOpenAudit('acquire-smm')}
+                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
+              >
                 Get Free Content & Ad Creative Audit →
-              </Button>
+              </button>
             </div>
 
             {/* Supporting Keywords */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2 text-xs font-mono text-white/60">
-              <span className="text-teal font-bold font-mono uppercase">FOCUS AREAS:</span>
+            <div className="pt-4 border-t border-white/20 flex flex-wrap gap-2 text-xs font-mono text-sky-100">
+              <span className="text-white font-bold font-mono uppercase">FOCUS AREAS:</span>
               <span>AI Generated Content</span> |
               <span>Social Media Management</span> |
               <span>Performance Ad Creatives</span> |
@@ -187,71 +197,113 @@ export const SMMService: React.FC<SMMServiceProps> = ({
           </h2>
         </div>
 
-        {/* 3 Large Capability Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 3 Large Litmus Capability Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           
-          {/* Pillar 1: AI Generated Content */}
-          <div id="ai-content" className="bg-white rounded-3xl p-8 border border-violet/20 space-y-6 shadow-sm flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-violet/10 rounded-2xl flex items-center justify-center text-violet">
+          {/* Pillar 1: AI Generated Content (Light Blue: #A8D5FF -> #5B8FBD) */}
+          <div
+            id="ai-content"
+            className="litmus-card-1 relative rounded-[24px] p-8 space-y-6 flex flex-col justify-between overflow-hidden group transition-all duration-300 hover:-translate-y-2 text-[#07101E]"
+            style={{
+              background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+            }}
+          >
+            {/* Glass Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+
+            <div className="relative z-10 space-y-4">
+              <div className="w-12 h-12 bg-white/60 border border-white/80 rounded-2xl flex items-center justify-center text-[#07101E] shadow-xs">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <span className="px-3 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full w-fit">PILLAR 01</span>
-              <h3 className="text-2xl font-display font-bold text-ink">AI Generated Content</h3>
-              <p className="text-mute text-sm leading-relaxed">
+              <span className="px-3 py-1 bg-white/60 border border-white/80 text-[#07101E] text-xs font-mono font-bold rounded-full w-fit">
+                PILLAR 01 • LIGHT BLUE
+              </span>
+              <h3 className="text-2xl font-display font-extrabold text-[#07101E] tracking-tight">
+                AI Generated Content
+              </h3>
+              <p className="text-sm text-[#0A2540] font-medium leading-relaxed">
                 Hyper-realistic AI image generation, synthetic video avatars, automated script writing, and rapid AI visual iteration for maximum asset volume at unmatched speed.
               </p>
-              <ul className="space-y-2 text-xs font-mono text-ink/80 pt-2">
+              <ul className="space-y-2.5 text-xs font-semibold text-[#07101E] pt-2 border-t border-[#07101E]/15">
                 <li className="flex items-center gap-2">• Generative AI Visuals & Product Shots</li>
                 <li className="flex items-center gap-2">• AI Synthetic Script & Voice Synthesis</li>
                 <li className="flex items-center gap-2">• Rapid Multivariant Asset Generation</li>
               </ul>
             </div>
-            <div className="pt-4 border-t border-hairline font-mono text-xs text-violet font-bold">
+            <div className="relative z-10 pt-4 border-t border-[#07101E]/15 font-mono text-xs text-[#07101E] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               High-Volume AI Creative →
             </div>
           </div>
 
-          {/* Pillar 2: Social Media Management */}
-          <div id="social-management" className="bg-white rounded-3xl p-8 border border-teal/30 space-y-6 shadow-sm flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-teal/10 rounded-2xl flex items-center justify-center text-teal">
+          {/* Pillar 2: Social Media Management (Medium Blue: #5DAFFF -> #1D5B9A) */}
+          <div
+            id="social-management"
+            className="litmus-card-2 relative rounded-[24px] p-8 space-y-6 flex flex-col justify-between overflow-hidden group transition-all duration-300 hover:-translate-y-2 text-white"
+            style={{
+              background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+            }}
+          >
+            {/* Glass Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+
+            <div className="relative z-10 space-y-4">
+              <div className="w-12 h-12 bg-white/20 border border-white/40 rounded-2xl flex items-center justify-center text-white backdrop-blur-md shadow-xs">
                 <Share2 className="w-6 h-6" />
               </div>
-              <span className="px-3 py-1 bg-teal/20 text-teal text-xs font-mono font-bold rounded-full w-fit">PILLAR 02</span>
-              <h3 className="text-2xl font-display font-bold text-ink">Social Media Management</h3>
-              <p className="text-mute text-sm leading-relaxed">
+              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit">
+                PILLAR 02 • MEDIUM BLUE
+              </span>
+              <h3 className="text-2xl font-display font-extrabold text-white tracking-tight drop-shadow-xs">
+                Social Media Management
+              </h3>
+              <p className="text-sm text-sky-100 font-medium leading-relaxed">
                 Full-service social media strategy, 30-day content calendar execution, cross-platform publishing (Instagram, LinkedIn, YouTube, TikTok), and responsive community DM management.
               </p>
-              <ul className="space-y-2 text-xs font-mono text-ink/80 pt-2">
+              <ul className="space-y-2.5 text-xs font-medium text-white pt-2 border-t border-white/20">
                 <li className="flex items-center gap-2">• 1-Click Monthly Approval Workflows</li>
                 <li className="flex items-center gap-2">• Multi-Channel Publishing & Analytics</li>
                 <li className="flex items-center gap-2">• Community DM & Comment Moderation</li>
               </ul>
             </div>
-            <div className="pt-4 border-t border-hairline font-mono text-xs text-teal font-bold">
+            <div className="relative z-10 pt-4 border-t border-white/20 font-mono text-xs text-white font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               Full-Service Social Execution →
             </div>
           </div>
 
-          {/* Pillar 3: Ad Creatives */}
-          <div id="ad-creatives" className="bg-white rounded-3xl p-8 border border-violet/20 space-y-6 shadow-sm flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-violet/10 rounded-2xl flex items-center justify-center text-violet">
+          {/* Pillar 3: Performance Ad Creatives (Dark Blue: #3B7FC3 -> #0D2D5C) */}
+          <div
+            id="ad-creatives"
+            className="litmus-card-3 relative rounded-[24px] p-8 space-y-6 flex flex-col justify-between overflow-hidden group transition-all duration-300 hover:-translate-y-2 text-white"
+            style={{
+              background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            {/* Glass Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+
+            <div className="relative z-10 space-y-4">
+              <div className="w-12 h-12 bg-white/15 border border-white/30 rounded-2xl flex items-center justify-center text-[#5DAFFF] backdrop-blur-md shadow-xs">
                 <Megaphone className="w-6 h-6" />
               </div>
-              <span className="px-3 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full w-fit">PILLAR 03</span>
-              <h3 className="text-2xl font-display font-bold text-ink">Performance Ad Creatives</h3>
-              <p className="text-mute text-sm leading-relaxed">
+              <span className="px-3 py-1 bg-white/15 border border-white/30 text-white text-xs font-mono font-bold rounded-full w-fit">
+                PILLAR 03 • DARK BLUE
+              </span>
+              <h3 className="text-2xl font-display font-extrabold text-white tracking-tight drop-shadow-sm">
+                Performance Ad Creatives
+              </h3>
+              <p className="text-sm text-blue-100 font-medium leading-relaxed">
                 Direct-response Reels, UGC video ads, high-converting hook variations, and promo assets engineered to convert cold traffic on Meta, TikTok, and YouTube Ads.
               </p>
-              <ul className="space-y-2 text-xs font-mono text-ink/80 pt-2">
+              <ul className="space-y-2.5 text-xs font-medium text-white pt-2 border-t border-white/20">
                 <li className="flex items-center gap-2">• Direct Response 9:16 Video Ads</li>
                 <li className="flex items-center gap-2">• UGC Creator Sourcing & Scripting</li>
                 <li className="flex items-center gap-2">• High-ROAS Hook & End-Card Iterations</li>
               </ul>
             </div>
-            <div className="pt-4 border-t border-hairline font-mono text-xs text-violet font-bold">
+            <div className="relative z-10 pt-4 border-t border-white/20 font-mono text-xs text-[#5DAFFF] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               High-Converting Ad Units →
             </div>
           </div>

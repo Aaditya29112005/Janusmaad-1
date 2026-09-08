@@ -656,19 +656,64 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {details.stats.map((stat, i) => (
-              <div key={i} className="card-surface rounded-2xl p-6 sm:p-8 space-y-3 relative overflow-hidden group">
-                <div className="flex items-center justify-between text-xs font-mono text-mute">
-                  <span>{stat.label}</span>
-                  <span className="text-teal font-bold">{stat.delta}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
+            {details.stats.map((stat, i) => {
+              const cardStyles = [
+                {
+                  className: 'litmus-card-1 text-[#07101E]',
+                  style: {
+                    background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+                  },
+                  labelColor: 'text-[#07101E]/80 font-bold',
+                  deltaColor: 'text-[#07101E] font-bold bg-white/50 px-2 py-0.5 rounded-full',
+                  valueColor: 'text-[#07101E]',
+                  descColor: 'text-[#0A2540] font-medium'
+                },
+                {
+                  className: 'litmus-card-2 text-white',
+                  style: {
+                    background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+                  },
+                  labelColor: 'text-white/80 font-bold',
+                  deltaColor: 'text-white font-bold bg-white/20 px-2 py-0.5 rounded-full',
+                  valueColor: 'text-white drop-shadow-xs',
+                  descColor: 'text-sky-100 font-medium'
+                },
+                {
+                  className: 'litmus-card-3 text-white',
+                  style: {
+                    background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+                  },
+                  labelColor: 'text-white/80 font-bold',
+                  deltaColor: 'text-[#5DAFFF] font-bold bg-black/20 px-2 py-0.5 rounded-full',
+                  valueColor: 'text-white drop-shadow-sm',
+                  descColor: 'text-blue-100 font-medium'
+                }
+              ][i % 3];
+
+              return (
+                <div
+                  key={i}
+                  style={cardStyles.style}
+                  className={`relative rounded-[24px] p-6 sm:p-8 space-y-3 overflow-hidden group transition-all duration-300 hover:-translate-y-1.5 ${cardStyles.className}`}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+                  <div className="relative z-10 space-y-3">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className={cardStyles.labelColor}>{stat.label}</span>
+                      <span className={cardStyles.deltaColor}>{stat.delta}</span>
+                    </div>
+                    <div className={`text-4xl sm:text-5xl font-display font-extrabold ${cardStyles.valueColor}`}>
+                      {stat.value}
+                    </div>
+                    <p className={`text-xs leading-relaxed ${cardStyles.descColor}`}>{stat.desc}</p>
+                  </div>
                 </div>
-                <div className="text-4xl sm:text-5xl font-display font-bold text-ink group-hover:text-violet transition-colors">
-                  {stat.value}
-                </div>
-                <p className="text-xs text-mute leading-relaxed">{stat.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -708,18 +753,60 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {details.solutions.map((sol, i) => (
-              <div key={i} className="card-surface rounded-2xl p-6 sm:p-8 space-y-4 group">
-                <div className="text-xs font-mono font-bold text-teal">{sol.num}</div>
-                <h3 className="text-lg font-display font-bold text-ink group-hover:text-violet transition-colors">
-                  {sol.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-mute leading-relaxed">
-                  {sol.desc}
-                </p>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {details.solutions.map((sol, i) => {
+              const cardStyles = [
+                {
+                  className: 'litmus-card-1 text-[#07101E]',
+                  style: {
+                    background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+                  },
+                  numColor: 'text-[#07101E] font-bold bg-white/60 px-2 py-0.5 rounded-full w-fit',
+                  titleColor: 'text-[#07101E]',
+                  descColor: 'text-[#0A2540] font-medium'
+                },
+                {
+                  className: 'litmus-card-2 text-white',
+                  style: {
+                    background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+                  },
+                  numColor: 'text-white font-bold bg-white/20 px-2 py-0.5 rounded-full w-fit',
+                  titleColor: 'text-white drop-shadow-xs',
+                  descColor: 'text-sky-100 font-medium'
+                },
+                {
+                  className: 'litmus-card-3 text-white',
+                  style: {
+                    background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+                  },
+                  numColor: 'text-[#5DAFFF] font-bold bg-black/20 px-2 py-0.5 rounded-full w-fit',
+                  titleColor: 'text-white drop-shadow-sm',
+                  descColor: 'text-blue-100 font-medium'
+                }
+              ][i % 3];
+
+              return (
+                <div
+                  key={i}
+                  style={cardStyles.style}
+                  className={`relative rounded-[24px] p-6 sm:p-8 space-y-4 overflow-hidden group transition-all duration-300 hover:-translate-y-1.5 ${cardStyles.className}`}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+                  <div className="relative z-10 space-y-3">
+                    <div className={`text-xs font-mono ${cardStyles.numColor}`}>{sol.num}</div>
+                    <h3 className={`text-lg font-display font-extrabold ${cardStyles.titleColor}`}>
+                      {sol.title}
+                    </h3>
+                    <p className={`text-xs sm:text-sm leading-relaxed ${cardStyles.descColor}`}>
+                      {sol.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -735,23 +822,65 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2 items-stretch">
             {[
               { title: 'Performance Ad Engine', source: 'Teckey Performance System', desc: 'Google PMax & Meta CAPI server-side conversion architecture.' },
               { title: 'Sub-Second PDP Speed', source: 'The Landing Page Co Framework', desc: 'Custom Shopify Liquid & Next.js 15 landing page speed optimization.' },
               { title: 'Short-Form Video Engine', source: 'Storyflix Direct Response', desc: 'Reels and TikTok creator UGC funnels driving viral purchase intent.' },
               { title: 'Multi-Channel Attribution', source: 'Visionary Growth Architecture', desc: 'Unified Google, Meta, and owned channel lifecycle attribution.' },
               { title: 'Zero-Party Data CDP', source: 'ShellKode Data Engineering', desc: 'BigQuery & Segment real-time zero-party quiz data warehousing.' },
-            ].map((caseItem, idx) => (
-              <div key={idx} className="p-5 bg-white rounded-2xl border border-hairline space-y-2 shadow-xs">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-violet">{caseItem.source}</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-mute" />
+            ].map((caseItem, idx) => {
+              const cardStyles = [
+                {
+                  className: 'litmus-card-1 text-[#07101E]',
+                  style: {
+                    background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
+                  },
+                  sourceColor: 'text-[#07101E] font-bold bg-white/60 px-2 py-0.5 rounded-full',
+                  titleColor: 'text-[#07101E]',
+                  descColor: 'text-[#0A2540] font-medium'
+                },
+                {
+                  className: 'litmus-card-2 text-white',
+                  style: {
+                    background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+                  },
+                  sourceColor: 'text-white font-bold bg-white/20 px-2 py-0.5 rounded-full',
+                  titleColor: 'text-white drop-shadow-xs',
+                  descColor: 'text-sky-100 font-medium'
+                },
+                {
+                  className: 'litmus-card-3 text-white',
+                  style: {
+                    background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
+                    boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
+                  },
+                  sourceColor: 'text-white font-bold bg-black/20 px-2 py-0.5 rounded-full',
+                  titleColor: 'text-white drop-shadow-sm',
+                  descColor: 'text-blue-100 font-medium'
+                }
+              ][idx % 3];
+
+              return (
+                <div
+                  key={idx}
+                  style={cardStyles.style}
+                  className={`relative rounded-[24px] p-6 space-y-2 overflow-hidden group transition-all duration-300 hover:-translate-y-1.5 ${cardStyles.className}`}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+                  <div className="relative z-10 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className={`text-xs font-mono ${cardStyles.sourceColor}`}>{caseItem.source}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                    </div>
+                    <div className={`font-display font-extrabold text-base ${cardStyles.titleColor}`}>{caseItem.title}</div>
+                    <div className={`text-xs leading-relaxed ${cardStyles.descColor}`}>{caseItem.desc}</div>
+                  </div>
                 </div>
-                <div className="font-display font-bold text-ink text-sm">{caseItem.title}</div>
-                <div className="text-xs text-mute leading-relaxed">{caseItem.desc}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

@@ -64,7 +64,7 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Award-Winning Card Surface & Shadow Utilities */
+/* Award-Winning Card Surface & Litmus System Utilities */
 .card-surface {
   background-color: #FFFFFF;
   border: 1px solid rgba(7, 11, 26, 0.08);
@@ -75,6 +75,34 @@ body {
 .card-surface:hover {
   border-color: rgba(14, 30, 75, 0.25);
   box-shadow: 0 30px 60px -20px rgba(7, 11, 26, 0.1);
+}
+
+/* Litmus Cards 135° Gradient & Glassmorphism Overlay */
+.litmus-card-1 {
+  background: linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%);
+  border-radius: 24px;
+  box-shadow: 0 28px 56px -18px rgba(0, 0, 0, 0.30),
+              inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6),
+              inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.litmus-card-2 {
+  background: linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%);
+  border-radius: 24px;
+  box-shadow: 0 28px 56px -18px rgba(0, 0, 0, 0.30),
+              inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
+              inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.litmus-card-3 {
+  background: linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%);
+  border-radius: 24px;
+  box-shadow: 0 28px 56px -18px rgba(0, 0, 0, 0.30),
+              inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4),
+              inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Accessibility Focus Visible */
@@ -98,56 +126,77 @@ body {
   background: var(--violet);
 }
 
-/* Range Input Styling for ROI Calculator */
+/* Range Input Styling for ROI & Performance Calculators - High Visibility Lines */
 input[type=range] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
+  height: 28px;
   background: transparent;
+  cursor: pointer;
 }
 
 input[type=range]:focus {
   outline: none;
 }
 
+/* WebKit (Chrome, Safari, Edge, Opera) Track */
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
-  background: rgba(7, 11, 26, 0.1);
-  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(93, 175, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 12px rgba(93, 175, 255, 0.4), inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+/* WebKit Thumb */
 input[type=range]::-webkit-slider-thumb {
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  background: var(--violet);
-  cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -8px;
-  box-shadow: 0 0 12px rgba(14, 30, 75, 0.3);
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  appearance: none;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #5DAFFF;
+  border: 2.5px solid #FFFFFF;
+  cursor: pointer;
+  margin-top: -7px;
+  box-shadow: 0 0 14px rgba(93, 175, 255, 0.9), 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 input[type=range]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  background: var(--violet-deep);
+  transform: scale(1.25);
+  background: #A8D5FF;
+  box-shadow: 0 0 18px rgba(168, 213, 255, 1), 0 4px 10px rgba(0, 0, 0, 0.6);
 }
 
+/* Firefox Track */
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
-  background: rgba(7, 11, 26, 0.1);
-  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(93, 175, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 12px rgba(93, 175, 255, 0.4), inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+/* Firefox Thumb */
 input[type=range]::-moz-range-thumb {
-  height: 24px;
-  width: 24px;
+  height: 22px;
+  width: 22px;
   border-radius: 50%;
-  background: var(--violet);
+  background: #5DAFFF;
+  border: 2.5px solid #FFFFFF;
   cursor: pointer;
-  border: none;
-  box-shadow: 0 0 12px rgba(14, 30, 75, 0.3);
+  box-shadow: 0 0 14px rgba(93, 175, 255, 0.9), 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type=range]::-moz-range-thumb:hover {
+  transform: scale(1.25);
+  background: #A8D5FF;
+  box-shadow: 0 0 18px rgba(168, 213, 255, 1), 0 4px 10px rgba(0, 0, 0, 0.6);
 }
