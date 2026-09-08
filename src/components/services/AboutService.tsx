@@ -9,6 +9,7 @@ import {
   Zap
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { ReceiptsSection } from '../receipts/ReceiptsSection';
 
 interface AboutServiceProps {
   onOpenAudit: (type?: string) => void;
@@ -492,6 +493,11 @@ export const AboutService: React.FC<AboutServiceProps> = ({
               </div>
             ))}
           </div>
+        </div>
+
+        {/* LIVE WORK & FUNNELS SHOWCASE */}
+        <div className="pt-4 border-t border-hairline">
+          <ReceiptsSection onOpenAudit={onOpenAudit} />
         </div>
 
         {/* 6. CLOSING SUMMARY & CTA */}

@@ -5,7 +5,12 @@ import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 
-export const ReceiptsSection: React.FC = () => {
+interface ReceiptsSectionProps {
+  className?: string;
+  onOpenAudit?: (type?: string) => void;
+}
+
+export const ReceiptsSection: React.FC<ReceiptsSectionProps> = ({ className = '', onOpenAudit }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -53,7 +58,7 @@ export const ReceiptsSection: React.FC = () => {
   };
 
   return (
-    <section id="receipts" className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative overflow-hidden select-none">
+    <section id="receipts" className={`py-16 relative overflow-hidden select-none ${className}`}>
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-hairline pb-8">
@@ -186,7 +191,7 @@ export const ReceiptsSection: React.FC = () => {
 
         {/* Category Success Metrics Explorer & All 38 Clients Database */}
         <div className="pt-12 border-t border-hairline">
-          <CategoryMetricsExplorer />
+          <CategoryMetricsExplorer onOpenAudit={onOpenAudit} />
         </div>
       </div>
     </section>
