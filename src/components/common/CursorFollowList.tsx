@@ -44,7 +44,11 @@ const WORK_IMAGES: Record<string, string> = {
   'cuddle-buds': '/work/cuddlebuds.jpg',
 };
 
-export const CursorFollowList: React.FC = () => {
+interface CursorFollowListProps {
+  className?: string;
+}
+
+export const CursorFollowList: React.FC<CursorFollowListProps> = ({ className = '' }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [activeImage, setActiveImage] = useState<string>('/work/thecreditlane.jpg');
@@ -115,7 +119,7 @@ export const CursorFollowList: React.FC = () => {
   }, [visibleCount]);
 
   return (
-    <section className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative">
+    <section className={`py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative ${className}`}>
       {/* Floating Cursor Image Wrapper (GSAP quickTo target) */}
       <div
         ref={wrapperRef}

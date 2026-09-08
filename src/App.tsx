@@ -18,7 +18,6 @@ import { TrustedBy } from './components/trusted/TrustedBy';
 import { HowWeWork } from './components/process/HowWeWork';
 import { HorizontalMarqueeText } from './components/common/HorizontalMarqueeText';
 import { ScrollRailMarquee } from './components/common/ScrollRailMarquee';
-import { CursorFollowList } from './components/common/CursorFollowList';
 import { CategoryMetricsExplorer } from './components/proof/CategoryMetricsExplorer';
 import { ThreeWaysIn } from './components/pricing/ThreeWaysIn';
 import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
@@ -164,7 +163,6 @@ export const App: React.FC = () => {
             <TestimonialsMarquee />
             <CategoryMetricsExplorer showOnlyClientRecords={true} onOpenAudit={handleOpenAudit} />
             <TrustedBy />
-            <CursorFollowList />
             <HowWeWork />
             <HorizontalMarqueeText />
             <ThreeWaysIn onOpenAudit={handleOpenAudit} />

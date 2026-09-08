@@ -4,6 +4,7 @@ import { ExternalLink, Sparkles, ChevronLeft, ChevronRight, Globe } from 'lucide
 import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
+import { CursorFollowList } from '../common/CursorFollowList';
 
 interface ReceiptsSectionProps {
   className?: string;
@@ -187,6 +188,11 @@ export const ReceiptsSection: React.FC<ReceiptsSectionProps> = ({ className = ''
               aria-label={`Show ${work.clientName}`}
             />
           ))}
+        </div>
+
+        {/* Interactive Hover Storefront Showcase */}
+        <div className="pt-12 border-t border-hairline">
+          <CursorFollowList className="py-8 px-0 border-b-0" />
         </div>
 
         {/* Category Success Metrics Explorer & All 38 Clients Database */}
