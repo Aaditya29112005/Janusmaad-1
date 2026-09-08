@@ -1,16 +1,16 @@
 export const FIT_CONTENT = {
-  heading: 'Who we do and do not work with.',
-  subheading: 'We maintain a strict client ratio so senior founders work on your account directly. Candour up front saves everyone months of wasted momentum.',
+  heading: "Who we don't work with.",
+  subheading: "We hate to say no, but sometimes it's the best option.",
   notForYou: [
-    'You are looking for cheap social media graphic templates without performance metrics.',
-    'You want an agency that agrees with every opinion rather than following empirical data.',
-    'You expect explosive growth while hiding actual unit economics and conversion numbers.',
-    'Your monthly ad spend is under $15k and you are not ready to test aggressive landing page angles.',
+    "You are not clear who your customer is. (We won't guess for you.)",
+    "You want deliverables measured in pages, not ROAS. (Hire a freelancer.)",
+    "You treat agencies like vendors, not partners. (Life's too short.)",
+    "You sell categories that violate Meta or Shopify policies. (Hard no.)",
   ],
   forYou: [
-    'You run a validated business ready to scale acquisition from $20k to $200k+ per month.',
-    'You appreciate brutal honesty, rapid iteration cycles, and full accountability.',
-    'You measure agency success on net profit and ROAS, not vanity engagement metrics.',
-    'You understand that premium design and high-speed tech infrastructure drive lower CAC.',
+    "You've hit a ceiling on ROAS or CVR and don't know why.",
+    "You have a product that actually works. (We can't fix a bad one.)",
+    "You'd rather see a 14-day test than a 40-slide deck.",
+    "You want the person writing the strategy on the first call.",
   ],
 };

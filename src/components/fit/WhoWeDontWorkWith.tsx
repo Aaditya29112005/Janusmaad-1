@@ -39,6 +39,7 @@ export const WhoWeDontWorkWith: React.FC = () => {
               <ul className="space-y-4 text-[#07101E] text-base leading-relaxed font-medium">
                 {FIT_CONTENT.notForYou.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 border-l-2 border-[#07101E]/30 pl-4 py-1">
+                    <span className="text-[#07101E]/70 font-bold shrink-0">→</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -65,6 +66,7 @@ export const WhoWeDontWorkWith: React.FC = () => {
               <ul className="space-y-4 text-white text-base leading-relaxed font-medium">
                 {FIT_CONTENT.forYou.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 border-l-2 border-white/40 pl-4 py-1">
+                    <span className="text-white/80 font-bold shrink-0">→</span>
                     <span>{item}</span>
                   </li>
                 ))}
