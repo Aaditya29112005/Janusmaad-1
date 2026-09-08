@@ -13,7 +13,6 @@ import { Preloader } from './components/chrome/Preloader';
 // Main Page Sections
 import { Hero } from './components/hero/Hero';
 import { ProofStrip } from './components/proof/ProofStrip';
-import { Calculator } from './components/calculator/Calculator';
 import { TestimonialsMarquee } from './components/testimonials/TestimonialsMarquee';
 import { TrustedBy } from './components/trusted/TrustedBy';
 import { HowWeWork } from './components/process/HowWeWork';
@@ -160,7 +159,6 @@ export const App: React.FC = () => {
           <>
             <Hero onOpenAudit={handleOpenAudit} />
             <ProofStrip />
-            <Calculator onOpenAudit={handleOpenAudit} />
             <TestimonialsMarquee />
             <TrustedBy />
             <CursorFollowList />

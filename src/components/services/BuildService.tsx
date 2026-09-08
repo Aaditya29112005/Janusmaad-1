@@ -4,6 +4,7 @@ import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 import { HowWeWork } from '../process/HowWeWork';
 import { ThreeWaysIn } from '../pricing/ThreeWaysIn';
+import { Calculator } from '../calculator/Calculator';
 
 interface BuildServiceProps {
   onOpenAudit: (type?: string) => void;
@@ -319,6 +320,9 @@ export const BuildService: React.FC<BuildServiceProps> = ({
           </div>
         </div>
       </div>
+
+      {/* CALCULATOR: DO THE MATH */}
+      <Calculator onOpenAudit={onOpenAudit} />
 
       {/* HOW WE WORK MANIFESTO */}
       <HowWeWork />
