@@ -248,6 +248,65 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </div>
 
+      {/* NO AUTOPILOT PHILOSOPHY SECTION */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-gradient-to-br from-ink via-[#0d1424] to-ink text-white rounded-3xl p-8 sm:p-12 border border-teal/30 shadow-2xl relative overflow-hidden space-y-8">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-teal/20 text-teal text-xs font-mono font-bold rounded-full border border-teal/40 uppercase">
+              NO 'SET AND FORGET' MEDIA BUYING
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white leading-tight">
+              Your campaigns should never run on autopilot<span className="text-teal">.</span>
+            </h2>
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-body">
+              At JanusMAAD, we combine AI-powered optimisation with human expertise to continuously improve your campaigns across all platforms; from Google and Meta to LinkedIn, YouTube and beyond.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
+              <div className="text-teal font-mono font-bold text-xs uppercase">• AI-POWERED OPTIMISATION</div>
+              <h3 className="text-lg font-bold text-white">Pattern & Opportunity Discovery</h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                AI-powered optimisation to uncover patterns, arbitrage, and scaling opportunities in real-time.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
+              <div className="text-teal font-mono font-bold text-xs uppercase">• MULTI-PLATFORM PERFORMANCE</div>
+              <h3 className="text-lg font-bold text-white">Cross-Channel Presence</h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Multi-platform performance across the channels where your highest-LTV buyers actually hang out.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
+              <div className="text-teal font-mono font-bold text-xs uppercase">• REGULAR CAMPAIGN REVIEWS</div>
+              <h3 className="text-lg font-bold text-white">No 'Set and Forget' Approach</h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Regular campaign reviews with weekly video teardowns — no 'set and forget' agency laziness.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors">
+              <div className="text-teal font-mono font-bold text-xs uppercase">• CONTINUOUS EXPERIMENTATION</div>
+              <h3 className="text-lg font-bold text-white">Multivariate Testing</h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Continuous testing across audiences, ad creatives, hooks, messaging, and high-converting landing pages.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:border-teal/50 transition-colors md:col-span-2 lg:col-span-2">
+              <div className="text-teal font-mono font-bold text-xs uppercase">• MARGINAL ROAS ALLOCATION</div>
+              <h3 className="text-lg font-bold text-white">Smarter Budget Allocation</h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Smarter budget allocation based on what’s actually driving net contribution margin and bottom-line business results.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* 2. ALTERNATING LEFT / RIGHT DELIVERABLE GROUPS SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-3">
