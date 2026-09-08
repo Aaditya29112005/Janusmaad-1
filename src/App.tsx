@@ -28,6 +28,15 @@ import { ClosingCTA } from './components/cta/ClosingCTA';
 // Dedicated Capability Page Component
 import { CapabilityPage, type CapabilityId } from './components/services/CapabilityPage';
 
+const SLUG_TO_CAPABILITY: Record<string, CapabilityId> = {
+  'services/performance-marketing': 'acquire-performance',
+  'services/seo': 'acquire-seo',
+  'services/social-media-marketing': 'acquire-smm',
+  'services/web-design-development': 'convert-build',
+  'services/conversion-rate-optimisation': 'convert-cro',
+  'services/retention-marketing': 'retain-marketing',
+};
+
 const VALID_CAPABILITIES: CapabilityId[] = [
   'acquire-performance',
   'acquire-seo',
@@ -48,22 +57,27 @@ export const App: React.FC = () => {
   const [activeCapability, setActiveCapability] = useState<CapabilityId | null>(null);
 
   useEffect(() => {
-    // Listen to hash changes for standalone capability page routing
+    // Listen to hash changes or route path for standalone capability page routing
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').trim();
-      if (VALID_CAPABILITIES.includes(hash as CapabilityId)) {
-        setActiveCapability(hash as CapabilityId);
+      const rawHash = window.location.hash.replace('#', '').trim();
+      const mappedCapability = SLUG_TO_CAPABILITY[rawHash];
+      
+      if (mappedCapability) {
+        setActiveCapability(mappedCapability);
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      } else if (VALID_CAPABILITIES.includes(rawHash as CapabilityId)) {
+        setActiveCapability(rawHash as CapabilityId);
         window.scrollTo({ top: 0, behavior: 'instant' });
       } else {
         setActiveCapability(null);
-        if (hash && hash !== 'home') {
+        if (rawHash && rawHash !== 'home') {
           setTimeout(() => {
-            const el = document.getElementById(hash);
+            const el = document.getElementById(rawHash);
             if (el) {
               el.scrollIntoView({ behavior: 'smooth' });
             }
           }, 150);
-        } else if (hash === 'home') {
+        } else if (rawHash === 'home') {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
