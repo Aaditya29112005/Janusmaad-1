@@ -48,22 +48,14 @@ export const TechPartners: React.FC = () => {
           {TECH_PARTNERS.map((partner) => (
             <div
               key={partner.id}
-              className="tech-card opacity-0 translate-y-6 scale-95 bg-white border border-hairline rounded-2xl p-6 flex flex-col items-center justify-center space-y-3 shadow-sm hover:shadow-xl hover:border-violet/40 hover:-translate-y-1.5 transition-all duration-300 group cursor-pointer"
+              className="tech-card opacity-0 translate-y-6 scale-95 bg-white border border-hairline rounded-2xl p-6 h-28 sm:h-32 flex items-center justify-center shadow-sm hover:shadow-xl hover:border-violet/40 hover:-translate-y-1.5 transition-all duration-300 group cursor-pointer"
             >
-              <div className="h-16 w-full flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center">
                 <img
                   src={partner.logoSrc}
                   alt={partner.name}
                   className="max-h-12 max-w-[130px] w-auto h-auto object-contain group-hover:scale-110 transition-transform duration-300"
                 />
-              </div>
-              <div className="text-center pt-2 border-t border-hairline w-full">
-                <div className="font-display font-bold text-xs text-ink group-hover:text-violet transition-colors">
-                  {partner.name}
-                </div>
-                <div className="text-[10px] text-mute font-mono uppercase tracking-wider">
-                  {partner.category}
-                </div>
               </div>
             </div>
           ))}
