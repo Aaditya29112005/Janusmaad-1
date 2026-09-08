@@ -8,6 +8,7 @@ import { Header } from './components/chrome/Header';
 import { Footer } from './components/chrome/Footer';
 import { AuditModal } from './components/chrome/AuditModal';
 import { CustomCursor } from './components/ui/CustomCursor';
+import { Preloader } from './components/chrome/Preloader';
 
 // Main Page Sections
 import { Hero } from './components/hero/Hero';
@@ -52,6 +53,7 @@ const VALID_CAPABILITIES: CapabilityId[] = [
 ];
 
 export const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<string>('audit');
   const [activeCapability, setActiveCapability] = useState<CapabilityId | null>(null);
@@ -135,6 +137,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-bone text-ink font-body selection:bg-violet selection:text-bone">
+      {/* GSAP Page Load Animation (JanusMAAD) */}
+      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+
       {/* Valmax Interactive Fluid Magnetic Cursor */}
       <CustomCursor />
 
