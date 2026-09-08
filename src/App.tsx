@@ -15,7 +15,6 @@ import { Hero } from './components/hero/Hero';
 import { ProofStrip } from './components/proof/ProofStrip';
 import { TestimonialsMarquee } from './components/testimonials/TestimonialsMarquee';
 import { TrustedBy } from './components/trusted/TrustedBy';
-import { HorizontalMarqueeText } from './components/common/HorizontalMarqueeText';
 import { ScrollRailMarquee } from './components/common/ScrollRailMarquee';
 import { CategoryMetricsExplorer } from './components/proof/CategoryMetricsExplorer';
 import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
@@ -161,7 +160,6 @@ export const App: React.FC = () => {
             <TestimonialsMarquee />
             <CategoryMetricsExplorer showOnlyClientRecords={true} onOpenAudit={handleOpenAudit} />
             <TrustedBy />
-            <HorizontalMarqueeText />
             <WhoWeDontWorkWith />
             <TechPartners />
             <ClosingCTA onOpenAudit={handleOpenAudit} />
