@@ -131,58 +131,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </button>
       </div>
 
-      {/* 1. CLEAN PERFORMANCE MARKETING HERO */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div
-          className="rounded-[28px] p-8 sm:p-12 lg:p-14 relative overflow-hidden shadow-2xl text-white"
-          style={{
-            background: 'linear-gradient(135deg, #07101E 0%, #10243E 45%, #1D5B9A 100%)',
-            boxShadow: '0 32px 64px -16px rgba(7, 16, 30, 0.5), inset 0 1px 2px 0 rgba(255, 255, 255, 0.2)'
-          }}
-        >
-          {/* Glass Glare */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/20 pointer-events-none rounded-[28px]" />
-          
-          <div className="relative z-10 space-y-6 max-w-3xl">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1 bg-white/15 text-white text-xs font-mono font-bold rounded-full border border-white/20 uppercase tracking-wider backdrop-blur-md">
-                ACQUIRE PILLAR • PERFORMANCE MARKETING
-              </span>
-            </div>
-
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight">
-              Performance Marketing & Performance Max<span className="text-teal">.</span>
-            </h1>
-
-            <p className="text-base sm:text-xl text-sky-100 font-medium leading-relaxed font-body">
-              Meta & Google campaigns managed strictly to blended ROAS and Contribution Margin. We build an end-to-end performance engine engineered to scale revenue profitably with real-time conversion signals.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {[
-                'Performance Max campaign setup & optimization',
-                'Lead quality analysis & funnel optimization',
-                'Creative testing across Search, Display & YouTube',
-                'Continuous performance monitoring & scaling'
-              ].map((bullet, i) => (
-                <div key={i} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-teal shrink-0 mt-1" />
-                  <span className="text-sm font-medium text-white/90">{bullet}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-3 flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => onOpenAudit('acquire-performance')}
-                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
-              >
-                Get Free Live Account Audit →
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* 2. NO AUTOPILOT SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
