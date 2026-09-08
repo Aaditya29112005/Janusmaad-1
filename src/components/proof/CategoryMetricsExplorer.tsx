@@ -137,115 +137,17 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
     <section id="metrics-database" className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative">
       <div className="max-w-7xl mx-auto space-y-16 relative z-10">
 
-        {/* Section Title */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-hairline pb-8">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet/10 border border-violet/20 rounded-full text-violet text-xs font-mono font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>VERIFIED PERFORMANCE DATABASE</span>
-            </div>
-            <h2 className="font-display text-3xl sm:text-5xl font-bold text-ink tracking-tight">
-              {showOnlyClientRecords ? 'All Client Records & Verified Storefronts' : 'Success Metrics by Category & Client Vault'}<span className="text-violet">.</span>
-            </h2>
-            <p className="text-mute text-base sm:text-lg">
-              {showOnlyClientRecords
-                ? 'Explore 38+ real client case studies across e-commerce, retail, hospitality, and services. Filter by channel or search by brand.'
-                : 'Explore 38+ real client case studies across e-commerce, retail, hospitality, and services. Select your category to see exact benchmark lift metrics.'}
-            </p>
-          </div>
-          <div className="text-xs font-mono text-violet font-bold bg-white px-4 py-2.5 rounded-xl border border-hairline shrink-0 shadow-xs">
-            38 Verified Client Records Live
-          </div>
-        </div>
-
-        {/* Category Pitch Generator Box */}
-        {!showOnlyClientRecords && (
-          <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="max-w-3xl space-y-3 relative z-10">
-              <span className="text-xs font-mono text-teal uppercase font-bold tracking-widest">
-                CATEGORY BENCHMARK PITCH FINDER
-              </span>
-              <h3 className="text-2xl sm:text-4xl font-display font-bold text-white">
-                What Metric Should You Benchmark For Your Brand?
-              </h3>
-              <p className="text-white/70 text-sm sm:text-base">
-                Select your category below. If your category is not an exact match, our engine automatically maps to the nearest proven industry benchmark.
-              </p>
-            </div>
-
-            {/* Category Selector Pills */}
-            <div className="flex flex-wrap items-center gap-2.5 relative z-10">
-              {CATEGORY_PITCHES.map((item) => {
-                const isSelected = item.category === selectedCategory;
-                return (
-                  <button
-                    key={item.category}
-                    onClick={() => setSelectedCategory(item.category)}
-                    className={`px-4 py-2 rounded-xl text-xs font-display font-bold transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-teal text-ink shadow-lg shadow-teal/20 scale-105'
-                        : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white'
-                    }`}
-                  >
-                    {item.category}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Category Pitch Showcase Result Card */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 relative z-10">
-              <div className="lg:col-span-6 space-y-4">
-                <div className="flex items-center gap-2 text-xs font-mono text-teal font-bold uppercase">
-                  <Award className="w-4 h-4 text-teal" />
-                  <span>PRIMARY PITCH METRIC FOR {activePitch.category.toUpperCase()}</span>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-4xl sm:text-5xl font-display font-bold text-white">
-                    {activePitch.topPitch.value}
-                  </div>
-                  <div className="text-lg font-display text-teal font-bold">
-                    {activePitch.topPitch.metric} <span className="text-white/60">({activePitch.topPitch.brand})</span>
-                  </div>
-                </div>
-                {activePitch.borrowedFromNote && (
-                  <div className="p-3 bg-amber-400/10 border border-amber-400/30 rounded-xl text-xs text-amber-300 font-mono">
-                    💡 <strong>Nearest Match Rule:</strong> {activePitch.borrowedFromNote}
-                  </div>
-                )}
+        {showOnlyClientRecords ? (
+          /* Simplified "Our Work" Header for Homepage */
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-hairline pb-8">
+            <div className="max-w-xl space-y-2">
+              <div className="inline-flex items-center gap-2 text-violet text-xs font-display font-bold uppercase tracking-widest">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Verified Portfolio</span>
               </div>
-
-              {/* Metrics Breakdown Grid */}
-              <div className="lg:col-span-6 space-y-3">
-                <div className="text-xs font-mono text-white/60 uppercase">Full Category Metrics Breakdown</div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {activePitch.metrics.map((m, idx) => (
-                    <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-xl space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-white/70">{m.metric}</span>
-                        <span className="text-xs font-mono text-teal font-bold">{m.brand}</span>
-                      </div>
-                      <div className="text-xl font-display font-bold text-white">{m.value}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* All 38 Clients Live Database Table */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="font-display font-bold text-2xl text-ink">
-                All Client Records ({filteredClients.length})
-              </h3>
-              <p className="text-xs text-mute font-mono">
-                Showing {visibleClients.length} of {filteredClients.length} verified live storefronts
-              </p>
+              <h2 className="font-display text-4xl sm:text-6xl font-bold text-ink tracking-tight">
+                Our Work<span className="text-violet">.</span>
+              </h2>
             </div>
 
             {/* Controls: Search & Service Filters */}
@@ -278,6 +180,149 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
               </div>
             </div>
           </div>
+        ) : (
+          <>
+            {/* Standard Full Section Title */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-hairline pb-8">
+              <div className="max-w-3xl space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet/10 border border-violet/20 rounded-full text-violet text-xs font-mono font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>VERIFIED PERFORMANCE DATABASE</span>
+                </div>
+                <h2 className="font-display text-3xl sm:text-5xl font-bold text-ink tracking-tight">
+                  Success Metrics by Category & Client Vault<span className="text-violet">.</span>
+                </h2>
+                <p className="text-mute text-base sm:text-lg">
+                  Explore 38+ real client case studies across e-commerce, retail, hospitality, and services. Select your category to see exact benchmark lift metrics.
+                </p>
+              </div>
+              <div className="text-xs font-mono text-violet font-bold bg-white px-4 py-2.5 rounded-xl border border-hairline shrink-0 shadow-xs">
+                38 Verified Client Records Live
+              </div>
+            </div>
+
+            {/* Category Pitch Generator Box */}
+            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="max-w-3xl space-y-3 relative z-10">
+                <span className="text-xs font-mono text-teal uppercase font-bold tracking-widest">
+                  CATEGORY BENCHMARK PITCH FINDER
+                </span>
+                <h3 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                  What Metric Should You Benchmark For Your Brand?
+                </h3>
+                <p className="text-white/70 text-sm sm:text-base">
+                  Select your category below. If your category is not an exact match, our engine automatically maps to the nearest proven industry benchmark.
+                </p>
+              </div>
+
+              {/* Category Selector Pills */}
+              <div className="flex flex-wrap items-center gap-2.5 relative z-10">
+                {CATEGORY_PITCHES.map((item) => {
+                  const isSelected = item.category === selectedCategory;
+                  return (
+                    <button
+                      key={item.category}
+                      onClick={() => setSelectedCategory(item.category)}
+                      className={`px-4 py-2 rounded-xl text-xs font-display font-bold transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-teal text-ink shadow-lg shadow-teal/20 scale-105'
+                          : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white'
+                      }`}
+                    >
+                      {item.category}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Category Pitch Showcase Result Card */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 relative z-10">
+                <div className="lg:col-span-6 space-y-4">
+                  <div className="flex items-center gap-2 text-xs font-mono text-teal font-bold uppercase">
+                    <Award className="w-4 h-4 text-teal" />
+                    <span>PRIMARY PITCH METRIC FOR {activePitch.category.toUpperCase()}</span>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-4xl sm:text-5xl font-display font-bold text-white">
+                      {activePitch.topPitch.value}
+                    </div>
+                    <div className="text-lg font-display text-teal font-bold">
+                      {activePitch.topPitch.metric} <span className="text-white/60">({activePitch.topPitch.brand})</span>
+                    </div>
+                  </div>
+                  {activePitch.borrowedFromNote && (
+                    <div className="p-3 bg-amber-400/10 border border-amber-400/30 rounded-xl text-xs text-amber-300 font-mono">
+                      💡 <strong>Nearest Match Rule:</strong> {activePitch.borrowedFromNote}
+                    </div>
+                  )}
+                </div>
+
+                {/* Metrics Breakdown Grid */}
+                <div className="lg:col-span-6 space-y-3">
+                  <div className="text-xs font-mono text-white/60 uppercase">Full Category Metrics Breakdown</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {activePitch.metrics.map((m, idx) => (
+                      <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-xl space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-mono text-white/70">{m.metric}</span>
+                          <span className="text-xs font-mono text-teal font-bold">{m.brand}</span>
+                        </div>
+                        <div className="text-xl font-display font-bold text-white">{m.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Client Live Database Table */}
+        <div className="space-y-6">
+          {!showOnlyClientRecords && (
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-display font-bold text-2xl text-ink">
+                  All Client Records ({filteredClients.length})
+                </h3>
+                <p className="text-xs text-mute font-mono">
+                  Showing {visibleClients.length} of {filteredClients.length} verified live storefronts
+                </p>
+              </div>
+
+              {/* Controls: Search & Service Filters */}
+              <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                <div className="relative flex-1 sm:w-64">
+                  <Search className="w-4 h-4 text-mute absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Search brand, category..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-hairline rounded-xl text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet"
+                  />
+                </div>
+
+                <div className="flex items-center gap-1 bg-white p-1 border border-hairline rounded-xl text-xs font-mono">
+                  {['ALL', 'PM', 'SEO', 'CRO', 'Build', 'RM', 'SMM'].map((service) => (
+                    <button
+                      key={service}
+                      onClick={() => setSelectedService(service)}
+                      className={`px-3 py-1.5 rounded-lg font-bold transition-colors cursor-pointer ${
+                        selectedService === service
+                          ? 'bg-violet text-white'
+                          : 'text-mute hover:text-ink'
+                      }`}
+                    >
+                      {service}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Client Table Grid (Showing visibleClients: 6 by default) */}
           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
