@@ -3,6 +3,8 @@ import { Gauge } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
+import { HowWeWork } from '../process/HowWeWork';
+import { ThreeWaysIn } from '../pricing/ThreeWaysIn';
 
 interface BuildServiceProps {
   onOpenAudit: (type?: string) => void;
@@ -259,6 +261,12 @@ export const BuildService: React.FC<BuildServiceProps> = ({
           </div>
         </div>
       </div>
+
+      {/* HOW WE WORK MANIFESTO */}
+      <HowWeWork />
+
+      {/* WE BUILD FOR CONVERSIONS */}
+      <ThreeWaysIn onOpenAudit={onOpenAudit} />
 
       {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR BUILD */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
