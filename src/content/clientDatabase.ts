@@ -738,9 +738,7 @@ export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
     metrics: [
       { metric: 'Retention ROAS', value: '6.0 ROAS', brand: 'Isha and Ishana' },
       { metric: 'Performance ROAS', value: '5.0 ROAS', brand: 'Too Bold to Confirm' },
-      { metric: 'Revenue Lift', value: '+40%', brand: 'Bombay Bloomers' },
-      { metric: 'Performance ROAS', value: '4.5 ROAS', brand: 'Soniva' },
-      { metric: 'Revenue Growth', value: '+30%', brand: 'Shaffa' }
+      { metric: 'Performance ROAS', value: '4.5 ROAS', brand: 'Soniva' }
     ]
   },
   {
@@ -750,7 +748,9 @@ export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
       { metric: 'SEO Organic Visitors', value: '4X Increase', brand: 'Paperbark Camp' },
       { metric: 'SEO Organic Visitors', value: '4X Increase', brand: 'Rangoli' },
       { metric: 'Performance ROAS', value: '5.0 ROAS', brand: 'Rangoli' },
-      { metric: 'Revenue Growth', value: '+45%', brand: 'Rangoli' }
+      { metric: 'Revenue Growth', value: '+45%', brand: 'Rangoli' },
+      { metric: 'Revenue Lift', value: '+40%', brand: 'Bombay Bloomers' },
+      { metric: 'Revenue Growth', value: '+30%', brand: 'Shaffa' }
     ]
   },
   {
