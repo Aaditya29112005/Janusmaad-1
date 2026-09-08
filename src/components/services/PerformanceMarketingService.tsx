@@ -6,6 +6,8 @@ import {
   Activity
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
+import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 
 interface PerformanceMarketingServiceProps {
   onOpenAudit: (type?: string) => void;
@@ -538,6 +540,28 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR PERFORMANCE MARKETING */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
+        <div className="text-center max-w-3xl mx-auto space-y-2">
+          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
+            VERIFIED PERFORMANCE MARKETING PROOF & CLIENT WORK
+          </div>
+          <h2 className="text-3xl font-display font-extrabold text-ink">
+            Top Performance Marketing Clients & Results
+          </h2>
+          <p className="text-mute text-sm">
+            Filtered by Performance Marketing (PM) case studies, with full access to all client vault records.
+          </p>
+        </div>
+
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" />
+      </div>
+
+      {/* VERIFIED TESTIMONIALS CAROUSEL */}
+      <div className="border-t border-hairline pt-12">
+        <TestimonialsMarquee />
       </div>
 
       {/* 5. FAQ MUST ANSWER SECTION */}

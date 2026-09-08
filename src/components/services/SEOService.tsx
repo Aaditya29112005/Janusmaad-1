@@ -6,6 +6,8 @@ import {
   BookOpen
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
+import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 
 interface SEOServiceProps {
   onOpenAudit: (type?: string) => void;
@@ -453,6 +455,28 @@ export const SEOService: React.FC<SEOServiceProps> = ({
                   </Button>
                 </div>
               </div>
+            </div>
+
+            {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR SEO */}
+            <div className="space-y-8 border-t border-hairline pt-12">
+              <div className="text-center max-w-3xl mx-auto space-y-2">
+                <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
+                  VERIFIED SEO PROOF & CLIENT WORK
+                </div>
+                <h2 className="text-3xl font-display font-extrabold text-ink">
+                  Top SEO & AEO Clients & Organic Results
+                </h2>
+                <p className="text-mute text-sm">
+                  Filtered by SEO case studies, with full access to all client vault records.
+                </p>
+              </div>
+
+              <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="SEO" />
+            </div>
+
+            {/* VERIFIED TESTIMONIALS CAROUSEL */}
+            <div className="border-t border-hairline pt-12">
+              <TestimonialsMarquee />
             </div>
 
             {/* FAQ MUST ANSWER SECTION */}

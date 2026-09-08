@@ -47,13 +47,23 @@ const WORK_IMAGES: Record<string, string> = {
 
 interface CategoryMetricsExplorerProps {
   onOpenAudit?: (type?: string) => void;
+  initialService?: string;
 }
 
-export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = () => {
+export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = ({
+  onOpenAudit: _onOpenAudit,
+  initialService = 'ALL'
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Jewelry (Ecomm + Retail)');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedService, setSelectedService] = useState<string>('ALL');
+  const [selectedService, setSelectedService] = useState<string>(initialService);
   const [visibleCount, setVisibleCount] = useState<number>(6);
+
+  useEffect(() => {
+    if (initialService) {
+      setSelectedService(initialService);
+    }
+  }, [initialService]);
 
   const gridRef = useRef<HTMLDivElement | null>(null);
 
