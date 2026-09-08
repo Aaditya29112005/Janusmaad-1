@@ -2,27 +2,70 @@ import React, { useEffect, useRef } from 'react';
 import { gsap, Observer } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 
+interface SpecializationItem {
+  id: string;
+  name: string;
+  isFeatured?: boolean;
+}
+
+const ROW_1_FIELDS: SpecializationItem[] = [
+  { id: 'jewelry', name: 'Jewelry (Ecomm + Retail)', isFeatured: true },
+  { id: 'fintech', name: 'Financial Services & Fintech' },
+  { id: 'spiritual', name: 'Spiritual, Wellness & Ayurveda' },
+  { id: 'fashion', name: 'Fashion, Apparel & Couture' },
+  { id: 'hospitality', name: 'Hospitality, Resorts & Dining' },
+  { id: 'skincare', name: 'Skincare, Beauty & Cosmetics' },
+];
+
+const ROW_2_FIELDS: SpecializationItem[] = [
+  { id: 'home', name: 'Home, Decor & Furniture' },
+  { id: 'rideables', name: 'Rideables, Footwear & D2C' },
+  { id: 'realestate', name: 'Real Estate & Broking' },
+  { id: 'petcare', name: 'Pet Products & Accessories' },
+  { id: 'food', name: 'Food, Sweets & Confectionery' },
+  { id: 'jewelry-2', name: 'Jewelry (Ecomm + Retail)', isFeatured: true },
+  { id: 'fintech-2', name: 'Financial Services & Fintech' },
+];
+
 export const ScrollRailMarquee: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const railRef = useRef<HTMLDivElement | null>(null);
+  const rail1Ref = useRef<HTMLDivElement | null>(null);
+  const rail2Ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const rail = railRef.current;
+    const rail1 = rail1Ref.current;
+    const rail2 = rail2Ref.current;
     const container = containerRef.current;
-    if (!rail || !container || prefersReducedMotion()) return;
+    if (!rail1 || !container || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Infinite horizontal marquee translation
-      const totalWidth = rail.scrollWidth / 2;
+      // Calculate half widths for seamless looping
+      const width1 = rail1.scrollWidth / 2;
+      const width2 = rail2 ? rail2.scrollWidth / 2 : width1;
 
-      const loopTween = gsap.to(rail, {
-        x: -totalWidth,
-        duration: 20,
+      // Rail 1 loops leftwards
+      const loopTween1 = gsap.to(rail1, {
+        x: -width1,
+        duration: 26,
         ease: 'none',
         repeat: -1,
       });
 
-      // Observer to accelerate / reverse marquee based on page scroll velocity (from user's CodePen)
+      // Rail 2 loops in opposite direction (or staggered)
+      let loopTween2: gsap.core.Tween | null = null;
+      if (rail2) {
+        gsap.set(rail2, { x: -width2 });
+        loopTween2 = gsap.to(rail2, {
+          x: 0,
+          duration: 30,
+          ease: 'none',
+          repeat: -1,
+        });
+      }
+
+      const activeTweens = loopTween2 ? [loopTween1, loopTween2] : [loopTween1];
+
+      // GSAP Observer: dynamically accelerate / reverse marquee based on scroll velocity
       Observer.create({
         target: window,
         type: 'scroll,wheel,touch',
@@ -33,8 +76,8 @@ export const ScrollRailMarquee: React.FC = () => {
           }
           gsap
             .timeline({ defaults: { ease: 'none' } })
-            .to(loopTween, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
-            .to(loopTween, { timeScale: 1, duration: 0.8, ease: 'power1.out' });
+            .to(activeTweens, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
+            .to(activeTweens, { timeScale: 1, duration: 0.9, ease: 'power1.out' });
         },
       });
     }, container);
@@ -42,35 +85,64 @@ export const ScrollRailMarquee: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
-  const marqueePhrases = [
-    'SILKY-SMOOTH PERFORMANCE',
-    '•',
-    'JANUSMAAD STOREFRONTS',
-    '•',
-    'DATA IN. DESIGN OUT.',
-    '•',
-    'PLUS 62% CVR LIFT',
-    '•',
-    'ZERO AD BUDGET WASTED',
-    '•',
-  ];
+  const renderPills = (items: SpecializationItem[], repeatCount = 4) => {
+    const fullList = Array(repeatCount).fill(items).flat();
+    return fullList.map((item, idx) => (
+      <h4
+        key={`${item.id}-${idx}`}
+        className={`whitespace-nowrap px-6 py-3 rounded-2xl text-sm sm:text-base font-display transition-all duration-300 select-none cursor-default inline-flex items-center gap-2 tracking-wide ${
+          item.isFeatured
+            ? 'bg-[#00BFA5] text-[#050D18] font-bold shadow-lg shadow-[#00BFA5]/25 border border-[#00E5D8]'
+            : 'bg-[#141F32] hover:bg-[#1C2B44] text-[#CBD5E1] hover:text-white font-medium border border-white/10 hover:border-teal/40'
+        }`}
+      >
+        {item.isFeatured && (
+          <span className="w-2 h-2 rounded-full bg-[#050D18] shrink-0 inline-block animate-pulse" />
+        )}
+        {item.name}
+      </h4>
+    ));
+  };
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden bg-ink text-white py-12 border-y border-hairline select-none">
-      <div className="scrolling-text overflow-hidden w-full flex items-center">
-        <div ref={railRef} className="rail flex items-center gap-8 whitespace-nowrap will-change-transform">
-          {[...marqueePhrases, ...marqueePhrases, ...marqueePhrases, ...marqueePhrases].map((phrase, idx) => (
-            <h4
-              key={idx}
-              className={`font-display text-4xl sm:text-7xl font-extrabold tracking-tight ${
-                phrase === '•' ? 'text-teal' : phrase.includes('CVR') ? 'text-teal' : 'text-white'
-              }`}
-            >
-              {phrase}
-            </h4>
-          ))}
+    <section
+      ref={containerRef}
+      id="specialization-fields"
+      className="w-full overflow-hidden bg-[#07101E] text-white py-14 border-y border-hairline/20 select-none relative"
+    >
+      {/* Subtle background ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[250px] bg-teal/5 blur-[120px] pointer-events-none rounded-full" />
+
+      {/* Header Tag */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center relative z-10">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal/10 border border-teal/20 text-teal text-xs font-mono font-bold tracking-widest uppercase mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse" />
+          OUR SPECIALIZATION FIELDS
+        </div>
+        <h3 className="font-display text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Tailored Growth Engines for High-Stakes Verticals
+        </h3>
+      </div>
+
+      {/* Scrolling Text Rail Row 1 */}
+      <div className="scrolling-text overflow-hidden w-full flex items-center mb-4 relative z-10">
+        <div
+          ref={rail1Ref}
+          className="rail flex items-center gap-4 whitespace-nowrap will-change-transform py-1"
+        >
+          {renderPills(ROW_1_FIELDS, 5)}
         </div>
       </div>
-    </div>
+
+      {/* Scrolling Text Rail Row 2 */}
+      <div className="scrolling-text overflow-hidden w-full flex items-center relative z-10">
+        <div
+          ref={rail2Ref}
+          className="rail flex items-center gap-4 whitespace-nowrap will-change-transform py-1"
+        >
+          {renderPills(ROW_2_FIELDS, 5)}
+        </div>
+      </div>
+    </section>
   );
 };

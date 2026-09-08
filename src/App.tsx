@@ -159,11 +159,11 @@ export const App: React.FC = () => {
           <>
             <Hero onOpenAudit={handleOpenAudit} />
             <ProofStrip />
+            <ScrollRailMarquee />
             <TestimonialsMarquee />
             <TrustedBy />
             <CursorFollowList />
             <HowWeWork />
-            <ScrollRailMarquee />
             <HorizontalMarqueeText />
             <ThreeWaysIn onOpenAudit={handleOpenAudit} />
             <WhoWeDontWorkWith />
