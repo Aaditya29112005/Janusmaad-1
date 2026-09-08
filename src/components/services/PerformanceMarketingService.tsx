@@ -31,8 +31,8 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
   const paybackDays = Math.max(7, Math.round(30 / (1 + targetLift / 100)));
 
   const formatCurrency = (val: number) => {
-    if (val >= 10000000) return `₹${(val / 10000000).toFixed(2)}Cr ($${(val / 60000).toFixed(1)}k AUD)`;
-    if (val >= 100000) return `₹${(val / 100000).toFixed(1)}L ($${(val / 60000).toFixed(1)}k AUD)`;
+    if (val >= 10000000) return `₹${(val / 10000000).toFixed(2)}Cr`;
+    if (val >= 100000) return `₹${(val / 100000).toFixed(1)}L`;
     return `₹${Math.round(val).toLocaleString('en-IN')}`;
   };
 
@@ -47,11 +47,11 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
     },
     "serviceType": "Performance Marketing Agency",
     "areaServed": ["Australia", "India"],
-    "description": "Meta, Google and TikTok campaigns managed to ROAS, not reach. Management baseline from $2,500 AUD / ₹1,50,000 INR per month.",
+    "description": "Meta & Google campaigns managed to ROAS, not reach. Management baseline from ₹1,50,000 INR per month.",
     "offers": {
       "@type": "Offer",
-      "price": "2500",
-      "priceCurrency": "AUD"
+      "price": "150000",
+      "priceCurrency": "INR"
     }
   };
 
@@ -64,7 +64,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         "name": "Do you charge a flat fee or percentage of spend?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We charge a transparent flat monthly retainer aligned to your spend band ($2,500 AUD / ₹1.5L baseline) or performance-share tiers. We do not punish scaling by taking arbitrary percentages of ad spend."
+          "text": "We charge a transparent flat monthly retainer aligned to your spend band (₹1.5L baseline) or performance-share tiers. We do not punish scaling by taking arbitrary percentages of ad spend."
         }
       },
       {
@@ -72,7 +72,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         "name": "What is the minimum monthly ad spend required?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Our performance media management is engineered for brands spending between $10,000 to $200,000+ AUD / ₹5L to ₹1Cr+ INR per month."
+          "text": "Our performance media management is engineered for brands spending between ₹5L to ₹1Cr+ INR per month."
         }
       },
       {
