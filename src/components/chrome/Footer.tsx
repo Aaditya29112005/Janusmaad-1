@@ -25,9 +25,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
               <img src="/logo.png" alt="Janusmaad Logo" className="h-8 object-contain" />
               <span className="font-display font-bold text-xl text-ink">Janusmaad Digital</span>
             </div>
-            <p className="text-mute max-w-md text-base leading-relaxed">
-              Performance marketing and SEO agency operating across India (Delhi NCR & Noida). We build high-converting landing pages, scale organic search visibility, and drive sustainable profit.
-            </p>
             <div className="pt-2">
               <Button
                 variant="primary"
@@ -73,10 +70,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
               <div className="text-data-label text-violet uppercase text-xs font-bold">Offices & Social</div>
               <div className="space-y-3 text-mute">
                 <div>
-                  <div className="text-ink font-bold text-xs uppercase">Delhi NCR Hub</div>
-                  <div className="text-xs text-mute">Cyber City, Phase II, Gurugram 122002</div>
-                </div>
-                <div>
                   <div className="text-ink font-bold text-xs uppercase">Noida Hub</div>
                   <div className="text-xs text-mute">Sector 62, Digital Park, Noida 201309</div>
                 </div>
@@ -101,7 +94,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
         {/* Meta Bar */}
         <div className="max-w-[96vw] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-mute uppercase gap-2 mb-6">
           <div>© {new Date().getFullYear()} JANUSMAAD DIGITAL. ALL RIGHTS RESERVED.</div>
-          <div>DATA IN. DESIGN OUT. ABSOLUTE IN INTENT.</div>
         </div>
 
         {/* Giant Edge-to-Edge JANUSMAAD Text with Top-to-Bottom Fade Gradient */}

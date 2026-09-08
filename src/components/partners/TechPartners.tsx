@@ -38,9 +38,6 @@ export const TechPartners: React.FC = () => {
           <h2 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
             Technology Partners<span className="text-violet">.</span>
           </h2>
-          <p className="text-mute text-sm sm:text-base">
-            Deep native integrations with leading enterprise commerce and performance growth platforms.
-          </p>
         </div>
 
         {/* CodePen GSAP ScrollTrigger.batch() Tech Cards Grid */}
