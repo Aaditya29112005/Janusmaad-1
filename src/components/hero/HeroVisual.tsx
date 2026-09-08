@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
-import { TrendingUp, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Sparkles, CheckCircle2 } from 'lucide-react';
 
 export const HeroVisual: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const desktopRef = useRef<HTMLDivElement | null>(null);
   const mobileRef = useRef<HTMLDivElement | null>(null);
-  const badgeRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -26,14 +25,6 @@ export const HeroVisual: React.FC = () => {
       gsap.to(mobileRef.current, {
         y: '+=14',
         duration: 3.6,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      gsap.to(badgeRef.current, {
-        y: '-=8',
-        duration: 2.5,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
@@ -130,20 +121,6 @@ export const HeroVisual: React.FC = () => {
               <span>Sub-1.2s Mobile LCP</span>
             </span>
           </div>
-        </div>
-      </div>
-
-      {/* Floating Card 3: Measured CVR Lift Pill Badge */}
-      <div
-        ref={badgeRef}
-        className="absolute top-4 -right-2 sm:-right-6 bg-violet text-bone border border-violet-deep px-4 py-3 rounded-2xl shadow-2xl z-30 flex items-center gap-3 backdrop-blur-md transform-gpu"
-      >
-        <div className="p-2 rounded-xl bg-teal/20 text-teal">
-          <TrendingUp className="w-5 h-5" />
-        </div>
-        <div>
-          <div className="text-[10px] text-bone/70 uppercase tracking-wider font-bold">Measured Lift</div>
-          <div className="font-display font-bold text-lg text-bone tabular-nums">+62.4% CVR</div>
         </div>
       </div>
     </div>
