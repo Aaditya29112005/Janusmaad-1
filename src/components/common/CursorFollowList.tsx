@@ -161,9 +161,9 @@ export const CursorFollowList: React.FC = () => {
                     <h3 className="font-display font-bold text-lg sm:text-xl text-ink group-hover:text-violet transition-colors">
                       {client.name}
                     </h3>
-                    <div className="text-xs text-mute font-mono flex items-center gap-2">
+                    <div className="text-xs text-mute font-mono">
                       <span>{client.category}</span>
-                      <span>•</span>
+                      <span className="mx-1.5">•</span>
                       <span className="text-violet font-semibold">{client.services.join(', ')}</span>
                     </div>
                   </div>
