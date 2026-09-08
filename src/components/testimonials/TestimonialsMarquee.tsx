@@ -102,11 +102,31 @@ export const TestimonialsMarquee: React.FC = () => {
       scrub.invalidate().restart();
     }
 
+    // Autoplay: automatically move to next testimonial card every 3 seconds
+    let autoPlayTimer: ReturnType<typeof setInterval> | null = null;
+
+    const startAutoPlay = () => {
+      if (autoPlayTimer) clearInterval(autoPlayTimer);
+      autoPlayTimer = setInterval(() => {
+        movePlayhead(spacing);
+      }, 3000);
+    };
+
+    const stopAutoPlay = () => {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    };
+
+    startAutoPlay();
+
     // Attach Draggable for smooth touch & cursor drag scrubbing
     const draggableInstance = Draggable.create(proxy, {
       type: 'x',
       trigger: cardsEl,
       onPress() {
+        stopAutoPlay();
         gsap.killTweensOf(scrub);
       },
       onDrag() {
@@ -119,16 +139,28 @@ export const TestimonialsMarquee: React.FC = () => {
         const snapped = snapTime(playhead.offset);
         scrub.vars.offset = snapped;
         scrub.invalidate().restart();
+        startAutoPlay();
       },
     })[0];
 
-    // Store move function on DOM element for Next / Prev buttons
+    // Pause autoplay on mouse hover so users can comfortably read; resume on leave
+    const handleMouseEnter = () => stopAutoPlay();
+    const handleMouseLeave = () => startAutoPlay();
+
+    cardsEl.addEventListener('mouseenter', handleMouseEnter);
+    cardsEl.addEventListener('mouseleave', handleMouseLeave);
+
+    // Store move function and timer reset on DOM element for Next / Prev buttons
     (cardsEl as any)._movePlayhead = movePlayhead;
+    (cardsEl as any)._resetTimer = startAutoPlay;
 
     // Initial progress render
     seamlessLoop.progress(0.001);
 
     return () => {
+      stopAutoPlay();
+      cardsEl.removeEventListener('mouseenter', handleMouseEnter);
+      cardsEl.removeEventListener('mouseleave', handleMouseLeave);
       draggableInstance.kill();
       seamlessLoop.kill();
       scrub.kill();
@@ -158,7 +190,10 @@ export const TestimonialsMarquee: React.FC = () => {
             <button
               onClick={() => {
                 const el = cardsRef.current as any;
-                if (el && el._movePlayhead) el._movePlayhead(-0.1);
+                if (el && el._movePlayhead) {
+                  el._movePlayhead(-0.1);
+                  el._resetTimer?.();
+                }
               }}
               className="p-4 bg-white border border-hairline rounded-2xl text-ink hover:bg-violet hover:text-white hover:border-violet transition-all shadow-md cursor-pointer group"
               aria-label="Previous Testimonial Card"
@@ -168,7 +203,10 @@ export const TestimonialsMarquee: React.FC = () => {
             <button
               onClick={() => {
                 const el = cardsRef.current as any;
-                if (el && el._movePlayhead) el._movePlayhead(0.1);
+                if (el && el._movePlayhead) {
+                  el._movePlayhead(0.1);
+                  el._resetTimer?.();
+                }
               }}
               className="p-4 bg-white border border-hairline rounded-2xl text-ink hover:bg-violet hover:text-white hover:border-violet transition-all shadow-md cursor-pointer group"
               aria-label="Next Testimonial Card"
