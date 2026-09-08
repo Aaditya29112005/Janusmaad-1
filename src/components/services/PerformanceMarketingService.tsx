@@ -212,8 +212,8 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
                 <div>
                   <div className="flex justify-between text-xs text-white/70 mb-1">
-                    <span>Janusmaad Rebuild Return (4.82x ROAS)</span>
-                    <span className="text-emerald-400 font-bold">$241,000 AUD</span>
+                    <span>Janusmaad Rebuild Return (4x ROAS)</span>
+                    <span className="text-emerald-400 font-bold">$200,000 AUD</span>
                   </div>
                   <div className="h-3 bg-white/10 rounded-full overflow-hidden">
                     <div className="h-full bg-teal w-[92%] rounded-full animate-pulse" />
