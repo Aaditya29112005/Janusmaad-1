@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
   CheckCircle2, 
-  HelpCircle, 
   Sparkles,
   BookOpen
 } from 'lucide-react';
@@ -42,67 +41,7 @@ export const SEOService: React.FC<SEOServiceProps> = ({
     },
     "serviceType": "SEO Agency",
     "areaServed": ["Sydney", "Delhi NCR", "Australia", "India"],
-    "description": "Rank on Google, YouTube and AI answers. Technical SEO, content clusters and AEO from $2,000 AUD / ₹1,20,000 INR monthly.",
-    "offers": {
-      "@type": "Offer",
-      "price": "2000",
-      "priceCurrency": "AUD"
-    }
-  };
-
-  const faqJsonLdData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is the monthly cost for Search Everywhere Optimisation?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "SEO engagements begin from $2,000 AUD / ₹1,20,000 INR per month for local/foundational search up to custom multi-market enterprise scopes."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How long before we see ranking and traffic movement?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Technical indexation and Core Web Vitals fixes show movement within 14 to 30 days. Commercial content clusters and AI citation authority compound over 60 to 90 days."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What happens to the work if we stop working together?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You own 100% of all published content clusters, schema markup code, technical fixes, and acquired digital PR links forever. Nothing is rented."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How does AEO (Answer Engine Optimisation) differ from traditional SEO?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Traditional SEO optimizes web pages to win blue link clicks on search engines. AEO (Answer Engine Optimisation) structures your brand data into structured facts and entity relationships so conversational AI models (ChatGPT, Perplexity, Google AI Overviews, Gemini) synthesize and directly cite your brand as the definitive authority."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are digital PR links bought or earned?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We strictly build high-authority earned digital PR links through original data reports, expert quotes, and editorial outreach across Sydney and Indian trade media."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How does reporting attribute organic revenue?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We map GA4 multi-touch attribution, Google Search Console search queries, and AI referral traffic (ChatGPT/Perplexity UTMs) directly to first-click and last-click revenue."
-        }
-      }
-    ]
+    "description": "Rank on Google, YouTube and AI answers. Technical SEO, content clusters and AEO."
   };
 
   return (
@@ -111,10 +50,6 @@ export const SEOService: React.FC<SEOServiceProps> = ({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLdData) }}
       />
 
       {/* Navigation */}
@@ -151,9 +86,6 @@ export const SEOService: React.FC<SEOServiceProps> = ({
             <Button variant="primary" size="lg" className="bg-violet hover:bg-violet-deep text-white border-none" onClick={() => onOpenAudit('acquire-seo')}>
               Free Search Visibility & AEO Audit →
             </Button>
-            <div className="text-xs text-mute font-mono">
-              Technical SEO & AEO packages from <strong className="text-violet font-bold">[PRICE: $2,000 AUD / ₹1.2L / mo]</strong>
-            </div>
           </div>
 
           {/* Primary & Supporting Keywords */}
@@ -400,63 +332,6 @@ export const SEOService: React.FC<SEOServiceProps> = ({
               </section>
             </div>
 
-            {/* PRICING TIERS */}
-            <div className="space-y-8 pt-6">
-              <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-                ENGAGEMENT TIERS
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm">
-                  <div className="text-xs font-mono font-bold text-violet">TIER 01 • DIAGNOSTIC</div>
-                  <h4 className="text-xl font-bold text-ink">Free Search Visibility Audit</h4>
-                  <div className="text-2xl font-bold text-ink">$0</div>
-                  <p className="text-xs text-mute leading-relaxed">
-                    Full technical audit, Core Web Vitals teardown, and AI citation analysis.
-                  </p>
-                  <Button variant="outline" size="sm" onClick={() => onOpenAudit('acquire-seo')}>
-                    Request Audit
-                  </Button>
-                </div>
-
-                <div className="bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm">
-                  <div className="text-xs font-mono font-bold text-violet">TIER 02 • FOUNDATIONS</div>
-                  <h4 className="text-xl font-bold text-ink">Search Foundations</h4>
-                  <div className="text-2xl font-bold text-ink">[PRICE] <span className="text-xs text-mute font-mono">/ mo</span></div>
-                  <p className="text-xs text-mute leading-relaxed">
-                    Technical SEO cleanup, 2 commercial content clusters, and baseline schema.
-                  </p>
-                  <Button variant="outline" size="sm" onClick={() => onOpenAudit('acquire-seo')}>
-                    Select Foundations
-                  </Button>
-                </div>
-
-                <div className="bg-ink text-white rounded-3xl p-6 border-2 border-violet space-y-4 shadow-xl">
-                  <div className="text-xs font-mono font-bold text-violet">TIER 03 • GROWTH</div>
-                  <h4 className="text-xl font-bold text-white">Search Everywhere Growth</h4>
-                  <div className="text-2xl font-bold text-white">[PRICE] <span className="text-xs text-white/60 font-mono">/ mo</span></div>
-                  <p className="text-xs text-white/80 leading-relaxed">
-                    Full AEO & GEO optimization, weekly content clusters, and digital PR link building.
-                  </p>
-                  <Button variant="primary" size="sm" className="bg-violet hover:bg-violet-deep text-white border-none" onClick={() => onOpenAudit('acquire-seo')}>
-                    Start Growth
-                  </Button>
-                </div>
-
-                <div className="bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm">
-                  <div className="text-xs font-mono font-bold text-violet">TIER 04 • MULTI-MARKET</div>
-                  <h4 className="text-xl font-bold text-ink">Enterprise Multi-Market</h4>
-                  <div className="text-2xl font-bold text-ink">Custom</div>
-                  <p className="text-xs text-mute leading-relaxed">
-                    For global brands expanding across Sydney, Delhi NCR, and international search indexes.
-                  </p>
-                  <Button variant="outline" size="sm" onClick={() => onOpenAudit('acquire-seo')}>
-                    Contact Enterprise
-                  </Button>
-                </div>
-              </div>
-            </div>
-
             {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR SEO */}
             <div className="space-y-8 border-t border-hairline pt-12">
               <div className="text-center max-w-3xl mx-auto space-y-2">
@@ -477,52 +352,6 @@ export const SEOService: React.FC<SEOServiceProps> = ({
             {/* VERIFIED TESTIMONIALS CAROUSEL */}
             <div className="border-t border-hairline pt-12">
               <TestimonialsMarquee />
-            </div>
-
-            {/* FAQ MUST ANSWER SECTION */}
-            <div className="space-y-6 pt-6">
-              <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-                FREQUENTLY ASKED QUESTIONS
-              </div>
-
-              <div className="space-y-4">
-                {[
-                  {
-                    q: "What is the monthly cost for Search Everywhere Optimisation?",
-                    a: "SEO engagements begin from [PRICE]/month ($2,000 AUD / ₹1,20,000 INR) for local/foundational search up to custom multi-market enterprise scopes."
-                  },
-                  {
-                    q: "How long before we see ranking and traffic movement?",
-                    a: "Technical indexation and Core Web Vitals fixes show movement within 14 to 30 days. Commercial content clusters and AI citation authority compound over 60 to 90 days."
-                  },
-                  {
-                    q: "What happens to the work if we stop working together?",
-                    a: "You own 100% of all published content clusters, schema markup code, technical fixes, and acquired digital PR links forever. Nothing is rented."
-                  },
-                  {
-                    q: "How does AEO (Answer Engine Optimisation) differ from traditional SEO?",
-                    a: "Traditional SEO optimizes web pages to win blue link clicks on search engines. AEO (Answer Engine Optimisation) structures your brand data into structured facts and entity relationships so conversational AI models (ChatGPT, Perplexity, Google AI Overviews, Gemini) synthesize and directly cite your brand as the definitive authority."
-                  },
-                  {
-                    q: "Are digital PR links bought or earned?",
-                    a: "We strictly build high-authority earned digital PR links through original data reports, expert quotes, and editorial outreach across Sydney and Indian trade media."
-                  },
-                  {
-                    q: "How does reporting attribute organic revenue?",
-                    a: "We map GA4 multi-touch attribution, Google Search Console search queries, and AI referral traffic (ChatGPT/Perplexity UTMs) directly to first-click and last-click revenue."
-                  }
-                ].map((faq, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl p-6 border border-hairline space-y-2">
-                    <h3 className="font-display font-bold text-ink text-base flex items-center gap-2">
-                      <HelpCircle className="w-4 h-4 text-violet shrink-0" />
-                      {faq.q}
-                    </h3>
-                    <p className="text-mute text-sm leading-relaxed pl-6">
-                      {faq.a}
-                    </p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* CROSS-LINKS SECTION */}
