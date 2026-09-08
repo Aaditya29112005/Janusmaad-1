@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   CheckCircle2, 
-  HelpCircle, 
   Gauge, 
   XCircle 
 } from 'lucide-react';
@@ -21,75 +20,15 @@ export const BuildService: React.FC<BuildServiceProps> = ({
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "Shopify & Landing Page Development Agency Sydney & Delhi NCR",
+    "name": "Shopify & Landing Page Development Agency India & Delhi NCR",
     "provider": {
       "@type": "Organization",
       "name": "Janusmaad Digital",
       "url": "https://janusmaad.com"
     },
     "serviceType": "Shopify Development Agency",
-    "areaServed": ["Australia", "India"],
-    "description": "Fast bespoke landing pages and custom Shopify storefronts, built mobile-first and speed-tuned. From $3,500 AUD / ₹2,000,000 INR.",
-    "offers": {
-      "@type": "Offer",
-      "price": "3500",
-      "priceCurrency": "AUD"
-    }
-  };
-
-  const faqJsonLdData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is the cost for a custom Shopify storefront or landing page build?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Single high-converting campaign landing pages start from $3,500 AUD / ₹2,00,000 INR. Full bespoke Shopify storefront revamps range from $8,000 to $25,000+ AUD."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the typical build timeline from kickoff to launch?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Single landing pages launch within 10 to 14 days. Full Shopify storefront revamps take 4 to 6 weeks including device QA and speed tuning."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What assets does the client need to supply?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You supply product imagery, brand guideline logos, and raw copy direction. We handle wireframing, UI/UX design, custom code development, and speed optimization."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who owns the code and Figma design files?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You own 100% of all Figma design tokens, Liquid/React source code, and custom component libraries upon final project handover."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What happens if our brand guidelines are not ready?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We build a streamlined digital design system & component token library as part of Phase 1 wireframing before writing production code."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is the site handed over or hosted by Janusmaad?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Shopify storefronts are transferred directly into your Shopify account. Headless/Next.js builds are deployed to your Vercel or AWS instance with 30 days post-launch care included."
-        }
-      }
-    ]
+    "areaServed": ["India", "Global"],
+    "description": "Fast bespoke landing pages and custom Shopify storefronts, built mobile-first and speed-tuned."
   };
 
   return (
@@ -98,10 +37,6 @@ export const BuildService: React.FC<BuildServiceProps> = ({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLdData) }}
       />
 
       {/* Navigation */}
@@ -141,9 +76,6 @@ export const BuildService: React.FC<BuildServiceProps> = ({
               <Button variant="primary" size="lg" className="bg-teal text-ink font-bold hover:bg-emerald-400 border-none" onClick={() => onOpenAudit('convert-build')}>
                 Get Free Speed & Conversion Teardown →
               </Button>
-              <div className="text-xs text-white/70 font-mono">
-                Build packages from <strong className="text-teal">[PRICE: $3,500 AUD / ₹2.0L]</strong>
-              </div>
             </div>
 
             {/* Supporting Keywords */}
@@ -403,68 +335,6 @@ export const BuildService: React.FC<BuildServiceProps> = ({
         </div>
       </div>
 
-      {/* 3. PRICING TIERS */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            ENGAGEMENT TIERS
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Development Packages
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm">
-            <div className="text-xs font-mono font-bold text-teal">TIER 01 • DIAGNOSTIC</div>
-            <h3 className="text-xl font-bold text-ink">Free Speed Teardown</h3>
-            <div className="text-2xl font-bold text-ink">$0</div>
-            <p className="text-xs text-mute leading-relaxed">
-              Lighthouse audit + Core Web Vitals code report exposing speed bottlenecks.
-            </p>
-            <Button variant="outline" size="sm" onClick={() => onOpenAudit('convert-build')}>
-              Request Teardown
-            </Button>
-          </div>
-
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm">
-            <div className="text-xs font-mono font-bold text-teal">TIER 02 • SINGLE PAGE</div>
-            <h3 className="text-xl font-bold text-ink">Campaign Landing Page</h3>
-            <div className="text-2xl font-bold text-ink">[PRICE]</div>
-            <p className="text-xs text-mute leading-relaxed">
-              Single high-converting direct response campaign landing page built mobile-first.
-            </p>
-            <Button variant="outline" size="sm" onClick={() => onOpenAudit('convert-build')}>
-              Select Single Page
-            </Button>
-          </div>
-
-          <div className="bg-ink text-white rounded-3xl p-6 border-2 border-teal space-y-4 shadow-xl">
-            <div className="text-xs font-mono font-bold text-teal">TIER 03 • MULTI-PAGE</div>
-            <h3 className="text-xl font-bold text-white">Multi-Page Funnel</h3>
-            <div className="text-2xl font-bold text-white">[PRICE]</div>
-            <p className="text-xs text-white/80 leading-relaxed">
-              Multi-page lander suite + cart slide upsell + custom liquid theme components.
-            </p>
-            <Button variant="primary" size="sm" className="bg-teal text-ink font-bold border-none" onClick={() => onOpenAudit('convert-build')}>
-              Start Multi-Page
-            </Button>
-          </div>
-
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-4 shadow-sm">
-            <div className="text-xs font-mono font-bold text-teal">TIER 04 • FULL REVAMP</div>
-            <h3 className="text-xl font-bold text-ink">Full Store Revamp</h3>
-            <div className="text-2xl font-bold text-ink">Custom</div>
-            <p className="text-xs text-mute leading-relaxed">
-              Bespoke Shopify Plus or Headless Next.js storefront rebuild with speed guarantees.
-            </p>
-            <Button variant="outline" size="sm" onClick={() => onOpenAudit('convert-build')}>
-              Contact Enterprise
-            </Button>
-          </div>
-        </div>
-      </div>
-
       {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR BUILD */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
         <div className="text-center max-w-3xl mx-auto space-y-2">
@@ -487,58 +357,7 @@ export const BuildService: React.FC<BuildServiceProps> = ({
         <TestimonialsMarquee />
       </div>
 
-      {/* 4. FAQ MUST ANSWER SECTION */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="text-center space-y-3">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            FREQUENTLY ASKED QUESTIONS
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Build Specs & Handover Details
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          {[
-            {
-              q: "What is the cost for a custom Shopify storefront or landing page build?",
-              a: "Single high-converting campaign landing pages start from [PRICE] ($3,500 AUD / ₹2,00,000 INR). Full bespoke Shopify storefront revamps range from $8,000 to $25,000+ AUD."
-            },
-            {
-              q: "What is the typical build timeline from kickoff to launch?",
-              a: "Single landing pages launch within 10 to 14 days. Full Shopify storefront revamps take 4 to 6 weeks including device QA and speed tuning."
-            },
-            {
-              q: "What assets does the client need to supply?",
-              a: "You supply product imagery, brand guideline logos, and raw copy direction. We handle wireframing, UI/UX design, custom code development, and speed optimization."
-            },
-            {
-              q: "Who owns the code and Figma design files?",
-              a: "You own 100% of all Figma design tokens, Liquid/React source code, and custom component libraries upon final project handover."
-            },
-            {
-              q: "What happens if our brand guidelines are not ready?",
-              a: "We build a streamlined digital design system & component token library as part of Phase 1 wireframing before writing production code."
-            },
-            {
-              q: "Is the site handed over or hosted by Janusmaad?",
-              a: "Shopify storefronts are transferred directly into your Shopify account. Headless/Next.js builds are deployed to your Vercel or AWS instance with 30 days post-launch care included."
-            }
-          ].map((faq, idx) => (
-            <div key={idx} className="bg-white rounded-2xl p-6 border border-hairline space-y-2">
-              <h3 className="font-display font-bold text-ink text-base flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-teal shrink-0" />
-                {faq.q}
-              </h3>
-              <p className="text-mute text-sm leading-relaxed pl-6">
-                {faq.a}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 5. CROSS-LINKS SECTION */}
+      {/* CROSS-LINKS SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 border-t border-hairline pt-12">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-bone rounded-3xl p-8 border border-hairline">
           <div>
@@ -570,3 +389,4 @@ export const BuildService: React.FC<BuildServiceProps> = ({
     </div>
   );
 };
+
