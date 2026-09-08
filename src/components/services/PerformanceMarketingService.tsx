@@ -184,6 +184,70 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </div>
 
+      {/* 2. NO AUTOPILOT SECTION */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-gradient-to-br from-[#07101E] via-[#0E1E38] to-[#122B4F] text-white rounded-[28px] p-8 sm:p-12 lg:p-14 border border-white/10 shadow-2xl relative overflow-hidden space-y-8">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#5DAFFF]/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="max-w-3xl space-y-4 relative z-10">
+            <span className="px-3.5 py-1 bg-white/10 text-teal text-xs font-mono font-bold rounded-full border border-teal/30 uppercase tracking-wider backdrop-blur-md">
+              CONTINUOUS OPTIMISATION • ZERO AUTOPILOT
+            </span>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white leading-tight">
+              Your campaigns should never run on autopilot<span className="text-teal">.</span>
+            </h2>
+
+            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
+              At JanusMAAD, we combine AI-powered optimisation with human expertise to continuously improve your campaigns across all platforms; from Google and Meta to LinkedIn, YouTube and beyond.
+            </p>
+          </div>
+
+          {/* 5 Clean Value Points */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2 relative z-10">
+            {[
+              {
+                title: 'AI-powered optimisation',
+                desc: 'to uncover patterns and opportunities'
+              },
+              {
+                title: 'Multi-platform performance',
+                desc: 'across the channels where your customers are'
+              },
+              {
+                title: 'Regular campaign reviews',
+                desc: 'no ‘set and forget’ approach'
+              },
+              {
+                title: 'Continuous testing',
+                desc: 'across audiences, creatives, messaging and landing pages'
+              },
+              {
+                title: 'Smarter budget allocation',
+                desc: 'based on what’s actually driving business results'
+              }
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className={`p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-teal/40 transition-all duration-300 space-y-2.5 backdrop-blur-sm ${idx === 4 ? 'md:col-span-2 lg:col-span-2' : ''}`}
+              >
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-teal shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <span className="font-display font-bold text-base sm:text-lg text-white block">
+                      {item.title}
+                    </span>
+                    <span className="text-xs sm:text-sm text-sky-100 font-medium leading-relaxed block">
+                      {item.desc}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* 3. CALCULATOR SECTION: Full-bleed teal band that breaks the container */}
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-teal text-ink py-16 px-4 sm:px-12 my-12 shadow-2xl">
         <div className="max-w-6xl mx-auto space-y-10">
