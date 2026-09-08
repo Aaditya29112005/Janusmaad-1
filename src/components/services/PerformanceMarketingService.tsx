@@ -163,16 +163,13 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               Meta & Google campaigns managed strictly to blended ROAS and Contribution Margin. Built for D2C and lead-gen founders spending <strong className="text-white font-mono">[SPEND_BAND: $10k - $200k+ / mo]</strong> whose ROAS has flattened and who cannot tell which campaign is carrying it.
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            <div className="pt-2">
               <button
                 onClick={() => onOpenAudit('acquire-performance')}
                 className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
               >
                 Get Free Live Account Audit (No Obligation) →
               </button>
-              <div className="text-xs text-sky-100 font-mono">
-                Management baseline from <strong className="text-white font-bold">[PRICE: $2,500 AUD / ₹1.5L / mo]</strong>
-              </div>
             </div>
 
             {/* Supporting Keywords Pills */}
@@ -211,7 +208,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   <div>
                     <div className="flex justify-between text-xs text-blue-100 mb-1 font-semibold">
                       <span>Monthly Ad Spend</span>
-                      <span className="text-white font-bold">$50,000 AUD</span>
+                      <span className="text-white font-bold">₹30L / Mo</span>
                     </div>
                     <div className="h-3 bg-black/20 rounded-full overflow-hidden border border-white/10">
                       <div className="h-full bg-white/50 w-1/3 rounded-full" />
@@ -221,7 +218,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   <div>
                     <div className="flex justify-between text-xs text-blue-100 mb-1 font-semibold">
                       <span>Legacy Agency Return (2.1x ROAS)</span>
-                      <span className="text-red-300 font-bold">$105,000 AUD</span>
+                      <span className="text-red-300 font-bold">₹63L / Mo</span>
                     </div>
                     <div className="h-3 bg-black/20 rounded-full overflow-hidden border border-white/10">
                       <div className="h-full bg-red-400/80 w-1/2 rounded-full" />
@@ -231,7 +228,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   <div>
                     <div className="flex justify-between text-xs text-blue-100 mb-1 font-semibold">
                       <span>Janusmaad Rebuild Return (4x ROAS)</span>
-                      <span className="text-emerald-300 font-bold">$200,000 AUD</span>
+                      <span className="text-emerald-300 font-bold">₹1.2Cr / Mo</span>
                     </div>
                     <div className="h-3 bg-black/20 rounded-full overflow-hidden border border-white/10">
                       <div className="h-full bg-[#5DAFFF] w-[92%] rounded-full animate-pulse" />
@@ -241,7 +238,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
                 <div className="p-4 bg-black/25 border border-white/20 rounded-xl space-y-1">
                   <div className="text-xs font-mono font-bold text-[#5DAFFF] uppercase">NET LIFT DEMONSTRATED</div>
-                  <div className="text-2xl font-display font-extrabold text-white">+$136,000 AUD / Mo</div>
+                  <div className="text-2xl font-display font-extrabold text-white">+₹57L / Mo</div>
                   <div className="text-xs text-blue-100">Attributable via GA4 + CAPI Server-Side Tagging</div>
                 </div>
               </div>
