@@ -1,9 +1,5 @@
 import React from 'react';
-import { 
-  CheckCircle2, 
-  Gauge, 
-  XCircle 
-} from 'lucide-react';
+import { Gauge } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
@@ -208,78 +204,7 @@ export const BuildService: React.FC<BuildServiceProps> = ({
         </div>
       </div>
 
-      {/* EXPLICIT PLATFORM MATRIX: WHAT WE BUILD ON VS WHAT WE DO NOT */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            ENGINEERING STACK HONESTY
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Platforms We Build On & Platforms We Do Not
-          </h2>
-          <p className="text-mute text-sm">
-            We do not compromise on code performance or speed. Here is our exact platform support matrix.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Supported Platforms */}
-          <div className="bg-emerald-950/10 border-2 border-emerald-500/40 rounded-3xl p-8 space-y-6">
-            <div className="flex items-center gap-2 text-emerald-600 font-mono font-bold text-sm uppercase">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-              SUPPORTED STACK (WE BUILD & OPTIMIZE)
-            </div>
-            <ul className="space-y-3 font-mono text-xs text-ink">
-              <li className="p-3 bg-white rounded-xl border border-emerald-500/30 flex items-center justify-between font-bold">
-                <span>Shopify & Shopify Plus (Custom Liquid)</span>
-                <span className="text-emerald-600">✓ Primary Flagship</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-emerald-500/30 flex items-center justify-between font-bold">
-                <span>Next.js 15 & React 19 (Headless Storefronts)</span>
-                <span className="text-emerald-600">✓ Sub-Second Speed</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-emerald-500/30 flex items-center justify-between font-bold">
-                <span>Custom HTML5 / Tailwind / Vanilla JS Landing Pages</span>
-                <span className="text-emerald-600">✓ High Converting</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-emerald-500/30 flex items-center justify-between font-bold">
-                <span>Headless Shopify + Vercel CDNs</span>
-                <span className="text-emerald-600">✓ Enterprise Scale</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-emerald-500/30 flex items-center justify-between font-bold">
-                <span>Custom WordPress / WooCommerce (Bespoke Themes)</span>
-                <span className="text-emerald-600">✓ Fully Supported</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Unsupported Platforms */}
-          <div className="bg-red-950/10 border-2 border-red-500/40 rounded-3xl p-8 space-y-6">
-            <div className="flex items-center gap-2 text-red-600 font-mono font-bold text-sm uppercase">
-              <XCircle className="w-5 h-5 text-red-600" />
-              UNSUPPORTED PLATFORMS (WE DO NOT BUILD ON)
-            </div>
-            <ul className="space-y-3 font-mono text-xs text-ink">
-              <li className="p-3 bg-white rounded-xl border border-red-500/30 flex items-center justify-between font-bold opacity-80">
-                <span>Wix & Wix Studio</span>
-                <span className="text-red-500">✕ Bloated Code / Slow</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-red-500/30 flex items-center justify-between font-bold opacity-80">
-                <span>Squarespace</span>
-                <span className="text-red-500">✕ Rigid Template Limits</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-red-500/30 flex items-center justify-between font-bold opacity-80">
-                <span>Webflow for E-Commerce</span>
-                <span className="text-red-500">✕ Restricted Cart APIs</span>
-              </li>
-              <li className="p-3 bg-white rounded-xl border border-red-500/30 flex items-center justify-between font-bold opacity-80">
-                <span>Generic Page Builders (PageFly / Shogun heavy drag-and-drop)</span>
-                <span className="text-red-500">✕ Destroys Mobile Speed</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
       {/* 2. DELIVERABLE GROUPS (01 - 05) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
