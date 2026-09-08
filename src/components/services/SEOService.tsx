@@ -33,14 +33,14 @@ export const SEOService: React.FC<SEOServiceProps> = ({
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "SEO Agency Sydney & Delhi NCR | Search Everywhere Optimisation",
+    "name": "SEO Agency India & Delhi NCR | Search Everywhere Optimisation",
     "provider": {
       "@type": "Organization",
       "name": "Janusmaad Digital",
       "url": "https://janusmaad.com"
     },
     "serviceType": "SEO Agency",
-    "areaServed": ["Sydney", "Delhi NCR", "Australia", "India"],
+    "areaServed": ["Delhi NCR", "India"],
     "description": "Rank on Google, YouTube and AI answers. Technical SEO, content clusters and AEO."
   };
 
@@ -90,7 +90,7 @@ export const SEOService: React.FC<SEOServiceProps> = ({
 
           {/* Primary & Supporting Keywords */}
           <div className="pt-6 border-t border-hairline flex flex-wrap gap-2 text-xs font-mono text-mute">
-            <span className="text-violet font-bold">PRIMARY KEYWORD:</span> SEO agency Sydney |
+            <span className="text-violet font-bold">PRIMARY KEYWORD:</span> SEO agency India |
             <span>search everywhere optimisation</span> |
             <span>AEO (Answer Engine Optimisation)</span> |
             <span>generative engine optimisation</span> |
@@ -251,83 +251,83 @@ export const SEOService: React.FC<SEOServiceProps> = ({
             </div>
 
             {/* NUMBERED SECTIONS (01 - 05 DELIVERABLE GROUPS) */}
-            <div className="space-y-12">
+            <div className="space-y-8">
               <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
                 THE 5 DELIVERABLE GROUPS
               </div>
 
               {/* 01. Technical SEO */}
-              <section id="technical-seo" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
+              <section id="technical-seo" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
                 <div className="text-2xl font-mono font-bold text-violet">01.</div>
-                <h3 className="text-2xl font-display font-bold text-ink">
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
                   Technical SEO: Crawlability, Core Web Vitals & Schema
                 </h3>
                 <p className="text-mute leading-relaxed text-sm">
-                  We fix indexation bottlenecks, render blocking JavaScript, canonical errors, and tune mobile Core Web Vitals (LCP, INP, CLS) to sub-second standards while implementing custom Organization, Article, and Product JSON-LD schema.
+                  Fix indexation bottlenecks, render-blocking scripts, and tune mobile Core Web Vitals to sub-second standards with rich JSON-LD Knowledge Graph schema.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Sub-1-second mobile load time tuning</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> JSON-LD Knowledge Graph architecture</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Sub-1-second mobile load tuning</div>
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> JSON-LD Knowledge Graph architecture</div>
                 </div>
               </section>
 
               {/* 02. Content Clusters */}
-              <section id="content-clusters" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
+              <section id="content-clusters" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
                 <div className="text-2xl font-mono font-bold text-violet">02.</div>
-                <h3 className="text-2xl font-display font-bold text-ink">
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
                   Content Clusters Mapped to Commercial Intent
                 </h3>
                 <p className="text-mute leading-relaxed text-sm">
-                  We design semantic pillar-and-cluster content structures that capture high-intent buyers searching at the bottom of the funnel, establishing topical authority on both Sydney and global search indexes.
+                  Build semantic pillar-and-cluster content to capture high-intent bottom-of-funnel searchers and dominate national search indexes.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> High-converting commercial landing pages</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Internal link architecture optimization</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> High-converting commercial landing pages</div>
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Internal link architecture optimization</div>
                 </div>
               </section>
 
               {/* 03. AEO and GEO */}
-              <section id="ai-seo-aeo" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
+              <section id="ai-seo-aeo" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
                 <div className="text-2xl font-mono font-bold text-violet">03.</div>
-                <h3 className="text-2xl font-display font-bold text-ink">
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
                   AEO & GEO: Getting Cited by ChatGPT, Perplexity & AI Overviews
                 </h3>
                 <p className="text-mute leading-relaxed text-sm">
-                  Formatting brand facts, pricing tables, product specs, and customer reviews into machine-readable structures that direct conversational AI models to cite your brand as the primary reference source.
+                  Format brand data and specs into machine-readable structures so conversational AI models directly cite your brand as the answer.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Citation optimization for LLM models</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Zero-click answer snippet capture</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> LLM model citation optimization</div>
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Zero-click AI snippet capture</div>
                 </div>
               </section>
 
               {/* 04. Digital PR & Links */}
-              <section id="link-building" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
+              <section id="link-building" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
                 <div className="text-2xl font-mono font-bold text-violet">04.</div>
-                <h3 className="text-2xl font-display font-bold text-ink">
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink">
                   Digital PR & Earned Authority Links
                 </h3>
                 <p className="text-mute leading-relaxed text-sm">
-                  No toxic link farms or spammy press releases. We earn high-DR contextual backlinks from authoritative Australian and Indian publications via data-driven PR campaigns.
+                  Earn high-DR contextual backlinks from authoritative Indian and global publications via clean, white-hat data PR campaigns.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Tier-1 editorial media placements</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Clean white-hat link acquisition</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Tier-1 editorial media placements</div>
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Clean white-hat link acquisition</div>
                 </div>
               </section>
 
               {/* 05. Local SEO & Shopify SEO */}
-              <section id="local-seo" className="bg-white rounded-3xl p-8 border border-hairline space-y-4 shadow-sm">
+              <section id="local-seo" className="bg-white rounded-3xl p-6 sm:p-8 border border-hairline space-y-3 shadow-sm">
                 <div className="text-2xl font-mono font-bold text-violet">05.</div>
-                <h3 id="shopify-seo" className="text-2xl font-display font-bold text-ink">
-                  Local SEO Across Dual Markets (Sydney & Delhi NCR) + Shopify SEO
+                <h3 id="shopify-seo" className="text-xl sm:text-2xl font-display font-bold text-ink">
+                  Local & National SEO (India & Delhi NCR) + Shopify SEO
                 </h3>
                 <p className="text-mute leading-relaxed text-sm">
-                  Dominating Google Map Packs and localized search queries in Sydney and Delhi NCR while optimizing Shopify collection trees, product tags, and mega-menus for high e-commerce conversion.
+                  Dominate Google Map Packs in Delhi NCR and national search queries while optimizing Shopify collection trees and mega-menus.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-ink/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Google Business Profile multi-location optimization</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet" /> Shopify URL structure & collection indexing</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-mono text-ink/80">
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Google Business Profile optimization</div>
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet shrink-0" /> Shopify URL & collection indexing</div>
                 </div>
               </section>
             </div>
