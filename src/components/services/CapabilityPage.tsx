@@ -23,6 +23,7 @@ import { SMMService } from './SMMService';
 import { BuildService } from './BuildService';
 import { CROService } from './CROService';
 import { RetentionMarketingService } from './RetentionMarketingService';
+import { AboutService } from './AboutService';
 
 
 
@@ -347,31 +348,31 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
   'about': {
     id: 'about',
     category: 'Convert',
-    badge: 'AGENCY PHILOSOPHY & PROCESS',
-    title: 'About Janusmaad Digital & How We Work',
-    subtitle: 'Performance marketing and engineering operating across Delhi NCR and Noida.',
-    description: 'We are a specialized growth studio. We combine direct-response media buying with sub-second frontend engineering to help ambitious brands scale profitably without ad waste.',
+    badge: 'THE JANUSMAAD PHILOSOPHY',
+    title: 'JanusMAAD is your full-stack growth partner',
+    subtitle: 'Built around a simple belief: what happened yesterday should make tomorrow smarter.',
+    description: 'We help businesses acquire customers, convert them and retain them by bringing four disciplines together — Marketing, Advertising, Analytics and Data.',
     bullets: [
-      '01. Deep Audit & Strategy Mapping',
-      '02. Rapid Execution & System Build',
-      '03. Continuous Optimization & Scaling',
-      'India Dual-Hub Operations (Delhi NCR & Noida)'
+      'Marketing: Strategic positioning, narrative & brand momentum',
+      'Advertising: High-intent performance media buying & scale',
+      'Analytics: Attribution, GA4, CAPI & deep conversion telemetry',
+      'Data: Customer lifetime value, RFM segmentation & automation'
     ],
-    kpiLabel: 'Client Retention Rate',
-    kpiValue: '94.2%',
-    kpiSubText: 'Average Partnership Duration: 18+ Months | Blended ROAS Target: 4.5x',
+    kpiLabel: 'Growth Framework',
+    kpiValue: 'M.A.A.D',
+    kpiSubText: 'Marketing • Advertising • Analytics • Data | Past insights. Future thinking.',
     stats: [
-      { label: 'Global Team Size', value: '28+', delta: 'Specialists', desc: 'Senior strategists, media buyers, developers, and data engineers.' },
-      { label: 'Ad Spend Managed', value: '$8.5M+', delta: 'Annual', desc: 'Optimization across Meta, Google, TikTok, and Amazon inventory.' },
-      { label: 'Client Net Satisfaction', value: '98%', delta: 'CSAT', desc: 'Transparent weekly reporting with real-time Slack/Teams access.' }
+      { label: 'Disciplines Integrated', value: '4-in-1', delta: 'MAAD System', desc: 'Marketing, Advertising, Analytics, and Data unified.' },
+      { label: 'Onboarding Sprint', value: '3 Weeks', delta: 'Structured', desc: 'From discovery to data forensics to high-speed execution.' },
+      { label: 'Philosophy', value: 'Past + Future', delta: 'Janus Ethos', desc: 'Look back to understand, look forward to anticipate.' }
     ],
-    technologies: ['GA4 & GTM', 'Vercel App Hosting', 'Meta Business Suite', 'Google Search Console', 'Klaviyo Enterprise', 'Ahrefs', 'Figma'],
+    technologies: ['GA4 & GTM Server-Side', 'Meta Ads CAPI', 'Google Performance Max', 'Shopify Plus & Headless', 'Klaviyo Enterprise', 'PostgreSQL & CDP'],
     solutions: [
-      { num: '01', title: 'Phase 1: Deep Audit & Data Setup', desc: 'We audit your tracking, funnel drop-offs, and ad accounts to plug revenue leaks immediately.' },
-      { num: '02', title: 'Phase 2: High-Speed Build & Ads', desc: 'We deploy sub-second landing pages, high-converting ad creative hooks, and automated email flows.' },
-      { num: '03', title: 'Phase 3: Scale & Optimize', desc: 'We run multivariate A/B tests and scale winning ad sets to maximize blended return on ad spend.' },
-      { num: '04', title: 'Transparent Communication', desc: 'No fluff reports. You get direct access to our senior strategists via dedicated channels.' },
-      { num: '05', title: 'Performance-Aligned Incentives', desc: 'Our growth models are structured around your profit targets, ensuring complete alignment.' }
+      { num: '01', title: 'Step 1: Discover & Assess (Week 1)', desc: 'Align on goals, spot the gaps and gather what we need. Understand goals, pain points and review current setup and tools.' },
+      { num: '02', title: 'Step 2: Analyse & Strategise (Week 2)', desc: 'Dive into the data to create a tailored game plan. Deep dive into data, technology, and user behaviour.' },
+      { num: '03', title: 'Step 3: Align & Execute (Week 3)', desc: 'Bring the plan to life with precision and purpose. Define team roles, resources, clear deliverables and kick off.' },
+      { num: '04', title: 'Holistic Attribution', desc: 'Growth comes from understanding the whole picture across your numbers, marketing, and technology.' },
+      { num: '05', title: 'Two-Faced Vision', desc: 'We look back to understand. We look forward to anticipate. And we use both to make better decisions.' }
     ]
   },
 
@@ -502,6 +503,15 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
 
       case 'receipts':
         return <CategoryMetricsExplorer onOpenAudit={onOpenAudit} />;
+
+      case 'about':
+        return (
+          <AboutService 
+            onOpenAudit={onOpenAudit} 
+            onNavigateCapability={navigateHandler} 
+            onNavigateHome={onNavigateHome} 
+          />
+        );
 
       default:
         return null;
