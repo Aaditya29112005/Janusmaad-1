@@ -108,10 +108,10 @@ export const CROService: React.FC<CROServiceProps> = ({
         </button>
       </div>
 
-      {/* 1. HERO SECTION: Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
+      {/* 1. HERO SECTION + CALCULATOR (SIDE-BY-SIDE): Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <div
-          className="rounded-3xl p-6 sm:p-12 space-y-8 relative overflow-hidden shadow-2xl text-white"
+          className="rounded-3xl p-6 sm:p-10 lg:p-12 relative overflow-hidden shadow-2xl text-white"
           style={{
             background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
             boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
@@ -120,51 +120,205 @@ export const CROService: React.FC<CROServiceProps> = ({
           {/* Glass Glare Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-3xl" />
           
-          <div className="relative z-10 space-y-6 max-w-3xl">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
-                CONVERT PILLAR • CRO EXPERIMENTATION LAB
-              </span>
-              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
-                SLUG: services/conversion-rate-optimisation
-              </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start relative z-10">
+            {/* LEFT COLUMN: Hero Value Proposition */}
+            <div className="lg:col-span-6 space-y-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="px-3 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
+                  CONVERT PILLAR • CRO EXPERIMENTATION LAB
+                </span>
+                <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
+                  SLUG: services/conversion-rate-optimisation
+                </span>
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white leading-tight tracking-tight drop-shadow-xs">
+                Make the Traffic You Already Pay For Worth More<span className="text-sky-200">.</span>
+              </h1>
+
+              <p className="text-sm sm:text-base text-sky-100 font-medium leading-relaxed font-body">
+                Research-led A/B testing, session recording science, and revenue-per-visitor engineering. Built for D2C & high-intent lead brands ready to eliminate checkout friction.
+              </p>
+
+              <div className="pt-1 flex flex-wrap items-center gap-4">
+                <button
+                  onClick={() => onOpenAudit('convert-cro')}
+                  className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs sm:text-sm hover:bg-white/95 active:scale-[0.99] transition-all shadow-lg cursor-pointer uppercase tracking-wider flex items-center gap-2 group"
+                >
+                  <span>Get Free Conversion Teardown (60 Min)</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+
+              {/* 4 Stat Highlights in 2x2 Grid */}
+              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/20">
+                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
+                  <div className="text-xl sm:text-2xl font-display font-extrabold text-white">+62%</div>
+                  <div className="text-[11px] text-sky-100 font-mono">Average CVR Lift</div>
+                </div>
+                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
+                  <div className="text-xl sm:text-2xl font-display font-extrabold text-white">95%+</div>
+                  <div className="text-[11px] text-sky-100 font-mono">Statistical Confidence</div>
+                </div>
+                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
+                  <div className="text-xl sm:text-2xl font-display font-extrabold text-white">Sub-0.8s</div>
+                  <div className="text-[11px] text-sky-100 font-mono">PDP Interaction Speed</div>
+                </div>
+                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
+                  <div className="text-xl sm:text-2xl font-display font-extrabold text-emerald-300">+38%</div>
+                  <div className="text-[11px] text-sky-100 font-mono">AOV Lift from Bundles</div>
+                </div>
+              </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight tracking-tight drop-shadow-xs">
-              Make the Traffic You Already Pay For Worth More<span className="text-sky-200">.</span>
-            </h1>
+            {/* RIGHT COLUMN: CRO Revenue Calculator */}
+            <div className="lg:col-span-6 bg-[#071324]/90 border border-white/20 rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-2xl backdrop-blur-md space-y-5 text-white">
+              <div className="space-y-1 pb-1 border-b border-white/10">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-teal/20 text-teal text-[11px] font-mono font-bold rounded-full border border-teal/30">
+                  <Sliders className="w-3 h-3" />
+                  CRO REVENUE CALCULATOR
+                </div>
+                <h2 className="text-xl sm:text-2xl font-display font-extrabold text-white tracking-tight">
+                  Calculate Extra Monthly Orders & Revenue Lift
+                </h2>
+                <p className="text-white/70 text-xs font-medium">
+                  Adjust monthly unique traffic & target conversion improvements.
+                </p>
+              </div>
 
-            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body max-w-2xl">
-              Research-led A/B testing, session recording science, and revenue-per-visitor engineering. Built for D2C & high-intent lead brands ready to eliminate checkout friction.
-            </p>
+              {/* Sliders */}
+              <div className="space-y-4">
+                {/* Sessions Slider */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-white/80 font-medium">Monthly Unique Sessions</span>
+                    <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
+                      {sessions.toLocaleString()}
+                    </span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min={10000} 
+                    max={500000} 
+                    step={10000}
+                    value={sessions}
+                    onChange={(e) => setSessions(Number(e.target.value))}
+                    className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
+                  />
+                  {/* Preset Chips */}
+                  <div className="flex items-center gap-1.5 pt-0.5">
+                    {[25000, 50000, 100000, 250000, 500000].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => setSessions(preset)}
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
+                          sessions === preset
+                            ? 'bg-teal text-ink font-bold shadow-xs'
+                            : 'bg-white/5 text-white/60 hover:bg-white/15 hover:text-white'
+                        }`}
+                      >
+                        {(preset / 1000).toFixed(0)}k
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => onOpenAudit('convert-cro')}
-                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/95 transition-all shadow-lg cursor-pointer uppercase tracking-wider flex items-center gap-2 group"
+                {/* Current CVR Slider */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-white/80 font-medium">Current Conversion Rate</span>
+                    <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
+                      {currentCVR.toFixed(1)}%
+                    </span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min={0.5} 
+                    max={5.0} 
+                    step={0.1}
+                    value={currentCVR}
+                    onChange={(e) => setCurrentCVR(Number(e.target.value))}
+                    className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
+                  />
+                </div>
+
+                {/* Target CVR Lift Slider */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-white/80 font-medium">Target CVR Lift</span>
+                    <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
+                      +{targetLift}%
+                    </span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min={10} 
+                    max={80} 
+                    step={5}
+                    value={targetLift}
+                    onChange={(e) => setTargetLift(Number(e.target.value))}
+                    className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
+                  />
+                </div>
+
+                <div className="pt-0.5 text-[11px] text-white/50 font-mono flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
+                  <span>Calculated at conservative ₹2,500 average order value (AOV).</span>
+                </div>
+              </div>
+
+              {/* Output Panel: Compact 2x2 HUD */}
+              <div
+                className="rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden text-white shadow-xl"
+                style={{
+                  background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
+                  boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.35), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+                }}
               >
-                <span>Get Free Conversion Teardown (60 Min)</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/20 pointer-events-none rounded-2xl" />
+                
+                <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
+                  {/* 2x2 Metric Matrix */}
+                  <div className="grid grid-cols-2 gap-2.5 font-mono">
+                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">New Target CVR</div>
+                      <div className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
+                        {newCVR}%
+                        <span className="text-[10px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                      </div>
+                    </div>
 
-            {/* 4 Stat Highlights */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/20">
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                <div className="text-xl sm:text-2xl font-display font-extrabold text-white">+62%</div>
-                <div className="text-[11px] text-sky-100 font-mono">Average CVR Lift</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                <div className="text-xl sm:text-2xl font-display font-extrabold text-white">95%+</div>
-                <div className="text-[11px] text-sky-100 font-mono">Statistical Confidence</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                <div className="text-xl sm:text-2xl font-display font-extrabold text-white">Sub-0.8s</div>
-                <div className="text-[11px] text-sky-100 font-mono">PDP Interaction Speed</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                <div className="text-xl sm:text-2xl font-display font-extrabold text-emerald-300">+38%</div>
-                <div className="text-[11px] text-sky-100 font-mono">AOV Lift from Bundles</div>
+                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Extra / Month</div>
+                      <div className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5 truncate">
+                        +{extraMonthlyOrders.toLocaleString()}
+                      </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Extra Monthly Rev</div>
+                      <div className="text-xl sm:text-2xl font-display font-extrabold text-emerald-300 mt-0.5 truncate">
+                        {formatCurrency(extraMonthlyRevenue)}
+                      </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">12-Mo Gain</div>
+                      <div className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5 truncate">
+                        {formatCurrency(annualGain)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => onOpenAudit('convert-cro')}
+                    className="w-full py-3 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/90 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group"
+                  >
+                    <span>CAPTURE THIS CVR LIFT</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -225,161 +379,6 @@ export const CROService: React.FC<CROServiceProps> = ({
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* 3. CALCULATOR: Compact, High-Impact Revenue Lift HUD */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-teal/40 space-y-6 shadow-2xl">
-          <div className="text-center max-w-2xl mx-auto space-y-1.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal/20 text-teal text-xs font-mono font-bold rounded-full">
-              <Sliders className="w-3.5 h-3.5" />
-              CRO REVENUE CALCULATOR
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
-              Calculate Extra Monthly Orders & Revenue Lift
-            </h2>
-            <p className="text-white/60 text-xs sm:text-sm font-medium">
-              Adjust monthly unique traffic & target conversion improvements.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            {/* Sliders Panel */}
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
-              {/* Sessions Slider */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-white/80 font-medium">Monthly Unique Sessions</span>
-                  <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
-                    {sessions.toLocaleString()}
-                  </span>
-                </div>
-                <input 
-                  type="range" 
-                  min={10000} 
-                  max={500000} 
-                  step={10000}
-                  value={sessions}
-                  onChange={(e) => setSessions(Number(e.target.value))}
-                  className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                />
-                {/* Preset Chips */}
-                <div className="flex items-center gap-1.5 pt-0.5">
-                  {[25000, 50000, 100000, 250000, 500000].map((preset) => (
-                    <button
-                      key={preset}
-                      type="button"
-                      onClick={() => setSessions(preset)}
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
-                        sessions === preset
-                          ? 'bg-teal text-ink font-bold shadow-xs'
-                          : 'bg-white/5 text-white/60 hover:bg-white/15 hover:text-white'
-                      }`}
-                    >
-                      {(preset / 1000).toFixed(0)}k
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Current CVR Slider */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-white/80 font-medium">Current Conversion Rate</span>
-                  <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
-                    {currentCVR.toFixed(1)}%
-                  </span>
-                </div>
-                <input 
-                  type="range" 
-                  min={0.5} 
-                  max={5.0} 
-                  step={0.1}
-                  value={currentCVR}
-                  onChange={(e) => setCurrentCVR(Number(e.target.value))}
-                  className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                />
-              </div>
-
-              {/* Target CVR Lift Slider */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-white/80 font-medium">Target CVR Lift</span>
-                  <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
-                    +{targetLift}%
-                  </span>
-                </div>
-                <input 
-                  type="range" 
-                  min={10} 
-                  max={80} 
-                  step={5}
-                  value={targetLift}
-                  onChange={(e) => setTargetLift(Number(e.target.value))}
-                  className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                />
-              </div>
-
-              <div className="pt-1 text-[11px] text-white/50 font-mono flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
-                <span>Calculated at conservative ₹2,500 average order value (AOV).</span>
-              </div>
-            </div>
-
-            {/* Output Panel: Compact 2x2 HUD */}
-            <div
-              className="lg:col-span-5 rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden text-white shadow-xl"
-              style={{
-                background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-                boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.35), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/20 pointer-events-none rounded-2xl" />
-              
-              <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
-                {/* 2x2 Metric Matrix */}
-                <div className="grid grid-cols-2 gap-3 font-mono">
-                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">New Target CVR</div>
-                    <div className="text-2xl font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
-                      {newCVR}%
-                      <span className="text-[10px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Extra / Month</div>
-                    <div className="text-2xl font-display font-extrabold text-white mt-0.5 truncate">
-                      +{extraMonthlyOrders.toLocaleString()}
-                    </div>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Extra Monthly Rev</div>
-                    <div className="text-2xl font-display font-extrabold text-emerald-300 mt-0.5 truncate">
-                      {formatCurrency(extraMonthlyRevenue)}
-                    </div>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">12-Mo Gain</div>
-                    <div className="text-2xl font-display font-extrabold text-white mt-0.5 truncate">
-                      {formatCurrency(annualGain)}
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => onOpenAudit('convert-cro')}
-                  className="w-full py-3 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/90 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group"
-                >
-                  <span>CAPTURE THIS CVR LIFT</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
