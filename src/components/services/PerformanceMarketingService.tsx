@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
   CheckCircle2, 
-  Sliders
+  Sliders,
+  ArrowRight
 } from 'lucide-react';
 
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
@@ -196,30 +197,34 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </div>
 
-      {/* 3. CALCULATOR SECTION: Full-bleed teal band that breaks the container */}
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-teal text-ink py-16 px-4 sm:px-12 my-12 shadow-2xl">
-        <div className="max-w-6xl mx-auto space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
+      {/* 3. CALCULATOR SECTION: Compact, High-Impact Section */}
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-teal text-ink py-10 sm:py-12 px-4 sm:px-8 my-8 shadow-xl">
+        <div className="max-w-5xl mx-auto space-y-6">
+          {/* Streamlined Header */}
+          <div className="text-center max-w-2xl mx-auto space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-ink text-teal text-xs font-mono font-bold rounded-full">
               <Sliders className="w-3.5 h-3.5" />
               INTERACTIVE PERFORMANCE CALCULATOR
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-ink tracking-tight">
               Estimate Your Extra Revenue & ROAS Lift
             </h2>
-            <p className="text-ink/80 text-sm sm:text-base font-medium">
-              Adjust the sliders below to calculate projected monthly growth based on your brand's actual inputs.
+            <p className="text-ink/80 text-xs sm:text-sm font-medium">
+              Adjust your monthly ad spend & targets to calculate projected growth.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-ink text-white p-8 sm:p-12 rounded-3xl shadow-2xl border border-ink/20">
-            {/* Sliders Side */}
-            <div className="lg:col-span-7 space-y-6">
+          {/* Compact Dual-Panel Calculator Card */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-ink text-white p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 items-stretch">
+            {/* Sliders Panel */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
               {/* Monthly Spend Slider */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm font-mono">
-                  <span className="text-white/80">Monthly Ad Spend</span>
-                  <span className="text-teal font-bold">{formatCurrency(monthlySpend)}</span>
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-white/80 font-medium">Monthly Ad Spend</span>
+                  <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
+                    {formatCurrency(monthlySpend)}
+                  </span>
                 </div>
                 <input 
                   type="range" 
@@ -228,15 +233,34 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   step={25000}
                   value={monthlySpend}
                   onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                  className="w-full accent-teal cursor-pointer"
+                  className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
                 />
+                {/* Quick Spend Preset Buttons */}
+                <div className="flex items-center gap-1.5 pt-0.5">
+                  {[100000, 250000, 500000, 1000000, 2000000].map((preset) => (
+                    <button
+                      key={preset}
+                      type="button"
+                      onClick={() => setMonthlySpend(preset)}
+                      className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
+                        monthlySpend === preset
+                          ? 'bg-teal text-ink font-bold shadow-xs'
+                          : 'bg-white/5 text-white/60 hover:bg-white/15 hover:text-white'
+                      }`}
+                    >
+                      {formatCurrency(preset)}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Current ROAS Slider */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm font-mono">
-                  <span className="text-white/80">Current Blended ROAS</span>
-                  <span className="text-teal font-bold">{currentROAS}x</span>
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-white/80 font-medium">Current Blended ROAS</span>
+                  <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
+                    {currentROAS.toFixed(1)}x
+                  </span>
                 </div>
                 <input 
                   type="range" 
@@ -245,15 +269,17 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   step={0.1}
                   value={currentROAS}
                   onChange={(e) => setCurrentROAS(Number(e.target.value))}
-                  className="w-full accent-teal cursor-pointer"
+                  className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
                 />
               </div>
 
               {/* Target Lift Slider */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm font-mono">
-                  <span className="text-white/80">Target ROAS Lift</span>
-                  <span className="text-teal font-bold">+{targetLift}%</span>
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-white/80 font-medium">Target ROAS Lift</span>
+                  <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
+                    +{targetLift}%
+                  </span>
                 </div>
                 <input 
                   type="range" 
@@ -262,52 +288,65 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   step={5}
                   value={targetLift}
                   onChange={(e) => setTargetLift(Number(e.target.value))}
-                  className="w-full accent-teal cursor-pointer"
+                  className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
                 />
               </div>
 
-              <div className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs text-white/60 italic font-mono">
-                * Note: This calculation is an estimate derived directly from the user's own inputs and conservative historical agency campaign benchmarks.
+              <div className="pt-1 text-[11px] text-white/50 font-mono flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
+                <span>Estimates calculated against historical agency campaign benchmarks.</span>
               </div>
             </div>
 
-            {/* Output Side: Medium Blue Litmus Card (#5DAFFF -> #1D5B9A) */}
+            {/* Output Side: High-Impact Compact Metric HUD (#5DAFFF -> #1D5B9A) */}
             <div
-              className="lg:col-span-5 rounded-[24px] p-6 sm:p-8 space-y-6 flex flex-col justify-between relative overflow-hidden text-white shadow-2xl"
+              className="lg:col-span-5 rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden text-white shadow-xl"
               style={{
                 background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
+                boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.35), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-              <div className="relative z-10 space-y-6 flex flex-col justify-between h-full">
-                <div className="space-y-4 font-mono">
-                  <div>
-                    <div className="text-xs text-sky-100 font-medium">Projected Blended ROAS</div>
-                    <div className="text-3xl font-display font-extrabold text-white drop-shadow-xs">{projectedROAS}x</div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/20 pointer-events-none rounded-2xl" />
+              
+              <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
+                {/* 2x2 Metric Matrix */}
+                <div className="grid grid-cols-2 gap-3 font-mono">
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Projected ROAS</div>
+                    <div className="text-2xl font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
+                      {projectedROAS}x
+                      <span className="text-[10px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                    </div>
                   </div>
 
-                  <div>
-                    <div className="text-xs text-sky-100 font-medium">Extra Monthly Revenue</div>
-                    <div className="text-2xl font-display font-extrabold text-white">{formatCurrency(extraMonthlyRevenue)}</div>
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Extra / Mo.</div>
+                    <div className="text-2xl font-display font-extrabold text-white mt-0.5 truncate">
+                      {formatCurrency(extraMonthlyRevenue)}
+                    </div>
                   </div>
 
-                  <div>
-                    <div className="text-xs text-sky-100 font-medium">12-Month Cumulative Gain</div>
-                    <div className="text-2xl font-display font-extrabold text-emerald-300">{formatCurrency(annualGain)}</div>
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">12-Mo Gain</div>
+                    <div className="text-2xl font-display font-extrabold text-emerald-300 mt-0.5 truncate">
+                      {formatCurrency(annualGain)}
+                    </div>
                   </div>
 
-                  <div>
-                    <div className="text-xs text-sky-100 font-medium">Estimated Payback Window</div>
-                    <div className="text-xl font-bold text-white">{paybackDays} Days</div>
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+                    <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Payback Speed</div>
+                    <div className="text-2xl font-display font-extrabold text-white mt-0.5">
+                      {paybackDays} <span className="text-xs font-normal text-sky-100">Days</span>
+                    </div>
                   </div>
                 </div>
 
                 <button
                   onClick={() => onOpenAudit('acquire-performance')}
-                  className="w-full py-3.5 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/95 transition-all shadow-md cursor-pointer uppercase tracking-wider"
+                  className="w-full py-3 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/90 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group"
                 >
-                  CLAIM THIS ROAS GROWTH →
+                  <span>CLAIM THIS ROAS GROWTH</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
