@@ -17,7 +17,7 @@ export const ThreeWaysIn: React.FC<ThreeWaysInProps> = ({ onOpenAudit }) => {
             <span>Targeted Solutions</span>
           </div>
           <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
-            {PRICING_HEADER.h1}<span className="text-violet">.</span>
+            {PRICING_HEADER.h1}
           </h1>
           <p className="text-mute text-base sm:text-lg">
             {PRICING_HEADER.subtitle}

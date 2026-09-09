@@ -66,7 +66,7 @@ export const TestimonialsMarquee: React.FC = () => {
         {/* Header - Center Aligned */}
         <div className="text-center max-w-4xl mx-auto px-4 sm:px-6">
           <h2 className="font-display text-4xl sm:text-6xl text-ink tracking-tight font-bold">
-            {TESTIMONIALS_HEADER.h1}<span className="text-violet">.</span>
+            {TESTIMONIALS_HEADER.h1}
           </h2>
         </div>
 

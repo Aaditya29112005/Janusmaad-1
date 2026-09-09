@@ -140,7 +140,7 @@ export const CursorFollowList: React.FC<CursorFollowListProps> = ({ className = 
               Interactive Vault
             </div>
             <h2 className="font-display text-3xl sm:text-5xl font-bold text-ink">
-              Hover Storefront Showcase<span className="text-violet">.</span>
+              Hover Storefront Showcase
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-mute font-mono max-w-sm">

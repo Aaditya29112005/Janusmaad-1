@@ -26,7 +26,7 @@ export const ClosingCTA: React.FC<ClosingCTAProps> = ({ onOpenAudit }) => {
 
         {/* Display Headline */}
         <h2 className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl text-ink tracking-tight leading-[1.05]">
-          Lets BUILD landing pages that earn their keep<span className="text-violet">.</span>
+          Lets BUILD landing pages that earn their keep
         </h2>
 
         {/* Input Field + Button */}

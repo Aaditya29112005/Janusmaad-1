@@ -81,7 +81,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onOpenAudit }) => {
             <span>Interactive ROI Calculator</span>
           </div>
           <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
-            Do the Math<span className="text-violet">.</span>
+            Do the Math
           </h1>
           <h2 className="text-mute text-lg sm:text-xl font-medium">
             Slide your numbers. Watch your revenue unlock. The math speaks before we do.

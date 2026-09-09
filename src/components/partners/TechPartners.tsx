@@ -36,7 +36,7 @@ export const TechPartners: React.FC = () => {
             Certified MarTech Architecture
           </span>
           <h2 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
-            Technology Partners<span className="text-violet">.</span>
+            Technology Partners
           </h2>
         </div>
 

@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
         {/* Display Headline Statement */}
         <div className="border-b border-hairline pb-12">
           <h2 className="text-footer-display font-display text-ink max-w-4xl">
-            Unlock your gateways to growth<span className="text-violet">.</span>
+            Unlock your gateways to growth
           </h2>
         </div>
 

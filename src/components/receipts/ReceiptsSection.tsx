@@ -69,7 +69,7 @@ export const ReceiptsSection: React.FC<ReceiptsSectionProps> = ({ className = ''
               <span>Live Website Showcase</span>
             </div>
             <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
-              Selected Work & Live Funnels<span className="text-violet">.</span>
+              Selected Work & Live Funnels
             </h1>
             <p className="text-mute text-sm sm:text-base max-w-xl">
               Actual live website pages built and scaled across India. Click any card to visit live URL.
