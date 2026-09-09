@@ -114,16 +114,8 @@ export const TestimonialsMarquee: React.FC = () => {
                   </p>
                 </div>
 
-                {/* 3. Founder Details: Avatar, Name and Founder/Co-founder Position */}
-                <div className="pb-8 pt-2 px-6 flex flex-col items-center text-center">
-                  <div className="w-13 h-13 rounded-full overflow-hidden mb-3 border-2 border-white shadow-md ring-1 ring-black/10">
-                    <img
-                      src={item.avatar}
-                      alt={item.founderName}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
+                {/* 3. Founder Details: Name and Founder/Co-founder Position (No photo) */}
+                <div className="pb-7 pt-4 px-6 flex flex-col items-center text-center">
                   <div className="text-sm sm:text-base font-bold text-ink leading-snug">
                     {item.founderName}
                   </div>
