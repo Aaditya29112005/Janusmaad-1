@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { PROOF_STATS } from '../../content/proof';
-import { gsap, Observer } from '../../gsap/register';
+import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 
 export const ProofStrip: React.FC = () => {
@@ -13,29 +13,29 @@ export const ProofStrip: React.FC = () => {
     if (!rail || !container || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Continuous horizontal loop of cards
+      // Continuous horizontal loop of cards - calm, steady luxury pace
       const loopTween = gsap.to(rail, {
         xPercent: -50,
-        duration: 30,
+        duration: 55,
         ease: 'none',
         repeat: -1,
       });
 
-      // Observer plugin to react to scroll direction & velocity (matches CodePen implementation)
-      Observer.create({
-        target: window,
-        type: 'scroll,wheel,touch',
-        onChangeY(self) {
-          let factor = 2.5;
-          if (self.deltaY < 0) {
-            factor *= -1;
-          }
-          gsap
-            .timeline({ defaults: { ease: 'none' } })
-            .to(loopTween, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
-            .to(loopTween, { timeScale: factor > 0 ? 1 : -1, duration: 0.8, ease: 'power1.out' });
-        },
-      });
+      // Smooth slow-down on hover so users can easily read metrics
+      const onMouseEnter = () => {
+        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
+      };
+      const onMouseLeave = () => {
+        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
+      };
+
+      container.addEventListener('mouseenter', onMouseEnter);
+      container.addEventListener('mouseleave', onMouseLeave);
+
+      return () => {
+        container.removeEventListener('mouseenter', onMouseEnter);
+        container.removeEventListener('mouseleave', onMouseLeave);
+      };
     }, container);
 
     return () => ctx.revert();

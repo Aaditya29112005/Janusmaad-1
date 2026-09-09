@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { gsap, Observer } from '../../gsap/register';
+import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 import { Sparkles, Star, ZoomIn, X } from 'lucide-react';
 
@@ -30,26 +30,26 @@ export const BuildReelsMarquee: React.FC = () => {
 
       const loopTween = gsap.to(rail, {
         x: -totalWidth,
-        duration: 35,
+        duration: 55,
         ease: 'none',
         repeat: -1,
       });
 
-      // Observer to accelerate / reverse marquee based on scroll velocity
-      Observer.create({
-        target: window,
-        type: 'scroll,wheel,touch',
-        onChangeY(self) {
-          let factor = 2.5;
-          if (self.deltaY < 0) {
-            factor *= -1;
-          }
-          gsap
-            .timeline({ defaults: { ease: 'none' } })
-            .to(loopTween, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
-            .to(loopTween, { timeScale: 1, duration: 0.8, ease: 'power1.out' });
-        },
-      });
+      // Smooth slow-down on hover
+      const onMouseEnter = () => {
+        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
+      };
+      const onMouseLeave = () => {
+        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
+      };
+
+      container.addEventListener('mouseenter', onMouseEnter);
+      container.addEventListener('mouseleave', onMouseLeave);
+
+      return () => {
+        container.removeEventListener('mouseenter', onMouseEnter);
+        container.removeEventListener('mouseleave', onMouseLeave);
+      };
     }, container);
 
     return () => ctx.revert();
@@ -71,13 +71,13 @@ export const BuildReelsMarquee: React.FC = () => {
             What Founders & CMOs Say About Our Builds
           </h2>
           <p className="text-xs sm:text-sm text-mute max-w-2xl">
-            Live reel reviews and verified feedback from DTC founders & growth leaders. Scroll or swipe to speed up the rail loop.
+            Live reel reviews and verified feedback from DTC founders & growth leaders. Hover over any reel to inspect.
           </p>
         </div>
 
         <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-violet bg-white border border-hairline px-3.5 py-1.5 rounded-full shadow-xs shrink-0 self-start sm:self-auto">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>GSAP VELOCITY RAIL</span>
+          <span>CONTINUOUS STREAM</span>
         </div>
       </div>
 
