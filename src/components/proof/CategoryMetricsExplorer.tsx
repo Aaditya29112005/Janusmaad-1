@@ -1,6 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ALL_38_CLIENTS, CATEGORY_PITCHES } from '../../content/clientDatabase';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Award } from 'lucide-react';
+import { gsap } from '../../gsap/register';
+import { prefersReducedMotion } from '../../gsap/utils';
 
 const WORK_IMAGES: Record<string, string> = {
   'the-credit-lane': '/work/thecreditlane.jpg',
@@ -52,27 +54,70 @@ interface CategoryMetricsExplorerProps {
 export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = ({
   showOnlyClientRecords = false,
 }) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const railRef = useRef<HTMLDivElement | null>(null);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewelry (Ecomm + Retail)');
 
   const activePitch = React.useMemo(() => {
     return CATEGORY_PITCHES.find(p => p.category === selectedCategory) || CATEGORY_PITCHES[0];
   }, [selectedCategory]);
 
+  useEffect(() => {
+    const rail = railRef.current;
+    const container = containerRef.current;
+    if (!rail || !container || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Half width translation for 100% continuous infinite loop
+      const totalWidth = rail.scrollWidth / 2;
+
+      const loopTween = gsap.to(rail, {
+        x: -totalWidth,
+        duration: 65,
+        ease: 'none',
+        repeat: -1,
+      });
+
+      // Smooth slow-down on hover so users can inspect & read cards effortlessly
+      const onMouseEnter = () => {
+        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
+      };
+      const onMouseLeave = () => {
+        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
+      };
+
+      container.addEventListener('mouseenter', onMouseEnter);
+      container.addEventListener('mouseleave', onMouseLeave);
+
+      return () => {
+        container.removeEventListener('mouseenter', onMouseEnter);
+        container.removeEventListener('mouseleave', onMouseLeave);
+      };
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
   const handleScroll = (direction: 'left' | 'right') => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cardWidth = 360;
-    const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
-    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    const rail = railRef.current;
+    if (!rail) return;
+    const shiftAmount = direction === 'left' ? 380 : -380;
+    gsap.to(rail, {
+      x: `+=${shiftAmount}`,
+      duration: 0.6,
+      ease: 'power2.out',
+    });
   };
 
+  // Double client records array to ensure 100% seamless infinite loop
+  const displayClients = [...ALL_38_CLIENTS, ...ALL_38_CLIENTS];
+
   return (
-    <section id="metrics-database" className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative select-none">
+    <section ref={containerRef} id="metrics-database" className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative select-none overflow-hidden">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
 
         {showOnlyClientRecords ? (
-          /* Center-aligned "Our Work" Header (No full stop, no tag, no search bar, no category pills) */
+          /* Center-aligned "Our Work" Header */
           <div className="text-center max-w-2xl mx-auto space-y-3 border-b border-hairline pb-8">
             <h2 className="font-display text-4xl sm:text-6xl font-bold text-ink tracking-tight">
               Our Work
@@ -159,7 +204,7 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
           </>
         )}
 
-        {/* Horizontal Scrolling Client Cards Slider (No vertical scroll, no 'Show More' button) */}
+        {/* GSAP Infinite Marquee Cards Container */}
         <div className="relative w-full overflow-hidden">
           {/* Left Arrow Scroll Button */}
           <button
@@ -179,64 +224,65 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Horizontal Scroll Rail */}
-          <div
-            ref={scrollRef}
-            className="flex items-stretch gap-6 overflow-x-auto scroll-smooth py-4 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-          >
-            {ALL_38_CLIENTS.map((client) => {
-              const bannerImg = WORK_IMAGES[client.id] || '/work/thecreditlane.jpg';
-              // Display top 2 to 4 success metrics max
-              const metricsToShow = client.allMetrics.slice(0, 4);
+          {/* Continuous Infinite Marquee Rail */}
+          <div className="overflow-hidden w-full py-4">
+            <div
+              ref={railRef}
+              className="rail flex items-stretch gap-6 whitespace-nowrap will-change-transform px-4"
+            >
+              {displayClients.map((client, idx) => {
+                const bannerImg = WORK_IMAGES[client.id] || '/work/thecreditlane.jpg';
+                const metricsToShow = client.allMetrics.slice(0, 4);
 
-              return (
-                <div
-                  key={client.id}
-                  className="w-[300px] sm:w-[360px] shrink-0 bg-white border border-hairline rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-xs hover:shadow-xl hover:border-violet/40 transition-all duration-300 group"
-                >
-                  {/* Real Storefront Screenshot Banner */}
-                  <div className="relative w-full h-44 bg-bone rounded-xl overflow-hidden border border-hairline group-hover:scale-[1.01] transition-transform duration-300">
-                    <img
-                      src={bannerImg}
-                      alt={`${client.name} Storefront Banner`}
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </div>
-
-                  {/* Top: Brand Name, Website Domain Link, & Service/Category */}
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <h4 className="font-display font-bold text-xl text-ink group-hover:text-violet transition-colors truncate">
-                        {client.name}
-                      </h4>
-                      <a
-                        href={client.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs font-mono font-bold text-violet hover:underline flex items-center gap-1 shrink-0"
-                      >
-                        {client.domain} <ArrowUpRight className="w-3.5 h-3.5" />
-                      </a>
+                return (
+                  <div
+                    key={`${client.id}-${idx}`}
+                    className="w-[300px] sm:w-[360px] shrink-0 bg-white border border-hairline rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-2xl hover:border-violet/40 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1"
+                  >
+                    {/* Real Storefront Screenshot Banner */}
+                    <div className="relative w-full h-44 bg-bone rounded-xl overflow-hidden border border-hairline group-hover:scale-[1.01] transition-transform duration-300">
+                      <img
+                        src={bannerImg}
+                        alt={`${client.name} Storefront Banner`}
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
-                    <div className="text-xs font-mono font-medium text-mute">{client.category}</div>
-                  </div>
 
-                  {/* Center: Top 2 to 4 Success Metrics (Big Numbers & Clear Labels) */}
-                  <div className="grid grid-cols-2 gap-2.5 pt-1 flex-1">
-                    {metricsToShow.map((m, idx) => (
-                      <div key={idx} className="p-3 bg-bone rounded-xl border border-hairline/60 space-y-1 flex flex-col justify-center">
-                        <div className="text-[10px] font-mono font-bold text-ink uppercase tracking-wider truncate">
-                          {m.label}
-                        </div>
-                        <div className="text-xl sm:text-2xl font-display font-extrabold text-violet tabular-nums">
-                          {m.value}
-                        </div>
+                    {/* Top: Brand Name, Website Domain Link, & Service/Category */}
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="font-display font-bold text-xl text-ink group-hover:text-violet transition-colors truncate">
+                          {client.name}
+                        </h4>
+                        <a
+                          href={client.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-mono font-bold text-violet hover:underline flex items-center gap-1 shrink-0"
+                        >
+                          {client.domain} <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
                       </div>
-                    ))}
+                      <div className="text-xs font-mono font-medium text-mute">{client.category}</div>
+                    </div>
+
+                    {/* Center: Top 2 to 4 Success Metrics (Big Numbers & Clear Labels) */}
+                    <div className="grid grid-cols-2 gap-2.5 pt-1 flex-1">
+                      {metricsToShow.map((m, mIdx) => (
+                        <div key={mIdx} className="p-3 bg-bone rounded-xl border border-hairline/60 space-y-1 flex flex-col justify-center">
+                          <div className="text-[10px] font-mono font-bold text-ink uppercase tracking-wider truncate">
+                            {m.label}
+                          </div>
+                          <div className="text-xl sm:text-2xl font-display font-extrabold text-violet tabular-nums">
+                            {m.value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
