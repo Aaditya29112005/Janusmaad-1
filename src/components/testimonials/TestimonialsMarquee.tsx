@@ -1,262 +1,159 @@
-import React, { useEffect, useRef } from 'react';
-import { TESTIMONIALS, TESTIMONIALS_HEADER } from '../../content/testimonials';
-import { gsap, Draggable } from '../../gsap/register';
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
-import { prefersReducedMotion } from '../../gsap/utils';
+import React, { useRef, useState } from 'react';
+import { TESTIMONIALS, TESTIMONIALS_HEADER, TESTIMONIAL_TICKER_ITEMS } from '../../content/testimonials';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 export const TestimonialsMarquee: React.FC = () => {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const cardsRef = useRef<HTMLUListElement | null>(null);
-  const proxyRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  useEffect(() => {
-    const cardsEl = cardsRef.current;
-    const proxy = proxyRef.current;
-    if (!cardsEl || !proxy || prefersReducedMotion()) return;
+  const checkScrollPosition = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  };
 
-    const cards = gsap.utils.toArray<HTMLElement>(cardsEl.querySelectorAll('li'));
-    if (cards.length === 0) return;
-
-    // Initial setup: position cards with xPercent and scale
-    gsap.set(cards, { xPercent: 400, opacity: 0, scale: 0 });
-
-    const spacing = 0.1;
-    const snapTime = gsap.utils.snap(spacing);
-
-    // Animation timeline for each card: opacity/scale curve + position translation from xPercent 400 to -400
-    const animateFunc = (element: HTMLElement) => {
-      const tl = gsap.timeline();
-      tl.fromTo(
-        element,
-        { scale: 0, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          zIndex: 100,
-          duration: 0.5,
-          yoyo: true,
-          repeat: 1,
-          ease: 'power1.in',
-          immediateRender: false,
-        }
-      ).fromTo(
-        element,
-        { xPercent: 400 },
-        { xPercent: -400, duration: 1, ease: 'none', immediateRender: false },
-        0
-      );
-      return tl;
-    };
-
-    // Build seamless infinite loop across 3 cycles of items
-    function buildSeamlessLoop(items: HTMLElement[], spacing: number, animFunc: (el: HTMLElement) => gsap.core.Timeline) {
-      const rawSequence = gsap.timeline({ paused: true });
-      const seamlessLoop = gsap.timeline({
-        paused: true,
-        repeat: -1,
-        onRepeat() {
-          if (this._time === this._dur) {
-            this._prev = this._dur;
-          }
-        },
-      });
-
-      const cycleDuration = spacing * items.length;
-
-      items
-        .concat(items)
-        .concat(items)
-        .forEach((_, i) => {
-          const anim = animFunc(items[i % items.length]);
-          rawSequence.add(anim, i * spacing);
-        });
-
-      seamlessLoop.fromTo(
-        rawSequence,
-        { time: cycleDuration },
-        { time: cycleDuration * 2, duration: cycleDuration, ease: 'none' }
-      );
-      return seamlessLoop;
-    }
-
-    const seamlessLoop = buildSeamlessLoop(cards, spacing, animateFunc);
-    const playhead = { offset: 0 };
-
-    function loopTime(offset: number) {
-      return ((offset % 1 + 1) % 1);
-    }
-
-    const scrub = gsap.to(playhead, {
-      offset: 0,
-      onUpdate() {
-        seamlessLoop.progress(loopTime(playhead.offset));
-      },
-      duration: 0.6,
-      ease: 'power2.out',
-      paused: true,
-    });
-
-    function movePlayhead(amount: number) {
-      const targetOffset = snapTime(playhead.offset + amount);
-      scrub.vars.offset = targetOffset;
-      scrub.invalidate().restart();
-    }
-
-    // Autoplay: automatically move to next testimonial card every 2 seconds
-    let autoPlayTimer: ReturnType<typeof setInterval> | null = null;
-
-    const startAutoPlay = () => {
-      if (autoPlayTimer) clearInterval(autoPlayTimer);
-      autoPlayTimer = setInterval(() => {
-        movePlayhead(spacing);
-      }, 2000);
-    };
-
-    const stopAutoPlay = () => {
-      if (autoPlayTimer) {
-        clearInterval(autoPlayTimer);
-        autoPlayTimer = null;
-      }
-    };
-
-    startAutoPlay();
-
-    // Attach Draggable for smooth touch & cursor drag scrubbing
-    const draggableInstance = Draggable.create(proxy, {
-      type: 'x',
-      trigger: cardsEl,
-      onPress() {
-        stopAutoPlay();
-        gsap.killTweensOf(scrub);
-      },
-      onDrag() {
-        const delta = (this.x - this.startX) * -0.0005;
-        playhead.offset += delta;
-        seamlessLoop.progress(loopTime(playhead.offset));
-        this.startX = this.x;
-      },
-      onRelease() {
-        const snapped = snapTime(playhead.offset);
-        scrub.vars.offset = snapped;
-        scrub.invalidate().restart();
-        startAutoPlay();
-      },
-    })[0];
-
-    // Pause autoplay on mouse hover so users can comfortably read; resume on leave
-    const handleMouseEnter = () => stopAutoPlay();
-    const handleMouseLeave = () => startAutoPlay();
-
-    cardsEl.addEventListener('mouseenter', handleMouseEnter);
-    cardsEl.addEventListener('mouseleave', handleMouseLeave);
-
-    // Store move function and timer reset on DOM element for Next / Prev buttons
-    (cardsEl as any)._movePlayhead = movePlayhead;
-    (cardsEl as any)._resetTimer = startAutoPlay;
-
-    // Initial progress render
-    seamlessLoop.progress(0.001);
-
-    return () => {
-      stopAutoPlay();
-      cardsEl.removeEventListener('mouseenter', handleMouseEnter);
-      cardsEl.removeEventListener('mouseleave', handleMouseLeave);
-      draggableInstance.kill();
-      seamlessLoop.kill();
-      scrub.kill();
-    };
-  }, []);
+  const handleScroll = (direction: 'left' | 'right') => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = 320;
+    const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  };
 
   return (
-    <section ref={sectionRef} className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative overflow-hidden select-none">
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-        {/* Headings & Actions */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 text-violet text-xs font-display font-bold uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Measured Proof</span>
-            </div>
-            <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
-              {TESTIMONIALS_HEADER.h1}<span className="text-violet">.</span>
-            </h1>
-            <h2 className="text-mute text-lg sm:text-xl font-medium">
-              {TESTIMONIALS_HEADER.h2}
-            </h2>
-          </div>
+    <section className="py-20 bg-bone border-b border-hairline relative overflow-hidden select-none">
+      <div className="w-full mx-auto space-y-10">
+        {/* Header - Center Aligned, strictly without "Measured Proof" or subtitle */}
+        <div className="text-center max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="font-display text-4xl sm:text-6xl text-ink tracking-tight font-bold">
+            {TESTIMONIALS_HEADER.h1}<span className="text-violet">.</span>
+          </h2>
+        </div>
 
-          {/* Action Buttons: Prev & Next */}
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              onClick={() => {
-                const el = cardsRef.current as any;
-                if (el && el._movePlayhead) {
-                  el._movePlayhead(-0.1);
-                  el._resetTimer?.();
-                }
-              }}
-              className="p-4 bg-white border border-hairline rounded-2xl text-ink hover:bg-violet hover:text-white hover:border-violet transition-all shadow-md cursor-pointer group"
-              aria-label="Previous Testimonial Card"
-            >
-              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
-            </button>
-            <button
-              onClick={() => {
-                const el = cardsRef.current as any;
-                if (el && el._movePlayhead) {
-                  el._movePlayhead(0.1);
-                  el._resetTimer?.();
-                }
-              }}
-              className="p-4 bg-white border border-hairline rounded-2xl text-ink hover:bg-violet hover:text-white hover:border-violet transition-all shadow-md cursor-pointer group"
-              aria-label="Next Testimonial Card"
-            >
-              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-            </button>
+        {/* Testimonials Strip with Navigation Controls */}
+        <div className="relative w-full">
+          {/* Left Arrow Button */}
+          <button
+            onClick={() => handleScroll('left')}
+            disabled={!canScrollLeft}
+            className={`absolute left-3 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/95 border border-hairline shadow-lg text-ink hover:bg-violet hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center ${
+              !canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-90 hover:opacity-100'
+            }`}
+            aria-label="Scroll testimonials left"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={() => handleScroll('right')}
+            disabled={!canScrollRight}
+            className={`absolute right-3 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/95 border border-hairline shadow-lg text-ink hover:bg-violet hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center ${
+              !canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-90 hover:opacity-100'
+            }`}
+            aria-label="Scroll testimonials right"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Scrollable Columns Container - TLPC Grid/Strip Layout */}
+          <div
+            ref={scrollRef}
+            onScroll={checkScrollPosition}
+            className="flex overflow-x-auto scroll-smooth border-y border-[#070B1A]/10 bg-white/60 divide-x divide-[#070B1A]/10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          >
+            {TESTIMONIALS.map((item) => (
+              <div
+                key={item.id}
+                className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 flex flex-col justify-between bg-white hover:bg-[#FAFAF8] transition-colors"
+              >
+                {/* 1. Brand Logo / Brand Name Header */}
+                <div className="h-20 border-b border-[#070B1A]/10 flex items-center justify-center px-6 bg-white/80">
+                  {item.brandLogo ? (
+                    <img
+                      src={item.brandLogo}
+                      alt={item.brandName}
+                      className="max-h-9 max-w-[150px] object-contain transition-transform hover:scale-105"
+                      onError={(e) => {
+                        // Fallback to text brand title if image fails
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          const fallback = document.createElement('span');
+                          fallback.className = 'font-display font-bold text-ink text-base tracking-tight uppercase';
+                          fallback.innerText = item.brandName;
+                          parent.appendChild(fallback);
+                        }
+                      }}
+                    />
+                  ) : (
+                    <span className="font-display font-bold text-ink text-base tracking-tight uppercase">
+                      {item.brandName}
+                    </span>
+                  )}
+                </div>
+
+                {/* 2. 5 Stars Rating & 2-3 High-Impact Review Lines */}
+                <div className="py-7 px-6 flex-1 flex flex-col justify-center">
+                  {/* 5 Stars */}
+                  <div className="flex items-center justify-center gap-1.5 mb-4">
+                    {[...Array(item.stars)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-4 h-4 fill-amber-400 text-amber-400"
+                        aria-hidden="true"
+                      />
+                    ))}
+                  </div>
+
+                  {/* 2 or 3 Key lines from the review */}
+                  <p className="text-sm sm:text-[15px] font-normal text-ink text-center leading-relaxed line-clamp-3">
+                    {item.quote}
+                  </p>
+                </div>
+
+                {/* 3. Founder Details: Avatar, Name and Founder/Co-founder Position */}
+                <div className="pb-8 pt-2 px-6 flex flex-col items-center text-center">
+                  <div className="w-13 h-13 rounded-full overflow-hidden mb-3 border-2 border-white shadow-md ring-1 ring-black/10">
+                    <img
+                      src={item.avatar}
+                      alt={item.founderName}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="text-sm sm:text-base font-bold text-ink leading-snug">
+                    {item.founderName}
+                  </div>
+                  <div className="text-xs text-mute font-medium mt-1">
+                    {item.founderRole}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Gallery Container: Smooth Dragging, Snapping & Infinite Loop */}
-        <div className="relative w-full h-[400px] sm:h-[480px] overflow-hidden flex items-center justify-center">
-          <ul
-            ref={cardsRef}
-            className="cards relative w-[280px] sm:w-[360px] h-[340px] sm:h-[420px] list-none p-0 m-0 cursor-grab active:cursor-grabbing"
-          >
-            {TESTIMONIALS.map((item) => (
-              <li
-                key={item.id}
-                className="absolute inset-0 w-full h-full bg-white border border-hairline rounded-3xl p-3 shadow-2xl overflow-hidden flex items-center justify-center"
-              >
-                {item.imageCardSrc ? (
-                  <div className="w-full h-full bg-bone rounded-2xl overflow-hidden border border-hairline flex items-center justify-center p-2">
-                    <img
-                      src={item.imageCardSrc}
-                      alt={`Client Testimonial ${item.id}`}
-                      className="w-full h-full object-contain rounded-xl pointer-events-none"
-                    />
-                  </div>
-                ) : (
-                  <div className="p-6 space-y-4 w-full">
-                    <div className="flex items-center justify-between">
-                      <span className="font-display font-bold text-violet text-sm">
-                        {item.logo}
-                      </span>
-                      <span className="px-3 py-1 bg-teal/10 text-teal text-xs font-display font-bold rounded-lg border border-teal/20">
-                        {item.metric}
-                      </span>
-                    </div>
-                    <p className="text-ink text-sm italic leading-relaxed">
-                      "{item.quote}"
-                    </p>
-                    <div className="pt-3 border-t border-hairline text-xs font-display font-bold text-ink">
-                      {item.name} — <span className="text-mute font-normal">{item.role}, {item.company}</span>
-                    </div>
-                  </div>
-                )}
-              </li>
+        {/* Continuous Horizontal Ticker Banner Right Underneath */}
+        <div className="w-full bg-[#0A0A0E] border-y border-white/10 py-3.5 sm:py-4 overflow-hidden relative select-none">
+          <div className="animate-ticker-continuous flex items-center">
+            {/* Duplicated items to make seamless 100% infinite marquee loop */}
+            {[...TESTIMONIAL_TICKER_ITEMS, ...TESTIMONIAL_TICKER_ITEMS, ...TESTIMONIAL_TICKER_ITEMS].map((ticker, idx) => (
+              <div key={idx} className="flex items-center shrink-0">
+                <span className="text-white font-display font-bold text-xs sm:text-sm tracking-widest uppercase">
+                  {ticker.brandName}
+                </span>
+                <span className="text-[#E6FE53] font-mono font-bold text-xs sm:text-sm ml-2 tracking-wide">
+                  • {ticker.metric}
+                </span>
+                <span className="text-white/25 mx-6 sm:mx-8 font-light select-none">
+                  |
+                </span>
+              </div>
             ))}
-          </ul>
-          <div ref={proxyRef} className="drag-proxy hidden" />
+          </div>
         </div>
       </div>
     </section>

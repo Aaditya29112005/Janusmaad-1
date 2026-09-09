@@ -200,3 +200,24 @@ input[type=range]::-moz-range-thumb:hover {
   background: #A8D5FF;
   box-shadow: 0 0 18px rgba(168, 213, 255, 1), 0 4px 10px rgba(0, 0, 0, 0.6);
 }
+
+/* Horizontal Continuous Ticker Animation for Testimonial Banner */
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker-continuous {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker-continuous:hover {
+  animation-play-state: paused;
+}
