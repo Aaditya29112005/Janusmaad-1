@@ -7,7 +7,6 @@ import { prefersReducedMotion, initGlobalMagneticButtons } from './gsap/utils';
 import { Header } from './components/chrome/Header';
 import { Footer } from './components/chrome/Footer';
 import { AuditModal } from './components/chrome/AuditModal';
-import { CustomCursor } from './components/ui/CustomCursor';
 import { Preloader } from './components/chrome/Preloader';
 
 // Main Page Sections
@@ -137,9 +136,6 @@ export const App: React.FC = () => {
     <div className="min-h-screen bg-bone text-ink font-body selection:bg-violet selection:text-bone">
       {/* GSAP Page Load Animation (JanusMAAD) */}
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-
-      {/* Valmax Interactive Fluid Magnetic Cursor */}
-      <CustomCursor />
 
       {/* Global Header */}
       <Header onOpenAudit={handleOpenAudit} />
