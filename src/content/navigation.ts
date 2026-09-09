@@ -28,8 +28,6 @@ export const NAV_DROPDOWNS: NavDropdownGroup[] = [
     title: 'Retain',
     items: [
       { name: 'Retention Marketing', href: '#retain-marketing', description: 'Automated email, SMS, and WhatsApp funnels that increase customer LTV.' },
-      { name: 'CEP (Customer Engagement Platform)', href: '#retain-cep', description: 'Klaviyo and Braze architectures setup for hyper-personalised messaging.' },
-      { name: 'CDP (Customer Data Platform)', href: '#retain-cdp', description: 'Unified zero-party data infrastructure for predictive audience targeting.' },
     ],
   },
 ];

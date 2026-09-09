@@ -137,9 +137,7 @@ export const AboutService: React.FC<AboutServiceProps> = ({
     { label: 'Social Media Marketing', id: 'acquire-smm' },
     { label: 'Web Design & Build', id: 'convert-build' },
     { label: 'Conversion Rate Optimisation (CRO)', id: 'convert-cro' },
-    { label: 'Retention Marketing', id: 'retain-marketing' },
-    { label: 'Customer Engagement (CEP)', id: 'retain-cep' },
-    { label: 'Customer Data Platforms (CDP)', id: 'retain-cdp' }
+    { label: 'Retention Marketing', id: 'retain-marketing' }
   ];
 
   return (

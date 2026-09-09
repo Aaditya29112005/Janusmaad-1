@@ -40,8 +40,6 @@ const VALID_CAPABILITIES: CapabilityId[] = [
   'convert-build',
   'convert-cro',
   'retain-marketing',
-  'retain-cep',
-  'retain-cdp',
   'receipts',
   'about',
   'pricing'

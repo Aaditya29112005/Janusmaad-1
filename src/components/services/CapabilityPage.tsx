@@ -36,8 +36,6 @@ export type CapabilityId =
   | 'convert-build' 
   | 'convert-cro' 
   | 'retain-marketing' 
-  | 'retain-cep' 
-  | 'retain-cdp'
   | 'receipts'
   | 'about'
   | 'pricing';
@@ -249,68 +247,6 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
       { num: '03', title: 'Omnichannel SMS & WhatsApp Funnels', desc: 'Instant 98% open-rate broadcast alerts, order updates, and conversational sales funnels.' },
       { num: '04', title: 'Customer Segmentation & RFM Analytics', desc: 'Segmenting your audience by Recency, Frequency, and Monetary value for targeted messaging.' },
       { num: '05', title: 'VIP Loyalty & Referral Programs', desc: 'Reward structures that gamify repeat purchases and turn happy buyers into brand ambassadors.' }
-    ]
-  },
-
-  'retain-cep': {
-    id: 'retain-cep',
-    category: 'Retain',
-    badge: 'RETAIN CAPABILITIES',
-    title: 'CEP (Customer Engagement Platform)',
-    subtitle: 'Klaviyo and Braze architectures setup for hyper-personalised real-time messaging.',
-    description: 'Enterprise-grade customer engagement infrastructure. We configure Klaviyo and Braze architectures to process real-time user events, dynamic catalog feeds, and hyper-targeted messages.',
-    bullets: [
-      'Enterprise Klaviyo & Braze Migration & Architecture',
-      'Real-Time Event Triggers & Webhook Synchronization',
-      'Hyper-Personalization Dynamic Catalog & Price Drop Alerts',
-      'Cross-Channel Messaging Orchestration (Email, Push, In-App)'
-    ],
-    kpiLabel: 'Real-Time Event Processing',
-    kpiValue: '12M+/mo',
-    kpiSubText: 'Event Latency: <50ms | Dynamic Personalization Rate: 99.4%',
-    stats: [
-      { label: 'Real-Time Triggers', value: '12M+', delta: 'Sub-50ms Sync', desc: 'Instant behavioral events triggering personalized messages.' },
-      { label: 'In-App & Push Lift', value: '+48%', delta: 'Mobile App Eng', desc: 'Higher engagement on mobile channels via Braze orchestration.' },
-      { label: 'Deliverability Score', value: '99.2%', delta: 'Tier-1 Sender', desc: 'Zero spam placement with dedicated IP warming protocols.' }
-    ],
-    technologies: ['Braze Enterprise', 'Klaviyo Master', 'Segment.io', 'Mixpanel', 'Webhooks API', 'Firebase Cloud Messaging'],
-    solutions: [
-      { num: '01', title: 'Klaviyo & Braze Enterprise Setup', desc: 'Clean architecture design, custom event schema mapping, and dedicated domain authentication.' },
-      { num: '02', title: 'Real-Time Event & Trigger Architecture', desc: 'Wiring custom backend events (e.g. video watch, wishlist add, trial start) directly to messaging triggers.' },
-      { num: '03', title: 'Dynamic Predictive Personalization', desc: 'Injecting dynamic product recommendations, custom pricing badges, and localized currency in real-time.' },
-      { num: '04', title: 'Cross-Channel Messaging Workflows', desc: 'Unified orchestration across Mobile Push, In-App Messages, Email, and SMS.' },
-      { num: '05', title: 'Deliverability & IP Reputation Management', desc: 'Proactive domain health monitoring, inbox placement testing, and warm-up schedules.' }
-    ]
-  },
-
-  'retain-cdp': {
-    id: 'retain-cdp',
-    category: 'Retain',
-    badge: 'RETAIN CAPABILITIES',
-    title: 'CDP (Customer Data Platform)',
-    subtitle: 'Unified zero-party data infrastructure for predictive audience targeting and privacy-first compliance.',
-    description: 'Take back control of your customer data in the post-cookie era. We build unified zero-party and first-party data platforms that sync real-time customer profiles directly with your ad channels.',
-    bullets: [
-      'Unified Single Customer View (SCV) Data Warehouse',
-      'Zero & First-Party Data Capture via Quizzes & Surveys',
-      'Real-Time Meta CAPI & Google Offline Conversion Sync',
-      'Privacy-First GDPR & CCPA Compliance Framework'
-    ],
-    kpiLabel: 'First-Party Data Match Rate',
-    kpiValue: '88.6%',
-    kpiSubText: 'Attribution Accuracy: 99.1% | Ad Platform Match Boost: +32%',
-    stats: [
-      { label: 'Unified Profiles', value: '1.2M+', delta: 'Single View', desc: 'Clean aggregated customer profiles across all touchpoints.' },
-      { label: 'Ad Match Rate Lift', value: '+35%', delta: 'Meta & Google', desc: 'Higher match rate for custom audiences using server-side sync.' },
-      { label: 'Data Accuracy', value: '99.8%', delta: 'Zero-Party Verified', desc: 'Direct survey and quiz preference data captured straight from buyers.' }
-    ],
-    technologies: ['Segment CDP', 'RudderStack', 'BigQuery Data Warehouse', 'Meta CAPI Gateway', 'Google Ads Offline API', 'Typeform / Octane AI'],
-    solutions: [
-      { num: '01', title: 'Unified Customer Profile Aggregation', desc: 'Combining website visits, purchase history, customer support tickets, and email clicks into one profile.' },
-      { num: '02', title: 'Server-Side Conversions API (CAPI)', desc: 'Bypassing ad blockers and iOS privacy restrictions with bulletproof server-to-server event tracking.' },
-      { num: '03', title: 'Zero-Party Quiz & Preference Funnels', desc: 'Interactive recommendation quizzes that collect customer preferences while increasing conversion.' },
-      { num: '04', title: 'Predictive Churn & LTV Modeling', desc: 'Using machine learning algorithms to identify high-LTV VIPs and at-risk buyers before they leave.' },
-      { num: '05', title: 'Real-Time Ad Platform Audience Sync', desc: 'Pushing dynamic exclusion lists and high-value lookalike seed lists directly into Meta, Google, and TikTok.' }
     ]
   },
 
@@ -552,9 +488,7 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
             'acquire-performance', 
             'acquire-smm', 
             'convert-cro', 
-            'retain-marketing', 
-            'retain-cep', 
-            'retain-cdp'
+            'retain-marketing'
           ].includes(capabilityId);
 
           const heroThemeClass = {
@@ -564,8 +498,6 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
             'convert-build': 'bg-gradient-to-br from-white via-bone to-white text-ink border-violet/30 shadow-xl',
             'convert-cro': 'bg-[#0f141f] text-white border-amber-500/30 shadow-2xl',
             'retain-marketing': 'bg-gradient-to-br from-[#091512] via-[#0d1e1a] to-[#07120f] text-white border-emerald-500/30 shadow-2xl',
-            'retain-cep': 'bg-gradient-to-br from-[#140e24] via-[#1b1230] to-[#0f0a1c] text-white border-purple-500/30 shadow-2xl',
-            'retain-cdp': 'bg-gradient-to-br from-[#0a1120] via-[#0e182e] to-[#070d1a] text-white border-cyan-500/30 shadow-2xl',
             'receipts': 'bg-white text-ink border-hairline',
             'about': 'bg-white text-ink border-hairline',
             'pricing': 'bg-white text-ink border-hairline',

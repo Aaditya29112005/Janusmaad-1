@@ -48,8 +48,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
                 <li><a href="#convert-build" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Shopify Build & Dev</a></li>
                 <li><a href="#convert-cro" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">CRO Retainer</a></li>
                 <li><a href="#retain-marketing" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">Retention Marketing</a></li>
-                <li><a href="#retain-cep" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">CEP (Klaviyo / Braze)</a></li>
-                <li><a href="#retain-cdp" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors">CDP (Zero-Party Data)</a></li>
               </ul>
             </div>
 
