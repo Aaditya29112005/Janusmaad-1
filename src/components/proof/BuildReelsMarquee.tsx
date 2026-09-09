@@ -11,7 +11,6 @@ const REEL_IMAGES = [
   { id: '11', src: '/testimonials/11.png', title: 'Headless Next.js Storefront', metric: '0.62s Load Speed' },
   { id: '13', src: '/testimonials/13.png', title: 'High-Converting UGC Video Funnel', metric: '4.82x ROAS' },
   { id: '14', src: '/testimonials/14.png', title: '1-Click Cart Upsell & AOV Engine', metric: '+38.5% AOV' },
-  { id: '15', src: '/testimonials/15.png', title: 'Verified DTC Growth Review', metric: '98/100 Lighthouse' },
 ];
 
 export const BuildReelsMarquee: React.FC = () => {

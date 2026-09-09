@@ -119,16 +119,6 @@ export const TESTIMONIALS: Testimonial[] = [
     imageCardSrc: '/testimonials/14.png',
   },
   {
-    id: '11',
-    logo: 'JANUSMAAD REVIEW 11',
-    metric: 'Sub-1.1s Speed',
-    quote: 'Headless Shopify architecture reduced page load from 4.2s to sub-1.1s. Paid conversion rate rose 38%.',
-    name: 'Verified Client',
-    role: 'CTO',
-    company: 'Luxury Goods',
-    imageCardSrc: '/testimonials/15.png',
-  },
-  {
     id: '12',
     logo: 'JANUSMAAD REVIEW 12',
     metric: '+72% CVR Lift',
