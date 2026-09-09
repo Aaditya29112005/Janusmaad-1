@@ -139,20 +139,6 @@ export const BuildService: React.FC<BuildServiceProps> = ({
         </div>
       </div>
 
-      {/* Sub-Topics Sticky Anchors */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-2xl p-4 border border-hairline flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
-          <span className="text-teal font-bold uppercase">SUB-TOPICS:</span>
-          <div className="flex flex-wrap gap-4 text-white/80">
-            <a href="#landing-pages" className="hover:text-teal transition-colors">#landing-pages</a>
-            <a href="#shopify-storefronts" className="hover:text-teal transition-colors">#shopify-storefronts</a>
-            <a href="#headless" className="hover:text-teal transition-colors">#headless</a>
-            <a href="#speed-core-web-vitals" className="hover:text-teal transition-colors">#speed-core-web-vitals</a>
-            <a href="#design-system" className="hover:text-teal transition-colors">#design-system</a>
-            <a href="#post-launch" className="hover:text-teal transition-colors">#post-launch</a>
-          </div>
-        </div>
-      </div>
 
       {/* 2. SPEED SCOREBOARD INSET PANEL (Dark inset panel with monospace numerals) */}
       <div id="speed-core-web-vitals" className="max-w-7xl mx-auto px-4 sm:px-8">

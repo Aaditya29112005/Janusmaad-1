@@ -126,21 +126,6 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
         </div>
       </div>
 
-      {/* Sub-Topics Sticky Anchors */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-2xl p-4 border border-hairline flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
-          <span className="text-teal font-bold uppercase">SUB-TOPICS:</span>
-          <div className="flex flex-wrap gap-4 text-white/80">
-            <a href="#core-flows" className="hover:text-teal transition-colors">#core-flows</a>
-            <a href="#campaigns" className="hover:text-teal transition-colors">#campaigns</a>
-            <a href="#whatsapp-api" className="hover:text-teal transition-colors">#whatsapp-api</a>
-            <a href="#segmentation-rfm" className="hover:text-teal transition-colors">#segmentation-rfm</a>
-            <a href="#deliverability" className="hover:text-teal transition-colors">#deliverability</a>
-            <a href="#calculator" className="hover:text-teal transition-colors">#calculator</a>
-          </div>
-        </div>
-      </div>
-
       {/* 2. CORE LIFECYCLE FLOW ARCHITECTURE: Interactive Scroll Rail with 5 Litmus Cards */}
       <div id="core-flows" className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-hairline pb-4">

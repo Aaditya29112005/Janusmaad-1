@@ -118,21 +118,6 @@ export const CROService: React.FC<CROServiceProps> = ({
         </div>
       </div>
 
-      {/* Sub-Topics Sticky Anchors */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-2xl p-4 border border-hairline flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
-          <span className="text-teal font-bold uppercase">SUB-TOPICS:</span>
-          <div className="flex flex-wrap gap-4 text-white/80">
-            <a href="#research" className="hover:text-teal transition-colors">#research</a>
-            <a href="#hypothesis-backlog" className="hover:text-teal transition-colors">#hypothesis-backlog</a>
-            <a href="#ab-testing" className="hover:text-teal transition-colors">#ab-testing</a>
-            <a href="#pdp-optimisation" className="hover:text-teal transition-colors">#pdp-optimisation</a>
-            <a href="#checkout" className="hover:text-teal transition-colors">#checkout</a>
-            <a href="#calculator" className="hover:text-teal transition-colors">#calculator</a>
-          </div>
-        </div>
-      </div>
-
       {/* 3 CORE CRO PILLARS WITH LITMUS CARDS */}
       <div id="ab-testing" className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
         <div className="space-y-2">
