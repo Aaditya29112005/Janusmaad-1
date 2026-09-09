@@ -91,8 +91,8 @@ export const TestimonialsMarquee: React.FC = () => {
       onUpdate() {
         seamlessLoop.progress(loopTime(playhead.offset));
       },
-      duration: 0.5,
-      ease: 'power3',
+      duration: 0.6,
+      ease: 'power2.out',
       paused: true,
     });
 
@@ -102,14 +102,14 @@ export const TestimonialsMarquee: React.FC = () => {
       scrub.invalidate().restart();
     }
 
-    // Autoplay: automatically move to next testimonial card every 3 seconds
+    // Autoplay: automatically move to next testimonial card every 2 seconds
     let autoPlayTimer: ReturnType<typeof setInterval> | null = null;
 
     const startAutoPlay = () => {
       if (autoPlayTimer) clearInterval(autoPlayTimer);
       autoPlayTimer = setInterval(() => {
         movePlayhead(spacing);
-      }, 3000);
+      }, 2000);
     };
 
     const stopAutoPlay = () => {
