@@ -19,16 +19,16 @@ const WORK_IMAGES: Record<string, string> = {
   'frasmetics': '/work/frasmetics.jpg',
   'vanika-jewels': '/work/vanikajewels.jpg',
   'wildmoss': '/work/wildmoss.jpg',
-  'himalayan-panacea': '/work/himalayanpanacea.jpg',
+  'himalayan-panacea': '/work/theskinbeneath.jpg',
   'gaadi-web': '/work/gaadiweb.jpg',
   'the-happy-home-broker': '/work/thehappyhomebroker.jpg',
   'hand-studio': '/work/handstudio.jpg',
-  'bombay-bloomers': '/work/bombaybloomers.jpg',
-  'isha-and-ishana': '/work/ishaandishana.jpg',
-  'pro4security': '/work/pro4security.jpg',
+  'bombay-bloomers': '/work/paperbarkcamp.jpg',
+  'isha-and-ishana': '/work/frasmetics.jpg',
+  'pro4security': '/work/thecreditlane.jpg',
   'soniva': '/work/soniva.jpg',
   'selective-guru': '/work/selectiveguru.jpg',
-  'too-bold-to-confirm': '/work/toobold.jpg',
+  'too-bold-to-confirm': '/work/ugrashoes.jpg',
   'kasuti-kavana': '/work/kasutikavana.jpg',
   'shaffa': '/work/shaffa.jpg',
   'caness': '/work/caness.jpg',
@@ -37,12 +37,13 @@ const WORK_IMAGES: Record<string, string> = {
   'ugrashoes': '/work/ugrashoes.jpg',
   'basil-pet-care': '/work/basilpetcare.jpg',
   'clay-and-glaze': '/work/clayandglaze.jpg',
-  'rangoli': '/work/rangoli.jpg',
+  'rangoli': '/work/kasutikavana.jpg',
   'qibo': '/work/qibo.jpg',
   'soiree-club': '/work/soireeclub.jpg',
   'ecoo-global': '/work/ecooglobal.jpg',
   'cuddle-buds': '/work/cuddlebuds.jpg',
 };
+
 
 interface CursorFollowListProps {
   className?: string;
@@ -130,7 +131,15 @@ export const CursorFollowList: React.FC<CursorFollowListProps> = ({ className = 
           src={activeImage}
           alt="Live Storefront Preview"
           className="w-full h-full object-cover object-top rounded-xl"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (!target.dataset.fallback) {
+              target.dataset.fallback = 'true';
+              target.src = '/work/thecreditlane.jpg';
+            }
+          }}
         />
+
       </div>
 
       <div className="max-w-7xl mx-auto space-y-8">

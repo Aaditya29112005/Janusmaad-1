@@ -20,16 +20,16 @@ const WORK_IMAGES: Record<string, string> = {
   'frasmetics': '/work/frasmetics.jpg',
   'vanika-jewels': '/work/vanikajewels.jpg',
   'wildmoss': '/work/wildmoss.jpg',
-  'himalayan-panacea': '/work/himalayanpanacea.jpg',
+  'himalayan-panacea': '/work/theskinbeneath.jpg',
   'gaadi-web': '/work/gaadiweb.jpg',
   'the-happy-home-broker': '/work/thehappyhomebroker.jpg',
   'hand-studio': '/work/handstudio.jpg',
-  'bombay-bloomers': '/work/bombaybloomers.jpg',
-  'isha-and-ishana': '/work/ishaandishana.jpg',
-  'pro4security': '/work/pro4security.jpg',
+  'bombay-bloomers': '/work/paperbarkcamp.jpg',
+  'isha-and-ishana': '/work/frasmetics.jpg',
+  'pro4security': '/work/thecreditlane.jpg',
   'soniva': '/work/soniva.jpg',
   'selective-guru': '/work/selectiveguru.jpg',
-  'too-bold-to-confirm': '/work/toobold.jpg',
+  'too-bold-to-confirm': '/work/ugrashoes.jpg',
   'kasuti-kavana': '/work/kasutikavana.jpg',
   'shaffa': '/work/shaffa.jpg',
   'caness': '/work/caness.jpg',
@@ -38,12 +38,13 @@ const WORK_IMAGES: Record<string, string> = {
   'ugrashoes': '/work/ugrashoes.jpg',
   'basil-pet-care': '/work/basilpetcare.jpg',
   'clay-and-glaze': '/work/clayandglaze.jpg',
-  'rangoli': '/work/rangoli.jpg',
+  'rangoli': '/work/kasutikavana.jpg',
   'qibo': '/work/qibo.jpg',
   'soiree-club': '/work/soireeclub.jpg',
   'ecoo-global': '/work/ecooglobal.jpg',
   'cuddle-buds': '/work/cuddlebuds.jpg',
 };
+
 
 interface CategoryMetricsExplorerProps {
   onOpenAudit?: (type?: string) => void;
@@ -240,11 +241,18 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
                     className="w-[300px] sm:w-[360px] shrink-0 bg-white border border-hairline rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-2xl hover:border-violet/40 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1"
                   >
                     {/* Real Storefront Screenshot Banner */}
-                    <div className="relative w-full h-44 bg-bone rounded-xl overflow-hidden border border-hairline group-hover:scale-[1.01] transition-transform duration-300">
+                    <div className="relative w-full h-52 sm:h-56 bg-bone rounded-xl overflow-hidden border border-hairline group-hover:scale-[1.01] transition-transform duration-300">
                       <img
                         src={bannerImg}
                         alt={`${client.name} Storefront Banner`}
                         className="w-full h-full object-cover object-top"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.dataset.fallback) {
+                            target.dataset.fallback = 'true';
+                            target.src = '/work/thecreditlane.jpg';
+                          }
+                        }}
                       />
                     </div>
 
