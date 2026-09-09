@@ -9,7 +9,7 @@ interface SpecializationItem {
 }
 
 const ROW_1_FIELDS: SpecializationItem[] = [
-  { id: 'jewelry', name: 'Jewelry (Ecomm + Retail)', isFeatured: true },
+  { id: 'jewelry', name: 'Jewelry (Ecomm + Retail)' },
   { id: 'fintech', name: 'Financial Services & Fintech' },
   { id: 'spiritual', name: 'Spiritual, Wellness & Ayurveda' },
   { id: 'fashion', name: 'Fashion, Apparel & Couture' },
@@ -23,7 +23,7 @@ const ROW_2_FIELDS: SpecializationItem[] = [
   { id: 'realestate', name: 'Real Estate & Broking' },
   { id: 'petcare', name: 'Pet Products & Accessories' },
   { id: 'food', name: 'Food, Sweets & Confectionery' },
-  { id: 'jewelry-2', name: 'Jewelry (Ecomm + Retail)', isFeatured: true },
+  { id: 'jewelry-2', name: 'Jewelry (Ecomm + Retail)' },
   { id: 'fintech-2', name: 'Financial Services & Fintech' },
 ];
 
@@ -90,15 +90,8 @@ export const ScrollRailMarquee: React.FC = () => {
     return fullList.map((item, idx) => (
       <h4
         key={`${item.id}-${idx}`}
-        className={`whitespace-nowrap px-6 py-3 rounded-2xl text-sm sm:text-base font-display transition-all duration-300 select-none cursor-default inline-flex items-center gap-2 tracking-wide ${
-          item.isFeatured
-            ? 'bg-[#00BFA5] text-[#050D18] font-bold shadow-lg shadow-[#00BFA5]/25 border border-[#00E5D8]'
-            : 'bg-[#141F32] hover:bg-[#1C2B44] text-[#CBD5E1] hover:text-white font-medium border border-white/10 hover:border-teal/40'
-        }`}
+        className="whitespace-nowrap px-6 py-3 rounded-2xl text-sm sm:text-base font-display transition-all duration-300 select-none cursor-default inline-flex items-center gap-2 tracking-wide bg-[#141F32] hover:bg-[#1C2B44] text-[#CBD5E1] hover:text-white font-medium border border-white/10 hover:border-teal/40"
       >
-        {item.isFeatured && (
-          <span className="w-2 h-2 rounded-full bg-[#050D18] shrink-0 inline-block animate-pulse" />
-        )}
         {item.name}
       </h4>
     ));

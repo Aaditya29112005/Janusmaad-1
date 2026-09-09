@@ -77,12 +77,11 @@ export const ProofStrip: React.FC = () => {
                 </div>
               </div>
 
-              {/* Bottom Row: Verified Attribution */}
-              <div className="pt-2 border-t border-hairline/60 flex items-center justify-between text-[11px] font-mono text-mute">
-                <span className="font-medium text-ink/70 truncate">{stat.clientName}</span>
-                <span className="inline-flex items-center gap-1 text-emerald-600 font-bold shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  Verified Lift
+              {/* Bottom Row: Client Name & Category (Black font only, no green) */}
+              <div className="pt-2 border-t border-hairline/60 flex items-center justify-between text-[11px] font-mono text-ink">
+                <span className="font-semibold text-ink truncate">{stat.clientName}</span>
+                <span className="text-ink/85 font-medium text-right shrink-0">
+                  {stat.category}
                 </span>
               </div>
             </div>
