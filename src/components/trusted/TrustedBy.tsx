@@ -18,36 +18,42 @@ export const TrustedBy: React.FC = () => {
     if (!row1 || !row2 || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Row 1: Infinite Glide Left
+      // Row 1: Infinite Glide Left (calm, steady luxury pace)
       const row1Width = row1.scrollWidth / 2;
       const tween1 = gsap.to(row1, {
         x: -row1Width,
-        duration: 25,
+        duration: 65,
         ease: 'none',
         repeat: -1,
       });
 
-      // Row 2: Infinite Glide Right
+      // Row 2: Infinite Glide Right (calm, steady luxury pace)
       const row2Width = row2.scrollWidth / 2;
       gsap.set(row2, { x: -row2Width });
       const tween2 = gsap.to(row2, {
         x: 0,
-        duration: 28,
+        duration: 70,
         ease: 'none',
         repeat: -1,
       });
 
-      // Pause on hover over section
+      // Smooth slow-down on hover so logos can be inspected effortlessly without sudden halting
       const section = sectionRef.current;
       if (section) {
-        section.addEventListener('mouseenter', () => {
-          tween1.pause();
-          tween2.pause();
-        });
-        section.addEventListener('mouseleave', () => {
-          tween1.play();
-          tween2.play();
-        });
+        const onMouseEnter = () => {
+          gsap.to([tween1, tween2], { timeScale: 0.15, duration: 0.6, ease: 'power2.out' });
+        };
+        const onMouseLeave = () => {
+          gsap.to([tween1, tween2], { timeScale: 1, duration: 0.6, ease: 'power2.out' });
+        };
+
+        section.addEventListener('mouseenter', onMouseEnter);
+        section.addEventListener('mouseleave', onMouseLeave);
+
+        return () => {
+          section.removeEventListener('mouseenter', onMouseEnter);
+          section.removeEventListener('mouseleave', onMouseLeave);
+        };
       }
     }, sectionRef);
 
