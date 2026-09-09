@@ -111,7 +111,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
   };
 
   return (
-    <div className="space-y-20 pb-16 overflow-hidden">
+    <div className="space-y-12 sm:space-y-16 pb-8 overflow-hidden">
       {/* Inject JSON-LD Schema */}
       <script
         type="application/ld+json"
@@ -126,14 +126,13 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <button
           onClick={() => onNavigateCapability('receipts')}
-          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-teal transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-teal transition-colors cursor-pointer"
         >
           <span>← Back to All Services</span>
         </button>
       </div>
 
-
-      {/* 2. NO AUTOPILOT SECTION */}
+      {/* 1. NO AUTOPILOT SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-gradient-to-br from-[#07101E] via-[#0E1E38] to-[#122B4F] text-white rounded-[28px] p-8 sm:p-12 lg:p-14 border border-white/10 shadow-2xl relative overflow-hidden space-y-8">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#5DAFFF]/10 rounded-full blur-3xl pointer-events-none" />
@@ -143,9 +142,9 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               CONTINUOUS OPTIMISATION • ZERO AUTOPILOT
             </span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white leading-tight">
               Your campaigns should never run on autopilot<span className="text-teal">.</span>
-            </h2>
+            </h1>
 
             <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
               At JanusMAAD, we combine AI-powered optimisation with human expertise to continuously improve your campaigns across all platforms; from Google and Meta to LinkedIn, YouTube and beyond.
@@ -173,7 +172,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               },
               {
                 title: 'Smarter budget allocation',
-                desc: 'based on what’s actually driving business results'
+                desc: 'based on what’s actually driving business result'
               }
             ].map((item, idx) => (
               <div
@@ -194,11 +193,21 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               </div>
             ))}
           </div>
+
+          <div className="pt-2 relative z-10 flex flex-wrap items-center gap-4">
+            <button
+              onClick={() => onOpenAudit('acquire-performance')}
+              className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs sm:text-sm hover:bg-white/95 active:scale-[0.99] transition-all shadow-lg cursor-pointer uppercase tracking-wider flex items-center gap-2 group"
+            >
+              <span>Get Free Live Account Audit (60 Min)</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* 3. CALCULATOR SECTION: Compact, High-Impact Section */}
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-teal text-ink py-10 sm:py-12 px-4 sm:px-8 my-8 shadow-xl">
+      {/* 2. CALCULATOR SECTION: Compact, High-Impact Section */}
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-teal text-ink py-10 sm:py-12 px-4 sm:px-8 my-4 shadow-xl">
         <div className="max-w-5xl mx-auto space-y-6">
           {/* Streamlined Header */}
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -354,60 +363,26 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </div>
 
-
-
-      {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR PERFORMANCE MARKETING */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
+      {/* 3. SUCCESS METRICS & CLIENT VAULT FOR PERFORMANCE MARKETING */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
           <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
             VERIFIED PERFORMANCE MARKETING PROOF & CLIENT WORK
           </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
+          <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
             Top Performance Marketing Clients & Results
           </h2>
-          <p className="text-mute text-sm">
-            Filtered by Performance Marketing (PM) case studies, with full access to all client vault records.
+          <p className="text-mute text-xs sm:text-sm">
+            Live client case studies across Meta, Google Ads, YouTube, and multi-channel scale.
           </p>
         </div>
 
         <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" />
       </div>
 
-      {/* VERIFIED TESTIMONIALS CAROUSEL */}
-      <div className="border-t border-hairline pt-12">
+      {/* 4. VERIFIED TESTIMONIALS CAROUSEL */}
+      <div className="border-t border-hairline pt-8">
         <TestimonialsMarquee />
-      </div>
-
-
-
-      {/* 6. CROSS-LINKS SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 border-t border-hairline pt-12">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-bone rounded-3xl p-8 border border-hairline">
-          <div>
-            <div className="text-xs font-mono font-bold text-teal uppercase">EXPLORE ADJACENT CAPABILITIES</div>
-            <div className="text-xl font-display font-bold text-ink mt-1">Amplify Your Paid Traffic Results</div>
-          </div>
-          <div className="flex flex-wrap gap-4 font-mono text-xs">
-            <button 
-              onClick={() => onNavigateCapability('convert-cro')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              CRO Agency →
-            </button>
-            <button 
-              onClick={() => onNavigateCapability('convert-build')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              Build & Landing Pages →
-            </button>
-            <button 
-              onClick={() => onNavigateCapability('retain-marketing')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              Retention Marketing →
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
