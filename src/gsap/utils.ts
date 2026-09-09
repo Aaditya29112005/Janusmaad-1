@@ -10,37 +10,34 @@ export const prefersReducedMotion = (): boolean => {
 };
 
 /**
- * Magnetic button hook for primary CTAs (C6 spec)
- * Uses overwrite: "auto", power2.out on move, and elastic.out(1, 0.4) on leave.
+ * Magnetic button hook for primary CTAs
+ * Exact physics:
+ * - mousemove: mapRange with strength, duration: 0.4, ease: "power2.out", overwrite: true
+ * - mouseleave: duration: 0.7, ease: "elastic.out(1, 0.4)", overwrite: true
  */
-export const useMagneticButton = <T extends HTMLElement = HTMLButtonElement>() => {
+export const useMagneticButton = <T extends HTMLElement = HTMLButtonElement>(strength = 0.35) => {
   const ref = useRef<T | null>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-
-    // Gate magnetic effect for pointer devices only
     if (!window.matchMedia('(hover: hover)').matches) return;
+
+    (el as any).__hasMagnetic = true;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const distanceX = e.clientX - centerX;
-      const distanceY = e.clientY - centerY;
 
-      // Magnetic pull up to 14px displacement
-      const x = gsap.utils.mapRange(-rect.width / 2, rect.width / 2, -14, 14, distanceX);
-      const y = gsap.utils.mapRange(-rect.height / 2, rect.height / 2, -14, 14, distanceY);
+      const x = gsap.utils.mapRange(rect.left, rect.right, -rect.width / 2, rect.width / 2, e.clientX);
+      const y = gsap.utils.mapRange(rect.top, rect.bottom, -rect.height / 2, rect.height / 2, e.clientY);
 
       gsap.to(el, {
-        x,
-        y,
+        x: x * strength,
+        y: y * strength,
         duration: 0.4,
         ease: 'power2.out',
-        overwrite: 'auto',
+        overwrite: true,
       });
     };
 
@@ -48,9 +45,9 @@ export const useMagneticButton = <T extends HTMLElement = HTMLButtonElement>() =
       gsap.to(el, {
         x: 0,
         y: 0,
-        duration: 0.8,
+        duration: 0.7,
         ease: 'elastic.out(1, 0.4)',
-        overwrite: 'auto',
+        overwrite: true,
       });
     };
 
@@ -60,8 +57,91 @@ export const useMagneticButton = <T extends HTMLElement = HTMLButtonElement>() =
     return () => {
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseleave', handleMouseLeave);
+      gsap.to(el, { x: 0, y: 0, duration: 0.2, overwrite: true });
     };
-  }, []);
+  }, [strength]);
 
   return ref;
+};
+
+/**
+ * Global magnetic buttons initializer
+ * Automatically applies the magnetic tween to EVERY button across the entire application:
+ * - mousemove: x * strength, y * strength, duration: 0.4, ease: "power2.out", overwrite: true
+ * - mouseleave: x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)", overwrite: true
+ */
+export const initGlobalMagneticButtons = (strength = 0.35) => {
+  if (typeof window === 'undefined') return () => {};
+  if (!window.matchMedia('(hover: hover)').matches || prefersReducedMotion()) return () => {};
+
+  let currentBtn: HTMLElement | null = null;
+
+  const handleMouseMove = (e: MouseEvent) => {
+    const target = e.target as HTMLElement | null;
+    const btn = target?.closest('button, [role="button"], a.btn, .mag-btn, .button-magnetic') as HTMLElement | null;
+
+    if (btn) {
+      // If element is already handled by useMagneticButton hook, skip to avoid duplicate computation
+      if ((btn as any).__hasMagnetic) return;
+
+      if (currentBtn && currentBtn !== btn) {
+        gsap.to(currentBtn, {
+          x: 0,
+          y: 0,
+          duration: 0.7,
+          ease: 'elastic.out(1, 0.4)',
+          overwrite: true,
+        });
+      }
+      currentBtn = btn;
+      const rect = btn.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
+      const x = gsap.utils.mapRange(rect.left, rect.right, -rect.width / 2, rect.width / 2, e.clientX);
+      const y = gsap.utils.mapRange(rect.top, rect.bottom, -rect.height / 2, rect.height / 2, e.clientY);
+
+      gsap.to(btn, {
+        x: x * strength,
+        y: y * strength,
+        duration: 0.4,
+        ease: 'power2.out',
+        overwrite: true,
+      });
+    } else if (currentBtn) {
+      gsap.to(currentBtn, {
+        x: 0,
+        y: 0,
+        duration: 0.7,
+        ease: 'elastic.out(1, 0.4)',
+        overwrite: true,
+      });
+      currentBtn = null;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (currentBtn) {
+      gsap.to(currentBtn, {
+        x: 0,
+        y: 0,
+        duration: 0.7,
+        ease: 'elastic.out(1, 0.4)',
+        overwrite: true,
+      });
+      currentBtn = null;
+    }
+  };
+
+  window.addEventListener('mousemove', handleMouseMove, { passive: true });
+  document.addEventListener('mouseleave', handleMouseLeave);
+  window.addEventListener('blur', handleMouseLeave);
+
+  return () => {
+    window.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseleave', handleMouseLeave);
+    window.removeEventListener('blur', handleMouseLeave);
+    if (currentBtn) {
+      gsap.to(currentBtn, { x: 0, y: 0, duration: 0.1, overwrite: true });
+    }
+  };
 };

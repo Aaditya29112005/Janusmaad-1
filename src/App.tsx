@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import { gsap, ScrollTrigger } from './gsap/register';
-import { prefersReducedMotion } from './gsap/utils';
+import { prefersReducedMotion, initGlobalMagneticButtons } from './gsap/utils';
 
 // Chrome
 import { Header } from './components/chrome/Header';
@@ -50,6 +50,11 @@ export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<string>('audit');
   const [activeCapability, setActiveCapability] = useState<CapabilityId | null>(null);
+
+  useEffect(() => {
+    const cleanupMagnetic = initGlobalMagneticButtons();
+    return cleanupMagnetic;
+  }, []);
 
   useEffect(() => {
     // Listen to hash changes or route path for standalone capability page routing

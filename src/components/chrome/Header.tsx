@@ -104,29 +104,40 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
           ))}
 
           {/* Flat Links */}
-          {NAV_FLAT.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              target={item.href.startsWith('#') && item.href !== '#audit-modal' ? '_blank' : undefined}
-              rel={item.href.startsWith('#') && item.href !== '#audit-modal' ? 'noopener noreferrer' : undefined}
-              onClick={(e) => {
-                if (item.href === '#audit-modal') {
-                  e.preventDefault();
-                  onOpenAudit('audit');
-                }
-              }}
-              className="text-ink/90 hover:text-violet font-medium transition-colors focus-visible:outline-violet"
-            >
-              {item.name}
-            </a>
-          ))}
+          {NAV_FLAT.map((item) => {
+            if (item.href === '#audit-modal') {
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => onOpenAudit('audit')}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink text-bone hover:bg-violet text-xs font-display font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 border border-ink/20 cursor-pointer"
+                  title="Request a Free Growth Audit"
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#0ae448] animate-pulse shadow-[0_0_8px_#0ae448]" />
+                  <span>{item.name}</span>
+                  <span className="text-[#0ae448] font-bold">→</span>
+                </button>
+              );
+            }
+
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                target={item.href.startsWith('#') ? '_blank' : undefined}
+                rel={item.href.startsWith('#') ? 'noopener noreferrer' : undefined}
+                className="text-ink/90 hover:text-violet font-medium transition-colors focus-visible:outline-violet"
+              >
+                {item.name}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right CTA */}
-        <div className="hidden lg:flex items-center">
+        <div className="hidden lg:flex items-center space-x-3">
           <Button
-            variant="primary"
+            variant="outline"
             size="sm"
             onClick={() => onOpenAudit('call')}
           >
@@ -168,24 +179,37 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAudit }) => {
           ))}
 
           <div className="pt-4 border-t border-hairline space-y-3">
-            {NAV_FLAT.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target={item.href.startsWith('#') && item.href !== '#audit-modal' ? '_blank' : undefined}
-                rel={item.href.startsWith('#') && item.href !== '#audit-modal' ? 'noopener noreferrer' : undefined}
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  if (item.href === '#audit-modal') {
-                    e.preventDefault();
-                    onOpenAudit('audit');
-                  }
-                }}
-                className="block text-ink text-base font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
+            {NAV_FLAT.map((item) => {
+              if (item.href === '#audit-modal') {
+                return (
+                  <button
+                    key={item.name}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenAudit('audit');
+                    }}
+                    className="w-full py-3 px-4 rounded-xl bg-ink text-bone hover:bg-violet font-display font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-md cursor-pointer transition-colors"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-[#0ae448] animate-pulse shadow-[0_0_8px_#0ae448]" />
+                    <span>{item.name}</span>
+                    <span className="text-[#0ae448] font-bold">→</span>
+                  </button>
+                );
+              }
+
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target={item.href.startsWith('#') ? '_blank' : undefined}
+                  rel={item.href.startsWith('#') ? 'noopener noreferrer' : undefined}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block text-ink text-base font-medium hover:text-violet"
+                >
+                  {item.name}
+                </a>
+              );
+            })}
 
             <div className="pt-2">
               <Button
