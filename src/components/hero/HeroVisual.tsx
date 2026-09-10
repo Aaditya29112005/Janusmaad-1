@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { MaadAtomStage } from './MaadAtomStage';
 import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 import { Sparkles, ArrowRight, Zap, Search, Share2 } from 'lucide-react';
@@ -128,11 +129,9 @@ export const HeroVisual: React.FC = () => {
           </div>
         </div>
 
-        {/* Dynamic 3D Scene Viewport */}
-        <div className="relative w-full aspect-[16/11] flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-bone/50 to-white border border-black/5 p-2">
-          {activeTab === 0 && <PerformanceMarketingScene />}
-          {activeTab === 1 && <SeoSearchBridgeScene />}
-          {activeTab === 2 && <SmmSocialRadarScene />}
+        {/* Dynamic 3D Scene Viewport - M.A.A.D Atom Model */}
+        <div className="relative w-full aspect-square max-h-[380px] sm:max-h-[420px] flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-[#F6F3EC]/80 to-white border border-black/5 p-2">
+          <MaadAtomStage activeTab={activeTab} onSelectTab={(index) => setActiveTab(index)} />
         </div>
 
         {/* Card Bottom Meta Description */}
