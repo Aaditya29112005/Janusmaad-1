@@ -128,18 +128,6 @@ export const SMMService: React.FC<SMMServiceProps> = ({
         </div>
       </div>
 
-      {/* Sub-Topics Sticky Anchors */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-2xl p-4 border border-hairline flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
-          <span className="text-teal font-bold uppercase">CORE PILLARS:</span>
-          <div className="flex flex-wrap gap-4 text-white/80">
-            <a href="#ai-content" className="hover:text-teal transition-colors">#ai-generated-content</a>
-            <a href="#social-management" className="hover:text-teal transition-colors">#social-media-management</a>
-            <a href="#ad-creatives" className="hover:text-teal transition-colors">#performance-ad-creatives</a>
-            <a href="#organic-to-paid" className="hover:text-teal transition-colors">#organic-to-paid-pipeline</a>
-          </div>
-        </div>
-      </div>
 
       {/* CORE DIFFERENTIATING ARGUMENT: ORGANIC TO PAID CREATIVE HANDOFF PIPELINE */}
       <div id="organic-to-paid" className="max-w-7xl mx-auto px-4 sm:px-8">
