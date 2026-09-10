@@ -69,16 +69,52 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
     return CATEGORY_PITCHES.find(p => p.category === selectedCategory) || CATEGORY_PITCHES[0];
   }, [selectedCategory]);
 
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setVisibleCount(3);
+  };
+
   const orderedClients = React.useMemo(() => {
-    const topIds = ['rudrasetu', 'kicky-and-perky', 'the-credit-lane'];
-    const topClients: typeof ALL_38_CLIENTS = [];
-    topIds.forEach((id) => {
-      const found = ALL_38_CLIENTS.find((c) => c.id === id);
-      if (found) topClients.push(found);
+    if (!activePitch) return ALL_38_CLIENTS;
+
+    const pitchBrandNames = [
+      activePitch.topPitch.brand,
+      ...activePitch.metrics.map((m) => m.brand),
+    ].map((b) => b.toLowerCase().trim());
+
+    // 1. Primary match: clients whose name matches any brand in the pitch metrics
+    const brandMatchedClients = ALL_38_CLIENTS.filter((client) =>
+      pitchBrandNames.some(
+        (brand) =>
+          client.name.toLowerCase().includes(brand) ||
+          brand.includes(client.name.toLowerCase())
+      )
+    );
+
+    // 2. Secondary match: clients whose categoryGroup or category matches selectedCategory
+    const categoryMatchedClients = ALL_38_CLIENTS.filter((client) => {
+      const groupLower = (client.categoryGroup || '').toLowerCase();
+      const catLower = (client.category || '').toLowerCase();
+      const selLower = selectedCategory.toLowerCase();
+      return groupLower.includes(selLower) || selLower.includes(groupLower) || catLower.includes(selLower);
     });
-    const remaining = ALL_38_CLIENTS.filter((c) => !topIds.includes(c.id));
-    return [...topClients, ...remaining];
-  }, []);
+
+    // Combine brand matches first, then category matches
+    const categoryClients: typeof ALL_38_CLIENTS = [];
+    const addedIds = new Set<string>();
+
+    [...brandMatchedClients, ...categoryMatchedClients].forEach((c) => {
+      if (!addedIds.has(c.id)) {
+        addedIds.add(c.id);
+        categoryClients.push(c);
+      }
+    });
+
+    // 3. Fallback clients so we always have all 38 available
+    const remaining = ALL_38_CLIENTS.filter((c) => !addedIds.has(c.id));
+
+    return [...categoryClients, ...remaining];
+  }, [activePitch, selectedCategory]);
 
   const visibleClients = orderedClients.slice(0, visibleCount);
 
@@ -134,7 +170,7 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
                 return (
                   <button
                     key={item.category}
-                    onClick={() => setSelectedCategory(item.category)}
+                    onClick={() => handleCategorySelect(item.category)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-violet text-white shadow-xs scale-102'
