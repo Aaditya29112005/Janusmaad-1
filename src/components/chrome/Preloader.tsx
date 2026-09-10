@@ -32,6 +32,12 @@ class PreloaderSoundFX {
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume().catch(() => {});
     }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      window.speechSynthesis.getVoices();
+    }
     return this.ctx;
   }
 
@@ -71,14 +77,18 @@ class PreloaderSoundFX {
   public speakPhrase() {
     if (this.muted || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     try {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
       window.speechSynthesis.cancel();
+
       const utterance = new SpeechSynthesisUtterance('JanusMAAD gives you growth');
       utterance.rate = 0.8;
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
 
-      const speakWithVoice = () => {
-        const voices = window.speechSynthesis.getVoices();
+      const voices = window.speechSynthesis.getVoices();
+      if (voices && voices.length > 0) {
         const preferredVoice = voices.find(
           (v) => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Alex') || v.name.includes('Karen') || v.name.includes('Fiona'))
         ) || voices.find((v) => v.lang.startsWith('en'));
@@ -86,16 +96,9 @@ class PreloaderSoundFX {
         if (preferredVoice) {
           utterance.voice = preferredVoice;
         }
-        window.speechSynthesis.speak(utterance);
-      };
-
-      if (window.speechSynthesis.getVoices().length > 0) {
-        speakWithVoice();
-      } else {
-        window.speechSynthesis.onvoiceschanged = () => {
-          speakWithVoice();
-        };
       }
+
+      window.speechSynthesis.speak(utterance);
     } catch {
       // Speech safety
     }
