@@ -397,62 +397,65 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
-      {/* 4. REAL STORIES. REAL RESULTS. (METRICS + CALCULATOR IN LIGHT MODE) */}
+      {/* 4. REAL STORIES. REAL RESULTS. (VERIFIED METRICS + INTERACTIVE CALCULATOR) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-white text-ink rounded-[32px] p-8 sm:p-12 border border-hairline shadow-xl space-y-12 relative overflow-hidden">
+        <div className="bg-white text-ink rounded-[32px] p-6 sm:p-10 border border-hairline shadow-xl space-y-8 relative overflow-hidden">
           
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
               REAL STORIES • REAL RESULTS
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink">
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">
               Verified Performance Metrics
             </h2>
-            <p className="text-mute text-sm sm:text-base">
+            <p className="text-mute text-sm sm:text-base font-medium max-w-xl mx-auto">
               Aggregated performance across multiple campaigns, industries, and media platforms.
             </p>
           </div>
 
           {/* Top 3-Column Key Metrics Banner */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center border-y border-hairline py-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center border-y border-hairline py-6">
             <div className="space-y-1">
-              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink">4.82x</div>
-              <div className="text-xs font-mono text-violet uppercase font-bold">Blended Client ROAS</div>
-              <p className="text-[11px] text-mute max-w-xs mx-auto">Verified return across Meta & Google ad spend.</p>
+              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">4.82x</div>
+              <div className="text-[11px] font-mono text-violet uppercase font-bold tracking-wider">BLENDED CLIENT ROAS</div>
+              <p className="text-xs text-mute max-w-xs mx-auto font-medium">Verified return across Meta & Google ad spend.</p>
             </div>
-            <div className="space-y-1 md:border-x border-hairline">
-              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink">120K+</div>
-              <div className="text-xs font-mono text-violet uppercase font-bold">Verified Clicks</div>
-              <p className="text-[11px] text-mute max-w-xs mx-auto">High-intent buyer traffic redirected to storefronts.</p>
+            <div className="space-y-1 md:border-x border-hairline px-4">
+              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">120K+</div>
+              <div className="text-[11px] font-mono text-violet uppercase font-bold tracking-wider">VERIFIED CLICKS</div>
+              <p className="text-xs text-mute max-w-xs mx-auto font-medium">High-intent buyer traffic redirected to storefronts.</p>
             </div>
             <div className="space-y-1">
-              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink">4.8M+</div>
-              <div className="text-xs font-mono text-violet uppercase font-bold">Multi-Channel Impressions</div>
-              <p className="text-[11px] text-mute max-w-xs mx-auto">Targeted brand reach across Search, YouTube & Feeds.</p>
+              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">4.8M+</div>
+              <div className="text-[11px] font-mono text-violet uppercase font-bold tracking-wider">MULTI-CHANNEL IMPRESSIONS</div>
+              <p className="text-xs text-mute max-w-xs mx-auto font-medium">Targeted brand reach across Search, YouTube & Feeds.</p>
             </div>
           </div>
 
-          {/* Content Split: ROAS Calculator HUD Inside Result Card */}
-          <div className="space-y-8">
-            <div className="space-y-2 text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full border border-violet/20">
-                <Sliders className="w-3.5 h-3.5" />
+          {/* INTERACTIVE CALCULATOR SECTION */}
+          <div className="pt-4 space-y-6">
+            {/* Pill Button & Subtitle */}
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-bone border border-hairline rounded-full text-xs font-mono font-bold text-ink shadow-2xs">
+                <Sliders className="w-3.5 h-3.5 text-violet" />
                 <span>INTERACTIVE REVENUE CALCULATOR</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
+              <h3 className="text-2xl sm:text-4xl font-display font-extrabold text-ink tracking-tight">
                 Estimate Your Revenue Lift & Payback Speed
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Sliders Column */}
-              <div className="lg:col-span-6 space-y-6 bg-bone p-6 sm:p-8 rounded-2xl border border-hairline">
-                {/* Monthly Spend */}
+            {/* OPTIMIZED COMPACT REVENUE CALCULATOR GRID */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
+              {/* Left Sliders Column */}
+              <div className="lg:col-span-6 space-y-5 bg-bone p-6 sm:p-7 rounded-3xl border border-hairline flex flex-col justify-center">
+                
+                {/* Monthly Spend Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-mono">
                     <span className="text-mute font-medium">Monthly Ad Spend</span>
-                    <span className="text-violet font-bold px-2.5 py-1 rounded bg-white border border-hairline">
+                    <span className="text-violet font-bold px-2.5 py-1 rounded-md bg-white border border-hairline shadow-2xs">
                       {formatCurrency(monthlySpend)}
                     </span>
                   </div>
@@ -465,13 +468,13 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                     onChange={(e) => setMonthlySpend(Number(e.target.value))}
                     className="w-full accent-violet cursor-pointer h-2 bg-hairline rounded-lg"
                   />
-                  <div className="flex items-center gap-2 pt-1 flex-wrap">
+                  <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
                     {[100000, 250000, 500000, 1000000, 2000000].map((preset) => (
                       <button
                         key={preset}
                         type="button"
                         onClick={() => setMonthlySpend(preset)}
-                        className={`text-xs font-mono px-2.5 py-1 rounded transition-all cursor-pointer ${
+                        className={`text-[11px] font-mono px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                           monthlySpend === preset
                             ? 'bg-violet text-white font-bold shadow-xs'
                             : 'bg-white text-mute hover:text-ink border border-hairline'
@@ -483,11 +486,11 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   </div>
                 </div>
 
-                {/* Current ROAS */}
+                {/* Current ROAS Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-mono">
                     <span className="text-mute font-medium">Current Blended ROAS</span>
-                    <span className="text-violet font-bold px-2.5 py-1 rounded bg-white border border-hairline">
+                    <span className="text-violet font-bold px-2.5 py-1 rounded-md bg-white border border-hairline shadow-2xs">
                       {currentROAS.toFixed(1)}x
                     </span>
                   </div>
@@ -502,11 +505,11 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   />
                 </div>
 
-                {/* Target Lift */}
+                {/* Target Lift Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-mono">
                     <span className="text-mute font-medium">Target ROAS Lift</span>
-                    <span className="text-violet font-bold px-2.5 py-1 rounded bg-white border border-hairline">
+                    <span className="text-violet font-bold px-2.5 py-1 rounded-md bg-white border border-hairline shadow-2xs">
                       +{targetLift}%
                     </span>
                   </div>
@@ -522,40 +525,40 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 </div>
               </div>
 
-              {/* Output HUD Card */}
-              <div className="lg:col-span-6">
+              {/* Right Output Card Column */}
+              <div className="lg:col-span-6 flex flex-col">
                 <div
-                  className="rounded-2xl p-6 sm:p-8 space-y-6 text-white shadow-xl relative overflow-hidden"
+                  className="rounded-3xl p-6 sm:p-8 space-y-6 text-white shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)',
-                    boxShadow: '0 20px 40px -15px rgba(124, 58, 237, 0.35), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5)'
+                    boxShadow: '0 20px 40px -15px rgba(124, 58, 237, 0.4), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4)'
                   }}
                 >
-                  <div className="grid grid-cols-2 gap-4 font-mono">
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-medium uppercase tracking-wider">Projected ROAS</div>
-                      <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1 flex items-baseline gap-1">
+                  <div className="grid grid-cols-2 gap-3.5 font-mono">
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">PROJECTED ROAS</div>
+                      <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1 flex items-baseline gap-1.5">
                         {projectedROAS}x
                         <span className="text-xs font-mono text-emerald-300 font-bold">+{targetLift}%</span>
                       </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-medium uppercase tracking-wider">Extra / Month</div>
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">EXTRA / MONTH</div>
                       <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1 truncate">
                         {formatCurrency(extraMonthlyRevenue)}
                       </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-medium uppercase tracking-wider">12-Mo Gain</div>
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">12-MO GAIN</div>
                       <div className="text-2xl sm:text-3xl font-display font-extrabold text-emerald-300 mt-1 truncate">
                         {formatCurrency(annualGain)}
                       </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-medium uppercase tracking-wider">Payback Speed</div>
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">PAYBACK</div>
                       <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1">
                         {paybackDays} <span className="text-xs font-normal text-purple-100">Days</span>
                       </div>
@@ -564,7 +567,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
                   <button
                     onClick={() => onOpenAudit('acquire-performance')}
-                    className="w-full py-3.5 px-6 rounded-xl bg-white text-violet font-display font-bold text-xs sm:text-sm hover:bg-white/95 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group"
+                    className="w-full py-3.5 px-6 rounded-2xl bg-white text-violet font-display font-bold text-xs hover:bg-white/95 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group mt-auto"
                   >
                     <span>CLAIM THIS ROAS GROWTH</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
