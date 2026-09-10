@@ -12,7 +12,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-16 relative z-10">
         {/* Display Headline Statement */}
         <div className="border-b border-hairline pb-12">
-          <h2 className="text-footer-display font-display text-ink max-w-none whitespace-nowrap">
+          <h2 className="text-[6.2vw] sm:text-footer-display font-display text-ink max-w-none whitespace-normal sm:whitespace-nowrap">
             Unlock gateways to growth
           </h2>
         </div>
