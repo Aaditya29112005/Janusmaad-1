@@ -8,12 +8,7 @@ import {
   Mail,
   Clock,
   Layers,
-  ChevronRight,
-  BarChart3,
-  Target,
-  Sparkles,
-  ShoppingBag,
-  Search
+  ChevronRight
 } from 'lucide-react';
 
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
@@ -549,7 +544,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         {/* Dual-Pane Interactive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
-          {/* Left Navigation Tabs (Compact list with hover scale & active indicator) */}
+          {/* Left Navigation Tabs (Compact list with real brand symbols & active indicator) */}
           <div className="lg:col-span-5 space-y-2.5">
             {[
               {
@@ -559,7 +554,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 desc: 'GA4, GTM & Meta CAPI server-to-server setups for 99.1% attribution accuracy.',
                 benchmark: '99.1% Verified Signal Accuracy',
                 highlights: ['Server-Side Meta CAPI', 'GA4 Custom E-commerce Events', 'Attribution Loss Shield'],
-                icon: BarChart3
+                icon: (
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="6" fill="#E37400"/>
+                    <path d="M7 17V13M12 17V7M17 17V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                )
               },
               {
                 num: '02',
@@ -568,7 +568,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 desc: 'High-converting video hook creative testing and audience segmentation.',
                 benchmark: '3.82x Average Campaign ROAS',
                 highlights: ['UGC Video Hook Testing', 'Dynamic Advantage+ Scaling', 'Lookalike Audience Funnels'],
-                icon: Target
+                icon: (
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="6" fill="#1877F2"/>
+                    <path d="M6 12C6 9.5 7.5 8 9.5 8C11.5 8 13 12 14 12C15 12 16.5 8 18.5 8C20.5 8 22 9.5 22 12C22 14.5 20.5 16 18.5 16C16.5 16 15 12 14 12C13 12 11.5 16 9.5 16C7.5 16 6 14.5 6 12Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )
               },
               {
                 num: '03',
@@ -577,7 +582,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 desc: 'Continuous production of high-hook short-form videos, carousels & landing pages.',
                 benchmark: '-38% Lower Cost Per Acquisition',
                 highlights: ['High-Hook Rate Iterations', 'Short-Form Video Reels', 'Conversion Landing Pages'],
-                icon: Sparkles
+                icon: (
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="6" fill="#7C3AED"/>
+                    <path d="M9.5 8.5L16.5 12.5L9.5 16.5V8.5Z" fill="white"/>
+                  </svg>
+                )
               },
               {
                 num: '04',
@@ -586,7 +596,13 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management.',
                 benchmark: '4.2x Marketplace ROAS',
                 highlights: ['Top Search Rank Bidding', 'A+ Catalog Optimization', 'Sponsored Brand Video Ads'],
-                icon: ShoppingBag
+                icon: (
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="6" fill="#FF9900"/>
+                    <path d="M7 15C10 17.5 14 17.5 17 15" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                    <path d="M15 14.5L17 15L16.2 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )
               },
               {
                 num: '05',
@@ -595,7 +611,14 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 desc: 'High-intent Search, Shopping, YouTube, and PMax campaigns.',
                 benchmark: '5.1x Peak Search ROAS',
                 highlights: ['PMax Asset Group Optimization', 'Negative Keyword Shields', 'Smart Bidding Rules'],
-                icon: Search
+                icon: (
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                    <path d="M21.805 10.023H12.18v3.954h5.546c-.24 1.28-.97 2.365-2.065 3.09v2.568h3.342c1.955-1.84 3.082-4.554 3.082-7.773 0-.61-.055-1.198-.28-1.839z" fill="#4285F4"/>
+                    <path d="M12.18 22c2.784 0 5.117-.924 6.823-2.365l-3.342-2.568c-.924.62-2.107.987-3.481.987-2.675 0-4.941-1.805-5.75-4.232H3v2.647A10.002 10.002 0 0 0 12.18 22z" fill="#34A853"/>
+                    <path d="M6.43 13.822A6.04 6.04 0 0 1 6.117 12c0-.632.109-1.247.313-1.822V7.53H3a10.002 10.002 0 0 0 0 8.94l3.43-2.648z" fill="#FBBC05"/>
+                    <path d="M12.18 5.946c1.506 0 2.858.518 3.922 1.535l2.943-2.943C17.293 2.892 14.96 2 12.18 2A10.002 10.002 0 0 0 3 7.53l3.43 2.648c.809-2.427 3.075-4.232 5.75-4.232z" fill="#EA4335"/>
+                  </svg>
+                )
               },
             ].map((sol, index) => {
               const isActive = activeSolution === index;
@@ -619,6 +642,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                     >
                       {sol.num}
                     </div>
+                    {sol.icon}
                     <div>
                       <div className="text-[10px] font-mono font-bold text-violet uppercase tracking-wider">
                         {sol.tag}
@@ -651,6 +675,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   desc: 'GA4, GTM, and Meta CAPI server-to-server setups engineered for 99.1% attribution accuracy across web and mobile funnels without data loss.',
                   benchmark: '99.1% Verified Signal Accuracy',
                   highlights: ['Server-Side Meta CAPI', 'GA4 E-commerce Telemetry', 'Attribution Loss Shield'],
+                  icon: (
+                    <svg className="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <rect width="24" height="24" rx="6" fill="#E37400"/>
+                      <path d="M7 17V13M12 17V7M17 17V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  )
                 },
                 {
                   num: '02',
@@ -659,6 +689,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   desc: 'High-converting video hook creative testing, dynamic audience segmentation, and direct-response campaign scaling across Reels and Feeds.',
                   benchmark: '3.82x Average Campaign ROAS',
                   highlights: ['UGC Video Hook Testing', 'Dynamic Advantage+ Scaling', 'Lookalike Audience Funnels'],
+                  icon: (
+                    <svg className="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <rect width="24" height="24" rx="6" fill="#1877F2"/>
+                      <path d="M6 12C6 9.5 7.5 8 9.5 8C11.5 8 13 12 14 12C15 12 16.5 8 18.5 8C20.5 8 22 9.5 22 12C22 14.5 20.5 16 18.5 16C16.5 16 15 12 14 12C13 12 11.5 16 9.5 16C7.5 16 6 14.5 6 12Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )
                 },
                 {
                   num: '03',
@@ -667,6 +703,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   desc: 'Continuous production and testing of high-hook short-form videos, carousels, and high-converting landing pages to lower cost per lead.',
                   benchmark: '-38% Lower Cost Per Acquisition',
                   highlights: ['High-Hook Rate Iterations', 'Short-Form Video Reels', 'Conversion Landing Pages'],
+                  icon: (
+                    <svg className="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <rect width="24" height="24" rx="6" fill="#7C3AED"/>
+                      <path d="M9.5 8.5L16.5 12.5L9.5 16.5V8.5Z" fill="white"/>
+                    </svg>
+                  )
                 },
                 {
                   num: '04',
@@ -675,6 +717,13 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management designed to dominate top category search rankings and boost organic rank.',
                   benchmark: '4.2x Marketplace ROAS',
                   highlights: ['Top Search Rank Bidding', 'A+ Catalog Optimization', 'Sponsored Brand Video Ads'],
+                  icon: (
+                    <svg className="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <rect width="24" height="24" rx="6" fill="#FF9900"/>
+                      <path d="M7 15C10 17.5 14 17.5 17 15" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M15 14.5L17 15L16.2 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )
                 },
                 {
                   num: '05',
@@ -683,6 +732,14 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   desc: 'High-intent Search, Shopping, YouTube, and PMax campaigns engineered specifically for maximum contribution margin and profit efficiency.',
                   benchmark: '5.1x Peak Search ROAS',
                   highlights: ['PMax Asset Group Tuning', 'Negative Keyword Shields', 'Smart Bidding Automation'],
+                  icon: (
+                    <svg className="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <path d="M21.805 10.023H12.18v3.954h5.546c-.24 1.28-.97 2.365-2.065 3.09v2.568h3.342c1.955-1.84 3.082-4.554 3.082-7.773 0-.61-.055-1.198-.28-1.839z" fill="#4285F4"/>
+                      <path d="M12.18 22c2.784 0 5.117-.924 6.823-2.365l-3.342-2.568c-.924.62-2.107.987-3.481.987-2.675 0-4.941-1.805-5.75-4.232H3v2.647A10.002 10.002 0 0 0 12.18 22z" fill="#34A853"/>
+                      <path d="M6.43 13.822A6.04 6.04 0 0 1 6.117 12c0-.632.109-1.247.313-1.822V7.53H3a10.002 10.002 0 0 0 0 8.94l3.43-2.648z" fill="#FBBC05"/>
+                      <path d="M12.18 5.946c1.506 0 2.858.518 3.922 1.535l2.943-2.943C17.293 2.892 14.96 2 12.18 2A10.002 10.002 0 0 0 3 7.53l3.43 2.648c.809-2.427 3.075-4.232 5.75-4.232z" fill="#EA4335"/>
+                    </svg>
+                  )
                 },
               ];
               const current = solList[activeSolution];
@@ -693,9 +750,12 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 >
                   {/* Top Bar */}
                   <div className="flex items-center justify-between">
-                    <span className="text-4xl font-display font-extrabold text-violet">
-                      {current.num}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-4xl font-display font-extrabold text-violet">
+                        {current.num}
+                      </span>
+                      {current.icon}
+                    </div>
                     <span className="px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
                       {current.tag}
                     </span>
