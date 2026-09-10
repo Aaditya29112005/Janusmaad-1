@@ -47,8 +47,8 @@ export const TrustedBy: React.FC = () => {
   return (
     <section ref={sectionRef} className="bg-bone py-16 sm:py-20 border-b border-hairline relative overflow-hidden select-none">
       {/* Title Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10">
-        <h1 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10 text-center">
+        <h1 className="font-display text-4xl sm:text-6xl font-bold text-ink tracking-tight">
           Our Clients
         </h1>
       </div>
