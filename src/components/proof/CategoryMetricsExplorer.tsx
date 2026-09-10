@@ -1,8 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ALL_38_CLIENTS, CATEGORY_PITCHES } from '../../content/clientDatabase';
-import { ArrowUpRight, ChevronLeft, ChevronRight, Award } from 'lucide-react';
-import { gsap } from '../../gsap/register';
-import { prefersReducedMotion } from '../../gsap/utils';
+import { ArrowUpRight, Award } from 'lucide-react';
 
 const WORK_IMAGES: Record<string, string> = {
   'the-credit-lane': '/work/thecreditlane.jpg',
@@ -59,47 +57,25 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
   showOnlyClientRecords = false,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const railRef = useRef<HTMLDivElement | null>(null);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewellery');
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
   const activePitch = React.useMemo(() => {
     return CATEGORY_PITCHES.find(p => p.category === selectedCategory) || CATEGORY_PITCHES[0];
   }, [selectedCategory]);
 
-  useEffect(() => {
-    const rail = railRef.current;
-    const container = containerRef.current;
-    if (!rail || !container || prefersReducedMotion()) return;
-
-    const ctx = gsap.context(() => {
-      // Half width translation for 100% continuous infinite loop
-      const totalWidth = rail.scrollWidth / 2;
-
-      const loopTween = gsap.to(rail, {
-        x: -totalWidth,
-        duration: 75,
-        ease: 'none',
-        repeat: -1,
-      });
-      loopTween.timeScale(0.45);
-    }, container);
-
-    return () => ctx.revert();
+  const orderedClients = React.useMemo(() => {
+    const topIds = ['rudrasetu', 'kicky-and-perky', 'the-credit-lane'];
+    const topClients: typeof ALL_38_CLIENTS = [];
+    topIds.forEach((id) => {
+      const found = ALL_38_CLIENTS.find((c) => c.id === id);
+      if (found) topClients.push(found);
+    });
+    const remaining = ALL_38_CLIENTS.filter((c) => !topIds.includes(c.id));
+    return [...topClients, ...remaining];
   }, []);
 
-  const handleScroll = (direction: 'left' | 'right') => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const shiftAmount = direction === 'left' ? 380 : -380;
-    gsap.to(rail, {
-      x: `+=${shiftAmount}`,
-      duration: 0.55,
-      ease: 'power2.out',
-    });
-  };
-
-  // Double client records array to ensure 100% seamless infinite loop
-  const displayClients = [...ALL_38_CLIENTS, ...ALL_38_CLIENTS];
+  const visibleClients = isExpanded ? orderedClients : orderedClients.slice(0, 3);
 
   return (
     <section ref={containerRef} id="metrics-database" className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative select-none overflow-hidden">
@@ -193,92 +169,78 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
           </>
         )}
 
-        {/* GSAP Infinite Marquee Cards Container */}
-        <div className="relative w-full overflow-hidden">
-          {/* Left Arrow Scroll Button */}
-          <button
-            onClick={() => handleScroll('left')}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/95 border border-hairline shadow-lg text-ink hover:bg-violet hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center opacity-90 hover:opacity-100"
-            aria-label="Scroll work left"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+        {/* Static 3-in-1-row Client Cards Grid & See More Button */}
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            {visibleClients.map((client) => {
+              const bannerImg = WORK_IMAGES[client.id] || '/work/thecreditlane.jpg';
+              const metricsToShow = client.allMetrics.slice(0, 4);
 
-          {/* Right Arrow Scroll Button */}
-          <button
-            onClick={() => handleScroll('right')}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/95 border border-hairline shadow-lg text-ink hover:bg-violet hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center opacity-90 hover:opacity-100"
-            aria-label="Scroll work right"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
-          {/* Continuous Infinite Marquee Rail */}
-          <div className="overflow-hidden w-full py-4">
-            <div
-              ref={railRef}
-              className="rail flex items-stretch gap-6 whitespace-nowrap will-change-transform px-4"
-            >
-              {displayClients.map((client, idx) => {
-                const bannerImg = WORK_IMAGES[client.id] || '/work/thecreditlane.jpg';
-                const metricsToShow = client.allMetrics.slice(0, 4);
-
-                return (
-                  <div
-                    key={`${client.id}-${idx}`}
-                    className="w-[300px] sm:w-[360px] shrink-0 bg-white border border-hairline rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-2xl hover:border-violet/40 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1"
-                  >
-                    {/* Real Storefront Screenshot Banner */}
-                    <div className="relative w-full h-52 sm:h-56 bg-bone rounded-xl overflow-hidden border border-hairline group-hover:scale-[1.01] transition-transform duration-300">
-                      <img
-                        src={bannerImg}
-                        alt={`${client.name} Storefront Banner`}
-                        className="w-full h-full object-cover object-top"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          if (!target.dataset.fallback) {
-                            target.dataset.fallback = 'true';
-                            target.src = '/work/thecreditlane.jpg';
-                          }
-                        }}
-                      />
-                    </div>
-
-                    {/* Top: Brand Name, Website Domain Link, & Service/Category */}
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <h4 className="font-display font-bold text-xl text-ink group-hover:text-violet transition-colors truncate">
-                          {client.name}
-                        </h4>
-                        <a
-                          href={client.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs font-mono font-bold text-violet hover:underline flex items-center gap-1 shrink-0"
-                        >
-                          {client.domain} <ArrowUpRight className="w-3.5 h-3.5" />
-                        </a>
-                      </div>
-                      <div className="text-xs font-mono font-medium text-mute">{client.category}</div>
-                    </div>
-
-                    {/* Center: Top 2 to 4 Success Metrics (Big Numbers & Clear Labels) */}
-                    <div className="grid grid-cols-2 gap-2.5 pt-1 flex-1">
-                      {metricsToShow.map((m, mIdx) => (
-                        <div key={mIdx} className="p-3 bg-bone rounded-xl border border-hairline/60 space-y-1 flex flex-col justify-center">
-                          <div className="text-[10px] font-mono font-bold text-ink uppercase tracking-wider truncate">
-                            {m.label}
-                          </div>
-                          <div className="text-xl sm:text-2xl font-display font-extrabold text-violet tabular-nums">
-                            {m.value}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+              return (
+                <div
+                  key={client.id}
+                  className="w-full bg-white border border-hairline rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-2xl hover:border-violet/40 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1"
+                >
+                  {/* Real Storefront Screenshot Banner */}
+                  <div className="relative w-full h-52 sm:h-56 bg-bone rounded-xl overflow-hidden border border-hairline group-hover:scale-[1.01] transition-transform duration-300">
+                    <img
+                      src={bannerImg}
+                      alt={`${client.name} Storefront Banner`}
+                      className="w-full h-full object-cover object-top"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.dataset.fallback) {
+                          target.dataset.fallback = 'true';
+                          target.src = '/work/thecreditlane.jpg';
+                        }
+                      }}
+                    />
                   </div>
-                );
-              })}
-            </div>
+
+                  {/* Top: Brand Name, Website Domain Link, & Service/Category */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="font-display font-bold text-xl text-ink group-hover:text-violet transition-colors truncate">
+                        {client.name}
+                      </h4>
+                      <a
+                        href={client.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-mono font-bold text-violet hover:underline flex items-center gap-1 shrink-0"
+                      >
+                        {client.domain} <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                    <div className="text-xs font-mono font-medium text-mute">{client.category}</div>
+                  </div>
+
+                  {/* Center: Top 2 to 4 Success Metrics */}
+                  <div className="grid grid-cols-2 gap-2.5 pt-1 flex-1">
+                    {metricsToShow.map((m, mIdx) => (
+                      <div key={mIdx} className="p-3 bg-bone rounded-xl border border-hairline/60 space-y-1 flex flex-col justify-center">
+                        <div className="text-[10px] font-mono font-bold text-ink uppercase tracking-wider truncate">
+                          {m.label}
+                        </div>
+                        <div className="text-xl sm:text-2xl font-display font-extrabold text-violet tabular-nums">
+                          {m.value}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bottom Center Aligned See More / See Less Button */}
+          <div className="flex justify-center pt-4">
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="px-8 py-3.5 bg-ink text-white hover:bg-violet transition-colors rounded-full font-display text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-md"
+            >
+              {isExpanded ? 'See Less' : 'See More'}
+            </button>
           </div>
         </div>
 

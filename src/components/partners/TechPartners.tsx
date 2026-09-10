@@ -32,9 +32,6 @@ export const TechPartners: React.FC = () => {
     <section id="partners" className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative">
       <div ref={containerRef} className="max-w-7xl mx-auto space-y-12 relative z-10">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-data-label text-violet text-xs uppercase tracking-widest font-bold">
-            Certified MarTech Architecture
-          </span>
           <h2 className="font-display text-4xl sm:text-6xl text-ink tracking-tight">
             Technology Partners
           </h2>
@@ -45,13 +42,13 @@ export const TechPartners: React.FC = () => {
           {TECH_PARTNERS.map((partner) => (
             <div
               key={partner.id}
-              className="tech-card opacity-0 translate-y-6 scale-95 bg-white border border-hairline rounded-2xl p-6 h-28 sm:h-32 flex items-center justify-center shadow-sm hover:shadow-xl hover:border-violet/40 hover:-translate-y-1.5 transition-all duration-300 group cursor-pointer"
+              className="tech-card opacity-0 translate-y-6 scale-95 bg-white border border-hairline rounded-2xl p-4 h-28 sm:h-32 flex items-center justify-center shadow-sm hover:shadow-xl hover:border-violet/40 hover:-translate-y-1.5 transition-all duration-300 group cursor-pointer"
             >
               <div className="w-full h-full flex items-center justify-center">
                 <img
                   src={partner.logoSrc}
                   alt={partner.name}
-                  className="max-h-12 max-w-[130px] w-auto h-auto object-contain group-hover:scale-110 transition-transform duration-300"
+                  className="max-h-[80%] max-w-[80%] w-auto h-auto object-contain group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             </div>

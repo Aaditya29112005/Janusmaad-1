@@ -91,12 +91,8 @@ export const ScrollRailMarquee: React.FC = () => {
 
       {/* Header Tag */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center relative z-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal/10 border border-teal/20 text-teal text-xs font-mono font-bold tracking-widest uppercase mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse" />
-          OUR SPECIALIZATION FIELDS
-        </div>
         <h3 className="font-display text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Tailored Growth Engines for High-Stakes Verticals
+          Growth Expertise, Built Around Your Industry
         </h3>
       </div>
 
