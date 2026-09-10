@@ -8,7 +8,10 @@ import {
   Send,
   Phone,
   Mail,
-  Clock
+  Clock,
+  Zap,
+  Layers,
+  ChevronRight
 } from 'lucide-react';
 
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
@@ -28,7 +31,18 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
   const [currentROAS, setCurrentROAS] = useState(2.2); // 2.2x
   const [targetLift, setTargetLift] = useState(35); // 35% lift
 
-  // Form State
+  // Hero Form State
+  const [heroForm, setHeroForm] = useState({
+    name: '',
+    email: '',
+    countryCode: '+91',
+    phone: '',
+    message: '',
+    optIn: true
+  });
+  const [heroSubmitted, setHeroSubmitted] = useState(false);
+
+  // Bottom Form State
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -53,17 +67,17 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
     return `₹${Math.round(val).toLocaleString('en-IN')}`;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
+  const handleHeroSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!heroForm.name || !heroForm.email || !heroForm.phone) return;
+    setHeroSubmitted(true);
+    setTimeout(() => {
+      setHeroSubmitted(false);
+      setHeroForm({ name: '', email: '', countryCode: '+91', phone: '', message: '', optIn: true });
+    }, 4000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleBottomSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
     setFormSubmitted(true);
@@ -73,112 +87,308 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
     }, 4000);
   };
 
-  const jsonLdData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Performance Marketing Agency Sydney & Delhi NCR",
-    "provider": {
-      "@type": "Organization",
-      "name": "Janusmaad Digital",
-      "url": "https://janusmaad.com"
-    },
-    "serviceType": "Performance Marketing Agency",
-    "areaServed": ["Australia", "India"],
-    "description": "Meta & Google campaigns managed to ROAS, not reach. Management baseline from ₹1,50,000 INR per month.",
-    "offers": {
-      "@type": "Offer",
-      "price": "150000",
-      "priceCurrency": "INR"
-    }
-  };
-
   return (
     <div className="space-y-16 sm:space-y-24 pb-12 overflow-hidden select-none">
-      {/* Inject JSON-LD Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
-
+      
       {/* Navigation Back Link */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4">
         <button
           onClick={() => onNavigateCapability('receipts')}
-          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-teal transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-violet transition-colors cursor-pointer"
         >
           <span>← Back to All Services</span>
         </button>
       </div>
 
-      {/* 1. TOP HEADING (OUT OF BOX) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full border border-violet/20 uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5 text-violet" />
-          <span>PERFORMANCE MARKETING • HIGH ROAS ENGINE</span>
-        </div>
-
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink leading-tight tracking-tight">
-          Performance Marketing Strategy Built for <span className="text-violet underline decoration-teal/50">Real Conversions</span>
-        </h1>
-
-        <p className="text-base sm:text-lg text-mute font-medium leading-relaxed font-body max-w-3xl">
-          At JanusMAAD, we combine AI-powered optimisation with human expertise to continuously improve your campaigns across Meta, Google, LinkedIn, YouTube, and Amazon.
-        </p>
-      </section>
-
-      {/* 2. MAIN DARK BOX (REST OF INFORMATION + CALCULATOR) */}
+      {/* 1. HERO SECTION (TECKEY-INSPIRED SPLIT LAYOUT: LEFT CONTENT + RIGHT FLOATING AUDIT FORM) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-[28px] p-6 sm:p-10 border border-white/15 shadow-2xl relative overflow-hidden space-y-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#5DAFFF]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="bg-ink text-white rounded-[32px] p-8 sm:p-12 border border-white/15 shadow-2xl relative overflow-hidden">
+          {/* Subtle Ambient Glowing Orbs */}
+          <div className="absolute top-[-100px] left-[10%] w-[350px] h-[350px] bg-violet/20 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-[-80px] right-[15%] w-[300px] h-[300px] bg-teal/15 rounded-full blur-[90px] pointer-events-none" />
 
-          {/* Top Half: Impactful Feature Grid */}
-          <div className="space-y-4 relative z-10">
-            <h3 className="text-lg sm:text-xl font-display font-bold text-white/90">
-              Core Pillars of Our High-ROAS Engine
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                { title: 'AI-Powered Optimisation', desc: 'Real-time telemetry to spot micro-conversions, audience shifts, and scaling opportunities.' },
-                { title: 'Multi-Channel Scale', desc: 'Unified media buying across Meta, Google PMax, YouTube, and Amazon Ads.' },
-                { title: 'Continuous Testing', desc: 'Rigorous multivariate testing across creatives, hooks, headlines, and landing pages.' },
-                { title: 'Smarter Budget Allocation', desc: 'Budget shifted dynamically to campaigns driving incremental bottom-line revenue.' },
-                { title: 'Server-Side CAPI Data', desc: 'First-party tracking & Meta CAPI setups for 99.1% clean attribution accuracy.' },
-                { title: 'Transparent Flat Retainers', desc: 'No arbitrary percentage penalties as you scale your monthly ad spend.' },
-              ].map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-teal/40 transition-all duration-300 backdrop-blur-sm space-y-1.5">
-                  <div className="flex items-center gap-2 text-teal font-display font-bold text-sm">
-                    <CheckCircle2 className="w-4 h-4 shrink-0 text-teal" />
-                    <span>{item.title}</span>
-                  </div>
-                  <p className="text-xs text-sky-100/80 leading-relaxed font-medium">
-                    {item.desc}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
+            <div className="lg:col-span-7 space-y-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-violet/20 border border-violet/40 rounded-full text-xs font-mono font-bold text-teal tracking-wider uppercase">
+                <span className="w-2 h-2 rounded-full bg-teal animate-ping" />
+                <span>BUILT ON DATA • OPTIMIZED FOR CONVERSIONS</span>
+              </div>
+
+              <div className="space-y-4">
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white leading-[1.1] tracking-tight uppercase">
+                  BUILT ON DATA.<br />
+                  <span className="bg-gradient-to-r from-teal via-emerald-300 to-sky-300 bg-clip-text text-transparent">
+                    OPTIMIZED FOR CONVERSIONS.
+                  </span>
+                </h1>
+
+                <p className="text-base sm:text-lg text-sky-100/80 font-medium leading-relaxed max-w-xl">
+                  We don’t guess. We test, track, and scale campaigns using real-time data, conversion signals, and smart automation across Meta, Google, Amazon, and YouTube.
+                </p>
+              </div>
+
+              {/* TRUSTED TECHNOLOGIES */}
+              <div className="space-y-3 pt-2">
+                <span className="text-[11px] font-mono font-bold tracking-widest text-white/50 uppercase block">
+                  TRUSTED TECHNOLOGIES & PLATFORMS
+                </span>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {[
+                    { name: 'Meta Ads', bg: 'bg-[#1877F2]/20 border-[#1877F2]/40 text-blue-200' },
+                    { name: 'Google Ads & PMax', bg: 'bg-[#4285F4]/20 border-[#4285F4]/40 text-sky-200' },
+                    { name: 'Amazon Ads', bg: 'bg-[#FF9900]/20 border-[#FF9900]/40 text-amber-200' },
+                    { name: 'Flipkart Ads', bg: 'bg-[#2874F0]/20 border-[#2874F0]/40 text-blue-300' },
+                    { name: 'Shopify Plus', bg: 'bg-[#96BF48]/20 border-[#96BF48]/40 text-lime-200' },
+                    { name: 'GA4 & Meta CAPI', bg: 'bg-teal/20 border-teal/40 text-teal' },
+                  ].map((tech, i) => (
+                    <div
+                      key={i}
+                      className={`px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold flex items-center gap-2 transition-transform hover:-translate-y-0.5 ${tech.bg}`}
+                    >
+                      <Sparkles className="w-3 h-3 shrink-0" />
+                      <span>{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: FLOATING FORM CARD */}
+            <div className="lg:col-span-5">
+              <div className="bg-white text-ink rounded-3xl p-6 sm:p-8 shadow-2xl border border-hairline relative">
+                <div className="text-center space-y-1 mb-6">
+                  <h3 className="font-display text-xl sm:text-2xl font-extrabold text-ink">
+                    Get Your <span className="text-violet">Free Consultation</span>
+                  </h3>
+                  <p className="text-xs text-mute font-medium">
+                    60-minute ad account teardown & custom growth roadmap
                   </p>
                 </div>
-              ))}
+
+                {heroSubmitted ? (
+                  <div className="py-8 text-center space-y-4">
+                    <div className="w-14 h-14 bg-teal/15 text-teal rounded-full flex items-center justify-center mx-auto">
+                      <ShieldCheck className="w-8 h-8 text-teal" />
+                    </div>
+                    <h4 className="font-display text-lg font-bold text-ink">Request Received!</h4>
+                    <p className="text-xs text-mute">
+                      A senior performance strategist will contact you within 2 hours.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleHeroSubmit} className="space-y-3.5">
+                    <div>
+                      <input
+                        type="text"
+                        required
+                        value={heroForm.name}
+                        onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
+                        placeholder="Your Full Name *"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-full text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="email"
+                        required
+                        value={heroForm.email}
+                        onChange={(e) => setHeroForm({ ...heroForm, email: e.target.value })}
+                        placeholder="Work Email Address *"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-full text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+
+                    <div className="flex gap-2">
+                      <select
+                        value={heroForm.countryCode}
+                        onChange={(e) => setHeroForm({ ...heroForm, countryCode: e.target.value })}
+                        className="w-28 px-3 py-3 bg-bone border border-hairline rounded-full text-xs text-ink focus:outline-none focus:border-violet font-mono"
+                      >
+                        <option value="+91">India +91</option>
+                        <option value="+1">USA +1</option>
+                        <option value="+44">UK +44</option>
+                        <option value="+61">Aus +61</option>
+                      </select>
+                      <input
+                        type="tel"
+                        required
+                        value={heroForm.phone}
+                        onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
+                        placeholder="Phone Number *"
+                        className="flex-1 px-4 py-3 bg-bone border border-hairline rounded-full text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <textarea
+                        rows={3}
+                        value={heroForm.message}
+                        onChange={(e) => setHeroForm({ ...heroForm, message: e.target.value })}
+                        placeholder="Tell us about your monthly ad spend & goals..."
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-2xl text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors resize-none"
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-2 pt-1">
+                      <input
+                        type="checkbox"
+                        id="heroOptIn"
+                        checked={heroForm.optIn}
+                        onChange={(e) => setHeroForm({ ...heroForm, optIn: e.target.checked })}
+                        className="mt-0.5 h-3.5 w-3.5 accent-violet cursor-pointer"
+                      />
+                      <label htmlFor="heroOptIn" className="text-[10px] text-mute leading-tight cursor-pointer">
+                        I agree to receive growth insights and audit updates.
+                      </label>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-violet via-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-opacity shadow-md cursor-pointer flex items-center justify-center gap-2 group"
+                    >
+                      <span>Contact Us</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. WHERE STRATEGY MEETS EXECUTION SECTION (TECKEY-STYLE SPLIT WITH LEAN OVERVIEW) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-white border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-sm">
+          <div className="max-w-3xl space-y-3">
+            <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
+              WHERE STRATEGY MEETS EXECUTION
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink leading-tight">
+              Marketing Should Always Pay for Itself
+            </h2>
+            <p className="text-mute text-base sm:text-lg leading-relaxed">
+              At JanusMAAD, we focus exclusively on performance-driven campaigns, transparent tracking, and scalable media buying frameworks that help businesses scale without wasting budget.
+            </p>
+          </div>
+
+          {/* 4 Core Pillars Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+            {[
+              { title: 'Data-First Telemetry', desc: 'GA4 & Meta CAPI server-side tracking to capture 99.1% clean conversion signals.' },
+              { title: 'Continuous Testing', desc: 'Multivariate ad copy, video hook, and creative iteration to slash CPL.' },
+              { title: 'Multi-Channel Buying', desc: 'Unified media buying across Search, Shopping, Meta Reels, and Amazon.' },
+              { title: 'Flat Retainer Scaling', desc: 'No arbitrary ad spend percentage penalties as your monthly revenue scales.' },
+            ].map((pillar, idx) => (
+              <div key={idx} className="p-5 rounded-2xl bg-bone border border-hairline hover:border-violet/40 transition-all duration-300 space-y-2">
+                <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-violet" />
+                  <span>{pillar.title}</span>
+                </div>
+                <p className="text-xs text-mute leading-relaxed font-medium">
+                  {pillar.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. PERFORMANCE MAX ENGINE & DELIVERABLES (SPLIT GRID) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Left Column */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full border border-violet/20 uppercase tracking-wider">
+              <Zap className="w-3.5 h-3.5 text-violet" />
+              <span>SERVICES PROVIDED</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink leading-tight">
+              A Performance Max Strategy Built for Real Conversions
+            </h2>
+            <p className="text-mute text-base leading-relaxed">
+              We don’t just run ads — we build a complete performance system. Our Performance Max approach is engineered to track, optimize, and scale high-quality leads across Google & Meta inventory.
+            </p>
+          </div>
+
+          {/* Right Card: Deliverables Checklist */}
+          <div className="lg:col-span-6">
+            <div className="bg-ink text-white rounded-3xl p-8 space-y-4 shadow-xl border border-white/15">
+              <h3 className="text-lg font-display font-bold text-teal flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-teal" />
+                <span>What We Deliver for Performance Campaigns</span>
+              </h3>
+              <ul className="space-y-3.5 text-sm text-sky-100/90 font-medium">
+                {[
+                  'Performance Max campaign setup & continuous AI optimization',
+                  'Lead quality analysis & multi-stage funnel optimization',
+                  'Creative testing across Search, Display, YouTube & Discovery',
+                  'Continuous performance monitoring, budget reallocation & scale'
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal mt-2 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. REAL STORIES. REAL RESULTS. (METRICS + CALCULATOR + PLATFORMS) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-gradient-to-br from-[#07101E] via-[#0E1E38] to-[#122B4F] text-white rounded-[32px] p-8 sm:p-12 border border-white/15 shadow-2xl space-y-12 relative overflow-hidden">
+          
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
+              REAL STORIES • REAL RESULTS
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white">
+              Verified Performance Metrics
+            </h2>
+            <p className="text-sky-100/80 text-sm sm:text-base">
+              Aggregated performance across multiple campaigns, industries, and media platforms.
+            </p>
+          </div>
+
+          {/* Top 3-Column Key Metrics Banner */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center border-y border-white/10 py-8">
+            <div className="space-y-1">
+              <div className="text-4xl sm:text-5xl font-display font-extrabold text-white">4.82x</div>
+              <div className="text-xs font-mono text-teal uppercase font-bold">Blended Client ROAS</div>
+              <p className="text-[11px] text-sky-100/60 max-w-xs mx-auto">Verified return across Meta & Google ad spend.</p>
+            </div>
+            <div className="space-y-1 md:border-x border-white/10">
+              <div className="text-4xl sm:text-5xl font-display font-extrabold text-white">120K+</div>
+              <div className="text-xs font-mono text-teal uppercase font-bold">Verified Clicks</div>
+              <p className="text-[11px] text-sky-100/60 max-w-xs mx-auto">High-intent buyer traffic redirected to storefronts.</p>
+            </div>
+            <div className="space-y-1">
+              <div className="text-4xl sm:text-5xl font-display font-extrabold text-white">4.8M+</div>
+              <div className="text-xs font-mono text-teal uppercase font-bold">Multi-Channel Impressions</div>
+              <p className="text-[11px] text-sky-100/60 max-w-xs mx-auto">Targeted brand reach across Search, YouTube & Feeds.</p>
             </div>
           </div>
 
-          <div className="border-t border-white/10 relative z-10" />
-
-          {/* Bottom Half: Interactive Calculator */}
-          <div className="space-y-6 pt-2 relative z-10">
-            <div className="space-y-2">
+          {/* Content Split: ROAS Calculator HUD Inside Result Card */}
+          <div className="space-y-8">
+            <div className="space-y-2 text-center max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal/15 text-teal text-xs font-mono font-bold rounded-full border border-teal/30">
                 <Sliders className="w-3.5 h-3.5" />
-                <span>ROAS & REVENUE GROWTH CALCULATOR</span>
+                <span>INTERACTIVE REVENUE CALCULATOR</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-white">
-                Estimate Your Revenue Lift & Payback Period
-              </h2>
-              <p className="text-white/70 text-xs sm:text-sm">
-                Adjust your monthly ad spend and target lift to calculate annual projected growth.
-              </p>
+              <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
+                Estimate Your Revenue Lift & Payback Speed
+              </h3>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Sliders Column */}
-              <div className="lg:col-span-6 space-y-6">
+              <div className="lg:col-span-6 space-y-6 bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10">
                 {/* Monthly Spend */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-mono">
@@ -307,104 +517,112 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
-      {/* 3. WHAT WE DO (COMPACT & SHORT) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-1">
-          <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-            WHAT WE DO
+      {/* 5. ALTERNATING SOLUTIONS SHOWCASE (INF-SOLUTIONS TECKEY LAYOUT) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full border border-violet/20 uppercase tracking-wider">
+            <Layers className="w-3.5 h-3.5 text-violet" />
+            <span>SOLUTIONS</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink">
-            Comprehensive Performance Marketing Solutions
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink">
+            Performance Marketing Solutions We Offer
           </h2>
-          <p className="text-mute text-xs sm:text-sm">
-            End-to-end media buying, creative testing, tracking telemetry, and campaign scaling.
+          <p className="text-mute text-sm sm:text-base">
+            End-to-end media buying, creative production, tracking telemetry, and campaign scaling.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Alternating Solution Rows */}
+        <div className="space-y-8">
           {[
             {
               num: '01',
-              title: 'Conversion Tracking & CAPI Telemetry',
-              desc: 'GA4, GTM, and Meta CAPI server-to-server setups for 99.1% attribution accuracy.'
+              title: 'Conversion Tracking & Analytics',
+              desc: 'GA4, GTM, and Meta CAPI server-to-server setups for 99.1% attribution accuracy across web and app funnels.',
+              tag: 'TELEMETRY & ATTRIBUTION',
+              reverse: false
             },
             {
               num: '02',
               title: 'Meta Ads (Facebook & Instagram)',
-              desc: 'High-converting creative testing, audience segmentation, and direct-response scaling.'
+              desc: 'High-converting video hook creative testing, audience segmentation, and direct-response campaign scaling.',
+              tag: 'PAID SOCIAL SCALE',
+              reverse: true
             },
             {
               num: '03',
-              title: 'Google Ads & Performance Max',
-              desc: 'High-intent search, Shopping, and PMax campaigns built for maximum ROAS.'
+              title: 'Creative Testing & Optimization',
+              desc: 'Continuous production and testing of high-hook short-form videos, carousels, and landing pages to reduce CPL.',
+              tag: 'DIRECT RESPONSE CREATIVES',
+              reverse: false
             },
             {
               num: '04',
               title: 'Amazon & Marketplace Ads',
-              desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management to dominate category search.'
+              desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management to dominate category search rankings.',
+              tag: 'MARKETPLACE DOMINANCE',
+              reverse: true
             },
             {
               num: '05',
-              title: 'Creative Testing & UGC Funnels',
-              desc: 'Continuous production of high-hook short-form videos, carousels, and landing pages.'
+              title: 'Google Ads & Performance Max',
+              desc: 'High-intent Search, Shopping, YouTube, and PMax campaigns engineered specifically for maximum contribution margin.',
+              tag: 'HIGH INTENT SEARCH',
+              reverse: false
             },
-            {
-              num: '06',
-              title: 'ROAS Audit & Account Reconstruction',
-              desc: 'Granular 60-minute teardowns to eliminate wasted ad spend and reconstruct tracking.'
-            },
-          ].map((service, i) => (
-            <div key={i} className="card-surface rounded-xl p-4 sm:p-5 space-y-2 group hover:border-violet/40 transition-all duration-300">
-              <div className="text-xs font-mono font-bold text-teal">{service.num}</div>
-              <h3 className="text-base font-display font-bold text-ink group-hover:text-violet transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-xs text-mute leading-relaxed">
-                {service.desc}
-              </p>
+          ].map((sol, index) => (
+            <div
+              key={index}
+              className={`bg-white border border-hairline rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-violet/40 transition-all duration-300 shadow-sm ${
+                sol.reverse ? 'lg:flex-row-reverse' : ''
+              }`}
+            >
+              <div className={`lg:col-span-7 space-y-3 ${sol.reverse ? 'lg:order-2' : 'lg:order-1'}`}>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl sm:text-3xl font-display font-extrabold text-violet">{sol.num}</span>
+                  <span className="text-[10px] font-mono font-bold px-2.5 py-1 bg-violet/10 text-violet rounded-full uppercase">
+                    {sol.tag}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-3xl font-display font-bold text-ink">
+                  {sol.title}
+                </h3>
+                <p className="text-mute text-sm sm:text-base leading-relaxed">
+                  {sol.desc}
+                </p>
+                <div className="pt-2">
+                  <button
+                    onClick={() => onOpenAudit('acquire-performance')}
+                    className="inline-flex items-center gap-2 text-xs font-display font-bold text-violet hover:text-violet-deep transition-colors cursor-pointer group"
+                  >
+                    <span>Explore Solution Roadmap</span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+
+              <div className={`lg:col-span-5 ${sol.reverse ? 'lg:order-1' : 'lg:order-2'}`}>
+                <div className="bg-bone rounded-2xl p-6 border border-hairline space-y-3 relative overflow-hidden">
+                  <div className="flex items-center justify-between text-xs font-mono text-mute">
+                    <span>JANUSMAAD BENCHMARK</span>
+                    <span className="text-teal font-bold">VERIFIED</span>
+                  </div>
+                  <div className="text-2xl font-display font-bold text-ink">
+                    {sol.title}
+                  </div>
+                  <p className="text-xs text-mute leading-relaxed">
+                    Custom media structure engineered to maximize customer lifetime value (LTV) and lower acquisition cost.
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 4. SUCCESS MATRIX (PERFORMANCE MARKETING SPECIFIC METRICS) */}
+      {/* 6. OUR WORK (CATEGORY METRICS EXPLORER) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-1">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            SUCCESS MATRIX
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink">
-            Verified Performance Marketing Metrics
-          </h2>
-          <p className="text-mute text-xs sm:text-sm">
-            Aggregated performance stats delivered strictly across performance marketing clients.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { label: 'Blended Client ROAS', value: '4.82x', delta: '+140% Lift', desc: 'Average verified return on ad spend across Meta & Google.' },
-            { label: 'Cost Per Lead Reduction', value: '-50% CPL', delta: 'Lead Scale', desc: 'Lower acquisition cost per lead via server CAPI & creative hooks.' },
-            { label: 'Verified Ad Clicks', value: '120K+', delta: '+165% Traffic', desc: 'High-intent buyer traffic redirected to client storefronts.' },
-            { label: 'Qualified Funnel Rate', value: '38.4%', delta: 'High Intent', desc: 'Conversion rate of incoming ad traffic into qualified leads.' },
-          ].map((stat, i) => (
-            <div key={i} className="card-surface rounded-xl p-5 space-y-2.5 relative overflow-hidden group hover:border-violet/40 transition-all duration-300">
-              <div className="flex items-center justify-between text-xs font-mono text-mute">
-                <span>{stat.label}</span>
-                <span className="text-teal font-bold">{stat.delta}</span>
-              </div>
-              <div className="text-3xl font-display font-extrabold text-ink group-hover:text-violet transition-colors">
-                {stat.value}
-              </div>
-              <p className="text-xs text-mute leading-relaxed">{stat.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. OUR WORK (FEATURED PERFORMANCE MARKETING PROJECTS) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-1">
+        <div className="text-center max-w-3xl mx-auto space-y-2">
           <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
             OUR WORK
           </div>
@@ -419,7 +637,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" />
       </section>
 
-      {/* 6. TESTIMONIALS (WHAT OUR CLIENTS ARE HAPPY ABOUT) */}
+      {/* 7. TESTIMONIALS (WHAT OUR CLIENTS ARE HAPPY ABOUT) */}
       <section className="border-t border-hairline pt-12 space-y-6">
         <div className="text-center max-w-3xl mx-auto space-y-1 px-4">
           <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
@@ -432,9 +650,9 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         <TestimonialsMarquee />
       </section>
 
-      {/* 7. CONTACT US / AUDIT FORM */}
+      {/* 8. TALK TO US / AUDIT FORM SECTION */}
       <section id="talk-to-us" className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-[28px] p-8 sm:p-12 space-y-10 shadow-2xl relative overflow-hidden">
+        <div className="bg-ink text-white rounded-[32px] p-8 sm:p-12 space-y-10 shadow-2xl relative overflow-hidden">
           <div className="max-w-3xl space-y-3">
             <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
               GET YOUR FREE AUDIT
@@ -459,7 +677,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleBottomSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-xs font-mono text-white/80 uppercase">Your Name*</label>
@@ -468,7 +686,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                         name="name"
                         required
                         value={formData.name}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="John Doe"
                         className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
                       />
@@ -480,7 +698,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                         name="email"
                         required
                         value={formData.email}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="john@company.com"
                         className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
                       />
@@ -495,7 +713,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                         name="subject"
                         required
                         value={formData.subject}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         placeholder="Performance Marketing Audit"
                         className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
                       />
@@ -507,7 +725,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                         name="phone"
                         required
                         value={formData.phone}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+91 98187 47001"
                         className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors"
                       />
@@ -521,7 +739,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       rows={4}
                       required
                       value={formData.message}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Tell us about your current monthly ad spend, target ROAS, and goals..."
                       className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-teal transition-colors resize-none"
                     />
@@ -533,7 +751,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       id="optIn"
                       name="optIn"
                       checked={formData.optIn}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({ ...formData, optIn: e.target.checked })}
                       className="mt-1 h-4 w-4 rounded border-white/20 bg-white/10 text-teal focus:ring-teal"
                     />
                     <label htmlFor="optIn" className="text-xs text-white/70 leading-relaxed cursor-pointer">
