@@ -245,31 +245,31 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   </div>
                 </div>
 
-                {/* Output Gradient Box */}
+                {/* Output Light Card */}
                 <div className="sm:col-span-6">
-                  <div className="rounded-2xl p-4 text-white shadow-lg h-full flex flex-col justify-between space-y-3" style={{ background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)' }}>
+                  <div className="rounded-2xl p-4 bg-bone border border-hairline shadow-sm h-full flex flex-col justify-between space-y-3">
                     <div className="grid grid-cols-2 gap-2 font-mono">
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase">PROJECTED ROAS</div>
-                        <div className="text-base font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
-                          {projectedROAS}x <span className="text-[9px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                      <div className="bg-white rounded-xl p-2.5 border border-hairline space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-mute font-bold uppercase">PROJECTED ROAS</div>
+                        <div className="text-base font-display font-extrabold text-ink mt-0.5 flex items-baseline gap-1">
+                          {projectedROAS}x <span className="text-[9px] font-mono text-violet font-bold">+{targetLift}%</span>
                         </div>
                       </div>
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase">EXTRA / MONTH</div>
-                        <div className="text-base font-display font-extrabold text-white mt-0.5 truncate">{formatCurrency(extraMonthlyRevenue)}</div>
+                      <div className="bg-white rounded-xl p-2.5 border border-hairline space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-mute font-bold uppercase">EXTRA / MONTH</div>
+                        <div className="text-base font-display font-extrabold text-violet mt-0.5 truncate">{formatCurrency(extraMonthlyRevenue)}</div>
                       </div>
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase">12-MO GAIN</div>
-                        <div className="text-base font-display font-extrabold text-emerald-300 mt-0.5 truncate">{formatCurrency(annualGain)}</div>
+                      <div className="bg-white rounded-xl p-2.5 border border-hairline space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-mute font-bold uppercase">12-MO GAIN</div>
+                        <div className="text-base font-display font-extrabold text-violet mt-0.5 truncate">{formatCurrency(annualGain)}</div>
                       </div>
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase">PAYBACK</div>
-                        <div className="text-base font-display font-extrabold text-white mt-0.5">{paybackDays} <span className="text-[9px] font-normal text-purple-100">Days</span></div>
+                      <div className="bg-white rounded-xl p-2.5 border border-hairline space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-mute font-bold uppercase">PAYBACK</div>
+                        <div className="text-base font-display font-extrabold text-ink mt-0.5">{paybackDays} <span className="text-[9px] font-normal text-mute">Days</span></div>
                       </div>
                     </div>
 
-                    <button onClick={() => onOpenAudit('acquire-performance')} className="w-full py-2.5 px-3 rounded-xl bg-white text-violet font-display font-bold text-[10px] hover:bg-white/95 transition-all shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1 group">
+                    <button onClick={() => onOpenAudit('acquire-performance')} className="w-full py-2.5 px-3 rounded-xl bg-ink text-white font-display font-bold text-[10px] hover:bg-violet transition-colors shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1 group">
                       <span>CLAIM THIS ROAS GROWTH</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -616,7 +616,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   <div className="pt-2">
                     <button
                       onClick={() => onOpenAudit('acquire-performance')}
-                      className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-violet via-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider hover:opacity-95 active:scale-[0.99] transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 group"
+                      className="w-full py-3.5 px-6 rounded-2xl bg-ink text-white font-display font-bold text-xs uppercase tracking-wider hover:bg-violet active:scale-[0.99] transition-colors shadow-md cursor-pointer flex items-center justify-center gap-2 group"
                     >
                       <span>EXPLORE {current.title.toUpperCase()} ROADMAP</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
