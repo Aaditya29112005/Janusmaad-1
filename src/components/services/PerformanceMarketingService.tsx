@@ -3,7 +3,6 @@ import {
   CheckCircle2, 
   Sliders,
   ArrowRight,
-  Sparkles,
   ShieldCheck,
   Send,
   Phone,
@@ -135,18 +134,78 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 </span>
                 <div className="flex flex-wrap items-center gap-2.5">
                   {[
-                    { name: 'Meta Ads', bg: 'bg-bone border-hairline text-ink' },
-                    { name: 'Google Ads & PMax', bg: 'bg-bone border-hairline text-ink' },
-                    { name: 'Amazon Ads', bg: 'bg-bone border-hairline text-ink' },
-                    { name: 'Flipkart Ads', bg: 'bg-bone border-hairline text-ink' },
-                    { name: 'Shopify Plus', bg: 'bg-bone border-hairline text-ink' },
-                    { name: 'GA4 & Meta CAPI', bg: 'bg-violet/10 border-violet/20 text-violet' },
+                    {
+                      name: 'Meta Ads',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#1877F2"/>
+                          <path d="M6 12C6 9.5 7.5 8 9.5 8C11.5 8 13 12 14 12C15 12 16.5 8 18.5 8C20.5 8 22 9.5 22 12C22 14.5 20.5 16 18.5 16C16.5 16 15 12 14 12C13 12 11.5 16 9.5 16C7.5 16 6 14.5 6 12Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Google Ads & PMax',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <path d="M21.805 10.023H12.18v3.954h5.546c-.24 1.28-.97 2.365-2.065 3.09v2.568h3.342c1.955-1.84 3.082-4.554 3.082-7.773 0-.61-.055-1.198-.28-1.839z" fill="#4285F4"/>
+                          <path d="M12.18 22c2.784 0 5.117-.924 6.823-2.365l-3.342-2.568c-.924.62-2.107.987-3.481.987-2.675 0-4.941-1.805-5.75-4.232H3v2.647A10.002 10.002 0 0 0 12.18 22z" fill="#34A853"/>
+                          <path d="M6.43 13.822A6.04 6.04 0 0 1 6.117 12c0-.632.109-1.247.313-1.822V7.53H3a10.002 10.002 0 0 0 0 8.94l3.43-2.648z" fill="#FBBC05"/>
+                          <path d="M12.18 5.946c1.506 0 2.858.518 3.922 1.535l2.943-2.943C17.293 2.892 14.96 2 12.18 2A10.002 10.002 0 0 0 3 7.53l3.43 2.648c.809-2.427 3.075-4.232 5.75-4.232z" fill="#EA4335"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Amazon Ads',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#FF9900"/>
+                          <path d="M7 15C10 17.5 14 17.5 17 15" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                          <path d="M15 14.5L17 15L16.2 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 7C9.8 7 8.5 8.5 8.5 10.5C8.5 12 9.5 13 11 13C12.5 13 13.5 12 13.5 10.5V7.5" stroke="white" strokeWidth="1.6" strokeLinecap="round"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Flipkart Ads',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#FFD700"/>
+                          <path d="M9 7H15C16 7 16.5 7.5 16.5 8.5V9.5H11V11H15.5V12.5H11V17H9V7Z" fill="#2874F0"/>
+                          <path d="M7 11H9" stroke="#2874F0" strokeWidth="1.5" strokeLinecap="round"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Shopify Plus',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#96BF48"/>
+                          <path d="M14.5 7L13.5 16.5L11.5 17.5L8 15L8.8 7H14.5Z" fill="white"/>
+                          <path d="M11.5 5.5C10.7 5.5 10 6.2 10 7H13C13 6.2 12.3 5.5 11.5 5.5Z" fill="#5E8E3E"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'GA4 & Meta CAPI',
+                      bg: 'bg-violet/10 border-violet/20 text-violet',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#E37400"/>
+                          <path d="M7 17V13M12 17V7M17 17V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      )
+                    },
                   ].map((tech, i) => (
                     <div
                       key={i}
                       className={`px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold flex items-center gap-2 transition-all hover:border-violet/40 hover:text-violet ${tech.bg}`}
                     >
-                      <Sparkles className="w-3 h-3 shrink-0 text-violet" />
+                      {tech.icon}
                       <span>{tech.name}</span>
                     </div>
                   ))}
