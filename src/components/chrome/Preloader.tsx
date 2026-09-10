@@ -374,7 +374,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
               ref={subtitleRef}
               className="text-white/60 tracking-widest uppercase text-[10px] sm:text-xs"
             >
-              Future Thinking
+              YOUR GROWTH PARTNER
             </div>
             <span
               ref={counterRef}
