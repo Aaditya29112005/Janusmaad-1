@@ -89,7 +89,7 @@ interface MaadAtomProps {
   showTrace?: boolean;
 }
 
-export const MaadAtomStage: React.FC<MaadAtomProps> = ({
+export const MaadAtomStage: React.FC<MaadAtomProps> = React.memo(({
   markSrc = "/janusmaad-mark.png",
   wordmarkSrc = "/janusmaad-wordmark.png",
   alt = "Janusmaad Digital",
@@ -107,7 +107,10 @@ export const MaadAtomStage: React.FC<MaadAtomProps> = ({
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const fit = () => {
-      if (stage.current) stage.current.style.transform = `scale(${Math.min(1.5, (el.clientWidth / 620) * 1.35)})`;
+      if (stage.current && el) {
+        const targetScale = Math.min(1.25, Math.max(0.4, (el.clientWidth / 620) * 1.1));
+        stage.current.style.transform = `scale(${targetScale})`;
+      }
     };
     const ro = new ResizeObserver(fit);
     ro.observe(el);
@@ -218,4 +221,4 @@ export const MaadAtomStage: React.FC<MaadAtomProps> = ({
       </div>
     </div>
   );
-};
+});

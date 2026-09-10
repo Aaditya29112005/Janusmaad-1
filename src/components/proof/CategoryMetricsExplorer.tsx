@@ -60,7 +60,7 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const railRef = useRef<HTMLDivElement | null>(null);
-  const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewelry (Ecomm + Retail)');
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewellery');
 
   const activePitch = React.useMemo(() => {
     return CATEGORY_PITCHES.find(p => p.category === selectedCategory) || CATEGORY_PITCHES[0];
@@ -77,11 +77,11 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 
       const loopTween = gsap.to(rail, {
         x: -totalWidth,
-        duration: 60,
+        duration: 180,
         ease: 'none',
         repeat: -1,
       });
-      loopTween.timeScale(0.55);
+      loopTween.timeScale(0.2);
     }, container);
 
     return () => ctx.revert();

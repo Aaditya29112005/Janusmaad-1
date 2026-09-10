@@ -9,7 +9,7 @@ interface SpecializationItem {
 }
 
 const ROW_1_FIELDS: SpecializationItem[] = [
-  { id: 'jewelry', name: 'Jewelry (Ecomm + Retail)' },
+  { id: 'jewelry', name: 'Jewellery' },
   { id: 'fintech', name: 'Financial Services & Fintech' },
   { id: 'spiritual', name: 'Spiritual, Wellness & Ayurveda' },
   { id: 'fashion', name: 'Fashion, Apparel & Couture' },
@@ -19,11 +19,11 @@ const ROW_1_FIELDS: SpecializationItem[] = [
 
 const ROW_2_FIELDS: SpecializationItem[] = [
   { id: 'home', name: 'Home, Decor & Furniture' },
-  { id: 'rideables', name: 'Rideables, Footwear & D2C' },
+  { id: 'rideables', name: 'Rideables & Footwear' },
   { id: 'realestate', name: 'Real Estate & Broking' },
   { id: 'petcare', name: 'Pet Products & Accessories' },
   { id: 'food', name: 'Food, Sweets & Confectionery' },
-  { id: 'jewelry-2', name: 'Jewelry (Ecomm + Retail)' },
+  { id: 'jewelry-2', name: 'Jewellery' },
   { id: 'fintech-2', name: 'Financial Services & Fintech' },
 ];
 
@@ -46,22 +46,22 @@ export const ScrollRailMarquee: React.FC = () => {
       // Rail 1 loops leftwards with a calm, readable pace
       const t1 = gsap.to(rail1, {
         x: -width1,
-        duration: 60,
+        duration: 160,
         ease: 'none',
         repeat: -1,
       });
-      t1.timeScale(0.55);
+      t1.timeScale(0.2);
 
       // Rail 2 loops in opposite direction with a calm, readable pace
       if (rail2) {
         gsap.set(rail2, { x: -width2 });
         const t2 = gsap.to(rail2, {
           x: 0,
-          duration: 60,
+          duration: 160,
           ease: 'none',
           repeat: -1,
         });
-        t2.timeScale(0.55);
+        t2.timeScale(0.2);
       }
     }, container);
 

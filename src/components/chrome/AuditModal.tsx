@@ -8,7 +8,7 @@ interface AuditModalProps {
   initialType?: string;
 }
 
-export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, initialType = 'audit' }) => {
+export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -61,13 +61,13 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, initial
           <div>
             <div className="mb-6 space-y-1">
               <span className="text-data-label text-violet font-bold uppercase tracking-widest block">
-                {initialType === 'audit' ? 'Live Growth Audit' : 'Book a Discovery Strategy Session'}
+                BOOK A FREE GROWTH CONSULTATION
               </span>
-              <h3 id="modal-title" className="font-display text-2xl sm:text-3xl text-ink">
-                Unlock your growth roadmap.
+              <h3 id="modal-title" className="font-display text-2xl sm:text-3xl text-ink font-bold">
+                Unlock your growth insights.
               </h3>
               <p className="text-mute text-sm">
-                Senior growth strategists review your analytics and storefront live on call.
+                Get a complimentary review of your website and customer journey followed by a focused growth consultation
               </p>
             </div>
 
@@ -124,6 +124,7 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, initial
                     onChange={(e) => setFormData({ ...formData, monthlySpend: e.target.value })}
                     className="w-full bg-bone border border-hairline rounded-xl px-3 py-3 text-ink text-sm focus:border-violet focus:outline-none transition-colors"
                   >
+                    <option value="Less than 1 Lakh">Less than 1 Lakh / month</option>
                     <option value="₹1L - ₹5L">₹1L - ₹5L / month</option>
                     <option value="₹5L - ₹20L">₹5L - ₹20L / month</option>
                     <option value="₹20L - ₹50L">₹20L - ₹50L / month</option>
@@ -149,14 +150,14 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, initial
               </div>
 
               <div className="pt-2">
-                <Button type="submit" variant="primary" size="lg" className="w-full group">
-                  <span>Confirm audit reservation</span>
+                <Button type="submit" variant="primary" size="lg" className="w-full group font-display font-bold tracking-wider uppercase">
+                  <span>GET YOUR FREE GROWTH AUDIT</span>
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
 
-              <p className="text-center text-xs text-mute pt-2">
-                Protected by NDA. Your URL analytics remain confidential.
+              <p className="text-center text-xs text-mute pt-2 font-medium">
+                No sales pitch. Just practical insights you can act on
               </p>
             </form>
           </div>

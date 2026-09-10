@@ -98,7 +98,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     url: 'https://espiragems.com/',
     domain: 'espiragems.com',
     category: 'Jewelry Ecomm',
-    categoryGroup: 'Jewelry (Ecomm + Retail)',
+    categoryGroup: 'Jewellery',
     services: ['PM', 'CRO'],
     primaryMetric: { label: 'Revenue Lift', value: '+70% Revenue' },
     allMetrics: [
@@ -116,7 +116,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     url: 'https://kickyandperky.com/',
     domain: 'kickyandperky.com',
     category: 'Jewelry Ecomm',
-    categoryGroup: 'Jewelry (Ecomm + Retail)',
+    categoryGroup: 'Jewellery',
     services: ['PM', 'RM'],
     primaryMetric: { label: 'Retention ROAS', value: '8+ ROAS' },
     allMetrics: [
@@ -273,7 +273,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     url: 'https://vanikajewels.com/',
     domain: 'vanikajewels.com',
     category: 'Jewelry Retail',
-    categoryGroup: 'Jewelry (Ecomm + Retail)',
+    categoryGroup: 'Jewellery',
     services: ['Build', 'SMM', 'PM'],
     primaryMetric: { label: 'Revenue Lift', value: '₹25L+ Net Lift' },
     allMetrics: [
@@ -533,7 +533,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     url: 'https://azonehtreasures.com/',
     domain: 'azonehtreasures.com',
     category: 'Jewelry Ecomm',
-    categoryGroup: 'Jewelry (Ecomm + Retail)',
+    categoryGroup: 'Jewellery',
     services: ['CRO', 'PM', 'SMM'],
     primaryMetric: { label: 'Revenue Lift', value: '+30% Revenue' },
     allMetrics: [
@@ -551,7 +551,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     url: 'https://mrjewels.in/',
     domain: 'mrjewels.in',
     category: 'Jewelry Ecomm',
-    categoryGroup: 'Jewelry (Ecomm + Retail)',
+    categoryGroup: 'Jewellery',
     services: ['SEO', 'RM'],
     primaryMetric: { label: 'Organic Visitors', value: '3X Visitors' },
     allMetrics: [
@@ -702,7 +702,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
 
 export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
   {
-    category: 'Jewelry (Ecomm + Retail)',
+    category: 'Jewellery',
     topPitch: { metric: 'Retention ROAS', value: '8+ ROAS', brand: 'Kicky and Perky' },
     metrics: [
       { metric: 'Retention ROAS', value: '8+ ROAS', brand: 'Kicky and Perky' },

@@ -15,7 +15,7 @@ export const PROOF_STATS: ProofStat[] = [
     clientName: 'Kicky & Perky',
     clientLogo: '/logos/full_brands/1_brand_1.png',
     serviceTag: 'Meta & Google Ads',
-    category: 'Jewelry (Ecomm + Retail)',
+    category: 'Jewellery',
   },
   {
     label: 'Cost Per Lead (CPL)',
@@ -55,7 +55,7 @@ export const PROOF_STATS: ProofStat[] = [
     clientName: 'Espira Gems',
     clientLogo: '/logos/full_brands/1_brand_7.png',
     serviceTag: 'Shopify Plus Bundles',
-    category: 'Jewelry (Ecomm + Retail)',
+    category: 'Jewellery',
   },
   {
     label: 'Organic Visitor Growth',
@@ -71,6 +71,6 @@ export const PROOF_STATS: ProofStat[] = [
     clientName: 'Radboards',
     clientLogo: '/logos/full_brands/1_brand_6.png',
     serviceTag: 'Storefront Build & CRO',
-    category: 'Rideables, Footwear & D2C',
+    category: 'Rideables & Footwear',
   },
 ];

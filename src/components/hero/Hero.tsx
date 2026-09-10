@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { HERO_CONTENT } from '../../content/hero';
 import { Button } from '../ui/Button';
-import { TextRolling } from './TextRolling';
+import { TypewriterText } from './TypewriterText';
 import { HeroVisual } from './HeroVisual';
-import { ArrowDown, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { gsap } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 
@@ -54,11 +54,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         {/* Left Column: Content */}
         <div className="lg:col-span-6 space-y-8">
-          {/* Main Display Headline */}
+          {/* Main Display Headline with Typewriter Effect */}
           <h1 className="valmax-headline opacity-0 text-hero-display text-ink font-display tracking-tight leading-[0.91]">
-            <span className="inline-block">{HERO_CONTENT.headlineLine1}</span>{' '}
-            <br className="hidden sm:inline" />
-            <TextRolling text={HERO_CONTENT.headlineLine2} />
+            <span className="block">{HERO_CONTENT.headlineLine1}</span>
+            <span className="block mt-1 sm:mt-2">
+              {HERO_CONTENT.headlinePrefix}{' '}
+              <TypewriterText words={HERO_CONTENT.typewriterWords} />
+            </span>
           </h1>
 
           {/* Subheading / Promise Body */}
@@ -76,16 +78,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
                   onClick={() => onOpenAudit('call')}
                 >
                   {HERO_CONTENT.primaryCTA}
-                </Button>
-              </div>
-              <div className="valmax-cta opacity-0">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  href="#calculator"
-                >
-                  <span>{HERO_CONTENT.secondaryCTA}</span>
-                  <ArrowDown className="w-4 h-4 ml-2 text-violet" />
                 </Button>
               </div>
             </div>

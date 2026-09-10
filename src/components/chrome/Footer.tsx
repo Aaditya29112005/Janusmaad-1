@@ -23,7 +23,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
           <div className="md:col-span-5 space-y-6">
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="Janusmaad Logo" className="h-8 object-contain" />
-              <span className="font-display font-bold text-xl text-ink">Janusmaad Digital</span>
             </div>
             <div className="pt-2">
               <Button
@@ -72,12 +71,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
                   <div className="text-xs text-mute">Sector 62, Digital Park, Noida 201309</div>
                 </div>
                 <div className="pt-2 flex items-center gap-4 text-xs font-display">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors flex items-center gap-1">
+                  <a href="https://www.linkedin.com/company/janusmaad/posts/" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors flex items-center gap-1">
                     <span>LinkedIn</span>
                     <ArrowUpRight className="w-3 h-3" />
                   </a>
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors flex items-center gap-1">
-                    <span>Twitter/X</span>
+                  <a href="https://www.instagram.com/janusmaad/" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors flex items-center gap-1">
+                    <span>Instagram</span>
                     <ArrowUpRight className="w-3 h-3" />
                   </a>
                 </div>
