@@ -18,7 +18,6 @@ import { ScrollRailMarquee } from './components/common/ScrollRailMarquee';
 import { CategoryMetricsExplorer } from './components/proof/CategoryMetricsExplorer';
 import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
 import { TechPartners } from './components/partners/TechPartners';
-import { ClosingCTA } from './components/cta/ClosingCTA';
 
 // Dedicated Capability Page Component
 import { CapabilityPage, type CapabilityId } from './components/services/CapabilityPage';
@@ -161,7 +160,6 @@ export const App: React.FC = () => {
             <TrustedBy />
             <WhoWeDontWorkWith />
             <TechPartners />
-            <ClosingCTA onOpenAudit={handleOpenAudit} />
           </>
         )}
       </main>
