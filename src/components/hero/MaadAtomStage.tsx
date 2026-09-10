@@ -31,7 +31,7 @@ const STEPS = 88;   // points sampled per ring
 const RAD = Math.PI / 180;
 
 const CSS = `
-.maad-atom{position:relative;width:100%;max-width:660px;margin-inline:auto;aspect-ratio:1/1;overflow:hidden;touch-action:pan-y;
+.maad-atom{position:relative;width:100%;max-width:760px;margin-inline:auto;aspect-ratio:1/1;overflow:hidden;touch-action:pan-y;
   --ink:#0D1526;--cream:#F5F1E8;--teal:#48BE9C;--purple:#7B52A6;--orbit:#0D1526;
   font-family:"Space Grotesk",Inter,system-ui,sans-serif}
 .maad-atom .stage{position:absolute;left:50%;top:50%;margin:-310px 0 0 -310px;width:620px;height:620px;transform-origin:center}
@@ -107,7 +107,7 @@ export const MaadAtomStage: React.FC<MaadAtomProps> = ({
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const fit = () => {
-      if (stage.current) stage.current.style.transform = `scale(${Math.min(1.15, el.clientWidth / 620)})`;
+      if (stage.current) stage.current.style.transform = `scale(${Math.min(1.28, el.clientWidth / 620)})`;
     };
     const ro = new ResizeObserver(fit);
     ro.observe(el);
