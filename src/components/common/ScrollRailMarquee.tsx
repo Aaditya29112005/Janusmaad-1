@@ -46,22 +46,22 @@ export const ScrollRailMarquee: React.FC = () => {
       // Rail 1 loops leftwards with a calm, readable pace
       const t1 = gsap.to(rail1, {
         x: -width1,
-        duration: 160,
+        duration: 65,
         ease: 'none',
         repeat: -1,
       });
-      t1.timeScale(0.2);
+      t1.timeScale(0.5);
 
       // Rail 2 loops in opposite direction with a calm, readable pace
       if (rail2) {
         gsap.set(rail2, { x: -width2 });
         const t2 = gsap.to(rail2, {
           x: 0,
-          duration: 160,
+          duration: 65,
           ease: 'none',
           repeat: -1,
         });
-        t2.timeScale(0.2);
+        t2.timeScale(0.5);
       }
     }, container);
 

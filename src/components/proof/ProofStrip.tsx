@@ -16,11 +16,11 @@ export const ProofStrip: React.FC = () => {
       // Continuous horizontal loop of cards - constant, steady luxury speed
       const loopTween = gsap.to(rail, {
         xPercent: -50,
-        duration: 160,
+        duration: 65,
         ease: 'none',
         repeat: -1,
       });
-      loopTween.timeScale(0.2);
+      loopTween.timeScale(0.5);
     }, container);
 
 

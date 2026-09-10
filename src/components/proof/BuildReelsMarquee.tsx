@@ -29,11 +29,11 @@ export const BuildReelsMarquee: React.FC = () => {
 
       const loopTween = gsap.to(rail, {
         x: -totalWidth,
-        duration: 160,
+        duration: 65,
         ease: 'none',
         repeat: -1,
       });
-      loopTween.timeScale(0.2);
+      loopTween.timeScale(0.5);
     }, container);
 
     return () => ctx.revert();

@@ -77,11 +77,11 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 
       const loopTween = gsap.to(rail, {
         x: -totalWidth,
-        duration: 180,
+        duration: 75,
         ease: 'none',
         repeat: -1,
       });
-      loopTween.timeScale(0.2);
+      loopTween.timeScale(0.45);
     }, container);
 
     return () => ctx.revert();
