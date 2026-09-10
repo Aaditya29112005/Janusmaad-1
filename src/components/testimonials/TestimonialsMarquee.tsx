@@ -109,9 +109,9 @@ export const TestimonialsMarquee: React.FC = () => {
                     )}
                   </div>
 
-                  {/* 2. 5 Stars Rating & Full Review Content (No truncation / no line clamp) */}
-                  <div className="p-6 flex-1 flex flex-col justify-center items-center bg-white text-center min-h-[240px]">
-                    <div className="flex items-center justify-center gap-1.5 mb-4">
+                  {/* 2. 5 Stars Rating & Full Review Content (Stars aligned at same level across cards) */}
+                  <div className="p-6 flex-1 flex flex-col items-center justify-start bg-white text-center min-h-[240px]">
+                    <div className="flex items-center justify-center gap-1.5 pt-1 mb-4 shrink-0">
                       {[...Array(item.stars)].map((_, i) => (
                         <Star
                           key={i}
@@ -121,7 +121,7 @@ export const TestimonialsMarquee: React.FC = () => {
                       ))}
                     </div>
 
-                    <div className="text-sm sm:text-[15px] font-medium text-ink/90 leading-relaxed whitespace-pre-line text-center px-2">
+                    <div className="text-sm sm:text-[15px] font-medium text-ink/90 leading-relaxed whitespace-pre-line text-center px-2 my-auto">
                       "{item.quote}"
                     </div>
                   </div>
