@@ -324,37 +324,38 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
-      {/* 2 & 3. COMBINED STRATEGY & DELIVERABLES SECTION */}
+      {/* 2, 3 & 4. COMBINED STRATEGY & REVENUE CALCULATOR SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-white text-ink border border-hairline rounded-[32px] p-6 sm:p-10 space-y-8 shadow-xl relative overflow-hidden">
           
-          {/* Top Row: Strategy Headline + Deliverables Card */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Column: Core Message */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
-                <Zap className="w-3.5 h-3.5 text-violet" />
-                <span>WHERE STRATEGY MEETS EXECUTION</span>
+          {/* Top Row: Strategy Message (Left) + Interactive Calculator (Right) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            
+            {/* LEFT COLUMN: STRATEGY & WHAT WE DELIVER */}
+            <div className="lg:col-span-5 space-y-6 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
+                  <Zap className="w-3.5 h-3.5 text-violet" />
+                  <span>WHERE STRATEGY MEETS EXECUTION</span>
+                </div>
+                
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight">
+                  Marketing Should Always Pay for Itself.
+                </h2>
+                
+                <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
+                  At JanusMAAD, we focus exclusively on performance-driven campaigns, transparent tracking, and scalable media buying frameworks that help businesses scale without wasting budget.
+                </p>
               </div>
-              
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.15] tracking-tight">
-                Marketing Should Always Pay for Itself.
-              </h2>
-              
-              <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
-                We build complete performance marketing systems — combining server-side GA4 & CAPI telemetry, continuous creative testing, multi-channel media buying, and AI-driven Performance Max scaling to maximize your contribution margin.
-              </p>
-            </div>
 
-            {/* Right Column: Key Deliverables Card */}
-            <div className="lg:col-span-5">
-              <div className="bg-bone text-ink rounded-3xl p-6 sm:p-7 space-y-4 border border-hairline shadow-2xs">
-                <div className="flex items-center gap-2 text-violet font-display font-bold text-base">
-                  <CheckCircle2 className="w-5 h-5 text-violet shrink-0" />
+              {/* What We Deliver List */}
+              <div className="bg-bone text-ink rounded-3xl p-5 sm:p-6 space-y-3.5 border border-hairline shadow-2xs">
+                <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
+                  <CheckCircle2 className="w-4.5 h-4.5 text-violet shrink-0" />
                   <span>What We Deliver for Performance Campaigns</span>
                 </div>
                 
-                <div className="space-y-3 text-xs text-mute font-semibold">
+                <div className="space-y-2.5 text-xs text-mute font-semibold">
                   {[
                     'Performance Max setup & continuous AI bidding optimization',
                     'GA4 & Meta CAPI server-to-server telemetry for 99.1% accuracy',
@@ -369,6 +370,151 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 </div>
               </div>
             </div>
+
+            {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
+            <div className="lg:col-span-7 flex flex-col justify-between bg-bone/50 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-hairline rounded-full text-[11px] font-mono font-bold text-ink shadow-2xs">
+                  <Sliders className="w-3 h-3 text-violet" />
+                  <span>INTERACTIVE REVENUE CALCULATOR</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
+                  Estimate Your Revenue Lift & Payback Speed
+                </h3>
+              </div>
+
+              {/* Compact 2-Column Calculator Layout */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
+                
+                {/* Sliders Box */}
+                <div className="sm:col-span-6 space-y-4 bg-white p-4 sm:p-5 rounded-2xl border border-hairline shadow-2xs flex flex-col justify-center">
+                  {/* Monthly Spend */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Monthly Ad Spend</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {formatCurrency(monthlySpend)}
+                      </span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min={50000} 
+                      max={2000000} 
+                      step={25000}
+                      value={monthlySpend}
+                      onChange={(e) => setMonthlySpend(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                    <div className="flex items-center gap-1 flex-wrap pt-0.5">
+                      {[100000, 250000, 500000, 1000000].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setMonthlySpend(preset)}
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
+                            monthlySpend === preset
+                              ? 'bg-violet text-white font-bold shadow-2xs'
+                              : 'bg-bone text-mute hover:text-ink border border-hairline'
+                          }`}
+                        >
+                          {formatCurrency(preset)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Current ROAS */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Current ROAS</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {currentROAS.toFixed(1)}x
+                      </span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min={1.0} 
+                      max={5.0} 
+                      step={0.1}
+                      value={currentROAS}
+                      onChange={(e) => setCurrentROAS(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+
+                  {/* Target Lift */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Target ROAS Lift</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        +{targetLift}%
+                      </span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min={10} 
+                      max={100} 
+                      step={5}
+                      value={targetLift}
+                      onChange={(e) => setTargetLift(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+                </div>
+
+                {/* Output Gradient Box */}
+                <div className="sm:col-span-6">
+                  <div
+                    className="rounded-2xl p-4 sm:p-5 text-white shadow-lg h-full flex flex-col justify-between space-y-4"
+                    style={{
+                      background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)',
+                      boxShadow: '0 12px 28px -10px rgba(124, 58, 237, 0.4), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4)'
+                    }}
+                  >
+                    <div className="grid grid-cols-2 gap-2.5 font-mono">
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">PROJECTED ROAS</div>
+                        <div className="text-lg font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
+                          {projectedROAS}x
+                          <span className="text-[9px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">EXTRA / MONTH</div>
+                        <div className="text-lg font-display font-extrabold text-white mt-0.5 truncate">
+                          {formatCurrency(extraMonthlyRevenue)}
+                        </div>
+                      </div>
+
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">12-MO GAIN</div>
+                        <div className="text-lg font-display font-extrabold text-emerald-300 mt-0.5 truncate">
+                          {formatCurrency(annualGain)}
+                        </div>
+                      </div>
+
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">PAYBACK</div>
+                        <div className="text-lg font-display font-extrabold text-white mt-0.5">
+                          {paybackDays} <span className="text-[9px] font-normal text-purple-100">Days</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => onOpenAudit('acquire-performance')}
+                      className="w-full py-3 px-4 rounded-xl bg-white text-violet font-display font-bold text-[11px] hover:bg-white/95 active:scale-[0.99] transition-all shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5 group"
+                    >
+                      <span>CLAIM THIS ROAS GROWTH</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
 
           {/* Bottom Row: 4 Core Pillars Grid */}
@@ -393,156 +539,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </div>
           </div>
 
-        </div>
-      </section>
-
-      {/* 4. INTERACTIVE REVENUE CALCULATOR SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-white text-ink rounded-[32px] p-6 sm:p-10 border border-hairline shadow-xl space-y-6 relative overflow-hidden">
-          
-          {/* INTERACTIVE CALCULATOR SECTION */}
-          <div className="space-y-6">
-            {/* Pill Button & Subtitle */}
-            <div className="text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-bone border border-hairline rounded-full text-xs font-mono font-bold text-ink shadow-2xs">
-                <Sliders className="w-3.5 h-3.5 text-violet" />
-                <span>INTERACTIVE REVENUE CALCULATOR</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink tracking-tight">
-                Estimate Your Revenue Lift & Payback Speed
-              </h2>
-            </div>
-
-            {/* OPTIMIZED COMPACT REVENUE CALCULATOR GRID */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2">
-              {/* Left Sliders Column */}
-              <div className="lg:col-span-6 space-y-5 bg-bone p-6 sm:p-7 rounded-3xl border border-hairline flex flex-col justify-center">
-                
-                {/* Monthly Spend Slider */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-mute font-medium">Monthly Ad Spend</span>
-                    <span className="text-violet font-bold px-2.5 py-1 rounded-md bg-white border border-hairline shadow-2xs">
-                      {formatCurrency(monthlySpend)}
-                    </span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min={50000} 
-                    max={2000000} 
-                    step={25000}
-                    value={monthlySpend}
-                    onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                    className="w-full accent-violet cursor-pointer h-2 bg-hairline rounded-lg"
-                  />
-                  <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
-                    {[100000, 250000, 500000, 1000000, 2000000].map((preset) => (
-                      <button
-                        key={preset}
-                        type="button"
-                        onClick={() => setMonthlySpend(preset)}
-                        className={`text-[11px] font-mono px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-                          monthlySpend === preset
-                            ? 'bg-violet text-white font-bold shadow-xs'
-                            : 'bg-white text-mute hover:text-ink border border-hairline'
-                        }`}
-                      >
-                        {formatCurrency(preset)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Current ROAS Slider */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-mute font-medium">Current Blended ROAS</span>
-                    <span className="text-violet font-bold px-2.5 py-1 rounded-md bg-white border border-hairline shadow-2xs">
-                      {currentROAS.toFixed(1)}x
-                    </span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min={1.0} 
-                    max={5.0} 
-                    step={0.1}
-                    value={currentROAS}
-                    onChange={(e) => setCurrentROAS(Number(e.target.value))}
-                    className="w-full accent-violet cursor-pointer h-2 bg-hairline rounded-lg"
-                  />
-                </div>
-
-                {/* Target Lift Slider */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-mute font-medium">Target ROAS Lift</span>
-                    <span className="text-violet font-bold px-2.5 py-1 rounded-md bg-white border border-hairline shadow-2xs">
-                      +{targetLift}%
-                    </span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min={10} 
-                    max={100} 
-                    step={5}
-                    value={targetLift}
-                    onChange={(e) => setTargetLift(Number(e.target.value))}
-                    className="w-full accent-violet cursor-pointer h-2 bg-hairline rounded-lg"
-                  />
-                </div>
-              </div>
-
-              {/* Right Output Card Column */}
-              <div className="lg:col-span-6 flex flex-col">
-                <div
-                  className="rounded-3xl p-6 sm:p-8 space-y-6 text-white shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)',
-                    boxShadow: '0 20px 40px -15px rgba(124, 58, 237, 0.4), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4)'
-                  }}
-                >
-                  <div className="grid grid-cols-2 gap-3.5 font-mono">
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">PROJECTED ROAS</div>
-                      <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1 flex items-baseline gap-1.5">
-                        {projectedROAS}x
-                        <span className="text-xs font-mono text-emerald-300 font-bold">+{targetLift}%</span>
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">EXTRA / MONTH</div>
-                      <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1 truncate">
-                        {formatCurrency(extraMonthlyRevenue)}
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">12-MO GAIN</div>
-                      <div className="text-2xl sm:text-3xl font-display font-extrabold text-emerald-300 mt-1 truncate">
-                        {formatCurrency(annualGain)}
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-                      <div className="text-[10px] text-purple-100 font-semibold uppercase tracking-wider">PAYBACK</div>
-                      <div className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1">
-                        {paybackDays} <span className="text-xs font-normal text-purple-100">Days</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => onOpenAudit('acquire-performance')}
-                    className="w-full py-3.5 px-6 rounded-2xl bg-white text-violet font-display font-bold text-xs hover:bg-white/95 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group mt-auto"
-                  >
-                    <span>CLAIM THIS ROAS GROWTH</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
