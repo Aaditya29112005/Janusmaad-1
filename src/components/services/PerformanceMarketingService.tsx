@@ -10,7 +10,12 @@ import {
   Clock,
   Zap,
   Layers,
-  ChevronRight
+  ChevronRight,
+  BarChart3,
+  Target,
+  Sparkles,
+  ShoppingBag,
+  Search
 } from 'lucide-react';
 
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
@@ -29,6 +34,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
   const [monthlySpend, setMonthlySpend] = useState(150000); // ₹1.5L default
   const [currentROAS, setCurrentROAS] = useState(2.2); // 2.2x
   const [targetLift, setTargetLift] = useState(35); // 35% lift
+  const [activeSolution, setActiveSolution] = useState(0);
 
   // Hero Form State
   const [heroForm, setHeroForm] = useState({
@@ -547,106 +553,224 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
-      {/* 5. ALTERNATING SOLUTIONS SHOWCASE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-12">
+      {/* 5. INTERACTIVE ANIMATED SOLUTIONS SHOWCASE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full border border-violet/20 uppercase tracking-wider">
             <Layers className="w-3.5 h-3.5 text-violet" />
             <span>SOLUTIONS</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">
             Performance Marketing Solutions We Offer
           </h2>
-          <p className="text-mute text-sm sm:text-base">
-            End-to-end media buying, creative production, tracking telemetry, and campaign scaling.
+          <p className="text-mute text-sm sm:text-base font-medium">
+            Click any solution to explore technical scope, verified metrics, and execution deliverables.
           </p>
         </div>
 
-        {/* Alternating Solution Rows */}
-        <div className="space-y-8">
-          {[
-            {
-              num: '01',
-              title: 'Conversion Tracking & Analytics',
-              desc: 'GA4, GTM, and Meta CAPI server-to-server setups for 99.1% attribution accuracy across web and app funnels.',
-              tag: 'TELEMETRY & ATTRIBUTION',
-              reverse: false
-            },
-            {
-              num: '02',
-              title: 'Meta Ads (Facebook & Instagram)',
-              desc: 'High-converting video hook creative testing, audience segmentation, and direct-response campaign scaling.',
-              tag: 'PAID SOCIAL SCALE',
-              reverse: true
-            },
-            {
-              num: '03',
-              title: 'Creative Testing & Optimization',
-              desc: 'Continuous production and testing of high-hook short-form videos, carousels, and landing pages to reduce CPL.',
-              tag: 'DIRECT RESPONSE CREATIVES',
-              reverse: false
-            },
-            {
-              num: '04',
-              title: 'Amazon & Marketplace Ads',
-              desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management to dominate category search rankings.',
-              tag: 'MARKETPLACE DOMINANCE',
-              reverse: true
-            },
-            {
-              num: '05',
-              title: 'Google Ads & Performance Max',
-              desc: 'High-intent Search, Shopping, YouTube, and PMax campaigns engineered specifically for maximum contribution margin.',
-              tag: 'HIGH INTENT SEARCH',
-              reverse: false
-            },
-          ].map((sol, index) => (
-            <div
-              key={index}
-              className={`bg-white border border-hairline rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-violet/40 transition-all duration-300 shadow-sm ${
-                sol.reverse ? 'lg:flex-row-reverse' : ''
-              }`}
-            >
-              <div className={`lg:col-span-7 space-y-3 ${sol.reverse ? 'lg:order-2' : 'lg:order-1'}`}>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl sm:text-3xl font-display font-extrabold text-violet">{sol.num}</span>
-                  <span className="text-[10px] font-mono font-bold px-2.5 py-1 bg-violet/10 text-violet rounded-full uppercase">
-                    {sol.tag}
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-3xl font-display font-bold text-ink">
-                  {sol.title}
-                </h3>
-                <p className="text-mute text-sm sm:text-base leading-relaxed">
-                  {sol.desc}
-                </p>
-                <div className="pt-2">
-                  <button
-                    onClick={() => onOpenAudit('acquire-performance')}
-                    className="inline-flex items-center gap-2 text-xs font-display font-bold text-violet hover:text-violet-deep transition-colors cursor-pointer group"
-                  >
-                    <span>Explore Solution Roadmap</span>
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </div>
+        {/* Dual-Pane Interactive Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          {/* Left Navigation Tabs (Compact list with hover scale & active indicator) */}
+          <div className="lg:col-span-5 space-y-2.5">
+            {[
+              {
+                num: '01',
+                title: 'Conversion Tracking & Analytics',
+                tag: 'TELEMETRY & ATTRIBUTION',
+                desc: 'GA4, GTM & Meta CAPI server-to-server setups for 99.1% attribution accuracy.',
+                benchmark: '99.1% Verified Signal Accuracy',
+                highlights: ['Server-Side Meta CAPI', 'GA4 Custom E-commerce Events', 'Attribution Loss Shield'],
+                icon: BarChart3
+              },
+              {
+                num: '02',
+                title: 'Meta Ads (Facebook & Instagram)',
+                tag: 'PAID SOCIAL SCALE',
+                desc: 'High-converting video hook creative testing and audience segmentation.',
+                benchmark: '3.82x Average Campaign ROAS',
+                highlights: ['UGC Video Hook Testing', 'Dynamic Advantage+ Scaling', 'Lookalike Audience Funnels'],
+                icon: Target
+              },
+              {
+                num: '03',
+                title: 'Creative Testing & Production',
+                tag: 'DIRECT RESPONSE CREATIVES',
+                desc: 'Continuous production of high-hook short-form videos, carousels & landing pages.',
+                benchmark: '-38% Lower Cost Per Acquisition',
+                highlights: ['High-Hook Rate Iterations', 'Short-Form Video Reels', 'Conversion Landing Pages'],
+                icon: Sparkles
+              },
+              {
+                num: '04',
+                title: 'Amazon & Marketplace Ads',
+                tag: 'MARKETPLACE DOMINANCE',
+                desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management.',
+                benchmark: '4.2x Marketplace ROAS',
+                highlights: ['Top Search Rank Bidding', 'A+ Catalog Optimization', 'Sponsored Brand Video Ads'],
+                icon: ShoppingBag
+              },
+              {
+                num: '05',
+                title: 'Google Ads & Performance Max',
+                tag: 'HIGH INTENT SEARCH',
+                desc: 'High-intent Search, Shopping, YouTube, and PMax campaigns.',
+                benchmark: '5.1x Peak Search ROAS',
+                highlights: ['PMax Asset Group Optimization', 'Negative Keyword Shields', 'Smart Bidding Rules'],
+                icon: Search
+              },
+            ].map((sol, index) => {
+              const isActive = activeSolution === index;
+              return (
+                <button
+                  key={index}
+                  onClick={() => setActiveSolution(index)}
+                  className={`w-full p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex items-center justify-between group ${
+                    isActive
+                      ? 'bg-white border-violet shadow-md text-ink translate-x-1'
+                      : 'bg-bone/80 hover:bg-white border-hairline hover:border-violet/40 text-mute hover:text-ink'
+                  }`}
+                >
+                  <div className="flex items-center gap-3.5">
+                    <div
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-xs transition-colors shrink-0 ${
+                        isActive
+                          ? 'bg-violet text-white shadow-xs'
+                          : 'bg-white border border-hairline text-violet group-hover:border-violet/40'
+                      }`}
+                    >
+                      {sol.num}
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono font-bold text-violet uppercase tracking-wider">
+                        {sol.tag}
+                      </div>
+                      <div className={`font-display font-bold text-xs sm:text-sm transition-colors ${
+                        isActive ? 'text-ink' : 'text-mute group-hover:text-ink'
+                      }`}>
+                        {sol.title}
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronRight
+                    className={`w-4 h-4 transition-transform duration-300 shrink-0 ${
+                      isActive ? 'text-violet translate-x-1' : 'text-mute/40 group-hover:translate-x-0.5'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
 
-              <div className={`lg:col-span-5 ${sol.reverse ? 'lg:order-1' : 'lg:order-2'}`}>
-                <div className="bg-bone rounded-2xl p-6 border border-hairline space-y-3 relative overflow-hidden">
-                  <div className="flex items-center justify-between text-xs font-mono text-mute">
-                    <span>JANUSMAAD BENCHMARK</span>
-                    <span className="text-violet font-bold">VERIFIED</span>
+          {/* Right Showcase Card (Animated view change) */}
+          <div className="lg:col-span-7">
+            {(() => {
+              const solList = [
+                {
+                  num: '01',
+                  title: 'Conversion Tracking & Analytics',
+                  tag: 'TELEMETRY & ATTRIBUTION',
+                  desc: 'GA4, GTM, and Meta CAPI server-to-server setups engineered for 99.1% attribution accuracy across web and mobile funnels without data loss.',
+                  benchmark: '99.1% Verified Signal Accuracy',
+                  highlights: ['Server-Side Meta CAPI', 'GA4 E-commerce Telemetry', 'Attribution Loss Shield'],
+                },
+                {
+                  num: '02',
+                  title: 'Meta Ads (Facebook & Instagram)',
+                  tag: 'PAID SOCIAL SCALE',
+                  desc: 'High-converting video hook creative testing, dynamic audience segmentation, and direct-response campaign scaling across Reels and Feeds.',
+                  benchmark: '3.82x Average Campaign ROAS',
+                  highlights: ['UGC Video Hook Testing', 'Dynamic Advantage+ Scaling', 'Lookalike Audience Funnels'],
+                },
+                {
+                  num: '03',
+                  title: 'Creative Testing & Production',
+                  tag: 'DIRECT RESPONSE CREATIVES',
+                  desc: 'Continuous production and testing of high-hook short-form videos, carousels, and high-converting landing pages to lower cost per lead.',
+                  benchmark: '-38% Lower Cost Per Acquisition',
+                  highlights: ['High-Hook Rate Iterations', 'Short-Form Video Reels', 'Conversion Landing Pages'],
+                },
+                {
+                  num: '04',
+                  title: 'Amazon & Marketplace Ads',
+                  tag: 'MARKETPLACE DOMINANCE',
+                  desc: 'Sponsored Products, Sponsored Brands, and Flipkart ad management designed to dominate top category search rankings and boost organic rank.',
+                  benchmark: '4.2x Marketplace ROAS',
+                  highlights: ['Top Search Rank Bidding', 'A+ Catalog Optimization', 'Sponsored Brand Video Ads'],
+                },
+                {
+                  num: '05',
+                  title: 'Google Ads & Performance Max',
+                  tag: 'HIGH INTENT SEARCH',
+                  desc: 'High-intent Search, Shopping, YouTube, and PMax campaigns engineered specifically for maximum contribution margin and profit efficiency.',
+                  benchmark: '5.1x Peak Search ROAS',
+                  highlights: ['PMax Asset Group Tuning', 'Negative Keyword Shields', 'Smart Bidding Automation'],
+                },
+              ];
+              const current = solList[activeSolution];
+              return (
+                <div
+                  key={activeSolution}
+                  className="bg-white border border-hairline rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 relative overflow-hidden transition-all duration-300"
+                >
+                  {/* Top Bar */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-4xl font-display font-extrabold text-violet">
+                      {current.num}
+                    </span>
+                    <span className="px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
+                      {current.tag}
+                    </span>
                   </div>
-                  <div className="text-2xl font-display font-bold text-ink">
-                    {sol.title}
+
+                  {/* Title & Body */}
+                  <div className="space-y-2.5">
+                    <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-ink leading-tight">
+                      {current.title}
+                    </h3>
+                    <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
+                      {current.desc}
+                    </p>
                   </div>
-                  <p className="text-xs text-mute leading-relaxed">
-                    Custom media structure engineered to maximize customer lifetime value (LTV) and lower acquisition cost.
-                  </p>
+
+                  {/* Benchmark Box */}
+                  <div className="bg-bone p-4 rounded-2xl border border-hairline flex items-center justify-between gap-4">
+                    <div className="space-y-0.5">
+                      <div className="text-[10px] font-mono font-bold text-mute uppercase tracking-wider">JANUSMAAD BENCHMARK</div>
+                      <div className="text-sm font-display font-bold text-ink">{current.benchmark}</div>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-1 bg-emerald-500/10 text-emerald-600 rounded-full border border-emerald-500/20 uppercase shrink-0">
+                      VERIFIED
+                    </span>
+                  </div>
+
+                  {/* Key Deliverables */}
+                  <div className="space-y-3 pt-1">
+                    <div className="text-xs font-mono font-bold text-violet uppercase tracking-wider">KEY DELIVERABLES</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      {current.highlights.map((feat, i) => (
+                        <div key={i} className="p-3 bg-bone border border-hairline rounded-xl text-xs font-semibold text-ink flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-violet shrink-0" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="pt-2">
+                    <button
+                      onClick={() => onOpenAudit('acquire-performance')}
+                      className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-violet via-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider hover:opacity-95 active:scale-[0.99] transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 group"
+                    >
+                      <span>EXPLORE {current.title.toUpperCase()} ROADMAP</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              );
+            })()}
+          </div>
         </div>
       </section>
 
