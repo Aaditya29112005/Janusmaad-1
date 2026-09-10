@@ -639,16 +639,10 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
       {/* 6. OUR WORK (CATEGORY METRICS EXPLORER) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-4">
-        <div className="text-center max-w-3xl mx-auto space-y-1.5">
-          <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-            OUR WORK
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink">
-            Featured Performance Marketing Projects
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">
+            Our Work
           </h2>
-          <p className="text-mute text-xs sm:text-sm">
-            Explore live performance marketing receipts, ad campaigns, and verified client scale.
-          </p>
         </div>
 
         <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" hideHeader={true} />
