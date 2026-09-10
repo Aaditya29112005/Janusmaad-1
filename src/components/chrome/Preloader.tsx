@@ -174,6 +174,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     soundFX.setMuted(nextState);
     if (!nextState) {
       soundFX.initCtx();
+      soundFX.speakPhrase();
     }
   };
 
@@ -183,15 +184,22 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       return;
     }
 
-    // Attempt audio context & speech initialization on early user interaction
-    const handleUserGesture = () => {
+    let hasSpoken = false;
+
+    const triggerAudioAndSpeech = () => {
       soundFX.initCtx();
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.getVoices();
+      if (!hasSpoken) {
+        soundFX.speakPhrase();
+        hasSpoken = true;
       }
     };
+
+    // Attempt audio context & speech initialization on early user interaction
+    const handleUserGesture = () => {
+      triggerAudioAndSpeech();
+    };
+
     window.addEventListener('pointerdown', handleUserGesture, { once: true });
-    window.addEventListener('pointermove', handleUserGesture, { once: true });
     window.addEventListener('touchstart', handleUserGesture, { once: true });
     window.addEventListener('click', handleUserGesture, { once: true });
     window.addEventListener('keydown', handleUserGesture, { once: true });
@@ -318,6 +326,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
   const handleSkip = () => {
     soundFX.initCtx();
+    soundFX.speakPhrase();
     if (timelineRef.current) {
       timelineRef.current.timeScale(4);
     }
