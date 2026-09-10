@@ -4,11 +4,9 @@ export const HERO_CONTENT = {
   typewriterWords: [
     'GROWTH',
     'BOOKINGS',
-    'ROAS',
     'LEADS',
     'CONVERSIONS',
     'RESULTS',
-    'SALES',
     'REVENUE',
     'RANKING',
   ],
