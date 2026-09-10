@@ -66,12 +66,14 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 
   const orderedClients = React.useMemo(() => {
     const topIds = ['rudrasetu', 'kicky-and-perky', 'the-credit-lane'];
+    const excludedIds = ['frasnetica', 'frasmetics', 'yube1', 'yubi1', 'canees', 'caness'];
+    const filteredClients = ALL_38_CLIENTS.filter((c) => !excludedIds.includes(c.id));
     const topClients: typeof ALL_38_CLIENTS = [];
     topIds.forEach((id) => {
-      const found = ALL_38_CLIENTS.find((c) => c.id === id);
+      const found = filteredClients.find((c) => c.id === id);
       if (found) topClients.push(found);
     });
-    const remaining = ALL_38_CLIENTS.filter((c) => !topIds.includes(c.id));
+    const remaining = filteredClients.filter((c) => !topIds.includes(c.id));
     return [...topClients, ...remaining];
   }, []);
 

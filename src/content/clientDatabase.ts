@@ -69,24 +69,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'AOV Increase', value: '+28%', type: 'AOV' }
     ]
   },
-  {
-    id: 'frasnetica',
-    name: 'Frasnetica',
-    url: 'https://frasnetica.com/',
-    domain: 'frasnetica.com',
-    category: 'Perfume / Ecomm',
-    categoryGroup: 'Beauty / Personal Care Ecomm',
-    services: ['Build', 'PM', 'SMM'],
-    primaryMetric: { label: 'Revenue Increase', value: '+65%' },
-    allMetrics: [
-      { label: 'SMM Followers', value: '+160%', type: 'FOLLOWERS' },
-      { label: 'PM ROAS', value: '3.0 ROAS', type: 'ROAS' },
-      { label: 'Revenue Increase', value: '+65%', type: 'REV' },
-      { label: 'AOV Increase', value: '+14%', type: 'AOV' },
-      { label: 'Bounce Decrease', value: '-18%', type: 'BOUNCE' }
-    ],
-    notes: 'PM ROAS stated as 3+ in source.'
-  },
+
   {
     id: 'vanika-jewels',
     name: 'Vanika Jewels',
@@ -422,22 +405,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     ],
     notes: 'No metrics recorded for Build, RM.'
   },
-  {
-    id: 'yube1',
-    name: 'Yube1',
-    url: 'https://yube1.in/',
-    domain: 'yube1.in',
-    category: 'Real Estate',
-    categoryGroup: 'Real Estate',
-    services: ['PM'],
-    primaryMetric: { label: 'Leads Increased', value: '3X' },
-    allMetrics: [
-      { label: 'PM ROAS', value: '2.5 ROAS', type: 'ROAS' },
-      { label: 'CPL Decrease', value: '-22%', type: 'CPL' },
-      { label: 'Leads Increased', value: '3X', type: 'LEADS' },
-      { label: 'Revenue Increase', value: '+40%', type: 'REV' }
-    ]
-  },
+
   {
     id: 'too-bold-to-confirm',
     name: 'Too Bold To Confirm',
@@ -491,24 +459,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     ],
     notes: 'Revenue reported as an absolute figure.'
   },
-  {
-    id: 'canees',
-    name: 'Canees',
-    url: 'https://canees.com.au/',
-    domain: 'caness.com.au',
-    category: 'Hospitality / Restaurant',
-    categoryGroup: 'Hospitality: Restaurants',
-    services: ['SEO', 'PM'],
-    primaryMetric: { label: 'Stated Revenue', value: '$23,000' },
-    allMetrics: [
-      { label: 'PM ROAS', value: '3.0 ROAS', type: 'ROAS' },
-      { label: 'CPL Decrease', value: '-18%', type: 'CPL' },
-      { label: 'Leads Increased', value: '2.5X', type: 'LEADS' },
-      { label: 'Stated Revenue', value: '$23,000+', type: 'REV' },
-      { label: 'Visitors Increase', value: '3X', type: 'VISITORS' }
-    ],
-    notes: 'Revenue reported as an absolute figure.'
-  },
+
   {
     id: 'azoneh-treasures',
     name: 'Azoreh Treasures',
@@ -726,17 +677,15 @@ export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
       { metric: 'PM ROAS', value: '6.0 ROAS', brand: 'Paperbark Camp' },
       { metric: 'PM ROAS', value: '5.5 ROAS', brand: 'Bombay Bloomers' },
       { metric: 'PM ROAS', value: '5.0 ROAS', brand: 'Rangoli' },
-      { metric: 'Stated Revenue', value: '$45,000', brand: 'Shaffa' },
-      { metric: 'Stated Revenue', value: '$23,000', brand: 'Canees' }
+      { metric: 'Stated Revenue', value: '$45,000', brand: 'Shaffa' }
     ]
   },
   {
     category: 'Skincare, Beauty & Cosmetics',
-    topPitch: { metric: 'Revenue Increase', value: '+65%', brand: 'Frasnetica' },
+    topPitch: { metric: 'PM ROAS', value: '4.0 ROAS', brand: 'The Skin Beneath' },
     metrics: [
-      { metric: 'Revenue Increase', value: '+65%', brand: 'Frasnetica' },
       { metric: 'PM ROAS', value: '4.0 ROAS', brand: 'The Skin Beneath' },
-      { metric: 'PM ROAS', value: '3.0 ROAS', brand: 'Frasnetica' }
+      { metric: 'Revenue Increase', value: '+45%', brand: 'The Skin Beneath' }
     ]
   },
   {
@@ -759,9 +708,9 @@ export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
   },
   {
     category: 'Real Estate & Services',
-    topPitch: { metric: 'Leads Increased', value: '3X', brand: 'Yube1' },
+    topPitch: { metric: 'Leads Increased', value: '3X', brand: 'Pro4Security' },
     metrics: [
-      { metric: 'Leads Increased', value: '3X', brand: 'Yube1' },
+      { metric: 'Leads Increased', value: '3X', brand: 'Pro4Security' },
       { metric: 'CPL Decrease', value: '-40%', brand: 'Gaadi Web' },
       { metric: 'Revenue Increase', value: '+250%', brand: 'Gaadi Web' }
     ]
