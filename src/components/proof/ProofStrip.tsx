@@ -39,18 +39,15 @@ export const ProofStrip: React.FC = () => {
               key={idx}
               className="w-72 sm:w-80 shrink-0 p-5 rounded-2xl border border-hairline/80 bg-white/90 backdrop-blur-md shadow-xs hover:shadow-lg hover:border-violet/40 transition-all duration-300 flex flex-col justify-between space-y-3.5 group cursor-default"
             >
-              {/* Top Row: Client Logo & Service Pill */}
-              <div className="flex items-center justify-between gap-3 border-b border-hairline/60 pb-3">
-                <div className="h-7 max-w-[120px] flex items-center">
+              {/* Top Row: Client Logo */}
+              <div className="flex items-center justify-start gap-3 border-b border-hairline/60 pb-3">
+                <div className="h-7 max-w-[140px] flex items-center">
                   <img
                     src={stat.clientLogo}
                     alt={stat.clientName}
-                    className="max-h-7 max-w-[120px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                    className="max-h-7 max-w-[140px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-violet/10 text-violet border border-violet/20 uppercase tracking-wider shrink-0">
-                  {stat.serviceTag}
-                </span>
               </div>
 
               {/* Middle Row: Big Stat & Label */}
