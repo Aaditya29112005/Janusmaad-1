@@ -1,5 +1,5 @@
 export const FIT_CONTENT = {
-  heading: "Who we don't work with.",
+  heading: "Who we don't work with",
   subheading: "We hate to say no, but sometimes it's the best option.",
   notForYou: [
     "You are not clear who your customer is. (We won't guess for you.)",
