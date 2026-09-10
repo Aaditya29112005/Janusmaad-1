@@ -7,7 +7,7 @@ export const TechPartners: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const visiblePartners = isExpanded ? TECH_PARTNERS : TECH_PARTNERS.slice(0, 4);
+  const visiblePartners = isExpanded ? TECH_PARTNERS : TECH_PARTNERS.slice(0, 5);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -41,7 +41,7 @@ export const TechPartners: React.FC = () => {
         </div>
 
         {/* CodePen GSAP ScrollTrigger.batch() Tech Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
           {visiblePartners.map((partner) => (
             <div
               key={partner.id}
@@ -59,7 +59,7 @@ export const TechPartners: React.FC = () => {
         </div>
 
         {/* Show More / Show Less Toggle Button */}
-        {TECH_PARTNERS.length > 4 && (
+        {TECH_PARTNERS.length > 5 && (
           <div className="flex justify-center pt-4">
             <button
               onClick={() => setIsExpanded((prev) => !prev)}
