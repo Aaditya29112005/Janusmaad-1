@@ -99,7 +99,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
         </div>
 
         {/* Right Column: High-Converting Live Performance Dashboard Visual */}
-        <div className="valmax-visual opacity-0 lg:col-span-5 relative flex items-center justify-center lg:justify-end">
+        <div className="valmax-visual opacity-0 lg:col-span-5 relative flex items-start justify-center lg:justify-end">
           <HeroVisual />
         </div>
       </div>
