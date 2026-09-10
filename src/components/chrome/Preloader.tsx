@@ -43,7 +43,7 @@ class PreloaderSoundFX {
 
     try {
       const ctx = this.initCtx();
-      if (!ctx || ctx.state !== 'running') return;
+      if (!ctx) return;
 
       const now = ctx.currentTime;
       const osc = ctx.createOscillator();
@@ -80,7 +80,7 @@ class PreloaderSoundFX {
       const speakWithVoice = () => {
         const voices = window.speechSynthesis.getVoices();
         const preferredVoice = voices.find(
-          (v) => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Alex'))
+          (v) => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Alex') || v.name.includes('Karen') || v.name.includes('Fiona'))
         ) || voices.find((v) => v.lang.startsWith('en'));
         
         if (preferredVoice) {
@@ -94,7 +94,6 @@ class PreloaderSoundFX {
       } else {
         window.speechSynthesis.onvoiceschanged = () => {
           speakWithVoice();
-          window.speechSynthesis.onvoiceschanged = null;
         };
       }
     } catch {
@@ -107,7 +106,7 @@ class PreloaderSoundFX {
     this.speakPhrase();
     try {
       const ctx = this.initCtx();
-      if (!ctx || ctx.state !== 'running') return;
+      if (!ctx) return;
 
       const now = ctx.currentTime;
 
@@ -181,11 +180,17 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       return;
     }
 
-    // Attempt audio context initialization on early user interaction
+    // Attempt audio context & speech initialization on early user interaction
     const handleUserGesture = () => {
       soundFX.initCtx();
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+      }
     };
     window.addEventListener('pointerdown', handleUserGesture, { once: true });
+    window.addEventListener('pointermove', handleUserGesture, { once: true });
+    window.addEventListener('touchstart', handleUserGesture, { once: true });
+    window.addEventListener('click', handleUserGesture, { once: true });
     window.addEventListener('keydown', handleUserGesture, { once: true });
 
     // Lock body scroll during intro
