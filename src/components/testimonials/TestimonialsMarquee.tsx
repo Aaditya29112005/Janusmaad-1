@@ -19,11 +19,11 @@ export const TestimonialsMarquee: React.FC = () => {
 
       const loopTween = gsap.to(rail, {
         x: -totalWidth,
-        duration: 75,
+        duration: 50,
         ease: 'none',
         repeat: -1,
       });
-      loopTween.timeScale(0.45);
+      loopTween.timeScale(0.75);
     }, container);
 
     return () => ctx.revert();
