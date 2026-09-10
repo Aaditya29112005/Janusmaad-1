@@ -79,12 +79,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
       {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE REVENUE CALCULATOR) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-white text-ink rounded-[32px] p-6 sm:p-10 border border-hairline shadow-xl relative overflow-hidden">
-          {/* Subtle Light Accent Background Glows */}
-          <div className="absolute top-[-80px] left-[5%] w-[320px] h-[320px] bg-violet/5 rounded-full blur-[90px] pointer-events-none" />
-          <div className="absolute bottom-[-80px] right-[10%] w-[300px] h-[300px] bg-teal/10 rounded-full blur-[80px] pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
             <div className="lg:col-span-5 space-y-6">
               <div className="space-y-3">
@@ -283,7 +278,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               </div>
             </div>
           </div>
-        </div>
       </section>
 
       {/* 2. STRATEGY & DELIVERABLES SECTION (COMPACT & IMPACTFUL) */}
