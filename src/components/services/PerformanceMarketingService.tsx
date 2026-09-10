@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { 
   CheckCircle2, 
-  Sliders,
   ArrowRight,
   ShieldCheck,
   Send,
   Phone,
   Mail,
   Clock,
-  Zap,
   Layers,
   ChevronRight,
   BarChart3,
@@ -115,10 +113,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
             <div className="lg:col-span-7 space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-violet animate-ping" />
-                <span>BUILT ON DATA • OPTIMIZED FOR CONVERSIONS</span>
-              </div>
+
 
               <div className="space-y-4">
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink leading-[1.1] tracking-tight uppercase">
@@ -334,10 +329,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             {/* LEFT COLUMN: STRATEGY & WHAT WE DELIVER */}
             <div className="lg:col-span-5 space-y-6 flex flex-col justify-between">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
-                  <Zap className="w-3.5 h-3.5 text-violet" />
-                  <span>WHERE STRATEGY MEETS EXECUTION</span>
-                </div>
+
                 
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight">
                   Marketing Should Always Pay for Itself.
@@ -374,10 +366,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
             <div className="lg:col-span-7 flex flex-col justify-between bg-bone/50 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4">
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-hairline rounded-full text-[11px] font-mono font-bold text-ink shadow-2xs">
-                  <Sliders className="w-3 h-3 text-violet" />
-                  <span>INTERACTIVE REVENUE CALCULATOR</span>
-                </div>
+
                 <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
                   Estimate Your Revenue Lift & Payback Speed
                 </h3>
@@ -728,9 +717,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       <div className="text-[10px] font-mono font-bold text-mute uppercase tracking-wider">JANUSMAAD BENCHMARK</div>
                       <div className="text-sm font-display font-bold text-ink">{current.benchmark}</div>
                     </div>
-                    <span className="text-[10px] font-mono font-bold px-2.5 py-1 bg-emerald-500/10 text-emerald-600 rounded-full border border-emerald-500/20 uppercase shrink-0">
-                      VERIFIED
-                    </span>
+
                   </div>
 
                   {/* Key Deliverables */}
@@ -783,9 +770,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       {/* 7. TESTIMONIALS (WHAT OUR CLIENTS ARE HAPPY ABOUT) */}
       <section className="border-t border-hairline pt-12 space-y-6">
         <div className="text-center max-w-3xl mx-auto space-y-1 px-4">
-          <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-            CLIENT REVIEWS
-          </div>
+
           <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink">
             What Our Clients Are Happy About
           </h2>
