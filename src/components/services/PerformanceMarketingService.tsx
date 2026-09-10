@@ -324,82 +324,75 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
-      {/* 2. WHERE STRATEGY MEETS EXECUTION SECTION */}
+      {/* 2 & 3. COMBINED STRATEGY & DELIVERABLES SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-white border border-hairline rounded-3xl p-8 sm:p-12 space-y-8 shadow-sm">
-          <div className="max-w-3xl space-y-3">
-            <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-              WHERE STRATEGY MEETS EXECUTION
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink leading-tight">
-              Marketing Should Always Pay for Itself
-            </h2>
-            <p className="text-mute text-base sm:text-lg leading-relaxed">
-              At JanusMAAD, we focus exclusively on performance-driven campaigns, transparent tracking, and scalable media buying frameworks that help businesses scale without wasting budget.
-            </p>
-          </div>
-
-          {/* 4 Core Pillars Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-            {[
-              { title: 'Data-First Telemetry', desc: 'GA4 & Meta CAPI server-side tracking to capture 99.1% clean conversion signals.' },
-              { title: 'Continuous Testing', desc: 'Multivariate ad copy, video hook, and creative iteration to slash CPL.' },
-              { title: 'Multi-Channel Buying', desc: 'Unified media buying across Search, Shopping, Meta Reels, and Amazon.' },
-              { title: 'Flat Retainer Scaling', desc: 'No arbitrary ad spend percentage penalties as your monthly revenue scales.' },
-            ].map((pillar, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-bone border border-hairline hover:border-violet/40 transition-all duration-300 space-y-2">
-                <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-violet" />
-                  <span>{pillar.title}</span>
-                </div>
-                <p className="text-xs text-mute leading-relaxed font-medium">
-                  {pillar.desc}
-                </p>
+        <div className="bg-white text-ink border border-hairline rounded-[32px] p-6 sm:p-10 space-y-8 shadow-xl relative overflow-hidden">
+          
+          {/* Top Row: Strategy Headline + Deliverables Card */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Column: Core Message */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 border border-violet/20 rounded-full text-xs font-mono font-bold text-violet uppercase tracking-wider">
+                <Zap className="w-3.5 h-3.5 text-violet" />
+                <span>WHERE STRATEGY MEETS EXECUTION</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3. PERFORMANCE MAX ENGINE & DELIVERABLES (LIGHT SPLIT GRID) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Column */}
-          <div className="lg:col-span-6 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-violet/10 text-violet text-xs font-mono font-bold rounded-full border border-violet/20 uppercase tracking-wider">
-              <Zap className="w-3.5 h-3.5 text-violet" />
-              <span>SERVICES PROVIDED</span>
+              
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.15] tracking-tight">
+                Marketing Should Always Pay for Itself.
+              </h2>
+              
+              <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
+                We build complete performance marketing systems — combining server-side GA4 & CAPI telemetry, continuous creative testing, multi-channel media buying, and AI-driven Performance Max scaling to maximize your contribution margin.
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink leading-tight">
-              A Performance Max Strategy Built for Real Conversions
-            </h2>
-            <p className="text-mute text-base leading-relaxed">
-              We don’t just run ads — we build a complete performance system. Our Performance Max approach is engineered to track, optimize, and scale high-quality leads across Google & Meta inventory.
-            </p>
-          </div>
 
-          {/* Right Card: Deliverables Checklist (Light Mode) */}
-          <div className="lg:col-span-6">
-            <div className="bg-bone text-ink rounded-3xl p-8 space-y-4 shadow-sm border border-hairline">
-              <h3 className="text-lg font-display font-bold text-violet flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-violet" />
-                <span>What We Deliver for Performance Campaigns</span>
-              </h3>
-              <ul className="space-y-3.5 text-sm text-mute font-medium">
-                {[
-                  'Performance Max campaign setup & continuous AI optimization',
-                  'Lead quality analysis & multi-stage funnel optimization',
-                  'Creative testing across Search, Display, YouTube & Discovery',
-                  'Continuous performance monitoring, budget reallocation & scale'
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Right Column: Key Deliverables Card */}
+            <div className="lg:col-span-5">
+              <div className="bg-bone text-ink rounded-3xl p-6 sm:p-7 space-y-4 border border-hairline shadow-2xs">
+                <div className="flex items-center gap-2 text-violet font-display font-bold text-base">
+                  <CheckCircle2 className="w-5 h-5 text-violet shrink-0" />
+                  <span>What We Deliver for Performance Campaigns</span>
+                </div>
+                
+                <div className="space-y-3 text-xs text-mute font-semibold">
+                  {[
+                    'Performance Max setup & continuous AI bidding optimization',
+                    'GA4 & Meta CAPI server-to-server telemetry for 99.1% accuracy',
+                    'High-hook video creative testing across Reels, YouTube & Search',
+                    'Continuous lead quality monitoring & automated budget scaling'
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-violet mt-1.5 shrink-0" />
+                      <span className="text-ink leading-snug">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* Bottom Row: 4 Core Pillars Grid */}
+          <div className="border-t border-hairline pt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { title: 'Data-First Telemetry', desc: 'GA4 & Meta CAPI server-side tracking for 99.1% signal accuracy.' },
+                { title: 'Continuous Testing', desc: 'Multivariate ad copy, video hook, and creative variant iteration.' },
+                { title: 'Multi-Channel Buying', desc: 'Unified media buying across Search, Shopping, Meta & Amazon.' },
+                { title: 'Flat Retainer Scaling', desc: 'No arbitrary ad spend percentage penalties as monthly revenue scales.' },
+              ].map((pillar, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-bone border border-hairline hover:border-violet/40 transition-all duration-300 space-y-1.5">
+                  <div className="flex items-center gap-2 text-violet font-display font-bold text-xs">
+                    <CheckCircle2 className="w-4 h-4 shrink-0 text-violet" />
+                    <span>{pillar.title}</span>
+                  </div>
+                  <p className="text-[11px] text-mute leading-relaxed font-medium">
+                    {pillar.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
