@@ -10,9 +10,9 @@ interface TypewriterTextProps {
 
 export const TypewriterText: React.FC<TypewriterTextProps> = React.memo(({
   words,
-  typingSpeed = 220,
-  deletingSpeed = 110,
-  pauseDuration = 5500,
+  typingSpeed = 120,
+  deletingSpeed = 70,
+  pauseDuration = 1800,
   className = '',
 }) => {
   const textRef = useRef<HTMLSpanElement | null>(null);

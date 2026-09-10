@@ -59,7 +59,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
             <span className="block">{HERO_CONTENT.headlineLine1}</span>
             <span className="block mt-1 sm:mt-2">
               <span className="inline-block whitespace-nowrap">{HERO_CONTENT.headlinePrefix}</span>{' '}
-              <TypewriterText words={HERO_CONTENT.typewriterWords} pauseDuration={5500} />
+              <TypewriterText
+                words={HERO_CONTENT.typewriterWords}
+                typingSpeed={120}
+                deletingSpeed={70}
+                pauseDuration={1800}
+              />
             </span>
           </h1>
 
