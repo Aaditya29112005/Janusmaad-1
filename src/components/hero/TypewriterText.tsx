@@ -12,7 +12,7 @@ export const TypewriterText: React.FC<TypewriterTextProps> = React.memo(({
   words,
   typingSpeed = 220,
   deletingSpeed = 110,
-  pauseDuration = 4500,
+  pauseDuration = 5500,
   className = '',
 }) => {
   const textRef = useRef<HTMLSpanElement | null>(null);
