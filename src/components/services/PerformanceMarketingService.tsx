@@ -90,9 +90,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               <div className="space-y-3">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink leading-[1.05] tracking-tight uppercase">
                   PERFORMANCE<br />
-                  <span className="bg-gradient-to-r from-violet via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                    MARKETING
-                  </span>
+                  MARKETING
                 </h1>
 
                 <p className="text-base sm:text-lg text-mute font-medium leading-relaxed font-body">
