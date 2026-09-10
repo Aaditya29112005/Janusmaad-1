@@ -16,7 +16,7 @@ export const ProofStrip: React.FC = () => {
       // Continuous horizontal loop of cards - constant, steady luxury speed
       gsap.to(rail, {
         xPercent: -50,
-        duration: 55,
+        duration: 90,
         ease: 'none',
         repeat: -1,
       });

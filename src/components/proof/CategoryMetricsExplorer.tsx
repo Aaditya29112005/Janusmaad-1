@@ -77,7 +77,7 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 
       gsap.to(rail, {
         x: -totalWidth,
-        duration: 60,
+        duration: 100,
         ease: 'none',
         repeat: -1,
       });

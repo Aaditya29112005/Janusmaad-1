@@ -22,7 +22,7 @@ export const TrustedBy: React.FC = () => {
       const row1Width = row1.scrollWidth / 2;
       gsap.to(row1, {
         x: -row1Width,
-        duration: 60,
+        duration: 90,
         ease: 'none',
         repeat: -1,
       });
@@ -32,7 +32,7 @@ export const TrustedBy: React.FC = () => {
       gsap.set(row2, { x: -row2Width });
       gsap.to(row2, {
         x: 0,
-        duration: 60,
+        duration: 90,
         ease: 'none',
         repeat: -1,
       });

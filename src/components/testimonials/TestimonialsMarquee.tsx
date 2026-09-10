@@ -19,7 +19,7 @@ export const TestimonialsMarquee: React.FC = () => {
 
       gsap.to(rail, {
         x: -totalWidth,
-        duration: 60,
+        duration: 90,
         ease: 'none',
         repeat: -1,
       });
