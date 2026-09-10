@@ -68,7 +68,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
               <div className="space-y-3 text-mute">
                 <div>
                   <div className="text-ink font-bold text-xs uppercase">Noida Hub</div>
-                  <div className="text-xs text-mute">Sector 62, Digital Park, Noida 201309</div>
+                  <div className="text-xs text-mute space-y-0.5 pt-0.5">
+                    <div>HD77, Sector 135, Noida</div>
+                    <div>Uttar Pradesh 201304, India</div>
+                  </div>
                 </div>
                 <div className="pt-2 flex items-center gap-4 text-xs font-display">
                   <a href="https://www.linkedin.com/company/janusmaad/home/" target="_blank" rel="noopener noreferrer" className="hover:text-violet transition-colors flex items-center gap-1">
