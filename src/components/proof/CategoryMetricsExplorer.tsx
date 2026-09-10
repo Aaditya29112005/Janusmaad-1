@@ -75,28 +75,12 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
       // Half width translation for 100% continuous infinite loop
       const totalWidth = rail.scrollWidth / 2;
 
-      const loopTween = gsap.to(rail, {
+      gsap.to(rail, {
         x: -totalWidth,
-        duration: 65,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
-
-      // Smooth slow-down on hover so users can inspect & read cards effortlessly
-      const onMouseEnter = () => {
-        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
-      };
-      const onMouseLeave = () => {
-        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
-      };
-
-      container.addEventListener('mouseenter', onMouseEnter);
-      container.addEventListener('mouseleave', onMouseLeave);
-
-      return () => {
-        container.removeEventListener('mouseenter', onMouseEnter);
-        container.removeEventListener('mouseleave', onMouseLeave);
-      };
     }, container);
 
     return () => ctx.revert();

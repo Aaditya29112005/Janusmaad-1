@@ -13,30 +13,15 @@ export const ProofStrip: React.FC = () => {
     if (!rail || !container || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Continuous horizontal loop of cards - calm, steady luxury pace
-      const loopTween = gsap.to(rail, {
+      // Continuous horizontal loop of cards - constant, steady luxury speed
+      gsap.to(rail, {
         xPercent: -50,
         duration: 55,
         ease: 'none',
         repeat: -1,
       });
-
-      // Smooth slow-down on hover so users can easily read metrics
-      const onMouseEnter = () => {
-        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
-      };
-      const onMouseLeave = () => {
-        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
-      };
-
-      container.addEventListener('mouseenter', onMouseEnter);
-      container.addEventListener('mouseleave', onMouseLeave);
-
-      return () => {
-        container.removeEventListener('mouseenter', onMouseEnter);
-        container.removeEventListener('mouseleave', onMouseLeave);
-      };
     }, container);
+
 
     return () => ctx.revert();
   }, []);

@@ -44,7 +44,7 @@ export const ScrollRailMarquee: React.FC = () => {
       const width2 = rail2 ? rail2.scrollWidth / 2 : width1;
 
       // Rail 1 loops leftwards with a calm, readable pace
-      const loopTween1 = gsap.to(rail1, {
+      gsap.to(rail1, {
         x: -width1,
         duration: 60,
         ease: 'none',
@@ -52,34 +52,15 @@ export const ScrollRailMarquee: React.FC = () => {
       });
 
       // Rail 2 loops in opposite direction with a calm, readable pace
-      let loopTween2: gsap.core.Tween | null = null;
       if (rail2) {
         gsap.set(rail2, { x: -width2 });
-        loopTween2 = gsap.to(rail2, {
+        gsap.to(rail2, {
           x: 0,
-          duration: 65,
+          duration: 60,
           ease: 'none',
           repeat: -1,
         });
       }
-
-      const activeTweens = loopTween2 ? [loopTween1, loopTween2] : [loopTween1];
-
-      // Smooth slow-down on hover so users can easily read pills without chasing them
-      const onMouseEnter = () => {
-        gsap.to(activeTweens, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
-      };
-      const onMouseLeave = () => {
-        gsap.to(activeTweens, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
-      };
-
-      container.addEventListener('mouseenter', onMouseEnter);
-      container.addEventListener('mouseleave', onMouseLeave);
-
-      return () => {
-        container.removeEventListener('mouseenter', onMouseEnter);
-        container.removeEventListener('mouseleave', onMouseLeave);
-      };
     }, container);
 
     return () => ctx.revert();

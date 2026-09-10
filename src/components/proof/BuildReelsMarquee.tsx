@@ -27,28 +27,12 @@ export const BuildReelsMarquee: React.FC = () => {
       // Half width translation for infinite loop
       const totalWidth = rail.scrollWidth / 2;
 
-      const loopTween = gsap.to(rail, {
+      gsap.to(rail, {
         x: -totalWidth,
-        duration: 55,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
-
-      // Smooth slow-down on hover
-      const onMouseEnter = () => {
-        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
-      };
-      const onMouseLeave = () => {
-        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
-      };
-
-      container.addEventListener('mouseenter', onMouseEnter);
-      container.addEventListener('mouseleave', onMouseLeave);
-
-      return () => {
-        container.removeEventListener('mouseenter', onMouseEnter);
-        container.removeEventListener('mouseleave', onMouseLeave);
-      };
     }, container);
 
     return () => ctx.revert();
@@ -70,7 +54,7 @@ export const BuildReelsMarquee: React.FC = () => {
             What Founders & CMOs Say About Our Builds
           </h2>
           <p className="text-xs sm:text-sm text-mute max-w-2xl">
-            Live reel reviews and verified feedback from DTC founders & growth leaders. Hover over any reel to inspect.
+            Live reel reviews and verified feedback from DTC founders & growth leaders. Click on any reel to inspect.
           </p>
         </div>
 

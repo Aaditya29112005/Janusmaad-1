@@ -7,7 +7,6 @@ import { prefersReducedMotion } from '../../gsap/utils';
 export const TestimonialsMarquee: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const railRef = useRef<HTMLDivElement | null>(null);
-  const loopTweenRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     const rail = railRef.current;
@@ -18,29 +17,12 @@ export const TestimonialsMarquee: React.FC = () => {
       // Half width translation for 100% continuous infinite loop
       const totalWidth = rail.scrollWidth / 2;
 
-      const loopTween = gsap.to(rail, {
+      gsap.to(rail, {
         x: -totalWidth,
-        duration: 55,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
-      loopTweenRef.current = loopTween;
-
-      // Smooth slow-down on hover so users can inspect & read cards effortlessly
-      const onMouseEnter = () => {
-        gsap.to(loopTween, { timeScale: 0.15, duration: 0.5, ease: 'power2.out' });
-      };
-      const onMouseLeave = () => {
-        gsap.to(loopTween, { timeScale: 1, duration: 0.5, ease: 'power2.out' });
-      };
-
-      container.addEventListener('mouseenter', onMouseEnter);
-      container.addEventListener('mouseleave', onMouseLeave);
-
-      return () => {
-        container.removeEventListener('mouseenter', onMouseEnter);
-        container.removeEventListener('mouseleave', onMouseLeave);
-      };
     }, container);
 
     return () => ctx.revert();
