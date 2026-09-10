@@ -397,53 +397,21 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
-      {/* 4. REAL STORIES. REAL RESULTS. (VERIFIED METRICS + INTERACTIVE CALCULATOR) */}
+      {/* 4. INTERACTIVE REVENUE CALCULATOR SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-white text-ink rounded-[32px] p-6 sm:p-10 border border-hairline shadow-xl space-y-8 relative overflow-hidden">
+        <div className="bg-white text-ink rounded-[32px] p-6 sm:p-10 border border-hairline shadow-xl space-y-6 relative overflow-hidden">
           
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-2">
-            <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
-              REAL STORIES • REAL RESULTS
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">
-              Verified Performance Metrics
-            </h2>
-            <p className="text-mute text-sm sm:text-base font-medium max-w-xl mx-auto">
-              Aggregated performance across multiple campaigns, industries, and media platforms.
-            </p>
-          </div>
-
-          {/* Top 3-Column Key Metrics Banner */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center border-y border-hairline py-6">
-            <div className="space-y-1">
-              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">4.82x</div>
-              <div className="text-[11px] font-mono text-violet uppercase font-bold tracking-wider">BLENDED CLIENT ROAS</div>
-              <p className="text-xs text-mute max-w-xs mx-auto font-medium">Verified return across Meta & Google ad spend.</p>
-            </div>
-            <div className="space-y-1 md:border-x border-hairline px-4">
-              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">120K+</div>
-              <div className="text-[11px] font-mono text-violet uppercase font-bold tracking-wider">VERIFIED CLICKS</div>
-              <p className="text-xs text-mute max-w-xs mx-auto font-medium">High-intent buyer traffic redirected to storefronts.</p>
-            </div>
-            <div className="space-y-1">
-              <div className="text-4xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">4.8M+</div>
-              <div className="text-[11px] font-mono text-violet uppercase font-bold tracking-wider">MULTI-CHANNEL IMPRESSIONS</div>
-              <p className="text-xs text-mute max-w-xs mx-auto font-medium">Targeted brand reach across Search, YouTube & Feeds.</p>
-            </div>
-          </div>
-
           {/* INTERACTIVE CALCULATOR SECTION */}
-          <div className="pt-4 space-y-6">
+          <div className="space-y-6">
             {/* Pill Button & Subtitle */}
             <div className="text-center space-y-3">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-bone border border-hairline rounded-full text-xs font-mono font-bold text-ink shadow-2xs">
                 <Sliders className="w-3.5 h-3.5 text-violet" />
                 <span>INTERACTIVE REVENUE CALCULATOR</span>
               </div>
-              <h3 className="text-2xl sm:text-4xl font-display font-extrabold text-ink tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink tracking-tight">
                 Estimate Your Revenue Lift & Payback Speed
-              </h3>
+              </h2>
             </div>
 
             {/* OPTIMIZED COMPACT REVENUE CALCULATOR GRID */}
