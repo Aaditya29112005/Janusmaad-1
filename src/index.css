@@ -69,7 +69,7 @@ body {
   background-color: #FFFFFF;
   border: 1px solid rgba(7, 11, 26, 0.08);
   box-shadow: 0 20px 40px -15px rgba(7, 11, 26, 0.05);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.55s ease;
 }
 
 .card-surface:hover {

@@ -20,22 +20,24 @@ export const TrustedBy: React.FC = () => {
     const ctx = gsap.context(() => {
       // Row 1: Infinite Glide Left (constant steady speed)
       const row1Width = row1.scrollWidth / 2;
-      gsap.to(row1, {
+      const t1 = gsap.to(row1, {
         x: -row1Width,
-        duration: 90,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
+      t1.timeScale(0.55);
 
       // Row 2: Infinite Glide Right (constant steady speed)
       const row2Width = row2.scrollWidth / 2;
       gsap.set(row2, { x: -row2Width });
-      gsap.to(row2, {
+      const t2 = gsap.to(row2, {
         x: 0,
-        duration: 90,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
+      t2.timeScale(0.55);
     }, sectionRef);
 
 

@@ -14,12 +14,13 @@ export const ProofStrip: React.FC = () => {
 
     const ctx = gsap.context(() => {
       // Continuous horizontal loop of cards - constant, steady luxury speed
-      gsap.to(rail, {
+      const loopTween = gsap.to(rail, {
         xPercent: -50,
-        duration: 90,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
+      loopTween.timeScale(0.55);
     }, container);
 
 

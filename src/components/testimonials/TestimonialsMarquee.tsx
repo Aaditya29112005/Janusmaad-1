@@ -17,12 +17,13 @@ export const TestimonialsMarquee: React.FC = () => {
       // Half width translation for 100% continuous infinite loop
       const totalWidth = rail.scrollWidth / 2;
 
-      gsap.to(rail, {
+      const loopTween = gsap.to(rail, {
         x: -totalWidth,
-        duration: 90,
+        duration: 60,
         ease: 'none',
         repeat: -1,
       });
+      loopTween.timeScale(0.55);
     }, container);
 
     return () => ctx.revert();
@@ -34,7 +35,7 @@ export const TestimonialsMarquee: React.FC = () => {
     const shiftAmount = direction === 'left' ? 340 : -340;
     gsap.to(rail, {
       x: `+=${shiftAmount}`,
-      duration: 0.6,
+      duration: 0.55,
       ease: 'power2.out',
     });
   };
