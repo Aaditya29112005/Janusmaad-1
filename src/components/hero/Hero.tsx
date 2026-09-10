@@ -53,7 +53,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
     <section ref={containerRef} className="relative min-h-[90vh] pt-32 pb-24 px-4 sm:px-8 flex flex-col justify-center overflow-hidden bg-bone border-b border-hairline">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         {/* Left Column: Content */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-6 space-y-8">
           {/* Main Display Headline */}
           <h1 className="valmax-headline opacity-0 text-hero-display text-ink font-display tracking-tight leading-[0.91]">
             <span className="inline-block">{HERO_CONTENT.headlineLine1}</span>{' '}
@@ -99,7 +99,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAudit }) => {
         </div>
 
         {/* Right Column: High-Converting Live Performance Dashboard Visual */}
-        <div className="valmax-visual opacity-0 lg:col-span-5 relative flex items-start justify-center lg:justify-end">
+        <div className="valmax-visual opacity-0 lg:col-span-6 relative flex items-center justify-center lg:justify-end">
           <HeroVisual />
         </div>
       </div>
