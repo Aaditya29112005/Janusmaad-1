@@ -36,13 +36,14 @@ const WORK_IMAGES: Record<string, string> = {
   'mr-jewels': '/work/mrjewels.jpg',
   'ugrashoes': '/work/ugrashoes.jpg',
   'basil-pet-care': '/work/basilpetcare.jpg',
-  'clay-and-glaze': '/work/clayandglaze.jpg',
-  'rangoli': '/work/kasutikavana.png',
+  'clay-and-glaze': '/work/clayandglaze.png',
+  'rangoli': '/work/rangoli.png',
   'qibo': '/work/qibo.jpg',
   'soiree-club': '/work/soireeclub.jpg',
-  'ecoo-global': '/work/ecooglobal.jpg',
+  'ecoo-global': '/work/ecooglobal.png',
   'cuddle-buds': '/work/cuddlebuds.jpg',
 };
+
 
 
 
