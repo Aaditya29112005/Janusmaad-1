@@ -396,7 +396,7 @@ export const CROService: React.FC<CROServiceProps> = ({
           </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="CRO" />
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="CRO" hideHeader={true} />
       </div>
 
       {/* 5. VERIFIED TESTIMONIALS CAROUSEL */}

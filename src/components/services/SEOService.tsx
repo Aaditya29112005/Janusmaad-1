@@ -255,7 +255,7 @@ export const SEOService: React.FC<SEOServiceProps> = ({
           </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="SEO" />
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="SEO" hideHeader={true} />
       </div>
 
       {/* 4. TESTIMONIALS */}

@@ -345,7 +345,7 @@ export const SMMService: React.FC<SMMServiceProps> = ({
           </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="SMM" />
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="SMM" hideHeader={true} />
       </div>
 
       {/* VERIFIED TESTIMONIALS CAROUSEL */}

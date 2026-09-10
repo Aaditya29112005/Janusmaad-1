@@ -330,7 +330,7 @@ export const BuildService: React.FC<BuildServiceProps> = ({
           </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="Build" />
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="Build" hideHeader={true} />
       </div>
 
       {/* VERIFIED TESTIMONIALS CAROUSEL */}

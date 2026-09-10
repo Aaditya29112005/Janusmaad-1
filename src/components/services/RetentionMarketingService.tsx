@@ -464,7 +464,7 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
           </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="RM" />
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="RM" hideHeader={true} />
       </div>
 
       {/* VERIFIED TESTIMONIALS CAROUSEL */}

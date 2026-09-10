@@ -693,7 +693,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
           </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" />
+        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" hideHeader={true} />
       </section>
 
       {/* 7. TESTIMONIALS (WHAT OUR CLIENTS ARE HAPPY ABOUT) */}

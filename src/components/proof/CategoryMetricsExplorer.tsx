@@ -54,10 +54,12 @@ interface CategoryMetricsExplorerProps {
   onOpenAudit?: (type?: string) => void;
   initialService?: string;
   showOnlyClientRecords?: boolean;
+  hideHeader?: boolean;
 }
 
 export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = ({
   showOnlyClientRecords = false,
+  hideHeader = false,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewellery');
@@ -89,19 +91,19 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
   };
 
   return (
-    <section ref={containerRef} id="metrics-database" className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative select-none overflow-hidden">
+    <section ref={containerRef} id="metrics-database" className={`${hideHeader ? 'py-0 border-b-0' : 'py-20 border-b border-hairline'} px-4 sm:px-8 bg-bone relative select-none overflow-hidden`}>
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
 
-        {showOnlyClientRecords ? (
-          /* Center-aligned "Our Work" Header */
-          <div className="text-center max-w-2xl mx-auto space-y-3 border-b border-hairline pb-8">
-            <h2 className="font-display text-4xl sm:text-6xl font-bold text-ink tracking-tight">
-              Our Work
-            </h2>
-          </div>
-        ) : (
-          <>
-            {/* Standard Full Section Title */}
+        {!hideHeader && (
+          showOnlyClientRecords ? (
+            /* Center-aligned "Our Work" Header */
+            <div className="text-center max-w-2xl mx-auto space-y-3 border-b border-hairline pb-8">
+              <h2 className="font-display text-4xl sm:text-6xl font-bold text-ink tracking-tight">
+                Our Work
+              </h2>
+            </div>
+          ) : (
+            /* Standard Full Section Title */
             <div className="text-center max-w-3xl mx-auto space-y-3 border-b border-hairline pb-8">
               <h2 className="font-display text-3xl sm:text-5xl font-bold text-ink tracking-tight">
                 Success Metrics by Category & Client Vault
@@ -110,74 +112,76 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
                 Explore real client case studies across e-commerce, retail, hospitality, and services.
               </p>
             </div>
+          )
+        )}
 
-            {/* Category Pitch Generator Box */}
-            <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl pointer-events-none" />
+        {!showOnlyClientRecords && (
+          /* Category Pitch Generator Box */
+          <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl pointer-events-none" />
 
-              <div className="max-w-3xl space-y-3 relative z-10">
-                <span className="text-xs font-mono text-teal uppercase font-bold tracking-widest">
-                  CATEGORY BENCHMARK PITCH FINDER
-                </span>
-                <h3 className="text-2xl sm:text-4xl font-display font-bold text-white">
-                  What Metric Should You Benchmark For Your Brand?
-                </h3>
-              </div>
+            <div className="max-w-3xl space-y-3 relative z-10">
+              <span className="text-xs font-mono text-teal uppercase font-bold tracking-widest">
+                CATEGORY BENCHMARK PITCH FINDER
+              </span>
+              <h3 className="text-2xl sm:text-4xl font-display font-bold text-white">
+                What Metric Should You Benchmark For Your Brand?
+              </h3>
+            </div>
 
-              {/* Category Selector Pills */}
-              <div className="flex flex-wrap items-center gap-2.5 relative z-10">
-                {CATEGORY_PITCHES.map((item) => {
-                  const isSelected = item.category === selectedCategory;
-                  return (
-                    <button
-                      key={item.category}
-                      onClick={() => setSelectedCategory(item.category)}
-                      className={`px-4 py-2 rounded-xl text-xs font-display font-bold transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-teal text-ink shadow-lg shadow-teal/20 scale-105'
-                          : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white'
-                      }`}
-                    >
-                      {item.category}
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Category Selector Pills */}
+            <div className="flex flex-wrap items-center gap-2.5 relative z-10">
+              {CATEGORY_PITCHES.map((item) => {
+                const isSelected = item.category === selectedCategory;
+                return (
+                  <button
+                    key={item.category}
+                    onClick={() => setSelectedCategory(item.category)}
+                    className={`px-4 py-2 rounded-xl text-xs font-display font-bold transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-teal text-ink shadow-lg shadow-teal/20 scale-105'
+                        : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    {item.category}
+                  </button>
+                );
+              })}
+            </div>
 
-              {/* Category Pitch Showcase Result Card */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 relative z-10">
-                <div className="lg:col-span-6 space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-mono text-teal font-bold uppercase">
-                    <Award className="w-4 h-4 text-teal" />
-                    <span>PRIMARY PITCH METRIC FOR {activePitch.category.toUpperCase()}</span>
+            {/* Category Pitch Showcase Result Card */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 relative z-10">
+              <div className="lg:col-span-6 space-y-4">
+                <div className="flex items-center gap-2 text-xs font-mono text-teal font-bold uppercase">
+                  <Award className="w-4 h-4 text-teal" />
+                  <span>PRIMARY PITCH METRIC FOR {activePitch.category.toUpperCase()}</span>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-4xl sm:text-5xl font-display font-bold text-white">
+                    {activePitch.topPitch.value}
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-4xl sm:text-5xl font-display font-bold text-white">
-                      {activePitch.topPitch.value}
-                    </div>
-                    <div className="text-lg font-display text-teal font-bold">
-                      {activePitch.topPitch.metric} <span className="text-white/60">({activePitch.topPitch.brand})</span>
-                    </div>
+                  <div className="text-lg font-display text-teal font-bold">
+                    {activePitch.topPitch.metric} <span className="text-white/60">({activePitch.topPitch.brand})</span>
                   </div>
                 </div>
+              </div>
 
-                <div className="lg:col-span-6 space-y-3">
-                  <div className="text-xs font-mono text-white/60 uppercase">Full Category Metrics Breakdown</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {activePitch.metrics.map((m, idx) => (
-                      <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-xl space-y-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-mono text-white/70">{m.metric}</span>
-                          <span className="text-xs font-mono text-teal font-bold">{m.brand}</span>
-                        </div>
-                        <div className="text-xl font-display font-bold text-white">{m.value}</div>
+              <div className="lg:col-span-6 space-y-3">
+                <div className="text-xs font-mono text-white/60 uppercase">Full Category Metrics Breakdown</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {activePitch.metrics.map((m, idx) => (
+                    <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-xl space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-mono text-white/70">{m.metric}</span>
+                        <span className="text-xs font-mono text-teal font-bold">{m.brand}</span>
                       </div>
-                    ))}
-                  </div>
+                      <div className="text-xl font-display font-bold text-white">{m.value}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </>
+          </div>
         )}
 
         {/* Static 3-in-1-row Client Cards Grid & See More Button */}
