@@ -13,9 +13,11 @@ const WORK_IMAGES: Record<string, string> = {
   'mothers-touch': '/work/motherstouch.jpg',
   'kidzfirstudio': '/work/kidzfirstudio.jpg',
   'yubi1': '/work/yubi1.jpg',
+  'yube1': '/work/yubi1.jpg',
   'the-skin-beneath': '/work/theskinbeneath.jpg',
   'shagun-sweets': '/work/shagunsweets.jpg',
   'frasmetics': '/work/frasmetics.jpg',
+  'frasnetica': '/work/frasmetics.jpg',
   'vanika-jewels': '/work/vanikajewels.png',
   'wildmoss': '/work/wildmoss.jpg',
   'himalayan-panacea': '/work/himalayanpanacea.png',
@@ -31,6 +33,7 @@ const WORK_IMAGES: Record<string, string> = {
   'kasuti-kavana': '/work/kasutikavana.png',
   'shaffa': '/work/shaffa.jpg',
   'caness': '/work/caness.jpg',
+  'canees': '/work/caness.jpg',
   'azoneh-treasures': '/work/azonehtreasures.jpg',
   'mr-jewels': '/work/mrjewels.jpg',
   'ugrashoes': '/work/ugrashoes.jpg',
@@ -66,14 +69,12 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 
   const orderedClients = React.useMemo(() => {
     const topIds = ['rudrasetu', 'kicky-and-perky', 'the-credit-lane'];
-    const excludedIds = ['frasnetica', 'frasmetics', 'yube1', 'yubi1', 'canees', 'caness'];
-    const filteredClients = ALL_38_CLIENTS.filter((c) => !excludedIds.includes(c.id));
     const topClients: typeof ALL_38_CLIENTS = [];
     topIds.forEach((id) => {
-      const found = filteredClients.find((c) => c.id === id);
+      const found = ALL_38_CLIENTS.find((c) => c.id === id);
       if (found) topClients.push(found);
     });
-    const remaining = filteredClients.filter((c) => !topIds.includes(c.id));
+    const remaining = ALL_38_CLIENTS.filter((c) => !topIds.includes(c.id));
     return [...topClients, ...remaining];
   }, []);
 

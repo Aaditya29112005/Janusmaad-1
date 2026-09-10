@@ -52,7 +52,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Revenue Increase', value: '+40%', type: 'REV' },
       { label: 'Stated Revenue', value: 'INR 2CR+', type: 'REV' }
     ],
-    notes: 'Revenue reported as an absolute figure. No metrics recorded for Build.'
+    notes: 'Revenue reported as an absolute figure. No metrics recorded for: Build.'
   },
   {
     id: 'shagun-sweets',
@@ -69,7 +69,24 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'AOV Increase', value: '+28%', type: 'AOV' }
     ]
   },
-
+  {
+    id: 'frasmetics',
+    name: 'Frasmetics',
+    url: 'https://frasmetics.com/',
+    domain: 'frasmetics.com',
+    category: 'Perfume / Ecomm',
+    categoryGroup: 'Beauty / Personal Care Ecomm',
+    services: ['Build', 'PM', 'SMM'],
+    primaryMetric: { label: 'Revenue Increase', value: '+65%' },
+    allMetrics: [
+      { label: 'SMM Followers', value: '+160%', type: 'FOLLOWERS' },
+      { label: 'PM ROAS', value: '3.0 ROAS', type: 'ROAS' },
+      { label: 'Revenue Increase', value: '+65%', type: 'REV' },
+      { label: 'AOV Increase', value: '+14%', type: 'AOV' },
+      { label: 'Bounce Decrease', value: '-18%', type: 'BOUNCE' }
+    ],
+    notes: 'PM ROAS stated as 3+ in source.'
+  },
   {
     id: 'vanika-jewels',
     name: 'Vanika Jewels',
@@ -78,14 +95,14 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     category: 'Jewelry / Retail',
     categoryGroup: 'Jewellery',
     services: ['Build', 'SMM', 'PM'],
-    primaryMetric: { label: 'Stated Revenue', value: 'INR 25 Lakh+' },
+    primaryMetric: { label: 'Stated Revenue', value: 'INR 25L+' },
     allMetrics: [
       { label: 'SMM Followers', value: '+120%', type: 'FOLLOWERS' },
       { label: 'CPL Decrease', value: '-30%', type: 'CPL' },
       { label: 'Leads Increased', value: '2.8X', type: 'LEADS' },
       { label: 'Stated Revenue', value: 'INR 25L+', type: 'REV' }
     ],
-    notes: 'Revenue reported as an absolute figure. No metrics recorded for Build.'
+    notes: 'Revenue reported as an absolute figure. No metrics recorded for: Build.'
   },
   {
     id: 'kicky-and-perky',
@@ -95,15 +112,15 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     category: 'Jewelry / Ecomm',
     categoryGroup: 'Jewellery',
     services: ['PM', 'RM'],
-    primaryMetric: { label: 'RM ROAS', value: '6.0 ROAS' },
+    primaryMetric: { label: 'RM ROAS', value: '8.0 ROAS' },
     allMetrics: [
       { label: 'PM ROAS', value: '4.0 ROAS', type: 'ROAS' },
-      { label: 'RM ROAS', value: '6.0 ROAS', type: 'ROAS' },
+      { label: 'RM ROAS', value: '8.0 ROAS', type: 'ROAS' },
       { label: 'Revenue Increase', value: '+35%', type: 'REV' },
       { label: 'AOV Increase', value: '+20%', type: 'AOV' },
       { label: 'Bounce Decrease', value: '-12%', type: 'BOUNCE' }
     ],
-    notes: 'RM ROAS stated as 6+ in source.'
+    notes: 'RM ROAS stated as 8+ in source.'
   },
   {
     id: 'espira-gems',
@@ -136,7 +153,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Revenue Increase', value: '+30%', type: 'REV' },
       { label: 'Visitors Increase', value: '2X', type: 'VISITORS' }
     ],
-    notes: 'PM ROAS stated as 2+ in source. No metrics recorded for CRO, Build.'
+    notes: 'PM ROAS stated as 2+ in source. No metrics recorded for: CRO, Build.'
   },
   {
     id: 'paperbark-camp',
@@ -146,9 +163,9 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     category: 'Hospitality / Stays',
     categoryGroup: 'Hospitality: Stays / Resorts',
     services: ['SEO', 'PM'],
-    primaryMetric: { label: 'PM ROAS', value: '6.0 ROAS' },
+    primaryMetric: { label: 'PM ROAS', value: '8.0 ROAS' },
     allMetrics: [
-      { label: 'PM ROAS', value: '6.0 ROAS', type: 'ROAS' },
+      { label: 'PM ROAS', value: '8.0 ROAS', type: 'ROAS' },
       { label: 'Stated Revenue', value: '$120K+', type: 'REV' },
       { label: 'Visitors Increase', value: '1.6X', type: 'VISITORS' }
     ],
@@ -210,9 +227,9 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     category: 'Wine Seller',
     categoryGroup: 'Food / FMCG Retail',
     services: ['SEO', 'CRO'],
-    primaryMetric: { label: 'Visitors Increase', value: '1.8X' },
+    primaryMetric: { label: 'Visitors Increase', value: '1.6X' },
     allMetrics: [
-      { label: 'Visitors Increase', value: '1.8X', type: 'VISITORS' },
+      { label: 'Visitors Increase', value: '1.6X', type: 'VISITORS' },
       { label: 'Bounce Decrease', value: '-18%', type: 'BOUNCE' }
     ]
   },
@@ -247,7 +264,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'AOV Increase', value: '+24%', type: 'AOV' },
       { label: 'Visitors Increase', value: '3X', type: 'VISITORS' }
     ],
-    notes: 'Followers stated as 1500+ increase / 75% increase. No metrics recorded for Build.'
+    notes: 'Followers stated as 1800+ increase / 75% increase. No metrics recorded for: Build.'
   },
   {
     id: 'isha-and-ishana',
@@ -264,7 +281,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Revenue Increase', value: '+43%', type: 'REV' },
       { label: 'Bounce Decrease', value: '-24%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for Build.'
+    notes: 'No metrics recorded for: Build.'
   },
   {
     id: 'rudrasetu',
@@ -281,10 +298,10 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'RM ROAS', value: '7.0 ROAS', type: 'ROAS' },
       { label: 'Revenue Increase', value: '+40%', type: 'REV' },
       { label: 'AOV Increase', value: '+15%', type: 'AOV' },
-      { label: 'Visitors Increase', value: '3.5X', type: 'VISITORS' },
+      { label: 'Leads Increased', value: '3.5X', type: 'LEADS' },
       { label: 'Bounce Decrease', value: '-32%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for Build.'
+    notes: 'No metrics recorded for: Build.'
   },
   {
     id: 'pro4security',
@@ -319,12 +336,12 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Visitors Increase', value: '3X', type: 'VISITORS' },
       { label: 'Bounce Decrease', value: '-23%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for CRO.'
+    notes: 'No metrics recorded for: CRO.'
   },
   {
     id: 'kidzfirstudio',
     name: 'Kidzfirstudio',
-    url: 'https://kidzfirstudio.com/',
+    url: 'https://kidzfitstudio.com/',
     domain: 'kidzfitstudio.com',
     category: 'Kid Gym / Daycare Services',
     categoryGroup: 'Local / Home Services',
@@ -367,7 +384,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Revenue Increase', value: '150%', type: 'REV' },
       { label: 'Visitors Increase', value: '4X', type: 'VISITORS' }
     ],
-    notes: 'Revenue stated as a multiple, not a percentage. No metrics recorded for SMM.'
+    notes: 'Revenue stated as a multiple, not a percentage. No metrics recorded for: SMM.'
   },
   {
     id: 'radboards',
@@ -386,7 +403,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Visitors Increase', value: '3.5X', type: 'VISITORS' },
       { label: 'Bounce Decrease', value: '-24%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for Build.'
+    notes: 'No metrics recorded for: Build.'
   },
   {
     id: 'the-skin-beneath',
@@ -403,9 +420,24 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'AOV Increase', value: '+15%', type: 'AOV' },
       { label: 'Bounce Decrease', value: '-22%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for Build, RM.'
+    notes: 'No metrics recorded for: Build, RM.'
   },
-
+  {
+    id: 'yube1',
+    name: 'Yube1',
+    url: 'https://yube1.in/',
+    domain: 'yube1.in',
+    category: 'Real Estate',
+    categoryGroup: 'Real Estate',
+    services: ['PM'],
+    primaryMetric: { label: 'Leads Increased', value: '3X' },
+    allMetrics: [
+      { label: 'PM ROAS', value: '2.5 ROAS', type: 'ROAS' },
+      { label: 'CPL Decrease', value: '-22%', type: 'CPL' },
+      { label: 'Leads Increased', value: '3X', type: 'LEADS' },
+      { label: 'Revenue Increase', value: '+40%', type: 'REV' }
+    ]
+  },
   {
     id: 'too-bold-to-confirm',
     name: 'Too Bold To Confirm',
@@ -423,7 +455,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Visitors Increase', value: '2X', type: 'VISITORS' },
       { label: 'Bounce Decrease', value: '-20%', type: 'BOUNCE' }
     ],
-    notes: 'Revenue stated as a multiple, not a percentage. No metrics recorded for Build.'
+    notes: 'Revenue stated as a multiple, not a percentage. No metrics recorded for: Build.'
   },
   {
     id: 'kasuti-kavana',
@@ -433,13 +465,13 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     category: 'Fashion / Ecomm',
     categoryGroup: 'Fashion Ecomm',
     services: ['CRO', 'Build', 'PM', 'RM'],
-    primaryMetric: { label: 'Revenue Increase', value: '+60%' },
+    primaryMetric: { label: 'Revenue Increase', value: '+50%' },
     allMetrics: [
       { label: 'PM ROAS', value: '2.5 ROAS', type: 'ROAS' },
-      { label: 'Revenue Increase', value: '+60%', type: 'REV' },
-      { label: 'Bounce Decrease', value: '-16%', type: 'BOUNCE' }
+      { label: 'Revenue Increase', value: '+50%', type: 'REV' },
+      { label: 'AOV Increase', value: '+15%', type: 'AOV' }
     ],
-    notes: 'No metrics recorded for Build, RM.'
+    notes: 'No metrics recorded for: Build, RM.'
   },
   {
     id: 'shaffa',
@@ -452,14 +484,31 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     primaryMetric: { label: 'Stated Revenue', value: '$45,000' },
     allMetrics: [
       { label: 'PM ROAS', value: '3.5 ROAS', type: 'ROAS' },
-      { label: 'CPL Decrease', value: '-30%', type: 'CPL' },
       { label: 'Leads Increased', value: '2.5X', type: 'LEADS' },
       { label: 'Stated Revenue', value: '$45,000+', type: 'REV' },
+      { label: 'Visitors Increase', value: '3X', type: 'VISITORS' },
+      { label: 'Bounce Decrease', value: '-30%', type: 'BOUNCE' }
+    ],
+    notes: 'Revenue reported as an absolute figure.'
+  },
+  {
+    id: 'caness',
+    name: 'Caness',
+    url: 'https://caness.com.au/',
+    domain: 'caness.com.au',
+    category: 'Hospitality / Restaurant',
+    categoryGroup: 'Hospitality: Restaurants',
+    services: ['SEO', 'PM'],
+    primaryMetric: { label: 'Stated Revenue', value: '$23,000' },
+    allMetrics: [
+      { label: 'PM ROAS', value: '3.0 ROAS', type: 'ROAS' },
+      { label: 'CPL Decrease', value: '-18%', type: 'CPL' },
+      { label: 'Leads Increased', value: '2.5X', type: 'LEADS' },
+      { label: 'Stated Revenue', value: '$23,000+', type: 'REV' },
       { label: 'Visitors Increase', value: '3X', type: 'VISITORS' }
     ],
     notes: 'Revenue reported as an absolute figure.'
   },
-
   {
     id: 'azoneh-treasures',
     name: 'Azoreh Treasures',
@@ -485,9 +534,9 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     category: 'Jewelry / Ecomm',
     categoryGroup: 'Jewellery',
     services: ['SEO', 'RM'],
-    primaryMetric: { label: 'RM ROAS', value: '5.0 ROAS' },
+    primaryMetric: { label: 'RM ROAS', value: '6.0 ROAS' },
     allMetrics: [
-      { label: 'RM ROAS', value: '5.0 ROAS', type: 'ROAS' },
+      { label: 'RM ROAS', value: '6.0 ROAS', type: 'ROAS' },
       { label: 'Revenue Increase', value: '+30%', type: 'REV' },
       { label: 'AOV Increase', value: '+12%', type: 'AOV' },
       { label: 'Visitors Increase', value: '3X', type: 'VISITORS' }
@@ -506,10 +555,10 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     allMetrics: [
       { label: 'PM ROAS', value: '2.5 ROAS', type: 'ROAS' },
       { label: 'Revenue Increase', value: '+40%', type: 'REV' },
-      { label: 'AOV Increase', value: '+16%', type: 'AOV' },
+      { label: 'AOV Increase', value: '+18%', type: 'AOV' },
       { label: 'Bounce Decrease', value: '-20%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for Build.'
+    notes: 'No metrics recorded for: Build.'
   },
   {
     id: 'basil-pet-care',
@@ -540,10 +589,10 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'SMM Followers', value: '+130%', type: 'FOLLOWERS' },
       { label: 'RM ROAS', value: '4.0 ROAS', type: 'ROAS' },
       { label: 'Revenue Increase', value: '+20%', type: 'REV' },
-      { label: 'Visitors Increase', value: '3X', type: 'VISITORS' },
-      { label: 'Bounce Decrease', value: '-16%', type: 'BOUNCE' }
+      { label: 'AOV Increase', value: '+18%', type: 'AOV' },
+      { label: 'Visitors Increase', value: '3X', type: 'VISITORS' }
     ],
-    notes: 'Revenue and AOV come from Retention Marketing, not PM. No metrics recorded for Build.'
+    notes: 'Revenue and AOV come from Retention Marketing, not PM. No metrics recorded for: Build.'
   },
   {
     id: 'rangoli',
@@ -624,7 +673,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'AOV Increase', value: '+15%', type: 'AOV' },
       { label: 'Bounce Decrease', value: '-24%', type: 'BOUNCE' }
     ],
-    notes: 'No metrics recorded for Build.'
+    notes: 'No metrics recorded for: Build.'
   }
 ];
 
