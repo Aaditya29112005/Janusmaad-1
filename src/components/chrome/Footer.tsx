@@ -100,11 +100,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
           </h1>
         </div>
 
-        {/* Dual Accent Bottom Bar (Navy + Red / Crimson Stripe) */}
-        <div className="w-full flex h-2.5 mt-0">
-          <div className="w-[28%] bg-[#1c202e]" />
-          <div className="w-[72%] bg-[#c8102e]" />
-        </div>
+        {/* Bottom Accent Bar (Brand Navy) */}
+        <div className="w-full h-2.5 bg-[#1c202e] mt-0" />
       </div>
     </footer>
   );
