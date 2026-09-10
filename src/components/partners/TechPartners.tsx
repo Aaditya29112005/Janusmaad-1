@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TECH_PARTNERS } from '../../content/partners';
 import { gsap, ScrollTrigger } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
 
 export const TechPartners: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const visiblePartners = isExpanded ? TECH_PARTNERS : TECH_PARTNERS.slice(0, 4);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -26,7 +29,7 @@ export const TechPartners: React.FC = () => {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [isExpanded]);
 
   return (
     <section id="partners" className="py-24 px-4 sm:px-8 bg-bone border-b border-hairline relative">
@@ -38,8 +41,8 @@ export const TechPartners: React.FC = () => {
         </div>
 
         {/* CodePen GSAP ScrollTrigger.batch() Tech Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-          {TECH_PARTNERS.map((partner) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6">
+          {visiblePartners.map((partner) => (
             <div
               key={partner.id}
               className="tech-card opacity-0 translate-y-6 scale-95 bg-white border border-hairline rounded-2xl p-4 h-28 sm:h-32 flex items-center justify-center shadow-sm hover:shadow-xl hover:border-violet/40 hover:-translate-y-1.5 transition-all duration-300 group cursor-pointer"
@@ -54,7 +57,20 @@ export const TechPartners: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Show More / Show Less Toggle Button */}
+        {TECH_PARTNERS.length > 4 && (
+          <div className="flex justify-center pt-4">
+            <button
+              onClick={() => setIsExpanded((prev) => !prev)}
+              className="px-8 py-3.5 bg-ink text-white hover:bg-violet transition-colors rounded-full font-display text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-md"
+            >
+              {isExpanded ? 'Show Less' : 'Show More'}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 };
+
