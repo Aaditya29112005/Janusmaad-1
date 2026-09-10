@@ -29,28 +29,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
   const [targetLift, setTargetLift] = useState(35); // 35% lift
   const [activeSolution, setActiveSolution] = useState(0);
 
-  // Hero Form State
-  const [heroForm, setHeroForm] = useState({
-    name: '',
-    email: '',
-    countryCode: '+91',
-    phone: '',
-    message: '',
-    optIn: true
-  });
-  const [heroSubmitted, setHeroSubmitted] = useState(false);
-
-  // Bottom Form State
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: 'Performance Marketing Audit Request',
-    phone: '',
-    message: '',
-    optIn: true
-  });
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
   // Calculation Logic
   const projectedROAS = Number((currentROAS * (1 + targetLift / 100)).toFixed(2));
   const currentRevenue = monthlySpend * currentROAS;
@@ -65,15 +43,16 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
     return `₹${Math.round(val).toLocaleString('en-IN')}`;
   };
 
-  const handleHeroSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!heroForm.name || !heroForm.email || !heroForm.phone) return;
-    setHeroSubmitted(true);
-    setTimeout(() => {
-      setHeroSubmitted(false);
-      setHeroForm({ name: '', email: '', countryCode: '+91', phone: '', message: '', optIn: true });
-    }, 4000);
-  };
+  // Bottom Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: 'Performance Marketing Audit Request',
+    phone: '',
+    message: '',
+    optIn: true
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleBottomSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,37 +77,35 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </button>
       </div>
 
-      {/* 1. LIGHT THEME HERO SECTION (SPLIT LAYOUT: LEFT CONTENT + RIGHT FLOATING AUDIT FORM) */}
+      {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE REVENUE CALCULATOR) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-white text-ink rounded-[32px] p-8 sm:p-12 border border-hairline shadow-xl relative overflow-hidden">
+        <div className="bg-white text-ink rounded-[32px] p-6 sm:p-10 border border-hairline shadow-xl relative overflow-hidden">
           {/* Subtle Light Accent Background Glows */}
           <div className="absolute top-[-80px] left-[5%] w-[320px] h-[320px] bg-violet/5 rounded-full blur-[90px] pointer-events-none" />
           <div className="absolute bottom-[-80px] right-[10%] w-[300px] h-[300px] bg-teal/10 rounded-full blur-[80px] pointer-events-none" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
-            <div className="lg:col-span-7 space-y-8">
-
-
-              <div className="space-y-4">
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink leading-[1.1] tracking-tight uppercase">
-                  BUILT ON DATA.<br />
+            <div className="lg:col-span-5 space-y-6">
+              <div className="space-y-3">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink leading-[1.05] tracking-tight uppercase">
+                  PERFORMANCE<br />
                   <span className="bg-gradient-to-r from-violet via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                    OPTIMIZED FOR CONVERSIONS.
+                    MARKETING
                   </span>
                 </h1>
 
-                <p className="text-base sm:text-lg text-mute font-medium leading-relaxed max-w-xl font-body">
-                  We don’t guess. We test, track, and scale campaigns using real-time data, conversion signals, and smart automation across Meta, Google, Amazon, and YouTube.
+                <p className="text-base sm:text-lg text-mute font-medium leading-relaxed font-body">
+                  Our campaigns should never run on autopilot.
                 </p>
               </div>
 
               {/* TRUSTED TECHNOLOGIES */}
-              <div className="space-y-3 pt-2">
+              <div className="space-y-2.5 pt-1">
                 <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
                   TRUSTED TECHNOLOGIES & PLATFORMS
                 </span>
-                <div className="flex flex-wrap items-center gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
                   {[
                     {
                       name: 'Meta Ads',
@@ -199,7 +176,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   ].map((tech, i) => (
                     <div
                       key={i}
-                      className={`px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold flex items-center gap-2 transition-all hover:border-violet/40 hover:text-violet ${tech.bg}`}
+                      className={`px-3 py-1 rounded-xl border text-xs font-mono font-bold flex items-center gap-2 transition-all hover:border-violet/40 hover:text-violet ${tech.bg}`}
                     >
                       {tech.icon}
                       <span>{tech.name}</span>
@@ -209,133 +186,125 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               </div>
             </div>
 
-            {/* RIGHT COLUMN: FLOATING LIGHT FORM CARD */}
-            <div className="lg:col-span-5">
-              <div className="bg-bone text-ink rounded-3xl p-6 sm:p-8 shadow-sm border border-hairline relative">
-                <div className="text-center space-y-1 mb-6">
-                  <h3 className="font-display text-xl sm:text-2xl font-extrabold text-ink">
-                    Get Your <span className="text-violet">Free Consultation</span>
-                  </h3>
-                  <p className="text-xs text-mute font-medium">
-                    60-minute ad account teardown & custom growth roadmap
-                  </p>
+            {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
+            <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+              <div className="space-y-1">
+                <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
+                  Estimate Your Revenue Lift & Payback Speed
+                </h3>
+              </div>
+
+              {/* Compact 2-Column Calculator Layout */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
+                {/* Sliders Box */}
+                <div className="sm:col-span-6 space-y-3.5 bg-white p-4 rounded-2xl border border-hairline shadow-2xs flex flex-col justify-center">
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Monthly Ad Spend</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {formatCurrency(monthlySpend)}
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={50000} max={2000000} step={25000}
+                      value={monthlySpend} onChange={(e) => setMonthlySpend(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                    <div className="flex items-center gap-1 flex-wrap pt-0.5">
+                      {[100000, 250000, 500000, 1000000].map((preset) => (
+                        <button key={preset} type="button" onClick={() => setMonthlySpend(preset)}
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
+                            monthlySpend === preset ? 'bg-violet text-white font-bold shadow-2xs' : 'bg-bone text-mute hover:text-ink border border-hairline'
+                          }`}
+                        >
+                          {formatCurrency(preset)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Current ROAS</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {currentROAS.toFixed(1)}x
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={1.0} max={5.0} step={0.1}
+                      value={currentROAS} onChange={(e) => setCurrentROAS(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Target ROAS Lift</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        +{targetLift}%
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={10} max={100} step={5}
+                      value={targetLift} onChange={(e) => setTargetLift(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
                 </div>
 
-                {heroSubmitted ? (
-                  <div className="py-8 text-center space-y-4">
-                    <div className="w-14 h-14 bg-violet/10 text-violet rounded-full flex items-center justify-center mx-auto">
-                      <ShieldCheck className="w-8 h-8 text-violet" />
-                    </div>
-                    <h4 className="font-display text-lg font-bold text-ink">Request Received!</h4>
-                    <p className="text-xs text-mute">
-                      A senior performance strategist will contact you within 2 hours.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleHeroSubmit} className="space-y-3.5">
-                    <div>
-                      <input
-                        type="text"
-                        required
-                        value={heroForm.name}
-                        onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
-                        placeholder="Your Full Name *"
-                        className="w-full px-4 py-3 bg-white border border-hairline rounded-full text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors shadow-2xs"
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        type="email"
-                        required
-                        value={heroForm.email}
-                        onChange={(e) => setHeroForm({ ...heroForm, email: e.target.value })}
-                        placeholder="Work Email Address *"
-                        className="w-full px-4 py-3 bg-white border border-hairline rounded-full text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors shadow-2xs"
-                      />
+                {/* Output Gradient Box */}
+                <div className="sm:col-span-6">
+                  <div className="rounded-2xl p-4 text-white shadow-lg h-full flex flex-col justify-between space-y-3" style={{ background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)' }}>
+                    <div className="grid grid-cols-2 gap-2 font-mono">
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase">PROJECTED ROAS</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
+                          {projectedROAS}x <span className="text-[9px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                        </div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase">EXTRA / MONTH</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5 truncate">{formatCurrency(extraMonthlyRevenue)}</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase">12-MO GAIN</div>
+                        <div className="text-base font-display font-extrabold text-emerald-300 mt-0.5 truncate">{formatCurrency(annualGain)}</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/15">
+                        <div className="text-[9px] text-purple-100 font-semibold uppercase">PAYBACK</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5">{paybackDays} <span className="text-[9px] font-normal text-purple-100">Days</span></div>
+                      </div>
                     </div>
 
-                    <div className="flex gap-2">
-                      <select
-                        value={heroForm.countryCode}
-                        onChange={(e) => setHeroForm({ ...heroForm, countryCode: e.target.value })}
-                        className="w-28 px-3 py-3 bg-white border border-hairline rounded-full text-xs text-ink focus:outline-none focus:border-violet font-mono shadow-2xs"
-                      >
-                        <option value="+91">India +91</option>
-                        <option value="+1">USA +1</option>
-                        <option value="+44">UK +44</option>
-                        <option value="+61">Aus +61</option>
-                      </select>
-                      <input
-                        type="tel"
-                        required
-                        value={heroForm.phone}
-                        onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
-                        placeholder="Phone Number *"
-                        className="flex-1 px-4 py-3 bg-white border border-hairline rounded-full text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors shadow-2xs"
-                      />
-                    </div>
-
-                    <div>
-                      <textarea
-                        rows={3}
-                        value={heroForm.message}
-                        onChange={(e) => setHeroForm({ ...heroForm, message: e.target.value })}
-                        placeholder="Tell us about your monthly ad spend & goals..."
-                        className="w-full px-4 py-3 bg-white border border-hairline rounded-2xl text-xs text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors resize-none shadow-2xs"
-                      />
-                    </div>
-
-                    <div className="flex items-start gap-2 pt-1">
-                      <input
-                        type="checkbox"
-                        id="heroOptIn"
-                        checked={heroForm.optIn}
-                        onChange={(e) => setHeroForm({ ...heroForm, optIn: e.target.checked })}
-                        className="mt-0.5 h-3.5 w-3.5 accent-violet cursor-pointer"
-                      />
-                      <label htmlFor="heroOptIn" className="text-[10px] text-mute leading-tight cursor-pointer">
-                        I agree to receive growth insights and audit updates.
-                      </label>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-violet via-purple-600 to-indigo-600 text-white font-display font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-opacity shadow-md cursor-pointer flex items-center justify-center gap-2 group"
-                    >
-                      <span>Contact Us</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <button onClick={() => onOpenAudit('acquire-performance')} className="w-full py-2.5 px-3 rounded-xl bg-white text-violet font-display font-bold text-[10px] hover:bg-white/95 transition-all shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1 group">
+                      <span>CLAIM THIS ROAS GROWTH</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </button>
-                  </form>
-                )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2, 3 & 4. COMBINED STRATEGY & REVENUE CALCULATOR SECTION */}
+      {/* 2. STRATEGY & DELIVERABLES SECTION (COMPACT & IMPACTFUL) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-white text-ink border border-hairline rounded-[32px] p-6 sm:p-10 space-y-8 shadow-xl relative overflow-hidden">
           
-          {/* Top Row: Strategy Message (Left) + Interactive Calculator (Right) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            
-            {/* LEFT COLUMN: STRATEGY & WHAT WE DELIVER */}
-            <div className="lg:col-span-5 space-y-6 flex flex-col justify-between">
-              <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Column: Narrative */}
+            <div className="lg:col-span-6 space-y-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight">
+                Marketing Should Always Pay for Itself.
+              </h2>
+              <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
+                At JanusMAAD, we focus exclusively on performance-driven campaigns, transparent tracking, and scalable media buying frameworks that help businesses scale without wasting budget.
+              </p>
+            </div>
 
-                
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight">
-                  Marketing Should Always Pay for Itself.
-                </h2>
-                
-                <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
-                  At JanusMAAD, we focus exclusively on performance-driven campaigns, transparent tracking, and scalable media buying frameworks that help businesses scale without wasting budget.
-                </p>
-              </div>
-
-              {/* What We Deliver List */}
+            {/* Right Column: Key Deliverables Card */}
+            <div className="lg:col-span-6">
               <div className="bg-bone text-ink rounded-3xl p-5 sm:p-6 space-y-3.5 border border-hairline shadow-2xs">
                 <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
                   <CheckCircle2 className="w-4.5 h-4.5 text-violet shrink-0" />
@@ -357,148 +326,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                 </div>
               </div>
             </div>
-
-            {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
-            <div className="lg:col-span-7 flex flex-col justify-between bg-bone/50 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4">
-              <div className="space-y-1">
-
-                <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
-                  Estimate Your Revenue Lift & Payback Speed
-                </h3>
-              </div>
-
-              {/* Compact 2-Column Calculator Layout */}
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
-                
-                {/* Sliders Box */}
-                <div className="sm:col-span-6 space-y-4 bg-white p-4 sm:p-5 rounded-2xl border border-hairline shadow-2xs flex flex-col justify-center">
-                  {/* Monthly Spend */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[11px] font-mono">
-                      <span className="text-mute font-medium">Monthly Ad Spend</span>
-                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
-                        {formatCurrency(monthlySpend)}
-                      </span>
-                    </div>
-                    <input 
-                      type="range" 
-                      min={50000} 
-                      max={2000000} 
-                      step={25000}
-                      value={monthlySpend}
-                      onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
-                    />
-                    <div className="flex items-center gap-1 flex-wrap pt-0.5">
-                      {[100000, 250000, 500000, 1000000].map((preset) => (
-                        <button
-                          key={preset}
-                          type="button"
-                          onClick={() => setMonthlySpend(preset)}
-                          className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
-                            monthlySpend === preset
-                              ? 'bg-violet text-white font-bold shadow-2xs'
-                              : 'bg-bone text-mute hover:text-ink border border-hairline'
-                          }`}
-                        >
-                          {formatCurrency(preset)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Current ROAS */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[11px] font-mono">
-                      <span className="text-mute font-medium">Current ROAS</span>
-                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
-                        {currentROAS.toFixed(1)}x
-                      </span>
-                    </div>
-                    <input 
-                      type="range" 
-                      min={1.0} 
-                      max={5.0} 
-                      step={0.1}
-                      value={currentROAS}
-                      onChange={(e) => setCurrentROAS(Number(e.target.value))}
-                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
-                    />
-                  </div>
-
-                  {/* Target Lift */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[11px] font-mono">
-                      <span className="text-mute font-medium">Target ROAS Lift</span>
-                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
-                        +{targetLift}%
-                      </span>
-                    </div>
-                    <input 
-                      type="range" 
-                      min={10} 
-                      max={100} 
-                      step={5}
-                      value={targetLift}
-                      onChange={(e) => setTargetLift(Number(e.target.value))}
-                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
-                    />
-                  </div>
-                </div>
-
-                {/* Output Gradient Box */}
-                <div className="sm:col-span-6">
-                  <div
-                    className="rounded-2xl p-4 sm:p-5 text-white shadow-lg h-full flex flex-col justify-between space-y-4"
-                    style={{
-                      background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)',
-                      boxShadow: '0 12px 28px -10px rgba(124, 58, 237, 0.4), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4)'
-                    }}
-                  >
-                    <div className="grid grid-cols-2 gap-2.5 font-mono">
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">PROJECTED ROAS</div>
-                        <div className="text-lg font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
-                          {projectedROAS}x
-                          <span className="text-[9px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">EXTRA / MONTH</div>
-                        <div className="text-lg font-display font-extrabold text-white mt-0.5 truncate">
-                          {formatCurrency(extraMonthlyRevenue)}
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">12-MO GAIN</div>
-                        <div className="text-lg font-display font-extrabold text-emerald-300 mt-0.5 truncate">
-                          {formatCurrency(annualGain)}
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15">
-                        <div className="text-[9px] text-purple-100 font-semibold uppercase tracking-wider">PAYBACK</div>
-                        <div className="text-lg font-display font-extrabold text-white mt-0.5">
-                          {paybackDays} <span className="text-[9px] font-normal text-purple-100">Days</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => onOpenAudit('acquire-performance')}
-                      className="w-full py-3 px-4 rounded-xl bg-white text-violet font-display font-bold text-[11px] hover:bg-white/95 active:scale-[0.99] transition-all shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1.5 group"
-                    >
-                      <span>CLAIM THIS ROAS GROWTH</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
           </div>
 
           {/* Bottom Row: 4 Core Pillars Grid */}
@@ -811,8 +638,8 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       </section>
 
       {/* 6. OUR WORK (CATEGORY METRICS EXPLORER) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-4">
+        <div className="text-center max-w-3xl mx-auto space-y-1.5">
           <div className="text-xs font-mono font-bold text-violet uppercase tracking-widest">
             OUR WORK
           </div>
@@ -827,14 +654,8 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="PM" hideHeader={true} />
       </section>
 
-      {/* 7. TESTIMONIALS (WHAT OUR CLIENTS ARE HAPPY ABOUT) */}
-      <section className="border-t border-hairline pt-12 space-y-6">
-        <div className="text-center max-w-3xl mx-auto space-y-1 px-4">
-
-          <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-ink">
-            What Our Clients Are Happy About
-          </h2>
-        </div>
+      {/* 7. TESTIMONIALS */}
+      <section className="border-t border-hairline pt-8">
         <TestimonialsMarquee />
       </section>
 

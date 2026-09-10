@@ -91,8 +91,8 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
   };
 
   return (
-    <section ref={containerRef} id="metrics-database" className={`${hideHeader ? 'py-0 border-b-0' : 'py-20 border-b border-hairline'} px-4 sm:px-8 bg-bone relative select-none overflow-hidden`}>
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+    <section ref={containerRef} id="metrics-database" className={`${hideHeader ? 'py-0 px-0 bg-transparent border-b-0' : 'py-16 px-4 sm:px-8 bg-bone border-b border-hairline'} relative select-none overflow-hidden`}>
+      <div className={`max-w-7xl mx-auto ${hideHeader ? 'space-y-6' : 'space-y-10'} relative z-10`}>
 
         {!hideHeader && (
           showOnlyClientRecords ? (
@@ -117,25 +117,25 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 
         {!showOnlyClientRecords && (
           /* Category Pitch Generator Box (Compact Light Mode) */
-          <div className="bg-white border border-hairline text-ink rounded-3xl p-6 sm:p-8 space-y-6 shadow-md relative overflow-hidden">
-            <div className="space-y-1 relative z-10">
-              <span className="text-xs font-mono font-bold text-violet uppercase tracking-widest block">
+          <div className="bg-white border border-hairline text-ink rounded-2xl p-4 sm:p-6 space-y-4 shadow-md relative overflow-hidden">
+            <div className="space-y-0.5 relative z-10">
+              <span className="text-[11px] font-mono font-bold text-violet uppercase tracking-widest block">
                 CATEGORY BENCHMARK PITCH FINDER
               </span>
-              <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink">
+              <h3 className="text-lg sm:text-xl font-display font-extrabold text-ink">
                 What Metric Should You Benchmark For Your Brand?
               </h3>
             </div>
 
             {/* Category Selector Pills */}
-            <div className="flex flex-wrap items-center gap-2 relative z-10">
+            <div className="flex flex-wrap items-center gap-1.5 relative z-10">
               {CATEGORY_PITCHES.map((item) => {
                 const isSelected = item.category === selectedCategory;
                 return (
                   <button
                     key={item.category}
                     onClick={() => setSelectedCategory(item.category)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-display font-bold transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-violet text-white shadow-xs scale-102'
                         : 'bg-bone text-mute hover:text-ink hover:bg-hairline/60 border border-hairline'
@@ -148,32 +148,32 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
             </div>
 
             {/* Category Pitch Showcase Result Card */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-bone border border-hairline rounded-2xl p-5 sm:p-6 relative z-10">
-              <div className="lg:col-span-5 space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-mono text-violet font-bold uppercase">
-                  <Award className="w-4 h-4 text-violet" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center bg-bone border border-hairline rounded-xl p-4 relative z-10">
+              <div className="lg:col-span-4 space-y-1.5">
+                <div className="flex items-center gap-1.5 text-[11px] font-mono text-violet font-bold uppercase">
+                  <Award className="w-3.5 h-3.5 text-violet" />
                   <span>BENCHMARK FOR {activePitch.category.toUpperCase()}</span>
                 </div>
                 <div className="space-y-0.5">
-                  <div className="text-3xl sm:text-4xl font-display font-extrabold text-ink">
+                  <div className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
                     {activePitch.topPitch.value}
                   </div>
-                  <div className="text-sm font-display text-violet font-bold">
+                  <div className="text-xs font-display text-violet font-bold">
                     {activePitch.topPitch.metric} <span className="text-mute font-medium">({activePitch.topPitch.brand})</span>
                   </div>
                 </div>
               </div>
 
-              <div className="lg:col-span-7 space-y-2">
-                <div className="text-[11px] font-mono text-mute uppercase font-bold">Full Category Metrics Breakdown</div>
+              <div className="lg:col-span-8 space-y-1.5">
+                <div className="text-[10px] font-mono text-mute uppercase font-bold">Full Category Metrics Breakdown</div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {activePitch.metrics.map((m, idx) => (
-                    <div key={idx} className="p-2.5 bg-white border border-hairline rounded-xl space-y-0.5">
+                    <div key={idx} className="p-2 bg-white border border-hairline rounded-lg space-y-0.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono text-mute">{m.metric}</span>
-                        <span className="text-[11px] font-mono text-violet font-bold">{m.brand}</span>
+                        <span className="text-[10px] font-mono text-mute">{m.metric}</span>
+                        <span className="text-[10px] font-mono text-violet font-bold">{m.brand}</span>
                       </div>
-                      <div className="text-lg font-display font-bold text-ink">{m.value}</div>
+                      <div className="text-base font-display font-bold text-ink">{m.value}</div>
                     </div>
                   ))}
                 </div>
