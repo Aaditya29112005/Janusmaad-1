@@ -73,8 +73,8 @@ class PreloaderSoundFX {
     try {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance('JanusMAAD gives you growth');
-      utterance.rate = 0.95;
-      utterance.pitch = 1.05;
+      utterance.rate = 0.8;
+      utterance.pitch = 1.0;
       utterance.volume = 1.0;
 
       const speakWithVoice = () => {
