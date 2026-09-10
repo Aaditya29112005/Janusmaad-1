@@ -196,7 +196,7 @@ export const MaadAtomStage: React.FC<MaadAtomProps> = ({
         )}
 
         <svg className="orbits behind" viewBox="0 0 620 620" aria-hidden="true">
-          {SERVICES.map((s, i) => <path key={s.label} ref={(n) => (backPaths.current[i] = n)} />)}
+          {SERVICES.map((s, i) => <path key={s.label} ref={(n) => { backPaths.current[i] = n; }} />)}
         </svg>
 
         <div className="nucleus">
@@ -205,11 +205,11 @@ export const MaadAtomStage: React.FC<MaadAtomProps> = ({
         </div>
 
         <svg className="orbits infront" viewBox="0 0 620 620" aria-hidden="true">
-          {SERVICES.map((s, i) => <path key={s.label} ref={(n) => (frontPaths.current[i] = n)} />)}
+          {SERVICES.map((s, i) => <path key={s.label} ref={(n) => { frontPaths.current[i] = n; }} />)}
         </svg>
 
         {SERVICES.map((s, i) => (
-          <div className="chip" key={s.label} ref={(n) => (chips.current[i] = n)}>
+          <div className="chip" key={s.label} ref={(n) => { chips.current[i] = n; }}>
             <i className={s.tone === "t" ? "t" : undefined} />
             <span>{s.label}</span>
           </div>
