@@ -68,8 +68,43 @@ class PreloaderSoundFX {
     }
   }
 
+  public speakPhrase() {
+    if (this.muted || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance('JanusMAAD gives you growth');
+      utterance.rate = 0.95;
+      utterance.pitch = 1.05;
+      utterance.volume = 1.0;
+
+      const speakWithVoice = () => {
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(
+          (v) => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Alex'))
+        ) || voices.find((v) => v.lang.startsWith('en'));
+        
+        if (preferredVoice) {
+          utterance.voice = preferredVoice;
+        }
+        window.speechSynthesis.speak(utterance);
+      };
+
+      if (window.speechSynthesis.getVoices().length > 0) {
+        speakWithVoice();
+      } else {
+        window.speechSynthesis.onvoiceschanged = () => {
+          speakWithVoice();
+          window.speechSynthesis.onvoiceschanged = null;
+        };
+      }
+    } catch {
+      // Speech safety
+    }
+  }
+
   public playGrowthChime() {
     if (this.muted) return;
+    this.speakPhrase();
     try {
       const ctx = this.initCtx();
       if (!ctx || ctx.state !== 'running') return;
