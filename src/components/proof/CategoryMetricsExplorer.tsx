@@ -58,7 +58,7 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewellery');
-  const [isExpanded, setIsExpanded] = React.useState(false);
+  const [visibleCount, setVisibleCount] = React.useState(3);
 
   const activePitch = React.useMemo(() => {
     return CATEGORY_PITCHES.find(p => p.category === selectedCategory) || CATEGORY_PITCHES[0];
@@ -75,7 +75,15 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
     return [...topClients, ...remaining];
   }, []);
 
-  const visibleClients = isExpanded ? orderedClients : orderedClients.slice(0, 3);
+  const visibleClients = orderedClients.slice(0, visibleCount);
+
+  const handleSeeMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 3, orderedClients.length));
+  };
+
+  const handleSeeLess = () => {
+    setVisibleCount(3);
+  };
 
   return (
     <section ref={containerRef} id="metrics-database" className="py-20 px-4 sm:px-8 bg-bone border-b border-hairline relative select-none overflow-hidden">
@@ -233,14 +241,24 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
             })}
           </div>
 
-          {/* Bottom Center Aligned See More / See Less Button */}
-          <div className="flex justify-center pt-4">
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="px-8 py-3.5 bg-ink text-white hover:bg-violet transition-colors rounded-full font-display text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-md"
-            >
-              {isExpanded ? 'See Less' : 'See More'}
-            </button>
+          {/* Bottom Center Aligned See More (adds 3 cards per click) / See Less Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            {visibleCount < orderedClients.length && (
+              <button
+                onClick={handleSeeMore}
+                className="px-8 py-3.5 bg-ink text-white hover:bg-violet transition-colors rounded-full font-display text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-md"
+              >
+                See More
+              </button>
+            )}
+            {visibleCount > 3 && (
+              <button
+                onClick={handleSeeLess}
+                className="px-6 py-3.5 bg-bone border border-hairline text-ink hover:bg-violet/10 transition-colors rounded-full font-display text-sm font-semibold flex items-center gap-2 cursor-pointer"
+              >
+                See Less
+              </button>
+            )}
           </div>
         </div>
 
