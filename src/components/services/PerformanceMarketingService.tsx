@@ -344,7 +344,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             <div 
               key={idx}
               className={`bg-white border border-hairline rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between ${
-                idx === 6 ? 'md:col-span-2 lg:col-span-3' : ''
+                idx === 6 ? 'md:col-span-2 md:w-1/2 md:mx-auto lg:w-full lg:col-span-1 lg:col-start-2' : ''
               }`}
             >
               <div className="space-y-3">
