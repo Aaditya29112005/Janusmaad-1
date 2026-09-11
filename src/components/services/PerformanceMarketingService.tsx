@@ -93,7 +93,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
               {/* TRUSTED TECHNOLOGIES */}
               <div className="space-y-2.5 pt-1">
                 <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
-                  TRUSTED TECHNOLOGIES & PLATFORMS
+                  Campaign Management across Platforms
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
                   {[
