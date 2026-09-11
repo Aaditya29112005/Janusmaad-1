@@ -282,41 +282,50 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       </section>
 
       {/* 2. STRATEGY & DELIVERABLES SECTION (COMPACT & IMPACTFUL) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
+        {/* Centered Heading OUTSIDE Top of Box */}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
+            WHAT WE DO
+          </h2>
+        </div>
+
         <div className="bg-white text-ink border border-hairline rounded-[32px] p-6 sm:p-10 space-y-8 shadow-xl relative overflow-hidden text-center">
           
-          {/* Centered at Top of Box */}
+          {/* Centered inside Box */}
           <div className="max-w-3xl mx-auto space-y-4 text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight text-center">
+            <h3 className="text-2xl sm:text-4xl font-display font-bold text-ink leading-[1.12] tracking-tight text-center">
               Marketing Should Always Pay for Itself.
-            </h2>
+            </h3>
             <p className="text-mute text-sm sm:text-base leading-relaxed font-medium text-center">
               At JanusMAAD, we combine AI-powered optimisation with human expertise to continuously improve your campaigns across all platforms; from Google and Meta to LinkedIn, YouTube and beyond.
             </p>
           </div>
 
-          {/* Key Deliverables Out of Box & Centered */}
-          <div className="max-w-3xl mx-auto text-center space-y-6 pt-6 border-t border-hairline/80">
-            <div className="flex items-center justify-center gap-2 text-violet font-display font-bold text-sm sm:text-base uppercase tracking-wider">
-              <CheckCircle2 className="w-5 h-5 text-violet shrink-0" />
-              <span>What We Deliver for Performance Campaigns</span>
-            </div>
-            
-            <div className="space-y-3 text-xs sm:text-sm text-mute font-medium max-w-2xl mx-auto">
-              {[
-                { bold: 'AI-powered optimisation', rest: ' to uncover patterns and opportunities' },
-                { bold: 'Multi-platform performance', rest: ' across the channels where your customers are' },
-                { bold: 'Regular campaign reviews', rest: ' - no ‘set and forget’ approach' },
-                { bold: 'Continuous testing', rest: ' across audiences, creatives, messaging and landing pages' },
-                { bold: 'Smarter budget allocation', rest: ' based on what’s actually driving business result' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center justify-center gap-2.5 text-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet shrink-0" />
-                  <span className="text-ink text-xs sm:text-sm leading-relaxed">
-                    <strong className="font-bold text-ink">{item.bold}</strong>{item.rest}
-                  </span>
-                </div>
-              ))}
+          {/* Key Deliverables Card Below */}
+          <div className="max-w-3xl mx-auto text-left">
+            <div className="bg-bone text-ink rounded-3xl p-5 sm:p-6 space-y-3.5 border border-hairline shadow-2xs">
+              <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
+                <CheckCircle2 className="w-4.5 h-4.5 text-violet shrink-0" />
+                <span>What We Deliver for Performance Campaigns</span>
+              </div>
+              
+              <div className="space-y-2.5 text-xs sm:text-sm text-mute font-semibold">
+                {[
+                  { bold: 'AI-powered optimisation', rest: ' to uncover patterns and opportunities' },
+                  { bold: 'Multi-platform performance', rest: ' across the channels where your customers are' },
+                  { bold: 'Regular campaign reviews', rest: ' - no ‘set and forget’ approach' },
+                  { bold: 'Continuous testing', rest: ' across audiences, creatives, messaging and landing pages' },
+                  { bold: 'Smarter budget allocation', rest: ' based on what’s actually driving business result' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet mt-2 shrink-0" />
+                    <span className="text-ink leading-snug">
+                      <strong className="font-bold text-ink">{item.bold}</strong>{item.rest}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
