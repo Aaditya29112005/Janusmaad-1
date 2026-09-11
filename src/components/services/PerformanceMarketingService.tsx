@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   CheckCircle2, 
   ArrowRight,
@@ -8,6 +8,8 @@ import {
   Mail,
   Clock
 } from 'lucide-react';
+import { gsap, ScrollTrigger } from '../../gsap/register';
+import { prefersReducedMotion } from '../../gsap/utils';
 
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
@@ -23,8 +25,36 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 }) => {
   // Calculator State
   const [monthlySpend, setMonthlySpend] = useState(150000); // ₹1.5L default
-  const [currentROAS, setCurrentROAS] = useState(2.2); // 2.2x
+  const [currentROAS, setCurrentROAS] = useState(2.2);
   const [targetLift, setTargetLift] = useState(35); // 35% lift
+
+  // GSAP Ref for How We Work Section
+  const howWeWorkRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = howWeWorkRef.current;
+    if (!el || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.set('.pm-how-card', { opacity: 0, y: 30, scale: 0.97 });
+
+      ScrollTrigger.batch('.pm-how-card', {
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: 0.09,
+            duration: 0.65,
+            ease: 'power3.out',
+            overwrite: 'auto'
+          }),
+        once: true
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   // Calculation Logic
   const projectedROAS = Number((currentROAS * (1 + targetLift / 100)).toFixed(2));
@@ -296,7 +326,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       </section>
 
       {/* 3. HOW WE WORK (PROCESS BLUEPRINT) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
+      <section ref={howWeWorkRef} className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
             How We Work
@@ -343,13 +373,25 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
           ].map((item, idx) => (
             <div 
               key={idx}
-              className={`bg-white border border-hairline rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between ${
+              onMouseEnter={(e) => {
+                if (prefersReducedMotion()) return;
+                gsap.to(e.currentTarget, { y: -8, scale: 1.02, duration: 0.3, ease: 'power2.out' });
+                const num = e.currentTarget.querySelector('.pm-step-num');
+                if (num) gsap.to(num, { scale: 1.12, color: '#7C3AED', duration: 0.3, ease: 'back.out(1.7)' });
+              }}
+              onMouseLeave={(e) => {
+                if (prefersReducedMotion()) return;
+                gsap.to(e.currentTarget, { y: 0, scale: 1, duration: 0.3, ease: 'power2.out' });
+                const num = e.currentTarget.querySelector('.pm-step-num');
+                if (num) gsap.to(num, { scale: 1, color: 'rgba(124, 58, 237, 0.4)', duration: 0.3, ease: 'power2.out' });
+              }}
+              className={`pm-how-card bg-white border border-hairline rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm transition-all duration-300 group relative overflow-hidden flex flex-col justify-between cursor-pointer ${
                 idx === 6 ? 'md:col-span-2 md:w-1/2 md:mx-auto lg:w-full lg:col-span-1 lg:col-start-2' : ''
               }`}
             >
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-4xl sm:text-5xl font-display font-black text-violet/40 group-hover:text-violet transition-colors">
+                  <span className="pm-step-num text-4xl sm:text-5xl font-display font-black text-violet/40 transition-colors origin-left inline-block">
                     {item.step}
                   </span>
                   <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-bone text-mute border border-hairline">
