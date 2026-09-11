@@ -9,6 +9,7 @@ import { Footer } from './components/chrome/Footer';
 import { AuditModal } from './components/chrome/AuditModal';
 import { Preloader } from './components/chrome/Preloader';
 import { FloatingWhatsApp } from './components/common/FloatingWhatsApp';
+import { JanusAIChatbot } from './components/common/JanusAIChatbot';
 
 // Main Page Sections
 import { Hero } from './components/hero/Hero';
@@ -177,6 +178,12 @@ export const App: React.FC = () => {
 
       {/* Floating WhatsApp Widget */}
       <FloatingWhatsApp />
+
+      {/* Futuristic Janus AI Chatbot */}
+      <JanusAIChatbot
+        onOpenAudit={handleOpenAudit}
+        onNavigateCapability={handleNavigateCapability}
+      />
     </div>
   );
 };
