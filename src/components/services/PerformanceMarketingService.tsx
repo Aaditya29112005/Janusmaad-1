@@ -297,16 +297,10 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
 
       {/* 3. HOW WE WORK (PROCESS BLUEPRINT) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="space-y-3">
-          <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
-            PROCESS BLUEPRINT
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
             How We Work
           </h2>
-          <p className="text-mute text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
-            We don’t just run ads. We make the whole journey work.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
