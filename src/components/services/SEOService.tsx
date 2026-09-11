@@ -96,6 +96,16 @@ export const SEOService: React.FC<SEOServiceProps> = ({
 
   return (
     <div className="space-y-16 py-6">
+      {/* Navigation Back Link */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4">
+        <button
+          onClick={() => onNavigateCapability('receipts')}
+          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-violet transition-colors cursor-pointer"
+        >
+          <span>← Back to All Services</span>
+        </button>
+      </div>
+
       {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE SEO CALCULATOR) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
