@@ -76,85 +76,86 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE REVENUE CALCULATOR) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className="space-y-3">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.05] tracking-tight uppercase">
-                  PERFORMANCE<br />
-                  MARKETING
-                </h1>
-              </div>
-
-              {/* TRUSTED TECHNOLOGIES */}
-              <div className="space-y-2.5 pt-1">
-                <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
-                  Campaign Management across Platforms
-                </span>
-                <div className="flex flex-wrap items-center gap-2">
-                  {[
-                    {
-                      name: 'Meta',
-                      bg: 'bg-bone border-hairline text-ink',
-                      icon: (
-                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <rect width="24" height="24" rx="6" fill="#1877F2"/>
-                          <path d="M6 12C6 9.5 7.5 8 9.5 8C11.5 8 13 12 14 12C15 12 16.5 8 18.5 8C20.5 8 22 9.5 22 12C22 14.5 20.5 16 18.5 16C16.5 16 15 12 14 12C13 12 11.5 16 9.5 16C7.5 16 6 14.5 6 12Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )
-                    },
-                    {
-                      name: 'Google',
-                      bg: 'bg-bone border-hairline text-ink',
-                      icon: (
-                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <path d="M21.805 10.023H12.18v3.954h5.546c-.24 1.28-.97 2.365-2.065 3.09v2.568h3.342c1.955-1.84 3.082-4.554 3.082-7.773 0-.61-.055-1.198-.28-1.839z" fill="#4285F4"/>
-                          <path d="M12.18 20.002c2.752 0 5.064-.908 6.75-2.474l-3.342-2.568c-.913.614-2.08.977-3.408.977-2.618 0-4.838-1.765-5.63-4.143H3.09v2.646c1.688 3.35 5.144 5.562 9.09 5.562z" fill="#34A853"/>
-                          <path d="M6.55 11.794c-.203-.61-.318-1.26-.318-1.928 0-.668.115-1.318.318-1.928V5.292H3.09C2.42 6.63 2.04 8.136 2.04 9.866c0 1.73.38 3.236 1.05 4.574l3.46-2.646z" fill="#FBBC05"/>
-                          <path d="M12.18 3.652c1.498 0 2.842.516 3.9 1.522l2.925-2.925C17.238.742 14.926 0 12.18 0 8.234 0 4.778 2.212 3.09 5.562l3.46 2.646c.792-2.378 3.012-4.143 5.63-4.143z" fill="#EA4335"/>
-                        </svg>
-                      )
-                    },
-                    {
-                      name: 'ChatGPT',
-                      bg: 'bg-bone border-hairline text-ink',
-                      icon: (
-                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <path d="M22.28 9.37a5.97 5.97 0 0 0-.52-4.84 6 6 0 0 0-6.66-2.82 6 6 0 0 0-4.66-2.08 6 6 0 0 0-5.74 4.14 6 6 0 0 0-4.14 2.84 6 6 0 0 0 .82 7.15 5.97 5.97 0 0 0 .52 4.84 6 6 0 0 0 6.66 2.82 6 6 0 0 0 4.66 2.08 6 6 0 0 0 5.74-4.14 6 6 0 0 0 4.14-2.84 6 6 0 0 0-.82-7.15z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )
-                    },
-                    {
-                      name: 'Amazon',
-                      bg: 'bg-bone border-hairline text-ink',
-                      icon: (
-                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <path d="M15.5 17c-4 2.5-9 2.5-12.5 0M16.5 14.5c.5.8 1.5 2 2.5 2.2-1 .5-2.5.5-3.5 0" stroke="#FF9900" strokeWidth="2" strokeLinecap="round"/>
-                        </svg>
-                      )
-                    },
-                    {
-                      name: 'LinkedIn',
-                      bg: 'bg-bone border-hairline text-ink',
-                      icon: (
-                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <rect width="24" height="24" rx="5" fill="#0A66C2"/>
-                          <path d="M6.5 8.5H9V17.5H6.5V8.5ZM7.75 5C6.92 5 6.25 5.67 6.25 6.5C6.25 7.33 6.92 8 7.75 8C8.58 8 9.25 7.33 9.25 6.5C9.25 5.67 8.58 5 7.75 5ZM11.5 8.5H13.8V9.75H13.85C14.17 9.14 14.96 8.5 16.12 8.5C18.54 8.5 19 10.09 19 12.16V17.5H16.5V13.08C16.5 12.03 16.48 10.67 15.03 10.67C13.56 10.67 13.34 11.82 13.34 12.99V17.5H10.84V8.5H11.5Z" fill="white"/>
-                        </svg>
-                      )
-                    }
-                  ].map((tech) => (
-                    <div key={tech.name} className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono font-medium flex items-center gap-1.5 ${tech.bg}`}>
-                      {tech.icon}
-                      <span>{tech.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="space-y-8 relative z-10">
+            {/* GIANT PAGE HEADING */}
+            <div>
+              <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold text-ink leading-[0.92] tracking-tight uppercase">
+                PERFORMANCE<br />
+                MARKETING
+              </h1>
             </div>
 
-            {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
-            <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* LEFT COLUMN: TRUSTED TECH & PLATFORMS */}
+              <div className="lg:col-span-5 space-y-6">
+                <div className="space-y-2.5 pt-1">
+                  <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+                    Campaign Management across Platforms
+                  </span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {[
+                      {
+                        name: 'Meta',
+                        bg: 'bg-bone border-hairline text-ink',
+                        icon: (
+                          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                            <rect width="24" height="24" rx="6" fill="#1877F2"/>
+                            <path d="M6 12C6 9.5 7.5 8 9.5 8C11.5 8 13 12 14 12C15 12 16.5 8 18.5 8C20.5 8 22 9.5 22 12C22 14.5 20.5 16 18.5 16C16.5 16 15 12 14 12C13 12 11.5 16 9.5 16C7.5 16 6 14.5 6 12Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )
+                      },
+                      {
+                        name: 'Google',
+                        bg: 'bg-bone border-hairline text-ink',
+                        icon: (
+                          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                            <path d="M21.805 10.023H12.18v3.954h5.546c-.24 1.28-.97 2.365-2.065 3.09v2.568h3.342c1.955-1.84 3.082-4.554 3.082-7.773 0-.61-.055-1.198-.28-1.839z" fill="#4285F4"/>
+                            <path d="M12.18 20.002c2.752 0 5.064-.908 6.75-2.474l-3.342-2.568c-.913.614-2.08.977-3.408.977-2.618 0-4.838-1.765-5.63-4.143H3.09v2.646c1.688 3.35 5.144 5.562 9.09 5.562z" fill="#34A853"/>
+                            <path d="M6.55 11.794c-.203-.61-.318-1.26-.318-1.928 0-.668.115-1.318.318-1.928V5.292H3.09C2.42 6.63 2.04 8.136 2.04 9.866c0 1.73.38 3.236 1.05 4.574l3.46-2.646z" fill="#FBBC05"/>
+                            <path d="M12.18 3.652c1.498 0 2.842.516 3.9 1.522l2.925-2.925C17.238.742 14.926 0 12.18 0 8.234 0 4.778 2.212 3.09 5.562l3.46 2.646c.792-2.378 3.012-4.143 5.63-4.143z" fill="#EA4335"/>
+                          </svg>
+                        )
+                      },
+                      {
+                        name: 'ChatGPT',
+                        bg: 'bg-bone border-hairline text-ink',
+                        icon: (
+                          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                            <path d="M22.28 9.37a5.97 5.97 0 0 0-.52-4.84 6 6 0 0 0-6.66-2.82 6 6 0 0 0-4.66-2.08 6 6 0 0 0-5.74 4.14 6 6 0 0 0-4.14 2.84 6 6 0 0 0 .82 7.15 5.97 5.97 0 0 0 .52 4.84 6 6 0 0 0 6.66 2.82 6 6 0 0 0 4.66 2.08 6 6 0 0 0 5.74-4.14 6 6 0 0 0 4.14-2.84 6 6 0 0 0-.82-7.15z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )
+                      },
+                      {
+                        name: 'Amazon',
+                        bg: 'bg-bone border-hairline text-ink',
+                        icon: (
+                          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                            <path d="M15.5 17c-4 2.5-9 2.5-12.5 0M16.5 14.5c.5.8 1.5 2 2.5 2.2-1 .5-2.5.5-3.5 0" stroke="#FF9900" strokeWidth="2" strokeLinecap="round"/>
+                          </svg>
+                        )
+                      },
+                      {
+                        name: 'LinkedIn',
+                        bg: 'bg-bone border-hairline text-ink',
+                        icon: (
+                          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                            <rect width="24" height="24" rx="5" fill="#0A66C2"/>
+                            <path d="M6.5 8.5H9V17.5H6.5V8.5ZM7.75 5C6.92 5 6.25 5.67 6.25 6.5C6.25 7.33 6.92 8 7.75 8C8.58 8 9.25 7.33 9.25 6.5C9.25 5.67 8.58 5 7.75 5ZM11.5 8.5H13.8V9.75H13.85C14.17 9.14 14.96 8.5 16.12 8.5C18.54 8.5 19 10.09 19 12.16V17.5H16.5V13.08C16.5 12.03 16.48 10.67 15.03 10.67C13.56 10.67 13.34 11.82 13.34 12.99V17.5H10.84V8.5H11.5Z" fill="white"/>
+                          </svg>
+                        )
+                      }
+                    ].map((tech) => (
+                      <div key={tech.name} className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono font-medium flex items-center gap-1.5 ${tech.bg}`}>
+                        {tech.icon}
+                        <span>{tech.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
+              <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
               <div className="space-y-1">
                 <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
                   Estimate Your Revenue Lift
@@ -249,7 +250,8 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* 2. STRATEGY & DELIVERABLES SECTION (COMPACT & IMPACTFUL) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
