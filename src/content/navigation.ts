@@ -35,6 +35,5 @@ export const NAV_DROPDOWNS: NavDropdownGroup[] = [
 export const NAV_FLAT: NavFlatItem[] = [
   { name: 'Receipts', href: '#receipts' },
   { name: 'About', href: '#about' },
-  { name: 'Blog', href: '#blog' },
   { name: 'Get Free Growth Audit', href: '#audit-modal' },
 ];
