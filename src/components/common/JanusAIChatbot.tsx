@@ -199,107 +199,6 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
     handleSendMessage(presetText);
   };
 
-  // Canvas Particle Animation Effect for Chat Window Background
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    if (!isOpen || !canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || 600);
-
-    const handleResize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.clientWidth;
-      height = canvas.height = canvas.parentElement.clientHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Particles setup
-    const particleCount = 42;
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      color: string;
-      baseAlpha: number;
-    }> = [];
-
-    const colors = [
-      'rgba(168, 85, 247, ', // violet
-      'rgba(56, 189, 248, ',  // cyan
-      'rgba(236, 72, 153, ',  // pink
-      'rgba(129, 140, 248, '  // indigo
-    ];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
-        radius: Math.random() * 2.2 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        baseAlpha: Math.random() * 0.6 + 0.3
-      });
-    }
-
-    let angle = 0;
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      angle += 0.015;
-
-      for (let i = 0; i < particles.length; i++) {
-        const p1 = particles[i];
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-
-        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
-
-        const currentAlpha = (Math.sin(angle + i) + 1) / 2 * 0.4 + 0.3;
-        ctx.beginPath();
-        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${p1.color}${currentAlpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = `${p1.color}1)`;
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 90) {
-            const lineAlpha = (1 - dist / 90) * 0.22;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(168, 85, 247, ${lineAlpha})`;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
-          }
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [isOpen]);
-
   return (
     <>
       {/* Floating Assistant Orb Trigger Button (Positioned to left of WhatsApp button) */}
@@ -347,18 +246,12 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
         </button>
       </div>
 
-      {/* Expandable Glassmorphism Janus AI Chat Window */}
+      {/* Expandable Janus AI Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-[96px] right-4 sm:right-6 w-[92vw] sm:w-[400px] h-[min(550px,calc(100vh-115px))] z-50 bg-slate-950/85 backdrop-blur-2xl text-white rounded-3xl border border-white/20 shadow-[0_20px_60px_rgba(124,58,237,0.35)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-250 relative">
+        <div className="fixed bottom-24 right-4 sm:right-6 w-[92vw] sm:w-[420px] max-h-[80vh] h-[600px] z-50 bg-ink text-white rounded-3xl border border-violet/30 shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-250">
           
-          {/* Animated Canvas Particles Background */}
-          <canvas 
-            ref={canvasRef} 
-            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70" 
-          />
-
-          {/* Glassmorphism Header */}
-          <div className="relative z-10 p-4 sm:p-5 bg-white/10 backdrop-blur-md border-b border-white/15 flex items-center justify-between">
+          {/* Header */}
+          <div className="p-4 sm:p-5 bg-white/5 border-b border-white/10 flex items-center justify-between backdrop-blur-md">
             <div className="flex items-center gap-3">
               {/* Glowing Mini 3D Orb */}
               <div 
@@ -376,22 +269,22 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               <div>
                 <div className="font-display font-bold text-sm text-white flex items-center gap-1.5">
                   <span>Janus AI Strategist</span>
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
-                <div className="text-[11px] font-mono text-white/70">24/7 Digital Growth Intelligence</div>
+                <div className="text-[11px] font-mono text-white/60">24/7 Digital Growth Intelligence</div>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/70 hover:text-white p-2 rounded-full hover:bg-white/15 transition-colors cursor-pointer"
+              className="text-white/60 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Glassmorphism Chat Messages Body */}
-          <div className="relative z-10 flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 font-body text-xs sm:text-sm">
+          {/* Chat Messages Body */}
+          <div className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 font-body text-xs sm:text-sm">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -400,14 +293,14 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
                 <div
                   className={`max-w-[85%] p-3.5 rounded-2xl leading-relaxed whitespace-pre-wrap ${
                     msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-br-xs shadow-lg shadow-violet-500/20 font-medium border border-violet-400/30'
-                      : 'bg-white/10 text-white/95 border border-white/20 rounded-bl-xs backdrop-blur-md shadow-md'
+                      ? 'bg-violet text-white rounded-br-xs shadow-md font-medium'
+                      : 'bg-white/10 text-white/90 border border-white/10 rounded-bl-xs backdrop-blur-sm'
                   }`}
                 >
                   {msg.text}
                 </div>
 
-                <span className="text-[9px] font-mono text-white/50 px-1">
+                <span className="text-[9px] font-mono text-white/40 px-1">
                   {msg.timestamp}
                 </span>
 
@@ -420,8 +313,8 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
                         onClick={act.action}
                         className={`text-xs font-mono font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1 ${
                           act.isPrimary
-                            ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:brightness-110 shadow-lg shadow-purple-500/30 border border-violet-400/30'
-                            : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md shadow-sm'
+                            ? 'bg-violet text-white hover:bg-violet-deep shadow-md'
+                            : 'bg-white/10 text-white hover:bg-white/20 border border-white/15'
                         }`}
                       >
                         <span>{act.label}</span>
@@ -435,10 +328,10 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
 
             {/* Typing Indicator */}
             {isTyping && (
-              <div className="flex items-center gap-1.5 p-3 bg-white/10 backdrop-blur-md rounded-2xl rounded-bl-xs w-fit border border-white/20">
-                <span className="w-2 h-2 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="flex items-center gap-1.5 p-3 bg-white/10 rounded-2xl rounded-bl-xs w-fit border border-white/10">
+                <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             )}
 
@@ -446,8 +339,8 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
           </div>
 
           {/* Quick Suggestion Chips */}
-          <div className="relative z-10 px-4 py-2 bg-white/5 backdrop-blur-md border-t border-white/15 flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] font-mono text-white/80">
-            <span className="text-violet-400 font-bold shrink-0">Ask:</span>
+          <div className="px-4 py-2 bg-white/5 border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] font-mono text-white/80">
+            <span className="text-violet font-bold shrink-0">Ask:</span>
             {[
               'Performance ROAS',
               'Shopify Speed Build',
@@ -458,7 +351,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               <button
                 key={idx}
                 onClick={() => handlePresetQuery(chip)}
-                className="shrink-0 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition-colors border border-white/20 cursor-pointer backdrop-blur-sm"
+                className="shrink-0 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition-colors border border-white/10 cursor-pointer"
               >
                 {chip}
               </button>
@@ -471,20 +364,20 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               e.preventDefault();
               handleSendMessage();
             }}
-            className="relative z-10 p-3 sm:p-4 bg-white/10 backdrop-blur-lg border-t border-white/15 flex items-center gap-2"
+            className="p-3 sm:p-4 bg-white/5 border-t border-white/10 flex items-center gap-2"
           >
             <input
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Ask Janus AI anything about performance growth..."
-              className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-violet-400 transition-colors backdrop-blur-sm"
+              className="flex-1 bg-white/10 border border-white/15 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-violet transition-colors"
             />
 
             <button
               type="submit"
               disabled={!inputMessage.trim()}
-              className="p-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-violet-500/25 border border-violet-400/30 cursor-pointer"
+              className="p-2.5 rounded-xl bg-violet text-white hover:bg-violet-deep disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-md cursor-pointer"
             >
               <Send className="w-4 h-4" />
             </button>
