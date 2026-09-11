@@ -295,6 +295,90 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         </div>
       </section>
 
+      {/* 3. HOW WE WORK (PROCESS BLUEPRINT) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="space-y-3">
+          <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+            PROCESS BLUEPRINT
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight">
+            How We Work
+          </h2>
+          <p className="text-mute text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
+            We don’t just run ads. We make the whole journey work.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              step: '01',
+              title: 'Audit First',
+              desc: 'We start with what you already have. Campaigns. Data. Tracking. Website. We find what’s working and what’s getting in the way.'
+            },
+            {
+              step: '02',
+              title: 'Fix the Measurement',
+              desc: 'If you can’t measure it, you can’t improve it. We make sure your analytics, pixels and conversion tracking are set up correctly.'
+            },
+            {
+              step: '03',
+              title: 'Know Your Customer',
+              desc: 'The right audience matters more than a bigger audience. We study who your customers are, what they want and what makes them act.'
+            },
+            {
+              step: '04',
+              title: 'Remove the Friction',
+              desc: 'An ad can win the click. Your website has to win the customer. We simplify the journey and optimise every important conversion point.'
+            },
+            {
+              step: '05',
+              title: 'Build the Campaign',
+              desc: 'We choose the right channels, audiences and messages. Then we put your budget to work across Google, Meta, Amazon and other relevant platforms.'
+            },
+            {
+              step: '06',
+              title: 'Test. Learn. Improve.',
+              desc: 'We don’t set campaigns and walk away. We test. We learn. We optimise. And we keep moving budget towards what works.'
+            },
+            {
+              step: '07',
+              title: 'Scale What Works',
+              desc: 'Once we find the winning formula, we scale it. Carefully. Profitably. With the numbers always in view.'
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx}
+              className={`bg-white border border-hairline rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between ${
+                idx === 6 ? 'md:col-span-2 lg:col-span-3' : ''
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-4xl sm:text-5xl font-display font-black text-violet/40 group-hover:text-violet transition-colors">
+                    {item.step}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-bone text-mute border border-hairline">
+                    STEP {item.step}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink group-hover:text-violet transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-mute text-xs sm:text-sm leading-relaxed font-medium">
+                  {item.desc}
+                </p>
+              </div>
+              
+              <div className="pt-4 border-t border-hairline/60 flex items-center gap-1.5 text-[11px] font-mono font-bold text-violet">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet" />
+                <span>PHASE {item.step} EXECUTION</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 6. OUR WORK (CATEGORY METRICS EXPLORER) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-4">
         <div className="text-center max-w-3xl mx-auto">
