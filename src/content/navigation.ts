@@ -12,7 +12,7 @@ export const NAV_DROPDOWNS: NavDropdownGroup[] = [
   {
     title: 'Acquire',
     items: [
-      { name: 'Performance Marketing', href: '#acquire-performance', description: 'Meta, Google & TikTok campaigns built for high return on ad spend.' },
+      { name: 'Performance Marketing', href: '#acquire-performance', description: 'Meta & Google campaigns built for high return on ad spend.' },
       { name: 'SEO (Search Everywhere Optimisation)', href: '#acquire-seo', description: 'Scale organic search visibility across Google, YouTube, and AI engines.' },
       { name: 'SMM (Social Media Marketing)', href: '#acquire-smm', description: 'Organic and paid content strategy engineered to build brand authority.' },
     ],

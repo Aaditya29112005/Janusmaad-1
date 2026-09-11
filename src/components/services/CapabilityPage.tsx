@@ -69,7 +69,7 @@ const CAPABILITIES_DATA: Record<CapabilityId, CapabilityDetails> = {
     category: 'Acquire',
     badge: 'ACQUIRE CAPABILITIES',
     title: 'Performance Marketing & Performance Max',
-    subtitle: 'Meta, Google & TikTok campaigns built for high return on ad spend (ROAS).',
+    subtitle: 'Meta & Google campaigns built for high return on ad spend (ROAS).',
     description: 'We don’t just run ads — we build a complete performance system. Our Performance Max approach is designed to track, optimize, and scale high-quality leads across Google & Meta inventory with real-time conversion signals.',
     bullets: [
       'Performance Max campaign setup & optimization',
