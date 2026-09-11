@@ -5,7 +5,6 @@ import {
   Sparkles, 
   ChevronRight
 } from 'lucide-react';
-import gsap from 'gsap';
 import { openWhatsApp, DISPLAY_PHONE } from '../../utils/whatsapp';
 
 interface Message {
@@ -20,171 +19,6 @@ interface JanusAIChatbotProps {
   onOpenAudit: (type?: string) => void;
   onNavigateCapability?: (id: any) => void;
 }
-
-// Canvas Background Component rendering floating GSAP social media platform particles
-const CanvasParticleBackground: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || 600);
-
-    const handleResize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.clientWidth;
-      height = canvas.height = canvas.parentElement.clientHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Render off-screen canvases for social media & growth platform icon badges
-    const iconCanvases: HTMLCanvasElement[] = [];
-
-    const iconConfigs = [
-      { name: 'Instagram', bg1: '#833ab4', bg2: '#fd1d1d', symbol: '📷' },
-      { name: 'Facebook', bg1: '#1877F2', bg2: '#0b51ab', symbol: 'f' },
-      { name: 'LinkedIn', bg1: '#0A66C2', bg2: '#004182', symbol: 'in' },
-      { name: 'ChatGPT', bg1: '#10a37f', bg2: '#05614a', symbol: '✦' },
-      { name: 'Amazon', bg1: '#FF9900', bg2: '#d87d00', symbol: 'a' },
-      { name: 'Shopify', bg1: '#95BF47', bg2: '#5e8e19', symbol: 'S' },
-      { name: 'Like', bg1: '#EC4899', bg2: '#be185d', symbol: '👍' },
-      { name: 'Google', bg1: '#4285F4', bg2: '#1a73e8', symbol: 'G' },
-      { name: 'Meta', bg1: '#0081FB', bg2: '#0055b3', symbol: '∞' }
-    ];
-
-    iconConfigs.forEach((cfg) => {
-      const c = document.createElement('canvas');
-      const s = 56;
-      c.width = s;
-      c.height = s;
-      const cctx = c.getContext('2d');
-      if (cctx) {
-        // Draw rounded box badge
-        cctx.beginPath();
-        const r = 14;
-        cctx.moveTo(r, 0);
-        cctx.lineTo(s - r, 0);
-        cctx.quadraticCurveTo(s, 0, s, r);
-        cctx.lineTo(s, s - r);
-        cctx.quadraticCurveTo(s, s, s - r, s);
-        cctx.lineTo(r, s);
-        cctx.quadraticCurveTo(0, s, 0, s - r);
-        cctx.lineTo(0, r);
-        cctx.quadraticCurveTo(0, 0, r, 0);
-        cctx.closePath();
-
-        const grad = cctx.createLinearGradient(0, 0, s, s);
-        grad.addColorStop(0, cfg.bg1);
-        grad.addColorStop(1, cfg.bg2);
-        cctx.fillStyle = grad;
-        cctx.fill();
-
-        // Glossy border
-        cctx.strokeStyle = 'rgba(255,255,255,0.4)';
-        cctx.lineWidth = 2;
-        cctx.stroke();
-
-        // Symbol Text
-        cctx.fillStyle = '#FFFFFF';
-        cctx.font = `bold ${cfg.symbol === '📷' || cfg.symbol === '👍' ? 24 : 26}px sans-serif`;
-        cctx.textAlign = 'center';
-        cctx.textBaseline = 'middle';
-        cctx.fillText(cfg.symbol, s / 2, s / 2 + (cfg.symbol === 'f' || cfg.symbol === 'in' ? 1 : 0));
-      }
-      iconCanvases.push(c);
-    });
-
-    // Create particles array (inspired by CodePen GSAP flair canvas animation)
-    const particleCount = 18;
-    interface Particle {
-      x: number;
-      y: number;
-      scale: number;
-      rotate: number;
-      alpha: number;
-      angle: number;
-      radiusOffset: number;
-      speed: number;
-      iconIndex: number;
-      baseSize: number;
-    }
-
-    const particles: Particle[] = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: width / 2,
-        y: height / 2,
-        scale: 0.25 + Math.random() * 0.4,
-        rotate: Math.random() * Math.PI * 2,
-        alpha: 0.12 + Math.random() * 0.25,
-        angle: (i / particleCount) * Math.PI * 2,
-        radiusOffset: 60 + Math.random() * (Math.max(width, height) * 0.4),
-        speed: 0.0015 + Math.random() * 0.003,
-        iconIndex: i % iconCanvases.length,
-        baseSize: 28 + Math.random() * 12
-      });
-    }
-
-    // GSAP animation controlling particle properties
-    particles.forEach((p, i) => {
-      gsap.to(p, {
-        scale: p.scale * 1.25,
-        rotate: p.rotate + Math.PI,
-        alpha: p.alpha > 0.25 ? 0.1 : 0.3,
-        duration: 5 + (i % 4),
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: (i % 5) * 0.5
-      });
-    });
-
-    // Continuous Canvas Render Loop
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach((p) => {
-        p.angle += p.speed;
-        p.x = width / 2 + Math.cos(p.angle * 2.5) * p.radiusOffset;
-        p.y = height / 2 + Math.sin(p.angle * 1.8) * (p.radiusOffset * 0.85);
-
-        ctx.save();
-        ctx.globalAlpha = p.alpha;
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotate);
-        ctx.scale(p.scale, p.scale);
-
-        const img = iconCanvases[p.iconIndex];
-        if (img) {
-          ctx.drawImage(img, -p.baseSize / 2, -p.baseSize / 2, p.baseSize, p.baseSize);
-        }
-        ctx.restore();
-      });
-
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-      particles.forEach((p) => gsap.killTweensOf(p));
-    };
-  }, []);
-
-  return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full opacity-35"
-    />
-  );
-};
 
 export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
   onOpenAudit,
@@ -365,6 +199,107 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
     handleSendMessage(presetText);
   };
 
+  // Canvas Particle Animation Effect for Chat Window Background
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    if (!isOpen || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 600);
+
+    const handleResize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Particles setup
+    const particleCount = 42;
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      color: string;
+      baseAlpha: number;
+    }> = [];
+
+    const colors = [
+      'rgba(168, 85, 247, ', // violet
+      'rgba(56, 189, 248, ',  // cyan
+      'rgba(236, 72, 153, ',  // pink
+      'rgba(129, 140, 248, '  // indigo
+    ];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: (Math.random() - 0.5) * 0.7,
+        radius: Math.random() * 2.2 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        baseAlpha: Math.random() * 0.6 + 0.3
+      });
+    }
+
+    let angle = 0;
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      angle += 0.015;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
+
+        const currentAlpha = (Math.sin(angle + i) + 1) / 2 * 0.4 + 0.3;
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `${p1.color}${currentAlpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = `${p1.color}1)`;
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 90) {
+            const lineAlpha = (1 - dist / 90) * 0.22;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(168, 85, 247, ${lineAlpha})`;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isOpen]);
+
   return (
     <>
       {/* Floating Assistant Orb Trigger Button (Positioned to left of WhatsApp button) */}
@@ -412,22 +347,18 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
         </button>
       </div>
 
-      {/* Expandable Janus AI Glassmorphism Chat Window */}
+      {/* Expandable Glassmorphism Janus AI Chat Window */}
       {isOpen && (
-        <div 
-          className="fixed bottom-24 right-4 sm:right-6 w-[92vw] sm:w-[420px] max-h-[82vh] h-[620px] z-50 text-white rounded-3xl border border-white/20 shadow-[0_20px_60px_rgba(124,58,237,0.35)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-250 backdrop-blur-2xl relative"
-          style={{
-            background: 'radial-gradient(circle at 50% 0%, rgba(30, 27, 75, 0.88) 0%, rgba(10, 13, 29, 0.95) 100%)'
-          }}
-        >
-          {/* Animated Canvas Particle Background with Social Media & Growth Platform Icons */}
-          <CanvasParticleBackground />
+        <div className="fixed bottom-24 right-4 sm:right-6 w-[92vw] sm:w-[420px] max-h-[80vh] h-[600px] z-50 bg-slate-950/80 backdrop-blur-2xl text-white rounded-3xl border border-white/20 shadow-[0_20px_60px_rgba(124,58,237,0.35)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-250 relative">
+          
+          {/* Animated Canvas Particles Background */}
+          <canvas 
+            ref={canvasRef} 
+            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70" 
+          />
 
-          {/* Top Glass Specular Reflection Highlight */}
-          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none z-10" />
-
-          {/* Header */}
-          <div className="relative z-10 p-4 sm:p-5 bg-white/10 border-b border-white/15 flex items-center justify-between backdrop-blur-xl">
+          {/* Glassmorphism Header */}
+          <div className="relative z-10 p-4 sm:p-5 bg-white/10 backdrop-blur-md border-b border-white/15 flex items-center justify-between">
             <div className="flex items-center gap-3">
               {/* Glowing Mini 3D Orb */}
               <div 
@@ -445,7 +376,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               <div>
                 <div className="font-display font-bold text-sm text-white flex items-center gap-1.5">
                   <span>Janus AI Strategist</span>
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
                 </div>
                 <div className="text-[11px] font-mono text-white/70">24/7 Digital Growth Intelligence</div>
               </div>
@@ -459,8 +390,8 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
             </button>
           </div>
 
-          {/* Chat Messages Body */}
-          <div className="relative z-10 flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 font-body text-xs sm:text-sm [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+          {/* Glassmorphism Chat Messages Body */}
+          <div className="relative z-10 flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 font-body text-xs sm:text-sm">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -469,8 +400,8 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
                 <div
                   className={`max-w-[85%] p-3.5 rounded-2xl leading-relaxed whitespace-pre-wrap ${
                     msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-violet to-purple-600 text-white rounded-br-xs shadow-lg font-medium border border-violet-400/40 backdrop-blur-md'
-                      : 'bg-black/50 text-white/95 border border-white/20 rounded-bl-xs backdrop-blur-xl shadow-md'
+                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-br-xs shadow-lg shadow-violet-500/20 font-medium border border-violet-400/30'
+                      : 'bg-white/10 text-white/95 border border-white/20 rounded-bl-xs backdrop-blur-md shadow-md'
                   }`}
                 >
                   {msg.text}
@@ -489,8 +420,8 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
                         onClick={act.action}
                         className={`text-xs font-mono font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1 ${
                           act.isPrimary
-                            ? 'bg-violet text-white hover:bg-violet-deep shadow-lg hover:shadow-violet-500/25 border border-violet-400/40'
-                            : 'bg-white/10 text-white hover:bg-white/20 border border-white/20 backdrop-blur-md'
+                            ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:brightness-110 shadow-lg shadow-purple-500/30 border border-violet-400/30'
+                            : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md shadow-sm'
                         }`}
                       >
                         <span>{act.label}</span>
@@ -504,21 +435,18 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
 
             {/* Typing Indicator */}
             {isTyping && (
-              <div className="flex items-center gap-1.5 p-3 bg-black/50 rounded-2xl rounded-bl-xs w-fit border border-white/20 backdrop-blur-xl">
-                <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="flex items-center gap-1.5 p-3 bg-white/10 backdrop-blur-md rounded-2xl rounded-bl-xs w-fit border border-white/20">
+                <span className="w-2 h-2 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             )}
 
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestion Chips (Completely scrollbar hidden) */}
-          <div 
-            className="relative z-10 px-4 py-2.5 bg-black/50 border-t border-white/15 flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] font-mono text-white/90 backdrop-blur-xl [&::-webkit-scrollbar]:hidden"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
+          {/* Quick Suggestion Chips */}
+          <div className="relative z-10 px-4 py-2 bg-white/5 backdrop-blur-md border-t border-white/15 flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] font-mono text-white/80">
             <span className="text-violet-400 font-bold shrink-0">Ask:</span>
             {[
               'Performance ROAS',
@@ -530,7 +458,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               <button
                 key={idx}
                 onClick={() => handlePresetQuery(chip)}
-                className="shrink-0 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition-colors border border-white/15 cursor-pointer"
+                className="shrink-0 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition-colors border border-white/20 cursor-pointer backdrop-blur-sm"
               >
                 {chip}
               </button>
@@ -543,20 +471,20 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               e.preventDefault();
               handleSendMessage();
             }}
-            className="relative z-10 p-3 sm:p-4 bg-black/60 border-t border-white/15 flex items-center gap-2 backdrop-blur-xl rounded-b-3xl"
+            className="relative z-10 p-3 sm:p-4 bg-white/10 backdrop-blur-lg border-t border-white/15 flex items-center gap-2"
           >
             <input
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Ask Janus AI anything about performance growth..."
-              className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-violet transition-colors backdrop-blur-md"
+              className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-violet-400 transition-colors backdrop-blur-sm"
             />
 
             <button
               type="submit"
               disabled={!inputMessage.trim()}
-              className="p-2.5 rounded-xl bg-violet text-white hover:bg-violet-deep disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-md cursor-pointer border border-violet-400/40"
+              className="p-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-violet-500/25 border border-violet-400/30 cursor-pointer"
             >
               <Send className="w-4 h-4" />
             </button>
