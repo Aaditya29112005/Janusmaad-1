@@ -1,10 +1,19 @@
-import React from 'react';
-import { Gauge } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  CheckCircle2, 
+  ArrowRight,
+  ShieldCheck,
+  Send,
+  Phone,
+  Mail,
+  Clock,
+  ChevronDown
+} from 'lucide-react';
+import { gsap, ScrollTrigger } from '../../gsap/register';
+import { prefersReducedMotion } from '../../gsap/utils';
+
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
-import { HowWeWork } from '../process/HowWeWork';
-import { ThreeWaysIn } from '../pricing/ThreeWaysIn';
-import { Calculator } from '../calculator/Calculator';
 
 interface BuildServiceProps {
   onOpenAudit: (type?: string) => void;
@@ -15,359 +24,633 @@ export const BuildService: React.FC<BuildServiceProps> = ({
   onOpenAudit,
   onNavigateCapability
 }) => {
-  const jsonLdData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Shopify & Landing Page Development Agency India & Delhi NCR",
-    "provider": {
-      "@type": "Organization",
-      "name": "Janusmaad Digital",
-      "url": "https://janusmaad.com"
-    },
-    "serviceType": "Shopify Development Agency",
-    "areaServed": ["India", "Global"],
-    "description": "Fast bespoke landing pages and custom Shopify storefronts, built mobile-first and speed-tuned."
+  // Build Estimator State
+  const [monthlyTraffic, setMonthlyTraffic] = useState(50000); // 50k visitors default
+  const [currentConversion, setCurrentConversion] = useState(1.8); // 1.8% conversion rate
+  const [targetLift, setTargetLift] = useState(30); // 30% lift
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  // GSAP Ref for How We Work Section
+  const howWeWorkRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = howWeWorkRef.current;
+    if (!el || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.set('.build-how-card', { opacity: 0, y: 30, scale: 0.97 });
+
+      ScrollTrigger.batch('.build-how-card', {
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: 0.09,
+            duration: 0.65,
+            ease: 'power3.out',
+            overwrite: 'auto'
+          }),
+        once: true
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Calculation Logic for Build / Speed
+  const projectedConversion = Number((currentConversion * (1 + targetLift / 100)).toFixed(2));
+  const currentOrders = Math.round(monthlyTraffic * (currentConversion / 100));
+  const projectedOrders = Math.round(monthlyTraffic * (projectedConversion / 100));
+  const extraMonthlyOrders = projectedOrders - currentOrders;
+  const annualGainOrders = extraMonthlyOrders * 12;
+
+  const formatNumber = (val: number) => {
+    if (val >= 10000000) return `${(val / 10000000).toFixed(2)}Cr`;
+    if (val >= 100000) return `${(val / 100000).toFixed(1)}L`;
+    if (val >= 1000) return `${(val / 1000).toFixed(1)}k`;
+    return `${Math.round(val).toLocaleString('en-IN')}`;
+  };
+
+  // Bottom Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: 'Shopify Storefront & Landing Page Audit',
+    phone: '',
+    message: '',
+    optIn: true
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleBottomSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) return;
+    setFormSubmitted(true);
+    setTimeout(() => {
+      setFormSubmitted(false);
+      setFormData({ name: '', email: '', subject: 'Shopify Storefront & Landing Page Audit', phone: '', message: '', optIn: true });
+    }, 4000);
   };
 
   return (
-    <div className="space-y-20 pb-16 overflow-hidden">
-      {/* Inject JSON-LD Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
-
-      {/* Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+    <div className="space-y-16 sm:space-y-24 pb-12 overflow-hidden select-none">
+      
+      {/* Navigation Back Link */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4">
         <button
           onClick={() => onNavigateCapability('receipts')}
-          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-teal transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-violet transition-colors cursor-pointer"
         >
           <span>← Back to All Services</span>
         </button>
       </div>
 
-      {/* 1. HERO SECTION: Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
-      <div
-        className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-16 px-4 sm:px-12 rounded-[24px] text-white overflow-hidden shadow-2xl"
-        style={{
-          background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-          boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-        }}
-      >
-        {/* Glass Glare */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
+      {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE SPEED/CONVERSION CALCULATOR) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
+            <div className="lg:col-span-6 space-y-6">
+              <div className="space-y-3">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold text-ink leading-[0.98] tracking-tight uppercase">
+                  DESIGN &<br />
+                  DEVELOPMENT
+                </h1>
+              </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+              {/* TRUSTED STACK */}
+              <div className="space-y-2.5 pt-1">
+                <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+                  Storefront Tech Stack & Speed Benchmarks
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {[
+                    {
+                      name: 'Shopify Plus',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <path d="M18.8 6.4s-1.4-.4-2.7.2c-.8.4-1.4 1.1-1.8 1.8-.7-.4-1.6-.5-2.5-.2-1.3.4-2.2 1.5-2.4 2.8-.8.1-1.5.6-1.9 1.3-.6 1.1-.3 2.5.6 3.2l7 5.2c.4.3.9.4 1.4.2l7.1-3.6c.7-.4 1.1-1.1 1.1-1.9V8.6c0-.9-.6-1.7-1.4-2l-4.5-.2z" fill="#96BF48"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'React / Next.js',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#000"/>
+                          <path d="M12 6L6 18h2.5l1.2-2.5h4.6L15.5 18H18L12 6zm-1.3 7.5L12 9.5l1.3 4h-2.6z" fill="#fff"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Headless Commerce',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#7C3AED"/>
+                          <path d="M7 12l3 3 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Sub-0.7s LCP',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#F59E0B"/>
+                        </svg>
+                      )
+                    }
+                  ].map((tech) => (
+                    <div key={tech.name} className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono font-medium flex items-center gap-1.5 ${tech.bg}`}>
+                      {tech.icon}
+                      <span>{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: INTERACTIVE SPEED & CONVERSION CALCULATOR */}
+            <div className="lg:col-span-6 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+              <div className="space-y-1">
+                <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
+                  Estimate Conversion & Order Lift
+                </h3>
+              </div>
+
+              {/* Compact 2-Column Calculator Layout */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
+                {/* Sliders Box */}
+                <div className="sm:col-span-6 space-y-3.5 bg-white p-4 rounded-2xl border border-hairline shadow-2xs flex flex-col justify-center">
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Monthly Visitors</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {formatNumber(monthlyTraffic)}
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={10000} max={500000} step={10000}
+                      value={monthlyTraffic} onChange={(e) => setMonthlyTraffic(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                    <div className="flex items-center gap-1 flex-wrap pt-0.5">
+                      {[25000, 50000, 100000, 250000].map((preset) => (
+                        <button key={preset} type="button" onClick={() => setMonthlyTraffic(preset)}
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
+                            monthlyTraffic === preset ? 'bg-violet text-white font-bold shadow-2xs' : 'bg-bone text-mute hover:text-ink border border-hairline'
+                          }`}
+                        >
+                          {formatNumber(preset)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Current Conversion Rate</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {currentConversion.toFixed(1)}%
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={0.5} max={5.0} step={0.1}
+                      value={currentConversion} onChange={(e) => setCurrentConversion(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Target Speed Lift</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        +{targetLift}%
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={10} max={100} step={5}
+                      value={targetLift} onChange={(e) => setTargetLift(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+                </div>
+
+                {/* Output Violet Card */}
+                <div className="sm:col-span-6">
+                  <div className="rounded-2xl p-4 bg-violet text-white shadow-md h-full flex flex-col justify-between space-y-3">
+                    <div className="grid grid-cols-2 gap-2 font-mono">
+                      <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 border border-white/20 space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-white/70 font-bold uppercase">TARGET CVR</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
+                          {projectedConversion}% <span className="text-[9px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                        </div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 border border-white/20 space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-white/70 font-bold uppercase">EXTRA ORDERS / MO</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5 truncate">+{formatNumber(extraMonthlyOrders)}</div>
+                      </div>
+                      <div className="col-span-2 bg-white/10 backdrop-blur-xs rounded-xl p-2.5 border border-white/20 space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-white/70 font-bold uppercase">12-MO ORDER GAIN</div>
+                        <div className="text-base font-display font-extrabold text-emerald-300 mt-0.5 truncate">+{formatNumber(annualGainOrders)} orders</div>
+                      </div>
+                    </div>
+
+                    <button onClick={() => onOpenAudit('convert-build')} className="w-full py-2.5 px-3 rounded-xl bg-white text-ink hover:bg-bone font-display font-bold text-[10px] transition-colors shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1 group">
+                      <span>CLAIM STOREFRONT SPEED LIFT</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. STRATEGY & DELIVERABLES SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
+        {/* Centered Heading OUTSIDE Top of Box */}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
+            WHAT WE DO
+          </h2>
+        </div>
+
+        <div className="bg-white text-ink border border-hairline rounded-[32px] p-6 sm:p-10 space-y-8 shadow-xl relative overflow-hidden text-center">
           
-          {/* Left Text Column */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
-                CONVERT PILLAR • DESIGN & DEVELOPMENT
-              </span>
-              <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
-                SLUG: services/web-design-development
-              </span>
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
-              Pages & Storefronts Built to Load Fast & Convert<span className="text-sky-200">.</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed font-body">
-              Fast bespoke landing pages and custom Shopify storefronts, built mobile-first and speed-tuned to sub-1-second standards. Engineered for brands whose site is slow, off-brand, or actively throttling paid media return.
+          {/* Centered inside Box */}
+          <div className="max-w-3xl mx-auto space-y-4 text-center">
+            <h3 className="text-2xl sm:text-4xl font-display font-bold text-ink leading-[1.12] tracking-tight text-center">
+              Your Website Should Load Instantly and Sell Effortlessly.
+            </h3>
+            <p className="text-mute text-sm sm:text-base leading-relaxed font-medium text-center">
+              At JanusMAAD, we design and develop high-speed bespoke landing pages and custom Shopify storefronts engineered for sub-second mobile loading speeds, seamless user flows, and maximum checkout conversion rates.
             </p>
-
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => onOpenAudit('convert-build')}
-                className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-sm hover:bg-white/95 transition-all shadow-lg cursor-pointer"
-              >
-                Get Free Speed & Conversion Teardown →
-              </button>
-            </div>
-
-            {/* Supporting Keywords */}
-            <div className="pt-4 border-t border-white/20 flex flex-wrap gap-2 text-xs font-mono text-sky-100">
-              <span className="text-white font-bold">PRIMARY:</span> Shopify development agency |
-              <span>landing page design</span> |
-              <span>custom Shopify theme</span> |
-              <span>headless Shopify</span> |
-              <span>WordPress development</span> |
-              <span>Core Web Vitals</span>
-            </div>
           </div>
 
-          {/* Right Bleeding Device Mockup Card (Dark Blue Litmus #3B7FC3 -> #0D2D5C) */}
-          <div className="lg:col-span-5 relative">
-            <div
-              className="lg:translate-x-12 translate-y-4 rounded-[24px] p-6 space-y-4 shadow-2xl backdrop-blur-xl text-white overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
-                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-              <div className="relative z-10 space-y-4">
-                <div className="flex items-center justify-between border-b border-white/20 pb-3 font-mono text-xs">
-                  <span className="text-blue-100 font-bold">DEVICE MOCKUP PROOF</span>
-                  <span className="text-white bg-white/20 px-2.5 py-0.5 rounded-full font-bold border border-white/30">SUB-0.65s MOBILE</span>
-                </div>
-                
-                <div className="space-y-3 font-mono text-xs">
-                  <div className="p-3 bg-black/20 rounded-xl border border-white/20 flex items-center justify-between">
-                    <span className="text-white/90">Lighthouse Score</span>
-                    <span className="text-emerald-300 font-bold">98 / 100</span>
+          {/* Key Deliverables Card Below */}
+          <div className="max-w-3xl mx-auto text-left">
+            <div className="bg-bone text-ink rounded-3xl p-5 sm:p-6 space-y-3.5 border border-hairline shadow-2xs">
+              <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
+                <CheckCircle2 className="w-4.5 h-4.5 text-violet shrink-0" />
+                <span>What We Deliver for Design & Development Projects</span>
+              </div>
+              
+              <div className="space-y-2.5 text-xs sm:text-sm text-mute font-semibold">
+                {[
+                  { bold: 'Sub-1-second page speed optimisation', rest: ' with 95+ Core Web Vitals guarantees' },
+                  { bold: 'Bespoke Shopify storefront design', rest: ' built mobile-first for frictionless checkout' },
+                  { bold: 'High-converting ad landing pages', rest: ' engineered specifically to maximize ROAS' },
+                  { bold: 'Clean modular code architecture', rest: ' without bloated third-party plugin drag' },
+                  { bold: 'Post-launch conversion monitoring', rest: ' to iterate and protect speed scores' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet mt-2 shrink-0" />
+                    <span className="text-ink leading-snug">
+                      <strong className="font-bold text-ink">{item.bold}</strong>{item.rest}
+                    </span>
                   </div>
-                  <div className="p-3 bg-black/20 rounded-xl border border-white/20 flex items-center justify-between">
-                    <span className="text-white/90">Largest Contentful Paint</span>
-                    <span className="text-sky-200 font-bold">0.62s</span>
-                  </div>
-                  <div className="p-3 bg-black/20 rounded-xl border border-white/20 flex items-center justify-between">
-                    <span className="text-white/90">Cumulative Layout Shift</span>
-                    <span className="text-sky-200 font-bold">0.000</span>
-                  </div>
-                </div>
-
-                <div className="text-[10px] text-sky-100/80 text-center italic font-mono">
-                  * Real build snapshot from D2C Skincare & SaaS mobile deployments.
-                </div>
+                ))}
               </div>
             </div>
           </div>
+
         </div>
-      </div>
+      </section>
 
-
-      {/* 2. SPEED SCOREBOARD INSET PANEL (Dark inset panel with monospace numerals) */}
-      <div id="speed-core-web-vitals" className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="bg-ink text-white rounded-3xl p-8 sm:p-12 border-2 border-teal/40 space-y-8 shadow-2xl relative overflow-hidden">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <div>
-              <div className="text-xs font-mono font-bold text-teal uppercase">REAL BUILD SPEED SCOREBOARD</div>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mt-1">
-                Before & After Core Web Vitals Benchmarks
-              </h2>
-            </div>
-            <Gauge className="w-8 h-8 text-teal hidden sm:block" />
-          </div>
-
-          {/* Speed Benchmark Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse font-mono text-xs sm:text-sm">
-              <thead>
-                <tr className="border-b border-white/15 text-teal bg-white/5">
-                  <th className="p-3">METRIC</th>
-                  <th className="p-3">BEFORE JANUSMAAD BUILD</th>
-                  <th className="p-3">AFTER SPEED TUNING</th>
-                  <th className="p-3">REVENUE LIFT DEMONSTRATED</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10 text-white font-mono">
-                <tr>
-                  <td className="p-3 font-bold">Largest Contentful Paint (LCP)</td>
-                  <td className="p-3 text-red-400 font-bold">[PLACEHOLDER: 4.2s]</td>
-                  <td className="p-3 text-emerald-400 font-bold">[PLACEHOLDER: 0.65s]</td>
-                  <td className="p-3 text-teal font-bold">+38.4% Add-to-Cart Rate</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold">Cumulative Layout Shift (CLS)</td>
-                  <td className="p-3 text-red-400 font-bold">[PLACEHOLDER: 0.28]</td>
-                  <td className="p-3 text-emerald-400 font-bold">[PLACEHOLDER: 0.00]</td>
-                  <td className="p-3 text-teal font-bold">Zero misclicks at checkout</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold">Mobile Google Lighthouse Score</td>
-                  <td className="p-3 text-red-400 font-bold">[PLACEHOLDER: 38 / 100]</td>
-                  <td className="p-3 text-emerald-400 font-bold">[PLACEHOLDER: 98 / 100]</td>
-                  <td className="p-3 text-teal font-bold">+48.2% Mobile Conversion Rate</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      {/* FULL-WIDTH CASE IMAGERY BANNER BETWEEN SECTIONS */}
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-bone border-y border-hairline py-12 px-4 sm:px-12">
-        <div className="max-w-7xl mx-auto space-y-4">
-          <div className="text-xs font-mono font-bold text-teal uppercase">FULL-WIDTH STOREFRONT CASE SHOWCASE</div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
-            {/* Card 1: Light Blue */}
-            <div
-              className="litmus-card-1 relative rounded-[24px] p-6 space-y-2 text-[#07101E] overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
-              style={{
-                background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
-                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-              <div className="relative z-10 space-y-2">
-                <div className="text-xs font-mono font-bold text-[#07101E]/80 bg-white/50 px-2.5 py-0.5 rounded-full w-fit">
-                  DTC Beauty & Skincare
-                </div>
-                <div className="font-display font-extrabold text-[#07101E] text-lg">Custom Shopify Liquid PDP</div>
-                <div className="text-xs text-[#0A2540] font-medium leading-relaxed">Sub-0.65s PDP load adding ₹1.2Cr monthly revenue.</div>
-              </div>
-            </div>
-
-            {/* Card 2: Medium Blue */}
-            <div
-              className="litmus-card-2 relative rounded-[24px] p-6 space-y-2 text-white overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
-              style={{
-                background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-              <div className="relative z-10 space-y-2">
-                <div className="text-xs font-mono font-bold text-white/90 bg-white/20 px-2.5 py-0.5 rounded-full w-fit">
-                  B2B Enterprise SaaS
-                </div>
-                <div className="font-display font-extrabold text-white text-lg drop-shadow-xs">Next.js 15 Demo Engine</div>
-                <div className="text-xs text-sky-100 font-medium leading-relaxed">Interactive pricing teardown and sub-second demo booking.</div>
-              </div>
-            </div>
-
-            {/* Card 3: Dark Blue */}
-            <div
-              className="litmus-card-3 relative rounded-[24px] p-6 space-y-2 text-white overflow-hidden group transition-all duration-300 hover:-translate-y-1.5"
-              style={{
-                background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
-                boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-              <div className="relative z-10 space-y-2">
-                <div className="text-xs font-mono font-bold text-blue-100 bg-black/20 px-2.5 py-0.5 rounded-full w-fit">
-                  Luxury Apparel E-Com
-                </div>
-                <div className="font-display font-extrabold text-white text-lg drop-shadow-sm">Headless Recharge Funnel</div>
-                <div className="text-xs text-blue-100 font-medium leading-relaxed">Bespoke 1-click cart upsell lifting AOV by ₹1,450.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      {/* 2. DELIVERABLE GROUPS (01 - 05) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            THE 5 DELIVERABLE GROUPS
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Engineering Deliverables
+      {/* 3. HOW WE WORK (PROCESS BLUEPRINT) */}
+      <section ref={howWeWorkRef} className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
+            How We Work
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div id="landing-pages" className="bg-white rounded-3xl p-6 border border-hairline space-y-3 shadow-sm">
-            <span className="text-xs font-mono font-bold text-teal">DELIVERABLE 01</span>
-            <h3 className="text-lg font-bold text-ink">Research & Session Wireframes</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Informed by real session recordings and heatmap data to remove friction points before design.
-            </p>
-          </div>
-
-          <div id="design-system" className="bg-white rounded-3xl p-6 border border-hairline space-y-3 shadow-sm">
-            <span className="text-xs font-mono font-bold text-teal">DELIVERABLE 02</span>
-            <h3 className="text-lg font-bold text-ink">Design System & Component Library</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Figma design tokens, typography scale, buttons, and mobile UI components for brand consistency.
-            </p>
-          </div>
-
-          <div id="shopify-storefronts" className="bg-white rounded-3xl p-6 border border-hairline space-y-3 shadow-sm">
-            <span className="text-xs font-mono font-bold text-teal">DELIVERABLE 03</span>
-            <h3 id="headless" className="text-lg font-bold text-ink">Build: Shopify, Headless or Bespoke Landing Pages</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Clean hand-coded Liquid or React 19 storefronts with zero redundant apps slowing down render times.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-3xl p-6 border border-hairline space-y-3 shadow-sm">
-            <span className="text-xs font-mono font-bold text-teal">DELIVERABLE 04</span>
-            <h3 className="text-lg font-bold text-ink">Speed & Core Web Vitals Tuning</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Image WebP optimization, lazy loading, edge CDN caching, and JavaScript bundle pruning.
-            </p>
-          </div>
-
-          <div id="post-launch" className="bg-white rounded-3xl p-6 border border-hairline space-y-3 shadow-sm md:col-span-2">
-            <span className="text-xs font-mono font-bold text-teal">DELIVERABLE 05</span>
-            <h3 className="text-lg font-bold text-ink">QA on Real Devices, Launch & 30 Days Care</h3>
-            <p className="text-xs text-mute leading-relaxed">
-              Cross-browser and real mobile device QA testing across iOS and Android, followed by 30 days post-launch support guarantee.
-            </p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              step: '01',
+              title: 'UX & Speed Audit',
+              desc: 'We analyze your current site performance, mobile friction points, Lighthouse scores, and cart drop-off bottlenecks.'
+            },
+            {
+              step: '02',
+              title: 'Wireframing & Conversion Flow',
+              desc: 'We map high-converting landing page layouts and streamlined product detail page (PDP) visual hierarchies.'
+            },
+            {
+              step: '03',
+              title: 'Bespoke UI/UX Design',
+              desc: 'We craft custom, premium visual designs in Figma that elevate your brand authority and reflect your product quality.'
+            },
+            {
+              step: '04',
+              title: 'High-Performance Development',
+              desc: 'We build clean, ultra-fast custom Shopify themes or Next.js storefronts with zero code bloat.'
+            },
+            {
+              step: '05',
+              title: 'Core Web Vitals Tuning',
+              desc: 'We compress images, optimize asset bundling, and tune critical CSS to guarantee sub-second mobile page loads.'
+            },
+            {
+              step: '06',
+              title: 'Rigorous QA & Device Testing',
+              desc: 'We test across iOS, Android, Safari, Chrome, and desktop viewports to ensure 100% bug-free checkout flows.'
+            },
+            {
+              step: '07',
+              title: 'Seamless Launch & Scaling',
+              desc: 'We deploy smoothly without downtime, monitoring live analytics to ensure sustained high conversion rates.'
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx}
+              onMouseEnter={(e) => {
+                if (prefersReducedMotion()) return;
+                gsap.to(e.currentTarget, { y: -8, scale: 1.02, duration: 0.3, ease: 'power2.out' });
+                const num = e.currentTarget.querySelector('.build-step-num');
+                if (num) gsap.to(num, { scale: 1.12, color: '#7C3AED', duration: 0.3, ease: 'back.out(1.7)' });
+              }}
+              onMouseLeave={(e) => {
+                if (prefersReducedMotion()) return;
+                gsap.to(e.currentTarget, { y: 0, scale: 1, duration: 0.3, ease: 'power2.out' });
+                const num = e.currentTarget.querySelector('.build-step-num');
+                if (num) gsap.to(num, { scale: 1, color: 'rgba(124, 58, 237, 0.4)', duration: 0.3, ease: 'power2.out' });
+              }}
+              className={`build-how-card bg-white border border-hairline rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm transition-all duration-300 group relative overflow-hidden flex flex-col justify-between cursor-pointer ${
+                idx === 6 ? 'md:col-span-2 md:w-1/2 md:mx-auto lg:w-full lg:col-span-1 lg:col-start-2' : ''
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="build-step-num text-4xl sm:text-5xl font-display font-black text-violet/40 transition-colors origin-left inline-block">
+                    {item.step}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-bone text-mute border border-hairline">
+                    STEP {item.step}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink group-hover:text-violet transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-mute text-xs sm:text-sm leading-relaxed font-medium">
+                  {item.desc}
+                </p>
+              </div>
+              
+              <div className="pt-4 border-t border-hairline/60 flex items-center gap-1.5 text-[11px] font-mono font-bold text-violet">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet" />
+                <span>PHASE {item.step} EXECUTION</span>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* CALCULATOR: DO THE MATH */}
-      <Calculator onOpenAudit={onOpenAudit} />
-
-      {/* HOW WE WORK MANIFESTO */}
-      <HowWeWork />
-
-      {/* WE BUILD FOR CONVERSIONS */}
-      <ThreeWaysIn onOpenAudit={onOpenAudit} />
-
-      {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR BUILD */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            VERIFIED BUILD PROOF & STOREFRONT CLIENT VAULT
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Top Storefront & Landing Page Builds & Client Work
+      {/* 4. OUR WORK (CATEGORY METRICS EXPLORER) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-4">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">
+            Our Work
           </h2>
-          <p className="text-mute text-sm">
-            Filtered by Build & Design case studies, with full access to all 38 client vault records.
-          </p>
         </div>
 
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="Build" hideHeader={true} />
-      </div>
+        <CategoryMetricsExplorer 
+          onOpenAudit={onOpenAudit} 
+          initialService="BUILD" 
+          hideHeader={true} 
+          customClientOrder={[
+            'radboards',
+            'kicky-and-perky',
+            'shagun-sweets',
+            'rudrasetu',
+            'paperbark-camp',
+            'soiree-club'
+          ]}
+        />
+      </section>
 
-      {/* VERIFIED TESTIMONIALS CAROUSEL */}
-      <div className="border-t border-hairline pt-12">
+      {/* 5. TESTIMONIALS */}
+      <section className="border-t border-hairline pt-8">
         <TestimonialsMarquee />
-      </div>
+      </section>
 
-      {/* CROSS-LINKS SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 border-t border-hairline pt-12">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-bone rounded-3xl p-8 border border-hairline">
-          <div>
-            <div className="text-xs font-mono font-bold text-teal uppercase">EXPLORE ADJACENT CAPABILITIES</div>
-            <div className="text-lg font-display font-bold text-ink mt-1">Turn Speed into High Conversion</div>
+      {/* 6. FAQ SECTION */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="text-center space-y-3">
+          <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+            FREQUENTLY ASKED QUESTIONS
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {[
+            {
+              q: 'How fast can a custom Shopify storefront or landing page be built?',
+              a: 'Bespoke high-converting landing pages take 5–7 business days from wireframe to launch. Complete custom Shopify storefront builds typically take 3–5 weeks depending on catalog complexity and custom app integrations.'
+            },
+            {
+              q: 'Do you guarantee speed and Core Web Vitals performance?',
+              a: 'Yes. Every storefront and landing page we engineer comes with strict Core Web Vitals targets, ensuring mobile loading speed under 1 second and Lighthouse performance scores above 90.'
+            },
+            {
+              q: 'Can we edit content ourselves after launch?',
+              a: 'Absolutely. We build modular, custom theme sections natively within Shopify Theme Editor or your headless CMS, allowing your marketing team to edit text, images, and promos without developer help.'
+            },
+            {
+              q: 'What platforms do you specialize in for ecommerce development?',
+              a: 'We specialize in custom Shopify & Shopify Plus development, Next.js / React headless storefronts, custom WooCommerce builds, and speed-optimized WordPress landing pages.'
+            },
+            {
+              q: 'Do you provide ongoing support and maintenance after launch?',
+              a: 'Yes. We offer retainer-based maintenance packages that cover speed audits, new section additions, feature updates, app integrations, and conversion rate optimization.'
+            },
+            {
+              q: 'How do custom landing pages improve our paid ad performance?',
+              a: 'Sending ad traffic to dedicated, ultra-fast landing pages with targeted messaging dramatically lowers bounce rates and increases conversion rates compared to sending traffic to generic homepages.'
+            }
+          ].map((faq, idx) => (
+            <div 
+              key={idx}
+              className="bg-white border border-hairline rounded-2xl overflow-hidden shadow-xs transition-all"
+            >
+              <button
+                type="button"
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-ink hover:text-violet transition-colors cursor-pointer"
+              >
+                <span>{faq.q}</span>
+                <ChevronDown 
+                  className={`w-5 h-5 text-violet shrink-0 transition-transform duration-200 ${
+                    openFaq === idx ? 'rotate-180' : ''
+                  }`} 
+                />
+              </button>
+              
+              {openFaq === idx && (
+                <div className="px-5 sm:px-6 pb-6 text-mute text-sm sm:text-base font-medium leading-relaxed border-t border-hairline/50 pt-4 animate-in fade-in duration-200">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. TALK TO US / AUDIT FORM SECTION */}
+      <section id="talk-to-us" className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-white text-ink rounded-[32px] p-8 sm:p-12 space-y-10 shadow-xl border border-hairline relative overflow-hidden">
+          <div className="max-w-3xl mx-auto space-y-3 text-center">
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink text-center">
+              Talk to Our Development & UX Engineers
+            </h2>
           </div>
-          <div className="flex flex-wrap gap-4 font-mono text-xs">
-            <button 
-              onClick={() => onNavigateCapability('convert-cro')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              CRO Agency →
-            </button>
-            <button 
-              onClick={() => onNavigateCapability('acquire-performance')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              Performance Marketing →
-            </button>
-            <button 
-              onClick={() => onNavigateCapability('acquire-seo')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              SEO & Speed Tuning →
-            </button>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            {/* Form Column */}
+            <div className="lg:col-span-7">
+              {formSubmitted ? (
+                <div className="bg-bone border border-violet/30 rounded-2xl p-8 text-center space-y-4 animate-in fade-in duration-200">
+                  <ShieldCheck className="w-12 h-12 text-violet mx-auto" />
+                  <h3 className="text-xl font-display font-bold text-ink">Thank You for Reaching Out!</h3>
+                  <p className="text-sm text-mute max-w-md mx-auto">
+                    Your request has been submitted successfully. A web development strategist will review your storefront and reach out within 2 hours.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleBottomSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Your Name*</label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="John Doe"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Your Email*</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="john@company.com"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Subject*</label>
+                      <input
+                        type="text"
+                        name="subject"
+                        required
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                        placeholder="Shopify Storefront Audit"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Your Phone*</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+91 98187 47001"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-mono text-mute uppercase font-bold">Message*</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tell us about your existing storefront, speed issues, or landing page goals..."
+                      className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-violet text-white font-display font-bold rounded-xl hover:bg-violet-deep transition-colors shadow-lg cursor-pointer"
+                  >
+                    <span>Send Audit Request</span>
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* Direct Contact Sidebar */}
+            <div className="lg:col-span-5 space-y-6 bg-bone border border-hairline rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-display font-bold text-ink">Direct Contact</h3>
+
+              <div className="space-y-4">
+                <a
+                  href="tel:+919818747001"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white border border-hairline hover:border-violet/40 transition-colors group"
+                >
+                  <div className="p-2.5 bg-violet/10 text-violet rounded-lg group-hover:scale-105 transition-transform">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-mute">Call Now</div>
+                    <div className="text-sm font-bold text-ink">+91 98187 47001</div>
+                  </div>
+                </a>
+
+                <a
+                  href="mailto:hello@janusmaad.com"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white border border-hairline hover:border-violet/40 transition-colors group"
+                >
+                  <div className="p-2.5 bg-violet/10 text-violet rounded-lg group-hover:scale-105 transition-transform">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-mute">Email Us</div>
+                    <div className="text-sm font-bold text-ink">hello@janusmaad.com</div>
+                  </div>
+                </a>
+
+                <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white border border-hairline">
+                  <div className="p-2.5 bg-violet/10 text-violet rounded-lg">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-mute">Working Hours</div>
+                    <div className="text-sm font-bold text-ink">Monday – Saturday: 9am – 8pm</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
-

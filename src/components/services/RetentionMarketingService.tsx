@@ -1,5 +1,17 @@
-import React, { useState, useRef } from 'react';
-import { Sliders, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  CheckCircle2, 
+  ArrowRight,
+  ShieldCheck,
+  Send,
+  Phone,
+  Mail,
+  Clock,
+  ChevronDown
+} from 'lucide-react';
+import { gsap, ScrollTrigger } from '../../gsap/register';
+import { prefersReducedMotion } from '../../gsap/utils';
+
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TestimonialsMarquee } from '../testimonials/TestimonialsMarquee';
 
@@ -12,27 +24,52 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
   onOpenAudit,
   onNavigateCapability
 }) => {
-  const scrollRailRef = useRef<HTMLDivElement | null>(null);
-
-  // Calculator State
-  const [orders, setOrders] = useState(3000); // 3,000 orders/mo
+  // Retention Estimator State
+  const [monthlyOrders, setMonthlyOrders] = useState(3000); // 3k orders/mo
   const [repeatRate, setRepeatRate] = useState(18); // 18% current repeat rate
-  const [aov] = useState(3200); // ₹3,200
+  const [averageOrderValue, setAverageOrderValue] = useState(3200); // ₹3,200 AOV
   const [targetLift, setTargetLift] = useState(35); // 35% lift on repeat rate
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const newRepeatRate = Number((repeatRate * (1 + targetLift / 100)).toFixed(1));
-  const incrementalRepeatOrders = Math.round(orders * ((newRepeatRate - repeatRate) / 100));
-  const extraMonthlyRevenue = incrementalRepeatOrders * aov;
+  // GSAP Ref for How We Work Section
+  const howWeWorkRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = howWeWorkRef.current;
+    if (!el || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.set('.retention-how-card', { opacity: 0, y: 30, scale: 0.97 });
+
+      ScrollTrigger.batch('.retention-how-card', {
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: 0.09,
+            duration: 0.65,
+            ease: 'power3.out',
+            overwrite: 'auto'
+          }),
+        once: true
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Calculation Logic for Retention
+  const projectedRepeatRate = Number((repeatRate * (1 + targetLift / 100)).toFixed(1));
+  const incrementalRepeatOrders = Math.round(monthlyOrders * ((projectedRepeatRate - repeatRate) / 100));
+  const extraMonthlyRevenue = incrementalRepeatOrders * averageOrderValue;
   const annualGain = extraMonthlyRevenue * 12;
 
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (scrollRailRef.current) {
-      const scrollAmount = 360;
-      scrollRailRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
-    }
+  const formatNumber = (val: number) => {
+    if (val >= 10000000) return `${(val / 10000000).toFixed(2)}Cr`;
+    if (val >= 100000) return `${(val / 100000).toFixed(1)}L`;
+    if (val >= 1000) return `${(val / 1000).toFixed(1)}k`;
+    return `${Math.round(val).toLocaleString('en-IN')}`;
   };
 
   const formatCurrency = (val: number) => {
@@ -41,467 +78,600 @@ export const RetentionMarketingService: React.FC<RetentionMarketingServiceProps>
     return `₹${Math.round(val).toLocaleString('en-IN')}`;
   };
 
-  const jsonLdData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Retention Marketing Agency | Email, SMS & WhatsApp",
-    "provider": {
-      "@type": "Organization",
-      "name": "Janusmaad Digital",
-      "url": "https://janusmaad.com"
-    },
-    "serviceType": "Retention Marketing Agency",
-    "areaServed": ["India", "Global"],
-    "description": "Automated email, SMS and WhatsApp flows that lift repeat rate and LTV."
+  // Bottom Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: 'Retention & Email/SMS Lifecycle Audit',
+    phone: '',
+    message: '',
+    optIn: true
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleBottomSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) return;
+    setFormSubmitted(true);
+    setTimeout(() => {
+      setFormSubmitted(false);
+      setFormData({ name: '', email: '', subject: 'Retention & Email/SMS Lifecycle Audit', phone: '', message: '', optIn: true });
+    }, 4000);
   };
 
   return (
-    <div className="space-y-20 pb-16">
-      {/* Inject JSON-LD Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
-
-      {/* Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+    <div className="space-y-16 sm:space-y-24 pb-12 overflow-hidden select-none">
+      
+      {/* Navigation Back Link */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4">
         <button
           onClick={() => onNavigateCapability('receipts')}
-          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-teal transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-mute hover:text-violet transition-colors cursor-pointer"
         >
           <span>← Back to All Services</span>
         </button>
       </div>
 
-      {/* 1. HERO SECTION + CALCULATOR (SIDE-BY-SIDE): Litmus Medium Blue Gradient (#5DAFFF -> #1D5B9A) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div
-          className="rounded-3xl p-6 sm:p-10 lg:p-12 relative overflow-hidden shadow-2xl text-white"
-          style={{
-            background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-            boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-          }}
-        >
-          {/* Glass Glare Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-3xl" />
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start relative z-10">
-            {/* LEFT COLUMN: Hero Value Proposition */}
+      {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE RETENTION CALCULATOR) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
             <div className="lg:col-span-6 space-y-6">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="px-3.5 py-1 bg-white/20 text-white text-xs font-mono font-bold rounded-full border border-white/40 uppercase backdrop-blur-md">
-                  RETAIN PILLAR • LIFECYCLE & RETENTION
+              <div className="space-y-3">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold text-ink leading-[0.98] tracking-tight uppercase">
+                  RETENTION<br />
+                  MARKETING
+                </h1>
+              </div>
+
+              {/* TRUSTED STACK */}
+              <div className="space-y-2.5 pt-1">
+                <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+                  Automated Lifecycle & LTV Engines
                 </span>
-                <span className="px-3 py-1 bg-black/20 text-white/90 text-xs font-mono rounded-full">
-                  SLUG: services/retention-marketing
-                </span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white leading-tight drop-shadow-xs">
-                Email, SMS & WhatsApp Flows That Lift Lifetime Value<span className="text-sky-200">.</span>
-              </h1>
-
-              <p className="text-sm sm:text-base text-sky-100 font-medium leading-relaxed font-body">
-                Automated lifecycle flows and predictive RFM segmentation engineered for brands where repeat rate is flat, customer acquisition cost (CAC) keeps climbing, and customer subscriber lists are sitting unsegmented.
-              </p>
-
-              <div className="pt-1 flex flex-wrap items-center gap-4">
-                <button
-                  onClick={() => onOpenAudit('retain-marketing')}
-                  className="py-3.5 px-7 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs sm:text-sm hover:bg-white/95 active:scale-[0.99] transition-all shadow-lg cursor-pointer uppercase tracking-wider flex items-center gap-2 group"
-                >
-                  <span>Get Free Flow & Deliverability Audit</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-
-              {/* 4 Stat Highlights in 2x2 Grid */}
-              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/20">
-                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                  <div className="text-xl sm:text-2xl font-display font-extrabold text-white">+35%</div>
-                  <div className="text-[11px] text-sky-100 font-mono">Avg Repeat Rate Lift</div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {[
+                    {
+                      name: 'Klaviyo',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#000000"/>
+                          <path d="M6 6h12v12H6z" fill="#FFF"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'WhatsApp Business API',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#25D366"/>
+                          <path d="M17.5 14.3c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.3c.2.2 2.4 3.7 5.8 5.1.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7-.1-.2-.3-.3-.6-.4z" fill="white"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'SMS Flow Automation',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="24" rx="6" fill="#7C3AED"/>
+                          <path d="M8 10h8M8 14h5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'RFM Predictive Analytics',
+                      bg: 'bg-bone border-hairline text-ink',
+                      icon: (
+                        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                          <path d="M4 19h16M4 15l4-5 4 3 5-7 3 3" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )
+                    }
+                  ].map((tech) => (
+                    <div key={tech.name} className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono font-medium flex items-center gap-1.5 ${tech.bg}`}>
+                      {tech.icon}
+                      <span>{tech.name}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                  <div className="text-xl sm:text-2xl font-display font-extrabold text-white">99.2%</div>
-                  <div className="text-[11px] text-sky-100 font-mono">Primary Inbox Placement</div>
-                </div>
-                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                  <div className="text-xl sm:text-2xl font-display font-extrabold text-white">4.8x</div>
-                  <div className="text-[11px] text-sky-100 font-mono">WhatsApp Recovery ROAS</div>
-                </div>
-                <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur-sm">
-                  <div className="text-xl sm:text-2xl font-display font-extrabold text-emerald-300">30-Day</div>
-                  <div className="text-[11px] text-sky-100 font-mono">LTV Payback Cycle</div>
-                </div>
-              </div>
-
-              {/* Supporting Keywords */}
-              <div className="pt-2 flex flex-wrap gap-2 text-xs font-mono text-sky-100/90">
-                <span className="text-white font-bold font-mono uppercase">PRIMARY:</span>
-                <span>retention marketing agency</span> |
-                <span>Klaviyo agency</span> |
-                <span>WhatsApp marketing API</span> |
-                <span>email marketing agency</span> |
-                <span>lifecycle marketing</span> |
-                <span>customer LTV</span>
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Lifetime Value Calculator */}
-            <div className="lg:col-span-6 bg-[#071324]/90 border border-white/20 rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-2xl backdrop-blur-md space-y-5 text-white">
-              <div className="space-y-1 pb-1 border-b border-white/10">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-teal/20 text-teal text-[11px] font-mono font-bold rounded-full border border-teal/30">
-                  <Sliders className="w-3 h-3" />
-                  LIFETIME VALUE CALCULATOR
-                </div>
-                <h2 className="text-xl sm:text-2xl font-display font-extrabold text-white tracking-tight">
-                  Calculate Repeat Rate Revenue Lift
-                </h2>
-                <p className="text-white/70 text-xs font-medium">
-                  Adjust monthly orders & target repeat rate improvements.
-                </p>
+            {/* RIGHT COLUMN: INTERACTIVE RETENTION CALCULATOR */}
+            <div className="lg:col-span-6 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+              <div className="space-y-1">
+                <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
+                  Estimate Your Repeat Revenue & LTV Lift
+                </h3>
               </div>
 
-              {/* Sliders */}
-              <div className="space-y-4">
-                {/* Monthly Orders Slider */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-white/80 font-medium">Monthly Orders</span>
-                    <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
-                      {orders.toLocaleString()}
-                    </span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min={500} 
-                    max={20000} 
-                    step={500}
-                    value={orders}
-                    onChange={(e) => setOrders(Number(e.target.value))}
-                    className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                  />
-                  {/* Preset Chips */}
-                  <div className="flex items-center gap-1.5 pt-0.5">
-                    {[1000, 2500, 5000, 10000, 20000].map((preset) => (
-                      <button
-                        key={preset}
-                        type="button"
-                        onClick={() => setOrders(preset)}
-                        className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
-                          orders === preset
-                            ? 'bg-teal text-ink font-bold shadow-xs'
-                            : 'bg-white/5 text-white/60 hover:bg-white/15 hover:text-white'
-                        }`}
-                      >
-                        {preset >= 1000 ? `${(preset / 1000).toFixed(0)}k` : preset}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Current Repeat Purchase Rate Slider */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-white/80 font-medium">Current Repeat Purchase Rate</span>
-                    <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
-                      {repeatRate}%
-                    </span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min={5} 
-                    max={40} 
-                    step={1}
-                    value={repeatRate}
-                    onChange={(e) => setRepeatRate(Number(e.target.value))}
-                    className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                  />
-                </div>
-
-                {/* Target Repeat Rate Lift Slider */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-white/80 font-medium">Target Repeat Rate Lift</span>
-                    <span className="text-teal font-bold px-2 py-0.5 rounded bg-teal/10 border border-teal/30">
-                      +{targetLift}%
-                    </span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min={10} 
-                    max={80} 
-                    step={5}
-                    value={targetLift}
-                    onChange={(e) => setTargetLift(Number(e.target.value))}
-                    className="w-full accent-teal cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                  />
-                </div>
-
-                <div className="pt-0.5 text-[11px] text-white/50 font-mono flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
-                  <span>Calculated with conservative ₹3,200 repeat basket value (AOV).</span>
-                </div>
-              </div>
-
-              {/* Output Panel: Compact 2x2 HUD */}
-              <div
-                className="rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden text-white shadow-xl"
-                style={{
-                  background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-                  boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.35), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/20 pointer-events-none rounded-2xl" />
-                
-                <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
-                  {/* 2x2 Metric Matrix */}
-                  <div className="grid grid-cols-2 gap-2.5 font-mono">
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">New Repeat Rate</div>
-                      <div className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
-                        {newRepeatRate}%
-                        <span className="text-[10px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
-                      </div>
+              {/* Compact 2-Column Calculator Layout */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
+                {/* Sliders Box */}
+                <div className="sm:col-span-6 space-y-3.5 bg-white p-4 rounded-2xl border border-hairline shadow-2xs flex flex-col justify-center">
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Monthly Orders</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {formatNumber(monthlyOrders)}
+                      </span>
                     </div>
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Incremental / Mo</div>
-                      <div className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5 truncate">
-                        +{incrementalRepeatOrders.toLocaleString()}
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">Extra Monthly Rev</div>
-                      <div className="text-xl sm:text-2xl font-display font-extrabold text-emerald-300 mt-0.5 truncate">
-                        {formatCurrency(extraMonthlyRevenue)}
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
-                      <div className="text-[10px] text-sky-100 font-medium uppercase tracking-wider">12-Mo Gain</div>
-                      <div className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5 truncate">
-                        {formatCurrency(annualGain)}
-                      </div>
+                    <input 
+                      type="range" min={500} max={25000} step={250}
+                      value={monthlyOrders} onChange={(e) => setMonthlyOrders(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                    <div className="flex items-center gap-1 flex-wrap pt-0.5">
+                      {[1000, 3000, 5000, 10000].map((preset) => (
+                        <button key={preset} type="button" onClick={() => setMonthlyOrders(preset)}
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded transition-all cursor-pointer ${
+                            monthlyOrders === preset ? 'bg-violet text-white font-bold shadow-2xs' : 'bg-bone text-mute hover:text-ink border border-hairline'
+                          }`}
+                        >
+                          {formatNumber(preset)}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => onOpenAudit('retain-marketing')}
-                    className="w-full py-3 px-4 rounded-xl bg-white text-[#1D5B9A] font-display font-bold text-xs hover:bg-white/90 active:scale-[0.99] transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center justify-center gap-2 group"
-                  >
-                    <span>UNLOCK RETENTION LIFT</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Current Repeat Rate</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {repeatRate.toFixed(1)}%
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={5} max={45} step={1}
+                      value={repeatRate} onChange={(e) => setRepeatRate(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Average Order Value (AOV)</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        {formatCurrency(averageOrderValue)}
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={1000} max={15000} step={500}
+                      value={averageOrderValue} onChange={(e) => setAverageOrderValue(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-mute font-medium">Target Repeat Lift</span>
+                      <span className="text-violet font-bold px-2 py-0.5 rounded bg-bone border border-hairline">
+                        +{targetLift}%
+                      </span>
+                    </div>
+                    <input 
+                      type="range" min={10} max={100} step={5}
+                      value={targetLift} onChange={(e) => setTargetLift(Number(e.target.value))}
+                      className="w-full accent-violet cursor-pointer h-1.5 bg-hairline rounded-lg"
+                    />
+                  </div>
+                </div>
+
+                {/* Output Violet Card */}
+                <div className="sm:col-span-6">
+                  <div className="rounded-2xl p-4 bg-violet text-white shadow-md h-full flex flex-col justify-between space-y-3">
+                    <div className="grid grid-cols-2 gap-2 font-mono">
+                      <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 border border-white/20 space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-white/70 font-bold uppercase">PROJECTED REPEAT RATE</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5 flex items-baseline gap-1">
+                          {projectedRepeatRate}% <span className="text-[9px] font-mono text-emerald-300 font-bold">+{targetLift}%</span>
+                        </div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 border border-white/20 space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-white/70 font-bold uppercase">EXTRA REVENUE / MO</div>
+                        <div className="text-base font-display font-extrabold text-white mt-0.5 truncate">{formatCurrency(extraMonthlyRevenue)}</div>
+                      </div>
+                      <div className="col-span-2 bg-white/10 backdrop-blur-xs rounded-xl p-2.5 border border-white/20 space-y-0.5 shadow-2xs">
+                        <div className="text-[9px] text-white/70 font-bold uppercase">12-MO REPEAT REVENUE GAIN</div>
+                        <div className="text-base font-display font-extrabold text-emerald-300 mt-0.5 truncate">{formatCurrency(annualGain)}</div>
+                      </div>
+                    </div>
+
+                    <button onClick={() => onOpenAudit('retain-marketing')} className="w-full py-2.5 px-3 rounded-xl bg-white text-ink hover:bg-bone font-display font-bold text-[10px] transition-colors shadow-sm cursor-pointer uppercase tracking-wider flex items-center justify-center gap-1 group">
+                      <span>CLAIM RETENTION REVENUE LIFT</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* 2. CORE LIFECYCLE FLOW ARCHITECTURE: Interactive Scroll Rail with 5 Litmus Cards */}
-      <div id="core-flows" className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-hairline pb-4">
-          <div className="space-y-2">
-            <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-              THE 5 DELIVERABLE GROUPS
+      {/* 2. STRATEGY & DELIVERABLES SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-6">
+        {/* Centered Heading OUTSIDE Top of Box */}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
+            WHAT WE DO
+          </h2>
+        </div>
+
+        <div className="bg-white text-ink border border-hairline rounded-[32px] p-6 sm:p-10 space-y-8 shadow-xl relative overflow-hidden text-center">
+          
+          {/* Centered inside Box */}
+          <div className="max-w-3xl mx-auto space-y-4 text-center">
+            <h3 className="text-2xl sm:text-4xl font-display font-bold text-ink leading-[1.12] tracking-tight text-center">
+              Automated Flows That Multiply Customer Lifetime Value.
+            </h3>
+            <p className="text-mute text-sm sm:text-base leading-relaxed font-medium text-center">
+              At JanusMAAD, we design and automate multi-channel Email, SMS, and WhatsApp lifecycle flows that turn one-time buyers into loyal brand advocates and maximize repeat purchase frequency.
+            </p>
+          </div>
+
+          {/* Key Deliverables Card Below */}
+          <div className="max-w-3xl mx-auto text-left">
+            <div className="bg-bone text-ink rounded-3xl p-5 sm:p-6 space-y-3.5 border border-hairline shadow-2xs">
+              <div className="flex items-center gap-2 text-violet font-display font-bold text-sm">
+                <CheckCircle2 className="w-4.5 h-4.5 text-violet shrink-0" />
+                <span>What We Deliver for Retention & Lifecycle Marketing</span>
+              </div>
+              
+              <div className="space-y-2.5 text-xs sm:text-sm text-mute font-semibold">
+                {[
+                  { bold: 'Automated Klaviyo & SMS flows', rest: ' including Welcome Series, Abandoned Cart, and Win-backs' },
+                  { bold: 'WhatsApp Business API automations', rest: ' for instant order recovery and VIP drops' },
+                  { bold: 'Predictive RFM customer segmentation', rest: ' targeting high-value buyers at key repeat windows' },
+                  { bold: 'Bespoke email template design & copywriting', rest: ' reflecting your brand voice' },
+                  { bold: 'Deliverability & primary inbox monitoring', rest: ' maintaining 99%+ email inbox placement' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet mt-2 shrink-0" />
+                    <span className="text-ink leading-snug">
+                      <strong className="font-bold text-ink">{item.bold}</strong>{item.rest}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h2 className="text-3xl font-display font-extrabold text-ink">
-              Core Lifecycle Flow Architecture
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. HOW WE WORK (PROCESS BLUEPRINT) */}
+      <section ref={howWeWorkRef} className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight text-center">
+            How We Work
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              step: '01',
+              title: 'Lifecycle & Deliverability Audit',
+              desc: 'We audit your existing email flows, open rates, inbox deliverability scores, and subscriber list health.'
+            },
+            {
+              step: '02',
+              title: 'RFM Customer Segmentation',
+              desc: 'We segment your customer database based on Recency, Frequency, and Monetary value to identify VIPs and churn risks.'
+            },
+            {
+              step: '03',
+              title: 'Build Core Automated Flows',
+              desc: 'We construct high-converting Welcome, Abandoned Checkout, Post-Purchase, and Win-back flow sequences in Klaviyo.'
+            },
+            {
+              step: '04',
+              title: 'WhatsApp & SMS Integration',
+              desc: 'We layer high-open-rate WhatsApp and SMS reminders into abandoned checkout and delivery update triggers.'
+            },
+            {
+              step: '05',
+              title: 'Weekly Campaign Broadcasts',
+              desc: 'We design and write engaging weekly email & SMS campaigns aligned with product launches, sales, and educational content.'
+            },
+            {
+              step: '06',
+              title: 'A/B Testing Subject Lines & Visuals',
+              desc: 'We test email subject lines, preview text, SMS send timings, and CTA designs to continuously push open and click rates higher.'
+            },
+            {
+              step: '07',
+              title: 'Scale LTV & Repeat Purchase Rate',
+              desc: 'We monitor repeat purchase cohorts monthly, optimizing retention flows to compound long-term customer lifetime value.'
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx}
+              onMouseEnter={(e) => {
+                if (prefersReducedMotion()) return;
+                gsap.to(e.currentTarget, { y: -8, scale: 1.02, duration: 0.3, ease: 'power2.out' });
+                const num = e.currentTarget.querySelector('.retention-step-num');
+                if (num) gsap.to(num, { scale: 1.12, color: '#7C3AED', duration: 0.3, ease: 'back.out(1.7)' });
+              }}
+              onMouseLeave={(e) => {
+                if (prefersReducedMotion()) return;
+                gsap.to(e.currentTarget, { y: 0, scale: 1, duration: 0.3, ease: 'power2.out' });
+                const num = e.currentTarget.querySelector('.retention-step-num');
+                if (num) gsap.to(num, { scale: 1, color: 'rgba(124, 58, 237, 0.4)', duration: 0.3, ease: 'power2.out' });
+              }}
+              className={`retention-how-card bg-white border border-hairline rounded-3xl p-6 sm:p-7 space-y-4 shadow-sm transition-all duration-300 group relative overflow-hidden flex flex-col justify-between cursor-pointer ${
+                idx === 6 ? 'md:col-span-2 md:w-1/2 md:mx-auto lg:w-full lg:col-span-1 lg:col-start-2' : ''
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="retention-step-num text-4xl sm:text-5xl font-display font-black text-violet/40 transition-colors origin-left inline-block">
+                    {item.step}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-bone text-mute border border-hairline">
+                    STEP {item.step}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-ink group-hover:text-violet transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-mute text-xs sm:text-sm leading-relaxed font-medium">
+                  {item.desc}
+                </p>
+              </div>
+              
+              <div className="pt-4 border-t border-hairline/60 flex items-center gap-1.5 text-[11px] font-mono font-bold text-violet">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet" />
+                <span>PHASE {item.step} EXECUTION</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. OUR WORK (CATEGORY METRICS EXPLORER) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 space-y-4">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink tracking-tight">
+            Our Work
+          </h2>
+        </div>
+
+        <CategoryMetricsExplorer 
+          onOpenAudit={onOpenAudit} 
+          initialService="RETENTION" 
+          hideHeader={true} 
+          customClientOrder={[
+            'shagun-sweets',
+            'kicky-and-perky',
+            'radboards',
+            'rudrasetu',
+            'paperbark-camp',
+            'soiree-club'
+          ]}
+        />
+      </section>
+
+      {/* 5. TESTIMONIALS */}
+      <section className="border-t border-hairline pt-8">
+        <TestimonialsMarquee />
+      </section>
+
+      {/* 6. FAQ SECTION */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="text-center space-y-3">
+          <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+            FREQUENTLY ASKED QUESTIONS
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {[
+            {
+              q: 'Which platforms do you use for Email, SMS, and WhatsApp automation?',
+              a: 'We are certified Klaviyo agency partners and integrate WhatsApp Business API (Wati, Interakt, AISensy) alongside SMS platforms (Attentive, Postscript, SMSBump) for unified cross-channel lifecycle messaging.'
+            },
+            {
+              q: 'How fast can we launch new automated email and SMS flows?',
+              a: 'Core lifecycle flows (Welcome, Abandoned Cart, Browse Abandonment, Post-Purchase) take 7–10 business days to design, copywrite, setup, and launch.'
+            },
+            {
+              q: 'How do you prevent emails from going into the Spam or Promotions tab?',
+              a: 'We implement SPF, DKIM, and DMARC domain authentication, perform list cleaning to clear unengaged contacts, and enforce strict email template text-to-image ratios to guarantee 99%+ primary inbox deliverability.'
+            },
+            {
+              q: 'Why should we add WhatsApp to our retention stack?',
+              a: 'WhatsApp boasts 98%+ open rates and 45%+ click-through rates. Adding automated WhatsApp checkout reminders and VIP drop notifications dramatically lifts instant recovery revenue.'
+            },
+            {
+              q: 'How do you measure retention marketing success?',
+              a: 'We track percentage of total revenue generated by owned channels (email/SMS/WhatsApp), repeat purchase rate, customer lifetime value (LTV) over 30/60/90 days, and flow-driven conversion rate.'
+            },
+            {
+              q: 'Do you create the email graphics and write the copy?',
+              a: 'Yes. Our team handles 100% of the copywriting, custom graphic design, HTML template coding, segment creation, and flow logic setup.'
+            }
+          ].map((faq, idx) => (
+            <div 
+              key={idx}
+              className="bg-white border border-hairline rounded-2xl overflow-hidden shadow-xs transition-all"
+            >
+              <button
+                type="button"
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-ink hover:text-violet transition-colors cursor-pointer"
+              >
+                <span>{faq.q}</span>
+                <ChevronDown 
+                  className={`w-5 h-5 text-violet shrink-0 transition-transform duration-200 ${
+                    openFaq === idx ? 'rotate-180' : ''
+                  }`} 
+                />
+              </button>
+              
+              {openFaq === idx && (
+                <div className="px-5 sm:px-6 pb-6 text-mute text-sm sm:text-base font-medium leading-relaxed border-t border-hairline/50 pt-4 animate-in fade-in duration-200">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. TALK TO US / AUDIT FORM SECTION */}
+      <section id="talk-to-us" className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="bg-white text-ink rounded-[32px] p-8 sm:p-12 space-y-10 shadow-xl border border-hairline relative overflow-hidden">
+          <div className="max-w-3xl mx-auto space-y-3 text-center">
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink text-center">
+              Talk to Our Retention & Lifecycle Strategists
             </h2>
           </div>
 
-          {/* Interactive Rail Controls */}
-          <div className="flex items-center gap-2 self-end sm:self-auto">
-            <button
-              onClick={() => handleScroll('left')}
-              className="p-3 bg-white border border-hairline hover:border-teal rounded-full shadow-sm hover:scale-105 active:scale-95 transition-all text-ink hover:text-teal cursor-pointer"
-              aria-label="Scroll rail left"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => handleScroll('right')}
-              className="p-3 bg-white border border-hairline hover:border-teal rounded-full shadow-sm hover:scale-105 active:scale-95 transition-all text-ink hover:text-teal cursor-pointer"
-              aria-label="Scroll rail right"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            {/* Form Column */}
+            <div className="lg:col-span-7">
+              {formSubmitted ? (
+                <div className="bg-bone border border-violet/30 rounded-2xl p-8 text-center space-y-4 animate-in fade-in duration-200">
+                  <ShieldCheck className="w-12 h-12 text-violet mx-auto" />
+                  <h3 className="text-xl font-display font-bold text-ink">Thank You for Reaching Out!</h3>
+                  <p className="text-sm text-mute max-w-md mx-auto">
+                    Your request has been submitted successfully. A retention marketing specialist will audit your email/SMS flows and reach out within 2 hours.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleBottomSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Your Name*</label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="John Doe"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Your Email*</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="john@company.com"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Subject*</label>
+                      <input
+                        type="text"
+                        name="subject"
+                        required
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                        placeholder="Retention & Email Audit"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-mute uppercase font-bold">Your Phone*</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+91 98187 47001"
+                        className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-mono text-mute uppercase font-bold">Message*</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tell us about your current monthly orders, email platform (Klaviyo, etc.), and retention goals..."
+                      className="w-full px-4 py-3 bg-bone border border-hairline rounded-xl text-sm text-ink placeholder:text-mute focus:outline-none focus:border-violet transition-colors resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-violet text-white font-display font-bold rounded-xl hover:bg-violet-deep transition-colors shadow-lg cursor-pointer"
+                  >
+                    <span>Send Audit Request</span>
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* Direct Contact Sidebar */}
+            <div className="lg:col-span-5 space-y-6 bg-bone border border-hairline rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-display font-bold text-ink">Direct Contact</h3>
+
+              <div className="space-y-4">
+                <a
+                  href="tel:+919818747001"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white border border-hairline hover:border-violet/40 transition-colors group"
+                >
+                  <div className="p-2.5 bg-violet/10 text-violet rounded-lg group-hover:scale-105 transition-transform">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-mute">Call Now</div>
+                    <div className="text-sm font-bold text-ink">+91 98187 47001</div>
+                  </div>
+                </a>
+
+                <a
+                  href="mailto:hello@janusmaad.com"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white border border-hairline hover:border-violet/40 transition-colors group"
+                >
+                  <div className="p-2.5 bg-violet/10 text-violet rounded-lg group-hover:scale-105 transition-transform">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-mute">Email Us</div>
+                    <div className="text-sm font-bold text-ink">hello@janusmaad.com</div>
+                  </div>
+                </a>
+
+                <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white border border-hairline">
+                  <div className="p-2.5 bg-violet/10 text-violet rounded-lg">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-mute">Working Hours</div>
+                    <div className="text-sm font-bold text-ink">Monday – Saturday: 9am – 8pm</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Swipe / Drag / Scroll Rail with all 5 Litmus Gradient Cards */}
-        <div
-          ref={scrollRailRef}
-          className="flex overflow-x-auto gap-6 pb-6 pt-2 scrollbar-none snap-x items-stretch scroll-smooth"
-        >
-          {/* Flow 01: Light Blue */}
-          <div
-            className="litmus-card-1 w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-[#07101E] hover:-translate-y-1 transition-all duration-300"
-            style={{
-              background: 'linear-gradient(135deg, #A8D5FF 0%, #5B8FBD 100%)',
-              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.2)'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-            <div className="relative z-10 space-y-4">
-              <span className="px-3 py-1 bg-white/60 border border-white/80 text-[#07101E] text-xs font-mono font-bold rounded-full w-fit inline-block">
-                FLOW 01 • LIGHT BLUE
-              </span>
-              <h3 id="campaigns" className="text-2xl font-display font-extrabold text-[#07101E]">
-                Welcome Series (3-Part)
-              </h3>
-              <p className="text-xs text-[#0A2540] font-medium leading-relaxed">
-                Introducing brand story, zero-party preference quiz, and first-purchase incentive.
-              </p>
-            </div>
-          </div>
-
-          {/* Flow 02: Medium Blue */}
-          <div
-            className="litmus-card-2 w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
-            style={{
-              background: 'linear-gradient(135deg, #5DAFFF 0%, #1D5B9A 100%)',
-              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-            <div className="relative z-10 space-y-4">
-              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
-                FLOW 02 • MEDIUM BLUE
-              </span>
-              <h3 id="whatsapp-api" className="text-2xl font-display font-extrabold text-white drop-shadow-xs">
-                Abandoned Cart & Checkout
-              </h3>
-              <p className="text-xs text-sky-100 font-medium leading-relaxed">
-                Multi-channel recovery triggers via Email + WhatsApp API within 15 minutes of drop-off.
-              </p>
-            </div>
-          </div>
-
-          {/* Flow 03: Dark Blue */}
-          <div
-            className="litmus-card-3 w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
-            style={{
-              background: 'linear-gradient(135deg, #3B7FC3 0%, #0D2D5C 100%)',
-              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-            <div className="relative z-10 space-y-4">
-              <span className="px-3 py-1 bg-white/15 border border-white/30 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
-                FLOW 03 • DARK BLUE
-              </span>
-              <h3 id="segmentation-rfm" className="text-2xl font-display font-extrabold text-white drop-shadow-sm">
-                Post-Purchase & Cross-Sell
-              </h3>
-              <p className="text-xs text-blue-100 font-medium leading-relaxed">
-                Product usage instructions, review capture, and dynamic cross-sell recommendations.
-              </p>
-            </div>
-          </div>
-
-          {/* Flow 04: Cyan Sky Litmus Card */}
-          <div
-            className="w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
-            style={{
-              background: 'linear-gradient(135deg, #60A5FA 0%, #1E40AF 100%)',
-              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-            <div className="relative z-10 space-y-4">
-              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
-                FLOW 04 • CYAN SKY
-              </span>
-              <h3 id="deliverability" className="text-2xl font-display font-extrabold text-white drop-shadow-xs">
-                Winback & Sunset Flow
-              </h3>
-              <p className="text-xs text-sky-100 font-medium leading-relaxed">
-                Re-engaging unengaged contacts before list cleaning to maintain high deliverability and sender reputation.
-              </p>
-            </div>
-          </div>
-
-          {/* Flow 05: Royal Deep Litmus Card */}
-          <div
-            className="w-80 sm:w-96 shrink-0 relative rounded-[24px] p-7 space-y-4 shadow-2xl snap-start overflow-hidden text-white hover:-translate-y-1 transition-all duration-300"
-            style={{
-              background: 'linear-gradient(135deg, #38BDF8 0%, #0369A1 100%)',
-              boxShadow: '0 28px 56px -18px rgba(0, 0, 0, 0.30), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25)'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/5 to-transparent pointer-events-none rounded-[24px]" />
-            <div className="relative z-10 space-y-4">
-              <span className="px-3 py-1 bg-white/20 border border-white/40 text-white text-xs font-mono font-bold rounded-full w-fit inline-block">
-                FLOW 05 • ROYAL BLUE
-              </span>
-              <h3 className="text-2xl font-display font-extrabold text-white drop-shadow-xs">
-                VIP Tier & RFM Modeling
-              </h3>
-              <p className="text-xs text-sky-100 font-medium leading-relaxed">
-                Segmenting high-LTV buyers into exclusive early-access drop lists, rewards tiers, and personalized VIP flows.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      {/* SUCCESS METRICS BY CATEGORY & CLIENT VAULT FOR RETENTION MARKETING */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-8 border-t border-hairline pt-12">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
-          <div className="text-xs font-mono font-bold text-teal uppercase tracking-widest">
-            VERIFIED RETENTION PROOF & LIFECYCLE CLIENT VAULT
-          </div>
-          <h2 className="text-3xl font-display font-extrabold text-ink">
-            Top Retention & Lifecycle Clients & LTV Results
-          </h2>
-          <p className="text-mute text-sm">
-            Filtered by Retention Marketing (RM) case studies, with full access to all client vault records.
-          </p>
-        </div>
-
-        <CategoryMetricsExplorer onOpenAudit={onOpenAudit} initialService="RM" hideHeader={true} />
-      </div>
-
-      {/* VERIFIED TESTIMONIALS CAROUSEL */}
-      <div className="border-t border-hairline pt-12">
-        <TestimonialsMarquee />
-      </div>
-
-      {/* CROSS-LINKS SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 border-t border-hairline pt-12">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-bone rounded-3xl p-8 border border-hairline">
-          <div>
-            <div className="text-xs font-mono font-bold text-teal uppercase">EXPLORE ADJACENT CAPABILITIES</div>
-            <div className="text-lg font-display font-bold text-ink mt-1">Scale Customer LTV</div>
-          </div>
-          <div className="flex flex-wrap gap-4 font-mono text-xs">
-            <button 
-              onClick={() => onNavigateCapability('acquire-performance')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              Performance Marketing →
-            </button>
-            <button 
-              onClick={() => onNavigateCapability('convert-cro')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              CRO Agency →
-            </button>
-            <button 
-              onClick={() => onNavigateCapability('acquire-smm')}
-              className="px-4 py-2 bg-white rounded-xl border border-hairline font-bold hover:border-teal transition-colors"
-            >
-              SMM Content Engine →
-            </button>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };
-
