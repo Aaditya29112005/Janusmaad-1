@@ -257,11 +257,11 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Column: Narrative */}
-            <div className="lg:col-span-6 space-y-4">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight">
+            <div className="lg:col-span-6 space-y-4 text-center">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink leading-[1.12] tracking-tight text-center">
                 Marketing Should Always Pay for Itself.
               </h2>
-              <p className="text-mute text-sm sm:text-base leading-relaxed font-medium">
+              <p className="text-mute text-sm sm:text-base leading-relaxed font-medium text-center">
                 At JanusMAAD, we combine AI-powered optimisation with human expertise to continuously improve your campaigns across all platforms; from Google and Meta to LinkedIn, YouTube and beyond.
               </p>
             </div>
