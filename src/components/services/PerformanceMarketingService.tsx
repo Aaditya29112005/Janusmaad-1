@@ -84,10 +84,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   PERFORMANCE<br />
                   MARKETING
                 </h1>
-
-                <p className="text-base sm:text-lg text-mute font-medium leading-relaxed font-body">
-                  Our campaigns should never run on autopilot.
-                </p>
               </div>
 
               {/* TRUSTED TECHNOLOGIES */}
