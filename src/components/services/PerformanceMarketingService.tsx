@@ -76,18 +76,18 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       {/* 1. LIGHT THEME HERO SECTION (LEFT CONTENT + RIGHT INTERACTIVE REVENUE CALCULATOR) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
-          <div className="space-y-8 relative z-10">
-            {/* HERO HEADLINE (FULL WIDTH AT TOP OF CARD FOR MAXIMUM TEXT SIZE) */}
-            <div>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-extrabold text-ink leading-[0.95] tracking-tight uppercase">
-                PERFORMANCE MARKETING
-              </h1>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="space-y-3">
+                <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-display font-extrabold text-ink leading-[1.02] tracking-tight uppercase">
+                  PERFORMANCE<br />
+                  MARKETING
+                </h1>
+              </div>
 
-            {/* TWO-COLUMN GRID BELOW HEADLINE: PLATFORMS & CALCULATOR */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-2">
-              {/* LEFT COLUMN: CAMPAIGN MANAGEMENT & TRUSTED TECH */}
-              <div className="lg:col-span-5 space-y-4 flex flex-col justify-center">
+              {/* TRUSTED TECHNOLOGIES */}
+              <div className="space-y-2.5 pt-1">
                 <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
                   Campaign Management across Platforms
                 </span>
@@ -151,9 +151,10 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                   ))}
                 </div>
               </div>
+            </div>
 
-              {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
-              <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+            {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
+            <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
               <div className="space-y-1">
                 <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
                   Estimate Your Revenue Lift
@@ -248,7 +249,6 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </div>
           </div>
         </div>
-      </div>
       </section>
 
       {/* 2. STRATEGY & DELIVERABLES SECTION (COMPACT & IMPACTFUL) */}
