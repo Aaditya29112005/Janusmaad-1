@@ -6,7 +6,8 @@ import {
   Send,
   Phone,
   Mail,
-  Clock
+  Clock,
+  ChevronDown
 } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../gsap/register';
 import { prefersReducedMotion } from '../../gsap/utils';
@@ -27,6 +28,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
   const [monthlySpend, setMonthlySpend] = useState(150000); // ₹1.5L default
   const [currentROAS, setCurrentROAS] = useState(2.2);
   const [targetLift, setTargetLift] = useState(35); // 35% lift
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   // GSAP Ref for How We Work Section
   const howWeWorkRef = useRef<HTMLDivElement | null>(null);
@@ -448,6 +450,71 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       {/* 7. TESTIMONIALS */}
       <section className="border-t border-hairline pt-8">
         <TestimonialsMarquee />
+      </section>
+
+      {/* 7.5 FAQ SECTION */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-8 space-y-8">
+        <div className="text-center space-y-3">
+          <span className="text-[11px] font-mono font-bold tracking-widest text-violet uppercase block">
+            FREQUENTLY ASKED QUESTIONS
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink uppercase tracking-tight">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {[
+            {
+              q: 'How fast can we expect to see measurable results from performance campaigns?',
+              a: 'Initial campaign setup and baseline telemetry audits take 3–5 days. Once live, algorithm learning and initial optimization kick in within 7–14 days, with full scaling and ROAS compounding typically achieved by week 3–4.'
+            },
+            {
+              q: 'What platforms do you manage for performance marketing?',
+              a: 'We engineer and scale performance campaigns across Meta (Instagram & Facebook), Google Ads (Search, Shopping, Performance Max, YouTube), Amazon, LinkedIn, and emerging AI advertising channels like ChatGPT.'
+            },
+            {
+              q: 'How do you handle budget allocation across channels?',
+              a: 'We do not lock spend into static monthly channel budgets. We continuously shift ad budget dynamically toward the highest-performing channels, ad sets, and landing pages based on real-time ROAS and CAC data.'
+            },
+            {
+              q: 'Do you handle creative production and landing page optimization?',
+              a: 'Yes. High-converting performance marketing requires relentless creative testing and friction-free landing pages. We produce performance ad creatives, hook variations, and custom speed-optimized landing pages engineered for conversion.'
+            },
+            {
+              q: 'What is your pricing and engagement model?',
+              a: 'We work on transparent retainer models or hybrid performance models scaled to your ad spend and growth targets. There are no hidden fees, and all ad accounts and data remain 100% owned by your brand.'
+            },
+            {
+              q: 'How do you ensure accurate conversion tracking post-iOS privacy updates?',
+              a: 'We audit and implement server-side tracking (Meta Conversions API, Google Enhanced Conversions, server-side GTM) to bypass browser restrictions and ad blockers, ensuring 99%+ attribution telemetry precision.'
+            }
+          ].map((faq, idx) => (
+            <div 
+              key={idx}
+              className="bg-white border border-hairline rounded-2xl overflow-hidden shadow-xs transition-all"
+            >
+              <button
+                type="button"
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-ink hover:text-violet transition-colors cursor-pointer"
+              >
+                <span>{faq.q}</span>
+                <ChevronDown 
+                  className={`w-5 h-5 text-violet shrink-0 transition-transform duration-200 ${
+                    openFaq === idx ? 'rotate-180' : ''
+                  }`} 
+                />
+              </button>
+              
+              {openFaq === idx && (
+                <div className="px-5 sm:px-6 pb-6 text-mute text-sm sm:text-base font-medium leading-relaxed border-t border-hairline/50 pt-4 animate-in fade-in duration-200">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* 8. TALK TO US / AUDIT FORM SECTION (LIGHT THEME) */}
