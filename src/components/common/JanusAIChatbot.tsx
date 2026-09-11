@@ -202,38 +202,46 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
   return (
     <>
       {/* Floating Assistant Orb Trigger Button (Positioned to left of WhatsApp button) */}
-      <div className="fixed bottom-6 right-24 z-50 flex items-center gap-2 group">
+      <div className="fixed bottom-6 right-24 sm:right-28 z-50 flex items-center gap-2 group">
         {/* Tooltip */}
-        <div className="hidden sm:flex items-center gap-1.5 bg-ink text-white text-xs font-mono font-bold px-3 py-2 rounded-xl shadow-xl border border-hairline opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none translate-x-2 group-hover:translate-x-0 transition-transform">
-          <Sparkles className="w-3.5 h-3.5 text-violet" />
+        <div className="hidden sm:flex items-center gap-1.5 bg-ink text-white text-xs font-mono font-bold px-3 py-2 rounded-xl shadow-2xl border border-hairline opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none translate-x-2 group-hover:translate-x-0 transition-transform">
+          <Sparkles className="w-3.5 h-3.5 text-violet-400" />
           <span>Ask Janus AI</span>
         </div>
 
-        {/* Custom Orb Button matching user reference image */}
+        {/* Custom 3D Glowing Sphere Button (Matching user reference image) */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle Janus AI Assistant"
-          className="relative w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer overflow-hidden group"
+          className="relative w-16 h-16 sm:w-[68px] sm:h-[68px] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer overflow-hidden group animate-orb-glow border-2 border-white/20"
           style={{
-            background: 'radial-gradient(circle at 30% 30%, #1e1b4b 0%, #09090b 100%)',
-            boxShadow: '0 0 25px rgba(124, 58, 237, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2)'
+            background: 'radial-gradient(circle at 35% 30%, #312e81 0%, #1e1b4b 45%, #070913 90%)'
           }}
         >
-          {/* Glowing Animated Outer Gradient Ring */}
+          {/* Top-Left Specular Glare Reflection for 3D Sphere Depth */}
+          <span className="absolute top-2 left-3 w-5 h-2.5 rounded-full bg-white/30 blur-[1px] transform -rotate-12 pointer-events-none z-20" />
+
+          {/* Outer Glowing Gradient Halo Ring */}
           <span 
             className="absolute inset-0 rounded-full p-[2.5px] pointer-events-none animate-spin-slow"
             style={{
-              background: 'linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #ec4899 100%)',
+              background: 'linear-gradient(135deg, #00F2FE 0%, #38bdf8 30%, #a855f7 65%, #f43f5e 100%)',
               WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
               WebkitMaskComposite: 'xor',
               maskComposite: 'exclude'
             }}
           />
 
-          {/* AI Robot Glowing Eyes (matching image reference) */}
-          <div className="flex items-center gap-1.5 z-10">
-            <span className="w-2.5 h-4 bg-gradient-to-b from-purple-300 to-violet-500 rounded-sm shadow-[0_0_10px_#a855f7] animate-pulse" />
-            <span className="w-2.5 h-4 bg-gradient-to-b from-purple-300 to-violet-500 rounded-sm shadow-[0_0_10px_#a855f7] animate-pulse" />
+          {/* 3D AI Robot Glowing Blinking Eyes */}
+          <div className="flex items-center gap-2 z-10 animate-ai-eye-blink">
+            {/* Left Eye */}
+            <div className="relative w-3 h-5 rounded-full bg-gradient-to-b from-cyan-200 via-purple-300 to-violet-500 shadow-[0_0_14px_#a855f7,0_0_6px_#38bdf8] flex items-start justify-center pt-0.5">
+              <span className="w-1 h-1 rounded-full bg-white opacity-90" />
+            </div>
+            {/* Right Eye */}
+            <div className="relative w-3 h-5 rounded-full bg-gradient-to-b from-cyan-200 via-purple-300 to-violet-500 shadow-[0_0_14px_#a855f7,0_0_6px_#38bdf8] flex items-start justify-center pt-0.5">
+              <span className="w-1 h-1 rounded-full bg-white opacity-90" />
+            </div>
           </div>
         </button>
       </div>
@@ -245,11 +253,17 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
           {/* Header */}
           <div className="p-4 sm:p-5 bg-white/5 border-b border-white/10 flex items-center justify-between backdrop-blur-md">
             <div className="flex items-center gap-3">
-              {/* Glowing Mini Orb */}
-              <div className="w-9 h-9 rounded-full relative flex items-center justify-center bg-black border border-violet/50 shadow-[0_0_12px_rgba(168,85,247,0.5)]">
-                <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-2.5 bg-violet-400 rounded-xs shadow-[0_0_6px_#a855f7]" />
-                  <span className="w-1.5 h-2.5 bg-violet-400 rounded-xs shadow-[0_0_6px_#a855f7]" />
+              {/* Glowing Mini 3D Orb */}
+              <div 
+                className="w-10 h-10 rounded-full relative flex items-center justify-center bg-black border border-violet/50 shadow-[0_0_15px_rgba(168,85,247,0.6)] overflow-hidden shrink-0"
+                style={{
+                  background: 'radial-gradient(circle at 35% 30%, #312e81 0%, #1e1b4b 50%, #070913 100%)'
+                }}
+              >
+                <span className="absolute top-1 left-1.5 w-3 h-1.5 rounded-full bg-white/30 blur-[0.5px] transform -rotate-12 pointer-events-none" />
+                <div className="flex items-center gap-1.5 z-10 animate-ai-eye-blink">
+                  <span className="w-2 h-3.5 rounded-full bg-gradient-to-b from-cyan-200 to-violet-400 shadow-[0_0_8px_#a855f7]" />
+                  <span className="w-2 h-3.5 rounded-full bg-gradient-to-b from-cyan-200 to-violet-400 shadow-[0_0_8px_#a855f7]" />
                 </div>
               </div>
               <div>
