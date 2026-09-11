@@ -19,6 +19,8 @@ import { CategoryMetricsExplorer } from './components/proof/CategoryMetricsExplo
 import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
 import { TechPartners } from './components/partners/TechPartners';
 
+import { FloatingWhatsApp } from './components/common/FloatingWhatsApp';
+
 // Dedicated Capability Page Component
 import { CapabilityPage, type CapabilityId } from './components/services/CapabilityPage';
 
@@ -173,6 +175,9 @@ export const App: React.FC = () => {
         onClose={() => setModalOpen(false)}
         initialType={modalType}
       />
+
+      {/* Floating WhatsApp Action Button */}
+      <FloatingWhatsApp />
     </div>
   );
 };
