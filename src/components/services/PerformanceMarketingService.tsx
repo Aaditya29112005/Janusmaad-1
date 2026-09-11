@@ -326,8 +326,8 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
       {/* 8. TALK TO US / AUDIT FORM SECTION (LIGHT THEME) */}
       <section id="talk-to-us" className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="bg-white text-ink rounded-[32px] p-8 sm:p-12 space-y-10 shadow-xl border border-hairline relative overflow-hidden">
-          <div className="max-w-3xl space-y-3">
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink">
+          <div className="max-w-3xl mx-auto space-y-3 text-center">
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-ink text-center">
               Talk to Our Performance Strategists
             </h2>
           </div>
