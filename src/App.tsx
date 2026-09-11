@@ -8,6 +8,7 @@ import { Header } from './components/chrome/Header';
 import { Footer } from './components/chrome/Footer';
 import { AuditModal } from './components/chrome/AuditModal';
 import { Preloader } from './components/chrome/Preloader';
+import { FloatingWhatsApp } from './components/common/FloatingWhatsApp';
 
 // Main Page Sections
 import { Hero } from './components/hero/Hero';
@@ -18,8 +19,6 @@ import { ScrollRailMarquee } from './components/common/ScrollRailMarquee';
 import { CategoryMetricsExplorer } from './components/proof/CategoryMetricsExplorer';
 import { WhoWeDontWorkWith } from './components/fit/WhoWeDontWorkWith';
 import { TechPartners } from './components/partners/TechPartners';
-
-import { FloatingWhatsApp } from './components/common/FloatingWhatsApp';
 
 // Dedicated Capability Page Component
 import { CapabilityPage, type CapabilityId } from './components/services/CapabilityPage';
@@ -176,7 +175,7 @@ export const App: React.FC = () => {
         initialType={modalType}
       />
 
-      {/* Floating WhatsApp Action Button */}
+      {/* Floating WhatsApp Widget */}
       <FloatingWhatsApp />
     </div>
   );

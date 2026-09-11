@@ -71,8 +71,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAudit }) => {
                   <div className="text-xs text-mute space-y-0.5 pt-0.5">
                     <div>HD77, Sector 135, Noida</div>
                     <div>Uttar Pradesh 201304, India</div>
-                    <div className="pt-1">
-                      <a href="https://wa.me/919818747001" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-bold hover:underline inline-flex items-center gap-1">
+                    <div className="pt-1 font-mono text-ink font-bold">
+                      <a href="https://wa.me/919818747001" target="_blank" rel="noopener noreferrer" className="hover:text-[#25D366] transition-colors flex items-center gap-1">
                         <span>WhatsApp: +91 98187 47001</span>
                       </a>
                     </div>
