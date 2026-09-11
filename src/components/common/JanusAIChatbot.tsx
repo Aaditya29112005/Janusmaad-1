@@ -349,7 +349,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
 
       {/* Expandable Glassmorphism Janus AI Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-4 sm:right-6 w-[92vw] sm:w-[420px] max-h-[80vh] h-[600px] z-50 bg-slate-950/80 backdrop-blur-2xl text-white rounded-3xl border border-white/20 shadow-[0_20px_60px_rgba(124,58,237,0.35)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-250 relative">
+        <div className="fixed bottom-[96px] right-4 sm:right-6 w-[92vw] sm:w-[400px] h-[min(550px,calc(100vh-115px))] z-50 bg-slate-950/85 backdrop-blur-2xl text-white rounded-3xl border border-white/20 shadow-[0_20px_60px_rgba(124,58,237,0.35)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-250 relative">
           
           {/* Animated Canvas Particles Background */}
           <canvas 
