@@ -78,9 +78,9 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-6 space-y-6">
               <div className="space-y-3">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink leading-[1.05] tracking-tight uppercase">
+                <h1 className="text-5xl sm:text-7xl lg:text-7xl xl:text-8xl font-display font-extrabold text-ink leading-[0.92] tracking-tighter uppercase">
                   PERFORMANCE<br />
                   MARKETING
                 </h1>
@@ -109,9 +109,9 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       icon: (
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
                           <path d="M21.805 10.023H12.18v3.954h5.546c-.24 1.28-.97 2.365-2.065 3.09v2.568h3.342c1.955-1.84 3.082-4.554 3.082-7.773 0-.61-.055-1.198-.28-1.839z" fill="#4285F4"/>
-                          <path d="M12.18 22c2.784 0 5.117-.924 6.823-2.365l-3.342-2.568c-.924.62-2.107.987-3.481.987-2.675 0-4.941-1.805-5.75-4.232H3v2.647A10.002 10.002 0 0 0 12.18 22z" fill="#34A853"/>
-                          <path d="M6.43 13.822A6.04 6.04 0 0 1 6.117 12c0-.632.109-1.247.313-1.822V7.53H3a10.002 10.002 0 0 0 0 8.94l3.43-2.648z" fill="#FBBC05"/>
-                          <path d="M12.18 5.946c1.506 0 2.858.518 3.922 1.535l2.943-2.943C17.293 2.892 14.96 2 12.18 2A10.002 10.002 0 0 0 3 7.53l3.43 2.648c.809-2.427 3.075-4.232 5.75-4.232z" fill="#EA4335"/>
+                          <path d="M12.18 20.002c2.752 0 5.064-.908 6.75-2.474l-3.342-2.568c-.913.614-2.08.977-3.408.977-2.618 0-4.838-1.765-5.63-4.143H3.09v2.646c1.688 3.35 5.144 5.562 9.09 5.562z" fill="#34A853"/>
+                          <path d="M6.55 11.794c-.203-.61-.318-1.26-.318-1.928 0-.668.115-1.318.318-1.928V5.292H3.09C2.42 6.63 2.04 8.136 2.04 9.866c0 1.73.38 3.236 1.05 4.574l3.46-2.646z" fill="#FBBC05"/>
+                          <path d="M12.18 3.652c1.498 0 2.842.516 3.9 1.522l2.925-2.925C17.238.742 14.926 0 12.18 0 8.234 0 4.778 2.212 3.09 5.562l3.46 2.646c.792-2.378 3.012-4.143 5.63-4.143z" fill="#EA4335"/>
                         </svg>
                       )
                     },
@@ -120,8 +120,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       bg: 'bg-bone border-hairline text-ink',
                       icon: (
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <rect width="24" height="24" rx="6" fill="#10A37F"/>
-                          <path d="M12 5.5C8.41 5.5 5.5 8.41 5.5 12C5.5 15.59 8.41 18.5 12 18.5C15.59 18.5 18.5 15.59 18.5 12C18.5 8.41 15.59 5.5 12 5.5ZM12 16.5C9.51 16.5 7.5 14.49 7.5 12C7.5 9.51 9.51 7.5 12 7.5C14.49 7.5 16.5 9.51 16.5 12C16.5 14.49 14.49 16.5 12 16.5Z" fill="white"/>
+                          <path d="M22.28 9.37a5.97 5.97 0 0 0-.52-4.84 6 6 0 0 0-6.66-2.82 6 6 0 0 0-4.66-2.08 6 6 0 0 0-5.74 4.14 6 6 0 0 0-4.14 2.84 6 6 0 0 0 .82 7.15 5.97 5.97 0 0 0 .52 4.84 6 6 0 0 0 6.66 2.82 6 6 0 0 0 4.66 2.08 6 6 0 0 0 5.74-4.14 6 6 0 0 0 4.14-2.84 6 6 0 0 0-.82-7.15z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       )
                     },
@@ -130,10 +129,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       bg: 'bg-bone border-hairline text-ink',
                       icon: (
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <rect width="24" height="24" rx="6" fill="#FF9900"/>
-                          <path d="M7 15C10 17.5 14 17.5 17 15" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-                          <path d="M15 14.5L17 15L16.2 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M12 7C9.8 7 8.5 8.5 8.5 10.5C8.5 12 9.5 13 11 13C12.5 13 13.5 12 13.5 10.5V7.5" stroke="white" strokeWidth="1.6" strokeLinecap="round"/>
+                          <path d="M15.5 17c-4 2.5-9 2.5-12.5 0M16.5 14.5c.5.8 1.5 2 2.5 2.2-1 .5-2.5.5-3.5 0" stroke="#FF9900" strokeWidth="2" strokeLinecap="round"/>
                         </svg>
                       )
                     },
@@ -142,16 +138,13 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
                       bg: 'bg-bone border-hairline text-ink',
                       icon: (
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                          <rect width="24" height="24" rx="6" fill="#0A66C2"/>
-                          <path d="M7 10H9.5V17H7V10ZM8.25 6.75C7.56 6.75 7 7.31 7 8C7 8.69 7.56 9.25 8.25 9.25C8.94 9.25 9.5 8.69 9.5 8C9.5 7.31 8.94 6.75 8.25 6.75ZM11 10H13.4V11.1H13.43C13.76 10.47 14.57 9.8 15.8 9.8C18.3 9.8 18.8 11.44 18.8 13.6V17H16.3V13.1C16.3 12.17 16.28 10.97 15 10.97C13.7 10.97 13.5 11.99 13.5 13.03V17H11V10Z" fill="white"/>
+                          <rect width="24" height="24" rx="5" fill="#0A66C2"/>
+                          <path d="M6.5 8.5H9V17.5H6.5V8.5ZM7.75 5C6.92 5 6.25 5.67 6.25 6.5C6.25 7.33 6.92 8 7.75 8C8.58 8 9.25 7.33 9.25 6.5C9.25 5.67 8.58 5 7.75 5ZM11.5 8.5H13.8V9.75H13.85C14.17 9.14 14.96 8.5 16.12 8.5C18.54 8.5 19 10.09 19 12.16V17.5H16.5V13.08C16.5 12.03 16.48 10.67 15.03 10.67C13.56 10.67 13.34 11.82 13.34 12.99V17.5H10.84V8.5H11.5Z" fill="white"/>
                         </svg>
                       )
-                    },
-                  ].map((tech, i) => (
-                    <div
-                      key={i}
-                      className={`px-3 py-1 rounded-xl border text-xs font-mono font-bold flex items-center gap-2 transition-all hover:border-violet/40 hover:text-violet ${tech.bg}`}
-                    >
+                    }
+                  ].map((tech) => (
+                    <div key={tech.name} className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono font-medium flex items-center gap-1.5 ${tech.bg}`}>
                       {tech.icon}
                       <span>{tech.name}</span>
                     </div>
@@ -161,7 +154,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </div>
 
             {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
-            <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+            <div className="lg:col-span-6 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
               <div className="space-y-1">
                 <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
                   Estimate Your Revenue Lift
