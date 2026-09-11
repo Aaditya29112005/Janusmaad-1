@@ -113,7 +113,8 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bone);
@@ -125,6 +126,18 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--violet);
 }
+
+/* Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
 
 /* Range Input Styling for ROI & Performance Calculators - High Visibility Lines */
 input[type=range] {
@@ -247,5 +260,3 @@ input[type=range]::-moz-range-thumb:hover {
 .animate-orb-glow {
   animation: slow-orb-glow 3.5s infinite ease-in-out;
 }
-
-

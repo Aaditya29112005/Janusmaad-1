@@ -100,7 +100,7 @@ const CanvasParticleBackground: React.FC = () => {
     });
 
     // Create particles array (inspired by CodePen GSAP flair canvas animation)
-    const particleCount = 28;
+    const particleCount = 18;
     interface Particle {
       x: number;
       y: number;
@@ -119,28 +119,28 @@ const CanvasParticleBackground: React.FC = () => {
       particles.push({
         x: width / 2,
         y: height / 2,
-        scale: 0.3 + Math.random() * 0.5,
+        scale: 0.25 + Math.random() * 0.4,
         rotate: Math.random() * Math.PI * 2,
-        alpha: 0.2 + Math.random() * 0.5,
+        alpha: 0.12 + Math.random() * 0.25,
         angle: (i / particleCount) * Math.PI * 2,
-        radiusOffset: 40 + Math.random() * (Math.max(width, height) * 0.45),
-        speed: 0.002 + Math.random() * 0.004,
+        radiusOffset: 60 + Math.random() * (Math.max(width, height) * 0.4),
+        speed: 0.0015 + Math.random() * 0.003,
         iconIndex: i % iconCanvases.length,
-        baseSize: 32 + Math.random() * 16
+        baseSize: 28 + Math.random() * 12
       });
     }
 
     // GSAP animation controlling particle properties
     particles.forEach((p, i) => {
       gsap.to(p, {
-        scale: p.scale * 1.3,
-        rotate: p.rotate + Math.PI * 2,
-        alpha: p.alpha > 0.4 ? 0.2 : 0.6,
-        duration: 4 + (i % 5),
+        scale: p.scale * 1.25,
+        rotate: p.rotate + Math.PI,
+        alpha: p.alpha > 0.25 ? 0.1 : 0.3,
+        duration: 5 + (i % 4),
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-        delay: (i % 7) * 0.4
+        delay: (i % 5) * 0.5
       });
     });
 
@@ -150,8 +150,8 @@ const CanvasParticleBackground: React.FC = () => {
 
       particles.forEach((p) => {
         p.angle += p.speed;
-        p.x = width / 2 + Math.cos(p.angle * 3) * p.radiusOffset;
-        p.y = height / 2 + Math.sin(p.angle * 2) * (p.radiusOffset * 0.8);
+        p.x = width / 2 + Math.cos(p.angle * 2.5) * p.radiusOffset;
+        p.y = height / 2 + Math.sin(p.angle * 1.8) * (p.radiusOffset * 0.85);
 
         ctx.save();
         ctx.globalAlpha = p.alpha;
@@ -181,7 +181,7 @@ const CanvasParticleBackground: React.FC = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full opacity-45"
+      className="absolute inset-0 pointer-events-none z-0 w-full h-full opacity-35"
     />
   );
 };
@@ -417,7 +417,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
         <div 
           className="fixed bottom-24 right-4 sm:right-6 w-[92vw] sm:w-[420px] max-h-[82vh] h-[620px] z-50 text-white rounded-3xl border border-white/20 shadow-[0_20px_60px_rgba(124,58,237,0.35)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-250 backdrop-blur-2xl relative"
           style={{
-            background: 'radial-gradient(circle at 50% 0%, rgba(30, 27, 75, 0.85) 0%, rgba(10, 13, 29, 0.92) 100%)'
+            background: 'radial-gradient(circle at 50% 0%, rgba(30, 27, 75, 0.88) 0%, rgba(10, 13, 29, 0.95) 100%)'
           }}
         >
           {/* Animated Canvas Particle Background with Social Media & Growth Platform Icons */}
@@ -460,7 +460,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
           </div>
 
           {/* Chat Messages Body */}
-          <div className="relative z-10 flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 font-body text-xs sm:text-sm">
+          <div className="relative z-10 flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 font-body text-xs sm:text-sm [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -470,7 +470,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
                   className={`max-w-[85%] p-3.5 rounded-2xl leading-relaxed whitespace-pre-wrap ${
                     msg.sender === 'user'
                       ? 'bg-gradient-to-r from-violet to-purple-600 text-white rounded-br-xs shadow-lg font-medium border border-violet-400/40 backdrop-blur-md'
-                      : 'bg-black/40 text-white/95 border border-white/20 rounded-bl-xs backdrop-blur-xl shadow-md'
+                      : 'bg-black/50 text-white/95 border border-white/20 rounded-bl-xs backdrop-blur-xl shadow-md'
                   }`}
                 >
                   {msg.text}
@@ -504,7 +504,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
 
             {/* Typing Indicator */}
             {isTyping && (
-              <div className="flex items-center gap-1.5 p-3 bg-black/40 rounded-2xl rounded-bl-xs w-fit border border-white/20 backdrop-blur-xl">
+              <div className="flex items-center gap-1.5 p-3 bg-black/50 rounded-2xl rounded-bl-xs w-fit border border-white/20 backdrop-blur-xl">
                 <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '0ms' }} />
                 <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '150ms' }} />
                 <span className="w-2 h-2 rounded-full bg-violet animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -514,8 +514,11 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestion Chips */}
-          <div className="relative z-10 px-4 py-2.5 bg-black/30 border-t border-white/15 flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] font-mono text-white/90 backdrop-blur-xl">
+          {/* Quick Suggestion Chips (Completely scrollbar hidden) */}
+          <div 
+            className="relative z-10 px-4 py-2.5 bg-black/50 border-t border-white/15 flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] font-mono text-white/90 backdrop-blur-xl [&::-webkit-scrollbar]:hidden"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             <span className="text-violet-400 font-bold shrink-0">Ask:</span>
             {[
               'Performance ROAS',
@@ -540,7 +543,7 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
               e.preventDefault();
               handleSendMessage();
             }}
-            className="relative z-10 p-3 sm:p-4 bg-black/40 border-t border-white/15 flex items-center gap-2 backdrop-blur-xl"
+            className="relative z-10 p-3 sm:p-4 bg-black/60 border-t border-white/15 flex items-center gap-2 backdrop-blur-xl rounded-b-3xl"
           >
             <input
               type="text"
@@ -564,4 +567,3 @@ export const JanusAIChatbot: React.FC<JanusAIChatbotProps> = ({
     </>
   );
 };
-
