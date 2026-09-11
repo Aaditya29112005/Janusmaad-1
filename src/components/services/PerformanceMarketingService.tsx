@@ -78,9 +78,9 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
         <div className="bg-white border border-hairline rounded-[32px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* LEFT COLUMN: HERO HEADLINE & TRUSTED TECH */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-6 space-y-6">
               <div className="space-y-3">
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-display font-extrabold text-ink leading-[1.02] tracking-tight uppercase">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold text-ink leading-[0.98] tracking-tight uppercase">
                   PERFORMANCE<br />
                   MARKETING
                 </h1>
@@ -154,7 +154,7 @@ export const PerformanceMarketingService: React.FC<PerformanceMarketingServicePr
             </div>
 
             {/* RIGHT COLUMN: INTERACTIVE REVENUE CALCULATOR */}
-            <div className="lg:col-span-7 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
+            <div className="lg:col-span-6 bg-bone/70 border border-hairline p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm">
               <div className="space-y-1">
                 <h3 className="text-xl sm:text-2xl font-display font-extrabold text-ink tracking-tight">
                   Estimate Your Revenue Lift
