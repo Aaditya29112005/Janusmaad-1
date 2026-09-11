@@ -456,7 +456,11 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
 
   const customFeature = renderCustomPageFeature(capabilityId);
   if (customFeature) {
-    return customFeature;
+    return (
+      <div className="pt-24 sm:pt-28">
+        {customFeature}
+      </div>
+    );
   }
 
   return (

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { ALL_38_CLIENTS, CATEGORY_PITCHES } from '../../content/clientDatabase';
-import { ArrowUpRight, Award } from 'lucide-react';
+import { ALL_38_CLIENTS } from '../../content/clientDatabase';
+import { ArrowUpRight } from 'lucide-react';
 
 const WORK_IMAGES: Record<string, string> = {
   'the-credit-lane': '/work/thecreditlane.jpg',
@@ -46,75 +46,32 @@ const WORK_IMAGES: Record<string, string> = {
   'cuddle-buds': '/work/cuddlebuds.jpg',
 };
 
-
-
-
-
 interface CategoryMetricsExplorerProps {
   onOpenAudit?: (type?: string) => void;
   initialService?: string;
   showOnlyClientRecords?: boolean;
   hideHeader?: boolean;
+  customClientOrder?: string[];
 }
 
 export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = ({
   showOnlyClientRecords = false,
   hideHeader = false,
+  customClientOrder,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [selectedCategory, setSelectedCategory] = React.useState<string>('Jewellery');
   const [visibleCount, setVisibleCount] = React.useState(3);
 
-  const activePitch = React.useMemo(() => {
-    return CATEGORY_PITCHES.find(p => p.category === selectedCategory) || CATEGORY_PITCHES[0];
-  }, [selectedCategory]);
-
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setVisibleCount(3);
-  };
-
   const orderedClients = React.useMemo(() => {
-    if (!activePitch) return ALL_38_CLIENTS;
-
-    const pitchBrandNames = [
-      activePitch.topPitch.brand,
-      ...activePitch.metrics.map((m) => m.brand),
-    ].map((b) => b.toLowerCase().trim());
-
-    // 1. Primary match: clients whose name matches any brand in the pitch metrics
-    const brandMatchedClients = ALL_38_CLIENTS.filter((client) =>
-      pitchBrandNames.some(
-        (brand) =>
-          client.name.toLowerCase().includes(brand) ||
-          brand.includes(client.name.toLowerCase())
-      )
-    );
-
-    // 2. Secondary match: clients whose categoryGroup or category matches selectedCategory
-    const categoryMatchedClients = ALL_38_CLIENTS.filter((client) => {
-      const groupLower = (client.categoryGroup || '').toLowerCase();
-      const catLower = (client.category || '').toLowerCase();
-      const selLower = selectedCategory.toLowerCase();
-      return groupLower.includes(selLower) || selLower.includes(groupLower) || catLower.includes(selLower);
+    const topIds = customClientOrder || ['rudrasetu', 'kicky-and-perky', 'the-credit-lane'];
+    const topClients: typeof ALL_38_CLIENTS = [];
+    topIds.forEach((id) => {
+      const found = ALL_38_CLIENTS.find((c) => c.id === id);
+      if (found) topClients.push(found);
     });
-
-    // Combine brand matches first, then category matches
-    const categoryClients: typeof ALL_38_CLIENTS = [];
-    const addedIds = new Set<string>();
-
-    [...brandMatchedClients, ...categoryMatchedClients].forEach((c) => {
-      if (!addedIds.has(c.id)) {
-        addedIds.add(c.id);
-        categoryClients.push(c);
-      }
-    });
-
-    // 3. Fallback clients so we always have all 38 available
-    const remaining = ALL_38_CLIENTS.filter((c) => !addedIds.has(c.id));
-
-    return [...categoryClients, ...remaining];
-  }, [activePitch, selectedCategory]);
+    const remaining = ALL_38_CLIENTS.filter((c) => !topIds.includes(c.id));
+    return [...topClients, ...remaining];
+  }, [customClientOrder]);
 
   const visibleClients = orderedClients.slice(0, visibleCount);
 
@@ -142,80 +99,13 @@ export const CategoryMetricsExplorer: React.FC<CategoryMetricsExplorerProps> = (
             /* Standard Full Section Title */
             <div className="text-center max-w-3xl mx-auto space-y-3 border-b border-hairline pb-8">
               <h2 className="font-display text-3xl sm:text-5xl font-bold text-ink tracking-tight">
-                Success Metrics by Category & Client Vault
+                Client Case Studies & Vault
               </h2>
               <p className="text-mute text-base sm:text-lg">
                 Explore real client case studies across e-commerce, retail, hospitality, and services.
               </p>
             </div>
           )
-        )}
-
-        {!showOnlyClientRecords && (
-          /* Category Pitch Generator Box (Compact Light Mode) */
-          <div className="bg-white border border-hairline text-ink rounded-2xl p-4 sm:p-6 space-y-4 shadow-md relative overflow-hidden">
-            <div className="space-y-0.5 relative z-10">
-              <span className="text-[11px] font-mono font-bold text-violet uppercase tracking-widest block">
-                CATEGORY BENCHMARK PITCH FINDER
-              </span>
-              <h3 className="text-lg sm:text-xl font-display font-extrabold text-ink">
-                What Metric Should You Benchmark For Your Brand?
-              </h3>
-            </div>
-
-            {/* Category Selector Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 relative z-10">
-              {CATEGORY_PITCHES.map((item) => {
-                const isSelected = item.category === selectedCategory;
-                return (
-                  <button
-                    key={item.category}
-                    onClick={() => handleCategorySelect(item.category)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-violet text-white shadow-xs scale-102'
-                        : 'bg-bone text-mute hover:text-ink hover:bg-hairline/60 border border-hairline'
-                    }`}
-                  >
-                    {item.category}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Category Pitch Showcase Result Card */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center bg-bone border border-hairline rounded-xl p-4 relative z-10">
-              <div className="lg:col-span-4 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-[11px] font-mono text-violet font-bold uppercase">
-                  <Award className="w-3.5 h-3.5 text-violet" />
-                  <span>BENCHMARK FOR {activePitch.category.toUpperCase()}</span>
-                </div>
-                <div className="space-y-0.5">
-                  <div className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
-                    {activePitch.topPitch.value}
-                  </div>
-                  <div className="text-xs font-display text-violet font-bold">
-                    {activePitch.topPitch.metric} <span className="text-mute font-medium">({activePitch.topPitch.brand})</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-8 space-y-1.5">
-                <div className="text-[10px] font-mono text-mute uppercase font-bold">Full Category Metrics Breakdown</div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {activePitch.metrics.map((m, idx) => (
-                    <div key={idx} className="p-2 bg-white border border-hairline rounded-lg space-y-0.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-mute">{m.metric}</span>
-                        <span className="text-[10px] font-mono text-violet font-bold">{m.brand}</span>
-                      </div>
-                      <div className="text-base font-display font-bold text-ink">{m.value}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
         )}
 
         {/* Static 3-in-1-row Client Cards Grid & See More Button */}

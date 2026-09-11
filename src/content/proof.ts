@@ -10,7 +10,7 @@ export interface ProofStat {
 
 export const PROOF_STATS: ProofStat[] = [
   {
-    label: 'Performance Media ROAS',
+    label: 'Performance Marketing ROAS',
     value: '4x',
     clientName: 'Kicky & Perky',
     clientLogo: '/logos/full_brands/1_brand_1.png',
@@ -34,7 +34,7 @@ export const PROOF_STATS: ProofStat[] = [
     category: 'Hospitality & Luxury Stays',
   },
   {
-    label: 'Retention Media ROAS',
+    label: 'Retention Marketing ROAS',
     value: '7x',
     clientName: 'Shagun Sweets',
     clientLogo: '/logos/full_brands/1_brand_4.png',
