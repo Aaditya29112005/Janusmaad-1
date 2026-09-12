@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, CheckCircle2, ArrowRight, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { sendAuditToWhatsApp, openWhatsApp, DISPLAY_PHONE } from '../../utils/whatsapp';
+import { submitLeadForm } from '../../utils/formSubmit';
 
 interface AuditModalProps {
   isOpen: boolean;
@@ -31,8 +32,16 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await submitLeadForm({
+      name: formData.name,
+      email: formData.email,
+      websiteUrl: formData.websiteUrl,
+      monthlySpend: formData.monthlySpend,
+      primaryGoal: formData.primaryGoal,
+      source: 'Book a Free Growth Consultation Modal'
+    });
     sendAuditToWhatsApp(formData);
     setSubmitted(true);
   };

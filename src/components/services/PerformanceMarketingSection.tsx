@@ -16,6 +16,7 @@ import {
   Send
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { submitLeadForm } from '../../utils/formSubmit';
 
 interface PerformanceMarketingSectionProps {
   onOpenAudit: (type?: string) => void;
@@ -45,9 +46,17 @@ export const PerformanceMarketingSection: React.FC<PerformanceMarketingSectionPr
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    await submitLeadForm({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      subject: formData.subject,
+      message: formData.message,
+      source: `Performance Marketing Section - ${activeTab}`
+    });
     setFormSubmitted(true);
     setTimeout(() => {
       setFormSubmitted(false);

@@ -16,6 +16,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { sendAuditToWhatsApp } from '../../utils/whatsapp';
+import { submitLeadForm } from '../../utils/formSubmit';
 import { Button } from '../ui/Button';
 import { CategoryMetricsExplorer } from '../proof/CategoryMetricsExplorer';
 import { TextRolling } from '../hero/TextRolling';
@@ -385,9 +386,17 @@ export const CapabilityPage: React.FC<CapabilityPageProps> = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    await submitLeadForm({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      subject: formData.subject,
+      message: formData.message,
+      source: `Capability Page - ${details.title}`
+    });
     sendAuditToWhatsApp(formData);
     setFormSubmitted(true);
     setTimeout(() => {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/Button';
 import { ArrowRight, CheckCircle2, Zap } from 'lucide-react';
+import { submitLeadForm } from '../../utils/formSubmit';
 
 interface ClosingCTAProps {
   onOpenAudit: (type?: string) => void;
@@ -10,9 +11,15 @@ export const ClosingCTA: React.FC<ClosingCTAProps> = ({ onOpenAudit }) => {
   const [url, setUrl] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!url) return;
+    await submitLeadForm({
+      name: 'Website Lead',
+      email: 'hello@janusmaad.com',
+      websiteUrl: url,
+      source: 'Zero Risk Audit Footer CTA'
+    });
     setSubmitted(true);
   };
 
