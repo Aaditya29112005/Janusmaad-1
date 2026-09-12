@@ -12,6 +12,7 @@ interface AuditModalProps {
 
 export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,16 +35,23 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await submitLeadForm({
-      name: formData.name,
-      email: formData.email,
-      websiteUrl: formData.websiteUrl,
-      monthlySpend: formData.monthlySpend,
-      primaryGoal: formData.primaryGoal,
-      source: 'Book a Free Growth Consultation Modal'
-    });
-    sendAuditToWhatsApp(formData);
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await submitLeadForm({
+        name: formData.name,
+        email: formData.email,
+        websiteUrl: formData.websiteUrl,
+        monthlySpend: formData.monthlySpend,
+        primaryGoal: formData.primaryGoal,
+        source: 'Book a Free Growth Consultation Modal'
+      });
+      sendAuditToWhatsApp(formData);
+    } catch (err) {
+      console.error('Submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const handleReset = () => {
@@ -161,9 +169,24 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div className="pt-2 space-y-2.5">
-                <Button type="submit" variant="primary" size="lg" className="w-full group font-display font-bold tracking-wider uppercase">
-                  <span>SEND VIA WHATSAPP ({DISPLAY_PHONE})</span>
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <Button 
+                  type="submit" 
+                  variant="primary" 
+                  size="lg" 
+                  disabled={isSubmitting}
+                  className="w-full group font-display font-bold tracking-wider uppercase cursor-pointer py-4"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>SAVING TO GOOGLE SHEET...</span>
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center gap-2">
+                      <span>SUBMIT AUDIT REQUEST</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  )}
                 </Button>
 
                 <button
@@ -187,8 +210,8 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose }) => {
               <CheckCircle2 className="w-10 h-10" />
             </div>
             <h3 className="font-display text-2xl text-ink font-bold">Audit Request Received!</h3>
-            <p className="text-mute text-sm max-w-md mx-auto">
-              We have dispatched a confirmation email to <span className="text-violet font-bold">{formData.email}</span>. A senior strategist from Delhi NCR / Noida will review <span className="text-ink font-bold">{formData.websiteUrl}</span> and confirm your call timeslot shortly.
+            <p className="text-mute text-sm max-w-md mx-auto leading-relaxed">
+              Your details for <span className="text-ink font-bold">{formData.name}</span> (<span className="text-violet font-bold">{formData.email}</span>) have been saved to <span className="text-emerald-600 font-bold">Google Sheet</span> & sent to <span className="text-violet font-bold">hello@janusmaad.com</span>. A senior growth strategist will review <span className="text-ink font-bold">{formData.websiteUrl}</span> shortly.
             </p>
             <div className="pt-4">
               <Button onClick={handleReset} variant="outline" size="md">
