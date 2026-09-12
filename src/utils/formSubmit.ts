@@ -13,9 +13,9 @@ export interface LeadFormData {
 
 export const JANUS_CONTACT_EMAIL = 'hello@janusmaad.com';
 
-// Configurable webhook URL for Google Apps Script / Google Sheet integration
-// Can be set via VITE_GOOGLE_SHEET_WEBHOOK_URL in environment or fallback to Apps Script endpoint
-export const GOOGLE_SHEET_WEBHOOK_URL = import.meta.env.VITE_GOOGLE_SHEET_WEBHOOK_URL || '';
+export const GOOGLE_SHEET_WEBHOOK_URL = 
+  import.meta.env.VITE_GOOGLE_SHEET_WEBHOOK_URL || 
+  'https://script.google.com/macros/s/AKfycbyLbON3GWlboBc8ZdWCJMPTkCDJXDIl4kP-y7jnPWqg174SnS7qckbKWp3dNEm2y_Yp/exec';
 
 /**
  * Sends form submission payload directly to:
