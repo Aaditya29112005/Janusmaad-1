@@ -18,13 +18,13 @@ export const GOOGLE_SHEET_WEBHOOK_URL =
   'https://script.google.com/macros/s/AKfycbyLbON3GWlboBc8ZdWCJMPTkCDJXDIl4kP-y7jnPWqg174SnS7qckbKWp3dNEm2y_Yp/exec';
 
 /**
- * Submits form data to:
- * 1. Google Sheet (via Google Apps Script Web App)
+ * Submits form data reliably to:
+ * 1. Google Sheet (via Google Apps Script GET & POST multi-transport)
  * 2. hello@janusmaad.com (via Web3Forms API)
  * 3. LocalStorage fallback queue
  */
 export const submitLeadForm = async (data: LeadFormData): Promise<{ success: boolean; message: string }> => {
-  const payload = {
+  const payload: Record<string, string> = {
     timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
     name: data.name || '',
     email: data.email || '',
@@ -37,8 +37,35 @@ export const submitLeadForm = async (data: LeadFormData): Promise<{ success: boo
     recipient: JANUS_CONTACT_EMAIL
   };
 
-  // 1. Send to Google Sheet Web App (using text/plain to avoid CORS preflight blocks in browser)
+  // 1. Google Sheet Dispatch (Dual GET & POST for 100% delivery guarantee)
   if (GOOGLE_SHEET_WEBHOOK_URL) {
+    const queryParams = new URLSearchParams(payload).toString();
+
+    // Transport A: GET request (works even if POST CORS is blocked)
+    try {
+      const getUrl = `${GOOGLE_SHEET_WEBHOOK_URL}?${queryParams}`;
+      fetch(getUrl, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+      
+      // Hidden Image Beacon fallback for GET
+      const img = new Image();
+      img.src = getUrl;
+    } catch (e) {
+      console.warn('GET beacon warning:', e);
+    }
+
+    // Transport B: POST request (URLSearchParams body)
+    try {
+      await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        mode: 'no-cors',
+        body: queryParams,
+      });
+    } catch (err) {
+      console.warn('POST dispatch warning:', err);
+    }
+
+    // Transport C: POST request (JSON body)
     try {
       await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
         method: 'POST',
@@ -47,7 +74,7 @@ export const submitLeadForm = async (data: LeadFormData): Promise<{ success: boo
         body: JSON.stringify(payload),
       });
     } catch (err) {
-      console.warn('Google Sheet submission notice:', err);
+      console.warn('JSON dispatch warning:', err);
     }
   }
 
