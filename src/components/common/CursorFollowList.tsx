@@ -29,7 +29,7 @@ const WORK_IMAGES: Record<string, string> = {
   'soniva': '/work/soniva.jpg',
   'selective-guru': '/work/selectiveguru.jpg',
   'too-bold-to-confirm': '/work/toobold.png',
-  'kasuti-kavana': '/work/kasutikavana.png',
+
   'shaffa': '/work/shaffa.jpg',
   'caness': '/work/caness.jpg',
   'azoneh-treasures': '/work/azonehtreasures.jpg',
@@ -38,7 +38,7 @@ const WORK_IMAGES: Record<string, string> = {
   'basil-pet-care': '/work/basilpetcare.jpg',
   'clay-and-glaze': '/work/clayandglaze.png',
   'rangoli': '/work/rangoli.png',
-  'qibo': '/work/qibo.jpg',
+
   'soiree-club': '/work/soireeclub.jpg',
   'ecoo-global': '/work/ecooglobal.png',
   'cuddle-buds': '/work/cuddlebuds.jpg',

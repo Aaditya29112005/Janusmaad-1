@@ -56,7 +56,7 @@ const WORK_IMAGES: Record<string, string> = {
   'the-skin-beneath': '/work/theskinbeneath.jpg',
   'yubi1': '/work/yubi1.jpg',
   'too-bold-to-confirm': '/work/toobold.jpg',
-  'kasuti-kavana': '/work/kasutikavana.jpg',
+
   'shaffa': '/work/shaffa.jpg',
   'caness': '/work/caness.jpg',
   'azoneh-treasures': '/work/azonehtreasures.jpg',
@@ -65,7 +65,7 @@ const WORK_IMAGES: Record<string, string> = {
   'basil-pet-care': '/work/basilpetcare.jpg',
   'clay-and-glaze': '/work/clayandglaze.jpg',
   'rangoli': '/work/rangoli.jpg',
-  'qibo': '/work/qibo.jpg',
+
   'soiree-club': '/work/soireeclub.jpg',
   'ecoo-global': '/work/ecooglobal.jpg',
   'cuddle-buds': '/work/cuddlebuds.jpg',

@@ -457,22 +457,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
     ],
     notes: 'Revenue stated as a multiple, not a percentage. No metrics recorded for: Build.'
   },
-  {
-    id: 'kasuti-kavana',
-    name: 'Kasuti Kavana',
-    url: 'https://kasutikavana.com/',
-    domain: 'kasutikavana.com',
-    category: 'Fashion / Ecomm',
-    categoryGroup: 'Fashion Ecomm',
-    services: ['CRO', 'Build', 'PM', 'RM'],
-    primaryMetric: { label: 'Revenue Increase', value: '+50%' },
-    allMetrics: [
-      { label: 'PM ROAS', value: '2.5 ROAS', type: 'ROAS' },
-      { label: 'Revenue Increase', value: '+50%', type: 'REV' },
-      { label: 'AOV Increase', value: '+15%', type: 'AOV' }
-    ],
-    notes: 'No metrics recorded for: Build, RM.'
-  },
+
   {
     id: 'shaffa',
     name: 'Shaffa',
@@ -612,21 +597,7 @@ export const ALL_38_CLIENTS: ClientRecord[] = [
       { label: 'Bounce Decrease', value: '-23%', type: 'BOUNCE' }
     ]
   },
-  {
-    id: 'qibo',
-    name: 'Qibo',
-    url: 'https://www.qibo.in/',
-    domain: 'qibo.in',
-    category: 'Interior Design / Ecomm',
-    categoryGroup: 'Home / Lifestyle / Decor Ecomm',
-    services: ['PM'],
-    primaryMetric: { label: 'PM ROAS', value: '4.5 ROAS' },
-    allMetrics: [
-      { label: 'PM ROAS', value: '4.5 ROAS', type: 'ROAS' },
-      { label: 'Revenue Increase', value: '+45%', type: 'REV' },
-      { label: 'AOV Increase', value: '+18%', type: 'AOV' }
-    ]
-  },
+
   {
     id: 'soiree-club',
     name: 'Soiree Club',
@@ -715,7 +686,7 @@ export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
     metrics: [
       { metric: 'Retention ROAS', value: '6.0 ROAS', brand: 'Too Bold To Confirm' },
       { metric: 'Revenue Increase', value: '200%', brand: 'Too Bold To Confirm' },
-      { metric: 'Revenue Increase', value: '+60%', brand: 'Kasuti Kavana' },
+
       { metric: 'Revenue Increase', value: '+43%', brand: 'Isha and Ishana' }
     ]
   },
@@ -742,7 +713,7 @@ export const CATEGORY_PITCHES: CategoryMetricPitch[] = [
     topPitch: { metric: 'PM ROAS', value: '5.5 ROAS', brand: 'Soiree Club' },
     metrics: [
       { metric: 'PM ROAS', value: '5.5 ROAS', brand: 'Soiree Club' },
-      { metric: 'PM ROAS', value: '4.5 ROAS', brand: 'Qibo' },
+
       { metric: 'RM ROAS', value: '4.0 ROAS', brand: 'Clay and Glaze' }
     ]
   },
