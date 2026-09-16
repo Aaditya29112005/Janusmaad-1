@@ -10,7 +10,6 @@ export const GUEST_LIST_LOGOS: ClientLogo[] = [
   { id: '5', name: 'JanusMaad Client 5', logoSrc: '/logos/full_brands/1_brand_5.png' },
   { id: '6', name: 'JanusMaad Client 6', logoSrc: '/logos/full_brands/1_brand_6.png' },
   { id: '7', name: 'JanusMaad Client 7', logoSrc: '/logos/full_brands/1_brand_7.png' },
-  { id: '8', name: 'JanusMaad Client 8', logoSrc: '/logos/full_brands/1_brand_8.png' },
   { id: '9', name: 'JanusMaad Client 9', logoSrc: '/logos/full_brands/1_brand_9.png' },
   { id: '10', name: 'JanusMaad Client 10', logoSrc: '/logos/full_brands/1_brand_10.png' },
   { id: '11', name: 'JanusMaad Client 11', logoSrc: '/logos/full_brands/1_brand_11.png' },
